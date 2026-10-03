@@ -16,8 +16,12 @@ class GuessWhoGame {
         this.selectedCharacterId = null;
         this.eliminated = new Set();
         this.accuseMode = false;
+        this.zoomMode = false;
+        this.activeTab = 'board';
+        this.unread = 0;
         this.gameOver = false;
         this.opponentConnected = false;
+        this._canHover = window.matchMedia('(hover: hover)').matches;
 
         this.dom = {
             turnIndicator: document.getElementById('turn-indicator'),
@@ -32,6 +36,12 @@ class GuessWhoGame {
             waitingOpponent: document.getElementById('waiting-opponent'),
             gameArea: document.getElementById('game-area'),
             boardGrid: document.getElementById('board-grid'),
+            boardPanel: document.getElementById('board-panel'),
+            chatPanel: document.getElementById('chat-panel'),
+            mobileTabs: document.getElementById('mobile-tabs'),
+            mobileTurn: document.getElementById('mobile-turn'),
+            chatBadge: document.getElementById('chat-badge'),
+            zoomModeBtn: document.getElementById('zoom-mode-btn'),
             clearEliminatedBtn: document.getElementById('clear-eliminated-btn'),
             chatLog: document.getElementById('chat-log'),
             chatInput: document.getElementById('chat-input'),
@@ -52,6 +62,10 @@ class GuessWhoGame {
             preview: document.getElementById('char-preview'),
             previewImg: document.getElementById('char-preview-img'),
             previewName: document.getElementById('char-preview-name'),
+            charZoom: document.getElementById('char-zoom'),
+            charZoomImg: document.getElementById('char-zoom-img'),
+            charZoomName: document.getElementById('char-zoom-name'),
+            charZoomClose: document.getElementById('char-zoom-close'),
         };
 
         this.loadCharacters();
@@ -88,13 +102,62 @@ class GuessWhoGame {
         this.dom.answerNo.addEventListener('click', () => this.answerQuestion('no'));
 
         this.dom.accuseBtn.addEventListener('click', () => this.toggleAccuseMode());
+        this.dom.zoomModeBtn.addEventListener('click', () => this.toggleZoomMode());
         this.dom.clearEliminatedBtn.addEventListener('click', () => this.clearEliminated());
         this.dom.playAgainBtn.addEventListener('click', () => this.requestRestart());
         this.dom.copyRoomBtn.addEventListener('click', () => this.copyRoomCode());
 
+        this.dom.charZoomClose.addEventListener('click', () => this.closeZoom());
+        this.dom.charZoom.addEventListener('click', (e) => {
+            if (e.target === this.dom.charZoom) this.closeZoom();
+        });
+
+        if (this.dom.mobileTabs) {
+            this.dom.mobileTabs.querySelectorAll('.tab-btn').forEach((btn) => {
+                btn.addEventListener('click', () => this.switchTab(btn.dataset.tab));
+            });
+        }
+
         document.addEventListener('mouseover', (e) => this.handlePreviewOver(e));
         document.addEventListener('mousemove', (e) => this.handlePreviewMove(e));
         document.addEventListener('mouseout', (e) => this.handlePreviewOut(e));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') this.closeZoom();
+        });
+    }
+
+    // ------------------------------------------------------------------
+    // Mobile layout helpers
+    // ------------------------------------------------------------------
+    switchTab(tab) {
+        this.activeTab = tab;
+        this.dom.gameArea.classList.toggle('show-board', tab === 'board');
+        this.dom.gameArea.classList.toggle('show-chat', tab === 'chat');
+        if (this.dom.mobileTabs) {
+            this.dom.mobileTabs.querySelectorAll('.tab-btn').forEach((btn) => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+        }
+        if (tab === 'chat') {
+            this.unread = 0;
+            this.dom.chatBadge.classList.add('hidden');
+            this.scrollChat();
+        }
+    }
+
+    showZoom(characterId) {
+        const character = this.characters[characterId];
+        if (!character) return;
+        this.dom.charZoomImg.src = this.imageUrl(characterId);
+        this.dom.charZoomImg.alt = character.name;
+        this.dom.charZoomName.textContent = character.name;
+        this.dom.charZoom.classList.remove('hidden');
+        this.dom.charZoom.setAttribute('aria-hidden', 'false');
+    }
+
+    closeZoom() {
+        this.dom.charZoom.classList.add('hidden');
+        this.dom.charZoom.setAttribute('aria-hidden', 'true');
     }
 
     // Enlarged character preview that follows the cursor on hover.
@@ -117,6 +180,7 @@ class GuessWhoGame {
     }
 
     showPreview(card) {
+        if (!this._canHover) return;
         const img = card.querySelector('img');
         if (!img) return;
         this._previewCard = card;
@@ -295,7 +359,12 @@ class GuessWhoGame {
         this.selfCharacterId = null;
         this.selectedCharacterId = null;
         this.eliminated = new Set();
-        this.accuseMode = false;
+        this.setAccuseMode(false);
+        this.setZoomMode(false);
+        this.unread = 0;
+        this._wasAnswerer = false;
+        this.dom.chatBadge.classList.add('hidden');
+        this.closeZoom();
         this.dom.gameOver.classList.add('hidden');
         this.dom.gameArea.classList.add('hidden');
         this.dom.mySecret.classList.add('hidden');
@@ -357,6 +426,10 @@ class GuessWhoGame {
             this.confirmAccusation(id);
             return;
         }
+        if (this.zoomMode) {
+            this.showZoom(id);
+            return;
+        }
         if (this.gameOver || this.status !== 'IN_PROGRESS') return;
 
         if (this.eliminated.has(id)) {
@@ -390,13 +463,34 @@ class GuessWhoGame {
 
     toggleAccuseMode() {
         if (!this.canAct()) return;
-        this.accuseMode = !this.accuseMode;
-        this.dom.boardGrid.classList.toggle('accuse-mode', this.accuseMode);
-        this.dom.accuseBtn.classList.toggle('active', this.accuseMode);
-        this.dom.accuseBtn.textContent = this.accuseMode ? 'İptal' : 'Tahmin Et';
-        this.dom.accuseHint.textContent = this.accuseMode
+        this.setAccuseMode(!this.accuseMode);
+        if (this.accuseMode) this.setZoomMode(false);
+    }
+
+    setAccuseMode(on) {
+        this.accuseMode = on;
+        this.dom.boardGrid.classList.toggle('accuse-mode', on);
+        this.dom.accuseBtn.classList.toggle('active', on);
+        this.dom.accuseBtn.textContent = on ? 'İptal' : 'Tahmin Et';
+        this.dom.accuseHint.textContent = on
             ? 'Tahmin etmek istediğin karaktere tıkla.'
             : 'Yanlış tahmin oyunu kaybettirir!';
+        if (on) this.switchTab('board');
+    }
+
+    toggleZoomMode() {
+        this.setZoomMode(!this.zoomMode);
+        if (this.zoomMode) {
+            this.setAccuseMode(false);
+            this.toast('Bir karaktere dokunarak büyütebilirsin.');
+        }
+    }
+
+    setZoomMode(on) {
+        this.zoomMode = on;
+        this.dom.boardGrid.classList.toggle('zoom-mode', on);
+        this.dom.zoomModeBtn.classList.toggle('active', on);
+        this.dom.zoomModeBtn.textContent = on ? 'Büyütmeyi Kapat' : 'Büyüt';
     }
 
     confirmAccusation(characterId) {
@@ -478,6 +572,13 @@ class GuessWhoGame {
         el.appendChild(who);
         el.appendChild(bubble);
         this.dom.chatLog.appendChild(el);
+
+        if (!skipScroll && !mine && this.activeTab !== 'chat') {
+            this.unread += 1;
+            this.dom.chatBadge.textContent = this.unread > 9 ? '9+' : String(this.unread);
+            this.dom.chatBadge.classList.remove('hidden');
+        }
+
         if (!skipScroll) this.scrollChat();
     }
 
@@ -528,6 +629,17 @@ class GuessWhoGame {
             indicator.textContent = 'RAKİBİN SIRASI';
         }
 
+        if (this.dom.mobileTurn) {
+            this.dom.mobileTurn.textContent = indicator.textContent;
+            const state = indicator.className.replace('turn-indicator', '').trim();
+            this.dom.mobileTurn.className = `mobile-turn ${state}`.trim();
+        }
+
+        if (imAnswerer && !this._wasAnswerer) {
+            this.switchTab('chat');
+        }
+        this._wasAnswerer = imAnswerer;
+
         this.updateAnswerBar(imAnswerer);
     }
 
@@ -564,6 +676,7 @@ class GuessWhoGame {
         this.dom.waitingOpponent.classList.add('hidden');
         this.dom.gameArea.classList.remove('hidden');
         this.dom.gameArea.classList.add('visible');
+        this.switchTab(this.activeTab || 'board');
     }
 
     showGameOver(iWon, reveal) {

@@ -1,22 +1,32 @@
 """Character catalogue for the Guess Who game.
 
-The catalogue is derived from the PNG files that live in the project-level
-``characters/`` directory. Files are expected to be named like
-``01_Mia.png`` where the numeric prefix is the id and the rest is the name.
+The catalogue is derived from the image files that live in the project-level
+``characters/`` directory. Any number of images is supported; adding a new file
+to that folder is enough to make it playable. Files may be named either
+``Mia.png`` or ``01_Mia.png`` — an optional leading numeric prefix is ignored
+when the display name is rendered.
 """
 
+import re
 from pathlib import Path
 
 from django.conf import settings
 
 CHARACTERS_DIR = Path(settings.BASE_DIR) / 'characters'
+IMAGE_EXTENSIONS = ('.png', '.jpg', '.jpeg', '.webp', '.gif')
+
+# Leading numeric prefixes such as "01_", "1-", "02 " are not part of the name.
+_PREFIX_RE = re.compile(r'^\d+[\s_\-]+')
 
 
 def _pretty_name(raw):
-    raw = raw.replace('_', ' ').strip()
-    if not raw:
-        return raw
-    return raw[0].upper() + raw[1:]
+    name = _PREFIX_RE.sub('', raw).replace('_', ' ').replace('-', ' ').strip()
+    return name or raw.strip()
+
+
+def _natural_key(value):
+    """Sort "2" before "10" and keep names in a stable, readable order."""
+    return [int(part) if part.isdigit() else part.lower() for part in re.split(r'(\d+)', value)]
 
 
 def _load_characters():
@@ -24,13 +34,17 @@ def _load_characters():
     if not CHARACTERS_DIR.is_dir():
         return characters
 
-    for path in sorted(CHARACTERS_DIR.glob('*.png')):
+    files = [
+        path
+        for path in CHARACTERS_DIR.iterdir()
+        if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS
+    ]
+    for path in sorted(files, key=lambda p: _natural_key(p.stem)):
         stem = path.stem
-        prefix, sep, name = stem.partition('_')
         characters.append(
             {
                 'id': stem,
-                'name': _pretty_name(name) if sep else _pretty_name(stem),
+                'name': _pretty_name(stem),
                 'image': f'characters/{path.name}',
             }
         )
@@ -40,3 +54,4 @@ def _load_characters():
 CHARACTERS = _load_characters()
 CHARACTER_MAP = {character['id']: character for character in CHARACTERS}
 CHARACTER_IDS = set(CHARACTER_MAP)
+CHARACTER_COUNT = len(CHARACTERS)

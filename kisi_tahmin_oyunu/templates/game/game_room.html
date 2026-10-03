@@ -56,10 +56,24 @@
         </section>
 
         <section id="game-area" class="game-area hidden">
-            <div class="board-panel">
+            <div class="mobile-tabs" id="mobile-tabs" role="tablist">
+                <div class="mobile-turn" id="mobile-turn">Rakip bekleniyor...</div>
+                <div class="mobile-tab-buttons">
+                    <button class="tab-btn active" data-tab="board" type="button" role="tab">Tahta</button>
+                    <button class="tab-btn" data-tab="chat" type="button" role="tab">
+                        Soru &amp; Sohbet
+                        <span class="tab-badge hidden" id="chat-badge">!</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="board-panel" id="board-panel">
                 <div class="board-toolbar">
                     <h3>Tahtan</h3>
-                    <button id="clear-eliminated-btn" class="ghost-btn small" type="button">İşaretleri Temizle</button>
+                    <div class="board-tools">
+                        <button id="zoom-mode-btn" class="ghost-btn small" type="button">Büyüt</button>
+                        <button id="clear-eliminated-btn" class="ghost-btn small" type="button">Temizle</button>
+                    </div>
                 </div>
                 <div class="char-grid board-grid" id="board-grid">
                     {% for c in characters %}
@@ -70,9 +84,13 @@
                     </button>
                     {% endfor %}
                 </div>
+                <div class="accuse-row">
+                    <button id="accuse-btn" class="danger" type="button" disabled>Tahmin Et</button>
+                    <p class="hint" id="accuse-hint">Yanlış tahmin oyunu kaybettirir!</p>
+                </div>
             </div>
 
-            <aside class="chat-panel">
+            <aside class="chat-panel" id="chat-panel">
                 <h3>Soru &amp; Sohbet</h3>
                 <div class="chat-log" id="chat-log"></div>
 
@@ -91,9 +109,6 @@
                         <button id="ask-btn" class="primary" type="button" disabled>Soru Sor</button>
                     </div>
                 </div>
-
-                <button id="accuse-btn" class="danger" type="button" disabled>Tahmin Et</button>
-                <p class="hint" id="accuse-hint">Yanlış tahmin oyunu kaybettirir!</p>
             </aside>
         </section>
 
@@ -107,6 +122,14 @@
     <div id="char-preview" class="char-preview hidden" aria-hidden="true">
         <img id="char-preview-img" alt="">
         <span id="char-preview-name"></span>
+    </div>
+
+    <div id="char-zoom" class="char-zoom hidden" aria-hidden="true">
+        <div class="char-zoom-card">
+            <img id="char-zoom-img" alt="">
+            <span id="char-zoom-name"></span>
+            <button id="char-zoom-close" class="ghost-btn small" type="button">Kapat</button>
+        </div>
     </div>
 
     <div id="toast" class="toast hidden"></div>
