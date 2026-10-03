@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yazayno - number app - Room {{ room_code }}</title>
+    <link rel="stylesheet" href="{% static 'css/game.css' %}">
+</head>
+<body data-room-code="{{ room_code }}">
+    <div class="game-container">
+        <div class="game-header">
+            <h1>yazayno - number app</h1>
+            <div class="room-code">Room: {{ room_code }}</div>
+        </div>
+
+        <div class="game-board">
+            <!-- Player Info -->
+            <div class="player-info">
+                <div class="player-section">
+                    <h2>YOU</h2>
+                    <div id="turn-indicator" class="turn-indicator waiting">
+                        Waiting for opponent...
+                    </div>
+                </div>
+
+                <div class="player-section">
+                    <h2>OPPONENT</h2>
+                    <div id="opponent-status" class="opponent-status">
+                        Waiting for opponent to join...
+                    </div>
+                    <div id="opponent-activity" class="opponent-activity"></div>
+                </div>
+            </div>
+
+            <!-- Secret Number Setup -->
+            <div id="secret-setup" class="secret-setup">
+                <div class="setup-card">
+                    <h3>Your Secret Number</h3>
+                    <div class="secret-display">••••</div>
+                    <input type="text" id="secret-input" maxlength="4" placeholder="Enter 4-digit number" autocomplete="off">
+                    <button id="set-secret-btn">Set Secret Number</button>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div id="game-area" class="game-area hidden">
+                <!-- Guess History -->
+                <div class="guess-history">
+                    <h3>Your Guesses</h3>
+                    <div class="guess-list" id="guess-list">
+                        <!-- Guesses will be added here -->
+                    </div>
+                </div>
+
+                <!-- Make Guess -->
+                <div class="make-guess">
+                    <h3>Make a Guess</h3>
+                    <div class="guess-input">
+                        <input type="text" id="guess-input" maxlength="4" placeholder="____" autocomplete="off">
+                        <button id="guess-btn" disabled>MAKE GUESS</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over -->
+            <div id="game-over" class="game-over hidden">
+                <h2 id="game-over-message"></h2>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/game.js' %}"></script>
+</body>
+</html>

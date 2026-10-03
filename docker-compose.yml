@@ -1,0 +1,49 @@
+# Shared infrastructure for all games in this repository.
+#
+# Starts ONE PostgreSQL server and ONE Redis server that every game stack
+# (sayi_oyunu, kisi_tahmin_oyunu, ...) connects to. The games do NOT start
+# their own database/cache containers anymore; they reach these services on the
+# host via `host.docker.internal` (`extra_hosts: host-gateway`).
+#
+# Start the shared services first:
+#
+#   docker compose up -d
+#
+# Then, from each game folder, create its database (once) and start the app:
+#
+#   docker compose --profile init run --rm db-init
+#   docker compose up -d --build
+#
+# Databases used by the games (created by each game's `db-init`):
+#   - kisi_tahmin_oyunu -> kimbu
+#   - sayi_oyunu        -> sayilar
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
