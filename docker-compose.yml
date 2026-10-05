@@ -1,39 +1,43 @@
-# Shared infrastructure for all games in this repository.
+# Unified games platform.
 #
-# Starts ONE PostgreSQL server and ONE Redis server that every game stack
-# (sayi_oyunu, kisi_tahmin_oyunu, ...) connects to. The games do NOT start
-# their own database/cache containers anymore; they reach these services on the
-# host via `host.docker.internal` (`extra_hosts: host-gateway`).
+# One Django project hosts both games in the same container/port.
+# PostgreSQL runs on AWS RDS (not in Docker); Redis runs here for WebSockets.
 #
-# Start the shared services first:
-#
-#   docker compose up -d
-#
-# Then, from each game folder, create its database (once) and start the app:
-#
-#   docker compose --profile init run --rm db-init
 #   docker compose up -d --build
 #
-# Databases used by the games (created by each game's `db-init`):
-#   - kisi_tahmin_oyunu -> kimbu
-#   - sayi_oyunu        -> sayilar
+# Then open:
+#   http://<host>:8000/          -> game selector (landing page)
+#   http://<host>:8000/sayi/     -> number guessing game
+#   http://<host>:8000/kim-bu/   -> "Kim Bu?" character guessing game
+#
+# The database named by DB_NAME (default: `oyunlar`) is created automatically
+# on the RDS instance by the `web` container at startup (ensure_db.py), using
+# the maintenance `postgres` database.
+#
+# Requirements on AWS: the RDS security group must allow inbound TCP 5432 from
+# this host (security group / IP), and the RDS instance must be reachable from
+# here (same VPC, or publicly accessible).
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    command: >
+      sh -c "python ensure_db.py &&
+             python manage.py migrate --noinput &&
+             python manage.py collectstatic --noinput &&
+             uvicorn config.asgi:application --host 0.0.0.0 --port 8000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - .:/code
     ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
+      - "8000:8000"
+    env_file:
+      - .env
+    extra_hosts:
+      # Lets the container reach the shared Redis on the host (WebSockets).
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      redis:
+        condition: service_started
     restart: unless-stopped
 
   redis:
@@ -45,5 +49,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data:
   redis_data:

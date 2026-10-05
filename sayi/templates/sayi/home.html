@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayı Tahmin Oyunu</title>
+    <link rel="stylesheet" href="{% static 'sayi/css/game.css' %}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Sayı Tahmin Oyunu</h1>
+            <p>Klasik kağıt-kalem sayı tahmin oyununun modern hali</p>
+        </div>
+
+        <div class="home-content">
+            <div class="game-card">
+                <h2>Oyun Kur</h2>
+                <p>Yeni bir oyun odası oluştur ve oda kodunu rakibinle paylaş</p>
+                <button id="create-btn" class="game-btn">OYUN KUR</button>
+            </div>
+
+            <div class="game-card">
+                <h2>Oyuna Katıl</h2>
+                <p>Mevcut bir oyuna katılmak için oda kodunu gir</p>
+                <input type="text" id="room-code-input" maxlength="6" placeholder="Oda Kodu" autocomplete="off">
+                <button id="join-btn" class="game-btn">KATIL</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 Sayı Tahmin Oyunu</p>
+        </div>
+    </div>
+
+    <script src="{% static 'sayi/js/home.js' %}"></script>
+</body>
+</html>

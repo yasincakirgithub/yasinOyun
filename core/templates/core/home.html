@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Merkezi</title>
+    <style>
+        :root {
+            --paper: #f7f2e7;
+            --ink: #2f3542;
+            --line: #3b6ea5;
+            --accent: #b4552d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 18px;
+            font-family: 'Patrick Hand', 'Comic Sans MS', 'Segoe UI', sans-serif;
+            color: var(--ink);
+            background-color: var(--paper);
+            background-image:
+                linear-gradient(rgba(59, 110, 165, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 110, 165, 0.12) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+        .wrap {
+            width: min(920px, 100%);
+            background: #fffdf7;
+            border: 1px solid rgba(47, 53, 66, 0.15);
+            border-radius: 14px;
+            box-shadow: 0 18px 45px rgba(47, 53, 66, 0.14);
+            padding: 40px clamp(20px, 5vw, 56px) 44px;
+        }
+        h1 {
+            margin: 0 0 6px;
+            font-size: clamp(30px, 5vw, 46px);
+            text-align: center;
+            color: var(--line);
+        }
+        .sub {
+            margin: 0 0 34px;
+            text-align: center;
+            font-size: 18px;
+            opacity: 0.75;
+        }
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding: 26px 24px;
+            background: var(--paper);
+            border: 2px solid rgba(59, 110, 165, 0.35);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--line);
+            box-shadow: 0 14px 30px rgba(59, 110, 165, 0.22);
+        }
+        .tag {
+            align-self: flex-start;
+            padding: 3px 12px;
+            border-radius: 999px;
+            background: rgba(180, 85, 45, 0.14);
+            color: var(--accent);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        .game-card h2 { margin: 0; font-size: 26px; color: var(--ink); }
+        .game-card p { margin: 0; font-size: 17px; line-height: 1.5; opacity: 0.8; }
+        .play {
+            margin-top: auto;
+            align-self: flex-start;
+            padding: 10px 22px;
+            border-radius: 8px;
+            background: var(--line);
+            color: #fff;
+            font-size: 17px;
+            letter-spacing: 0.5px;
+        }
+        .footer {
+            margin-top: 34px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Oyun Merkezi</h1>
+        <p class="sub">Oynamak istedigin oyunu sec.</p>
+
+        <div class="games">
+            {% for game in games %}
+            <a class="game-card" href="{% url game.url_name %}">
+                <span class="tag">{{ game.tag }}</span>
+                <h2>{{ game.title }}</h2>
+                <p>{{ game.description }}</p>
+                <span class="play">Oyna &rarr;</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="footer">&copy; 2026 Oyun Merkezi</div>
+    </div>
+</body>
+</html>

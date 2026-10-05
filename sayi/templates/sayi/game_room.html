@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayı Tahmin Oyunu - Oda {{ room_code }}</title>
+    <link rel="stylesheet" href="{% static 'sayi/css/game.css' %}">
+</head>
+<body data-room-code="{{ room_code }}">
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Sayı Tahmin Oyunu</h1>
+            <div class="room-code">Oda: {{ room_code }}</div>
+        </div>
+
+        <div class="game-board">
+            <!-- Oyuncu Bilgisi -->
+            <div class="player-info">
+                <div class="player-section">
+                    <h2>SEN</h2>
+                    <div id="turn-indicator" class="turn-indicator waiting">
+                        Rakip bekleniyor...
+                    </div>
+                </div>
+
+                <div class="player-section">
+                    <h2>RAKİP</h2>
+                    <div id="opponent-status" class="opponent-status">
+                        Rakibin katılması bekleniyor...
+                    </div>
+                    <div id="opponent-activity" class="opponent-activity"></div>
+                </div>
+            </div>
+
+            <!-- Gizli Sayı Kurulumu -->
+            <div id="secret-setup" class="secret-setup">
+                <div class="setup-card">
+                    <h3>Gizli Sayın</h3>
+                    <div class="secret-display">••••</div>
+                    <input type="text" id="secret-input" maxlength="4" placeholder="4 basamaklı sayı gir" autocomplete="off">
+                    <button id="set-secret-btn">Gizli Sayıyı Kaydet</button>
+                </div>
+            </div>
+
+            <!-- Oyun Alanı -->
+            <div id="game-area" class="game-area hidden">
+                <!-- Tahmin Geçmişi -->
+                <div class="guess-history">
+                    <h3>Tahminlerin</h3>
+                    <div class="guess-list" id="guess-list">
+                        <!-- Tahminler buraya eklenecek -->
+                    </div>
+                </div>
+
+                <!-- Tahmin Yap -->
+                <div class="make-guess">
+                    <h3>Tahmin Yap</h3>
+                    <div class="guess-input">
+                        <input type="text" id="guess-input" maxlength="4" placeholder="____" autocomplete="off">
+                        <button id="guess-btn" disabled>TAHMİN ET</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oyun Bitti -->
+            <div id="game-over" class="game-over hidden">
+                <h2 id="game-over-message"></h2>
+                <button id="play-again-btn">Yeniden Oyna</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'sayi/js/game.js' %}"></script>
+</body>
+</html>
