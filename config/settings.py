@@ -3,11 +3,12 @@ Django settings for the unified games platform.
 
 Hosts all games in one project:
 
-  - ``core``  : landing page (game selector)
-  - ``sayi``  : 4-digit number guessing game (Bulls and Cows)
-  - ``kim``   : "Kim Bu?" / Guess Who character guessing game
+  - ``core``    : landing page (game selector)
+  - ``sayi``    : 4-digit number guessing game (Bulls and Cows)
+  - ``kim``     : "Kim Bu?" / Guess Who character guessing game
+  - ``amiral``  : two-player Battleship game ("Amiral Battı")
 
-The two games share a single PostgreSQL database and Redis instance.
+The games share a single PostgreSQL database and Redis instance.
 """
 
 from pathlib import Path
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'core',
     'sayi',
     'kim',
+    'amiral',
 ]
 
 MIDDLEWARE = [
@@ -229,5 +231,6 @@ LOGGING = {
     'loggers': {
         'sayi': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'kim': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'amiral': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }

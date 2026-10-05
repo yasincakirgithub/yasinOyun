@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amiral Battı - Oda {{ room_code }}</title>
+    <link rel="stylesheet" href="{% static 'amiral/css/game.css' %}">
+</head>
+<body data-room-code="{{ room_code }}"
+      data-grid-size="{{ grid_size }}"
+      data-audio-bg="{% static 'amiral/audio/background.mp3' %}"
+      data-audio-hit="{% static 'amiral/audio/hit.mp3' %}"
+      data-audio-miss="{% static 'amiral/audio/miss.mp3' %}">
+    {{ fleet|json_script:"fleet-data" }}
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Amiral Battı</h1>
+            <div class="room-code">Oda: {{ room_code }}</div>
+            <button id="copy-room-btn" class="ghost-btn small" type="button">Kodu Kopyala</button>
+        </div>
+
+        <div class="audio-bar">
+            <button id="audio-toggle" class="ghost-btn small" type="button" aria-pressed="true">Ses: Açık</button>
+            <label class="volume-control">
+                <span>Müzik</span>
+                <input type="range" id="music-volume" min="0" max="100" value="35" aria-label="Müzik ses seviyesi">
+                <output id="music-volume-value">35</output>
+            </label>
+            <label class="volume-control">
+                <span>Efekt</span>
+                <input type="range" id="sfx-volume" min="0" max="100" value="70" aria-label="Efekt ses seviyesi">
+                <output id="sfx-volume-value">70</output>
+            </label>
+        </div>
+
+        <div class="player-info">
+            <div class="player-section">
+                <h2>SEN</h2>
+                <div id="turn-indicator" class="turn-indicator waiting">Rakip bekleniyor...</div>
+            </div>
+
+            <div class="player-section">
+                <h2>RAKİP</h2>
+                <div id="opponent-status" class="opponent-status disconnected">Rakibin katılması bekleniyor...</div>
+                <div id="opponent-activity" class="opponent-activity"></div>
+            </div>
+        </div>
+
+        <section id="placement" class="placement hidden">
+            <h2>Gemilerini Yerleştir</h2>
+            <p class="placement-sub">Önce gemiyi seç, sonra tahtada yerleştirmek istediğin kareye tıkla. Yönü değiştirmek için "Döndür" düğmesini kullan. Yerleştirilmiş bir gemiyi kaldırmak için üzerine tıkla.</p>
+
+            <div class="placement-layout">
+                <div class="board-wrap">
+                    <div class="board" id="placement-grid" aria-label="Yerleştirme tahtası"></div>
+                </div>
+
+                <aside class="placement-panel">
+                    <h3>Filon</h3>
+                    <div class="ship-tray" id="ship-tray"></div>
+
+                    <div class="placement-controls">
+                        <button id="rotate-btn" class="ghost-btn" type="button">Yön: Yatay</button>
+                        <button id="random-btn" class="ghost-btn" type="button">Rastgele</button>
+                        <button id="clear-btn" class="ghost-btn" type="button">Temizle</button>
+                    </div>
+
+                    <button id="confirm-btn" class="primary" type="button" disabled>YERLEŞTİRMEYİ BİTİR</button>
+                    <p class="hint" id="placement-hint">Tüm gemileri yerleştir ve hazır ol.</p>
+                </aside>
+            </div>
+        </section>
+
+        <section id="waiting-opponent" class="waiting-opponent hidden">
+            <p>Rakibin gemilerini yerleştirmesi bekleniyor...</p>
+        </section>
+
+        <section id="game-area" class="game-area hidden">
+            <div class="mobile-turn" id="mobile-turn">Rakip bekleniyor...</div>
+
+            <div class="boards">
+                <div class="board-panel">
+                    <div class="board-toolbar">
+                        <h3>Senin Tahtan</h3>
+                        <span class="board-note">Gemilerin</span>
+                    </div>
+                    <div class="board-wrap">
+                        <div class="board own-board" id="own-grid" aria-label="Kendi tahtan"></div>
+                    </div>
+                </div>
+
+                <div class="board-panel enemy-panel">
+                    <div class="board-toolbar">
+                        <h3>Rakip Tahtan</h3>
+                        <span class="board-note" id="enemy-note">Ateş etmek için tıkla</span>
+                    </div>
+                    <div class="board-wrap">
+                        <div class="board enemy-board" id="enemy-grid" aria-label="Rakip tahtası"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="legend">
+                <span class="legend-item"><i class="mark ship-mark"></i> Gemi</span>
+                <span class="legend-item"><i class="mark hit-mark"></i> Vuruş</span>
+                <span class="legend-item"><i class="mark miss-mark"></i> Iska</span>
+                <span class="legend-item"><i class="mark sunk-mark"></i> Batan gemi</span>
+            </div>
+        </section>
+
+        <div id="game-over" class="game-over hidden">
+            <h2 id="game-over-message"></h2>
+            <p id="game-over-detail" class="game-over-detail"></p>
+            <button id="play-again-btn" type="button">YENİDEN OYNA</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="{% static 'amiral/js/game.js' %}"></script>
+</body>
+</html>

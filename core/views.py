@@ -22,6 +22,16 @@ GAMES = [
         ),
         'tag': 'Karakter',
     },
+    {
+        'slug': 'amiral',
+        'url_name': 'amiral:home',
+        'title': 'Amiral Battı',
+        'description': (
+            'Gemilerini yerleştir, koordinatlara ateş et ve rakibinin tüm '
+            'filosunu batır.'
+        ),
+        'tag': 'Strateji',
+    },
 ]
 
 

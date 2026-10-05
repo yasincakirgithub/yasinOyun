@@ -7,6 +7,8 @@ urlpatterns = [
     path('sayi/', include('sayi.urls')),
     # "Kim Bu?" character guessing game
     path('kim-bu/', include('kim.urls')),
+    # Battleship game ("Amiral Battı")
+    path('amiral/', include('amiral.urls')),
     # Landing page (last so it only matches the root)
     path('', include('core.urls')),
 ]
