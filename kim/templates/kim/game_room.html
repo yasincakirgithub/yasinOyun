@@ -1,11 +1,11 @@
-{% load static %}
+{% load static static_version %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kim Bu? - Oda {{ room_code }}</title>
-    <link rel="stylesheet" href="{% static 'kim/css/game.css' %}">
+    <link rel="stylesheet" href="{% static_v 'kim/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}">
     {{ characters|json_script:"characters-data" }}
@@ -134,6 +134,6 @@
 
     <div id="toast" class="toast hidden"></div>
 
-    <script src="{% static 'kim/js/game.js' %}"></script>
+    <script src="{% static_v 'kim/js/game.js' %}"></script>
 </body>
 </html>

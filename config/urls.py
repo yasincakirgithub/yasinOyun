@@ -9,6 +9,8 @@ urlpatterns = [
     path('kim-bu/', include('kim.urls')),
     # Battleship game ("Amiral Battı")
     path('amiral/', include('amiral.urls')),
+    # Two-player chess game (python-chess)
+    path('satranc/', include('satranc.urls')),
     # Landing page (last so it only matches the root)
     path('', include('core.urls')),
 ]

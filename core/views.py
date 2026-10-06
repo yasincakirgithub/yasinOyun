@@ -32,6 +32,16 @@ GAMES = [
         ),
         'tag': 'Strateji',
     },
+    {
+        'slug': 'satranc',
+        'url_name': 'satranc:home',
+        'title': 'Satranç',
+        'description': (
+            'Klasik iki kişilik satranç. Oda kur, kodu paylaş ve rakibini '
+            'mat etmeye çalış.'
+        ),
+        'tag': 'Zeka',
+    },
 ]
 
 

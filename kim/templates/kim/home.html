@@ -1,11 +1,11 @@
-{% load static %}
+{% load static static_version %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kim Bu? - Online Karakter Tahmin Oyunu</title>
-    <link rel="stylesheet" href="{% static 'kim/css/game.css' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
 </head>
 <body>
     <div class="game-container">
@@ -34,6 +34,6 @@
         </div>
     </div>
 
-    <script src="{% static 'kim/js/home.js' %}"></script>
+    <script src="{% static_v 'kim/js/home.js' %}"></script>
 </body>
 </html>

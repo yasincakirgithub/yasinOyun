@@ -1,0 +1,82 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satranç - Oda {{ room_code }}</title>
+    <link rel="stylesheet" href="{% static_v 'satranc/css/game.css' %}">
+</head>
+<body data-room-code="{{ room_code }}">
+    <div class="game-container">
+        <div class="game-header">
+            <h1>Satranç</h1>
+            <div class="room-code">Oda: {{ room_code }}</div>
+            <button id="copy-room-btn" class="ghost-btn small" type="button">Kodu Kopyala</button>
+        </div>
+
+        <div class="game-layout">
+            <div class="board-column">
+                <div class="player-bar top" id="opponent-bar">
+                    <span class="player-name" id="opponent-name">RAKİP</span>
+                    <span class="player-status" id="opponent-status">Bağlanıyor...</span>
+                </div>
+
+                <div class="board-wrap">
+                    <div class="board-area">
+                        <div class="rank-labels" id="rank-labels"></div>
+                        <div class="board" id="board" aria-label="Satranç tahtası"></div>
+                        <div class="file-labels" id="file-labels"></div>
+                    </div>
+                </div>
+
+                <div class="player-bar bottom" id="self-bar">
+                    <span class="player-name" id="self-name">SEN</span>
+                    <span class="player-status" id="self-status">Bağlanıyor...</span>
+                </div>
+            </div>
+
+            <aside class="side-panel">
+                <div id="turn-indicator" class="turn-indicator waiting">Rakip bekleniyor...</div>
+                <div id="check-indicator" class="check-indicator hidden">ŞAH!</div>
+
+                <h3>Hamleler</h3>
+                <ol id="move-list" class="move-list"></ol>
+
+                <button id="play-again-btn" class="primary hidden" type="button">YENİDEN OYNA</button>
+
+                <p class="hint">Taşı sürükleyip bırakarak ya da önce taşa sonra hedef kareye tıklayarak oyna. Terfi için çıkan seçeneklerden birini seç.</p>
+            </aside>
+        </div>
+    </div>
+
+    <div id="promotion" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Terfi</h3>
+            <p>Piyonunu hangi taşa terfi ettirmek istersin?</p>
+            <div class="promotion-choices">
+                <button type="button" data-piece="q">&#9819;</button>
+                <button type="button" data-piece="r">&#9820;</button>
+                <button type="button" data-piece="b">&#9821;</button>
+                <button type="button" data-piece="n">&#9822;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over" class="modal-overlay hidden">
+        <div class="modal">
+            <h2 id="game-over-message"></h2>
+            <p id="game-over-detail"></p>
+            <div class="modal-actions">
+                <button id="close-game-over" class="ghost-btn" type="button">TAHTAYI İNCELE</button>
+                <button id="rematch-btn" class="primary" type="button">YENİDEN OYNA</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="{% static_v 'satranc/js/pieces.js' %}"></script>
+    <script src="{% static_v 'satranc/js/game.js' %}"></script>
+</body>
+</html>

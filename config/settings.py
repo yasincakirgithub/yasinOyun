@@ -7,6 +7,7 @@ Hosts all games in one project:
   - ``sayi``    : 4-digit number guessing game (Bulls and Cows)
   - ``kim``     : "Kim Bu?" / Guess Who character guessing game
   - ``amiral``  : two-player Battleship game ("Amiral Battı")
+  - ``satranc`` : two-player online chess game (python-chess)
 
 The games share a single PostgreSQL database and Redis instance.
 """
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     'sayi',
     'kim',
     'amiral',
+    'satranc',
 ]
 
 MIDDLEWARE = [
@@ -232,5 +234,6 @@ LOGGING = {
         'sayi': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'kim': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'amiral': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'satranc': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }

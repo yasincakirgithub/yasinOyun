@@ -1,11 +1,11 @@
-{% load static %}
+{% load static static_version %}
 <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sayı Tahmin Oyunu - Oda {{ room_code }}</title>
-    <link rel="stylesheet" href="{% static 'sayi/css/game.css' %}">
+    <link rel="stylesheet" href="{% static_v 'sayi/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}">
     <div class="game-container">
@@ -71,6 +71,6 @@
         </div>
     </div>
 
-    <script src="{% static 'sayi/js/game.js' %}"></script>
+    <script src="{% static_v 'sayi/js/game.js' %}"></script>
 </body>
 </html>
