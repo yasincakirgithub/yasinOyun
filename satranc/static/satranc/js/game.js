@@ -55,10 +55,15 @@ class ChessGame {
         this.gameOverMessage = document.getElementById('game-over-message');
         this.gameOverDetail = document.getElementById('game-over-detail');
         this.toastEl = document.getElementById('toast');
+        this.commentaryEl = document.getElementById('commentary');
 
         this.toastTimer = null;
         this.sounds = {};
         this.audioUnlocked = false;
+        this.commentaryCtx = null;
+        this.commentarySampleRate = 24000;
+        this.nextCommentaryTime = 0;
+        this.commentaryTimer = null;
         this.initAudio();
         this.bindEvents();
     }
@@ -116,6 +121,74 @@ class ChessGame {
         }
     }
 
+    // ------------------------------------------------------------------
+    // Sesli AI yorumu (WebSocket binary PCM akışı)
+    // ------------------------------------------------------------------
+    onCommentary(data) {
+        this.commentarySampleRate = data.sample_rate || 24000;
+        this.nextCommentaryTime = 0;
+        this.showCommentary(data.text);
+        if (this.commentaryEl) {
+            this.commentaryEl.classList.add('speaking');
+        }
+    }
+
+    onCommentaryEnd() {
+        if (this.commentaryEl) {
+            this.commentaryEl.classList.remove('speaking');
+        }
+    }
+
+    showCommentary(text) {
+        if (!this.commentaryEl || !text) return;
+        this.commentaryEl.textContent = text;
+        this.commentaryEl.classList.remove('hidden');
+        if (this.commentaryTimer) {
+            clearTimeout(this.commentaryTimer);
+        }
+        this.commentaryTimer = setTimeout(() => {
+            this.commentaryEl.classList.add('hidden');
+        }, 6000);
+    }
+
+    playCommentaryChunk(arrayBuffer) {
+        const ctx = this.ensureCommentaryContext();
+        if (!ctx) return;
+
+        const view = new DataView(arrayBuffer);
+        const samples = Math.floor(view.byteLength / 2);
+        if (samples <= 0) return;
+
+        const buffer = ctx.createBuffer(1, samples, this.commentarySampleRate);
+        const channel = buffer.getChannelData(0);
+        for (let i = 0; i < samples; i += 1) {
+            channel[i] = view.getInt16(i * 2, true) / 32768;
+        }
+
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+
+        const now = ctx.currentTime;
+        if (this.nextCommentaryTime < now) {
+            this.nextCommentaryTime = now;
+        }
+        source.start(this.nextCommentaryTime);
+        this.nextCommentaryTime += buffer.duration;
+    }
+
+    ensureCommentaryContext() {
+        if (!this.commentaryCtx) {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (!Ctx) return null;
+            this.commentaryCtx = new Ctx();
+        }
+        if (this.commentaryCtx.state === 'suspended') {
+            this.commentaryCtx.resume().catch(() => {});
+        }
+        return this.commentaryCtx;
+    }
+
     bindEvents() {
         if (this.copyRoomBtn) {
             this.copyRoomBtn.addEventListener('click', () => this.copyRoomCode());
@@ -162,20 +235,27 @@ class ChessGame {
         this.playerIdentifier = sessionStorage.getItem(storageKey)
             || `guest_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
         sessionStorage.setItem(storageKey, this.playerIdentifier);
+        this.playerName = sessionStorage.getItem('satranc:playerName') || 'Oyuncu';
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
         const wsUrl = `${wsScheme}://${window.location.host}/satranc/ws/game/${this.roomCode}/`;
 
         this.ws = new WebSocket(wsUrl);
+        this.ws.binaryType = 'arraybuffer';
 
         this.ws.onopen = () => {
             this.ws.send(JSON.stringify({
                 type: 'join_player',
                 player_identifier: this.playerIdentifier,
+                name: this.playerName,
             }));
         };
 
         this.ws.onmessage = (event) => {
+            if (event.data instanceof ArrayBuffer) {
+                this.playCommentaryChunk(event.data);
+                return;
+            }
             let data;
             try {
                 data = JSON.parse(event.data);
@@ -214,6 +294,12 @@ class ChessGame {
             case 'game_abandoned':
                 this.showToast(data.message, true);
                 this.updateOpponentStatus(data.message);
+                break;
+            case 'commentary':
+                this.onCommentary(data);
+                break;
+            case 'commentary_end':
+                this.onCommentaryEnd();
                 break;
             case 'error':
                 this.showToast(data.message, true);
@@ -412,16 +498,19 @@ class ChessGame {
     }
 
     renderPlayers() {
+        const me = this.players.find((p) => p.player_identifier === this.playerIdentifier);
         const opponent = this.players.find((p) => p.player_identifier !== this.playerIdentifier);
 
         if (this.myColor) {
-            this.selfName.textContent = `SEN (${COLOR_NAMES[this.myColor]})`;
+            const myName = (me && me.name) || this.playerName || 'SEN';
+            this.selfName.textContent = `${myName} (${COLOR_NAMES[this.myColor]})`;
         } else {
             this.selfName.textContent = 'İZLEYİCİ';
         }
 
         if (opponent) {
-            this.opponentName.textContent = `RAKİP (${COLOR_NAMES[opponent.color]})`;
+            const oppName = opponent.name || 'RAKİP';
+            this.opponentName.textContent = `${oppName} (${COLOR_NAMES[opponent.color]})`;
             this.updateOpponentStatus('Bağlandı');
         } else {
             this.opponentName.textContent = 'RAKİP';

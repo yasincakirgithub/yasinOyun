@@ -49,6 +49,8 @@ class GamePlayer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     game_room = models.ForeignKey(GameRoom, on_delete=models.CASCADE, related_name='players')
     player_identifier = models.CharField(max_length=100, unique=True)
+    # Display name chosen by the player before the game starts.
+    name = models.CharField(max_length=30, blank=True, default='')
     color = models.CharField(max_length=1, choices=COLOR_CHOICES)
     joined_at = models.DateTimeField(auto_now_add=True)
 

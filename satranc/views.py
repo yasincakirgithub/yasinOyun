@@ -49,9 +49,13 @@ def join_room(request):
     try:
         data = json.loads(request.body)
         room_code = data.get('room_code', '').upper().strip()
+        name = (data.get('name') or '').strip()[:30]
 
         if not room_code:
             return JsonResponse({'success': False, 'error': 'Oda kodu gerekli.'}, status=400)
+
+        if not name:
+            return JsonResponse({'success': False, 'error': 'İsim gerekli.'}, status=400)
 
         room = GameRoom.objects.filter(room_code=room_code).first()
         if not room:
@@ -74,6 +78,7 @@ def join_room(request):
             game_room=room,
             player_identifier=player_identifier,
             color=color,
+            name=name,
         )
 
         if room.players.count() == 2 and room.status == 'WAITING':
@@ -117,6 +122,7 @@ def get_room_state(request, room_code):
             'id': str(player.id),
             'player_identifier': player.player_identifier,
             'color': player.color,
+            'name': player.name or '',
         }
         for player in room.players.order_by('joined_at')
     ]

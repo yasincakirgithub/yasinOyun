@@ -214,6 +214,61 @@ body {
     box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
 }
 
+/* ---------- Oyuncu Adı ---------- */
+.name-card {
+    padding: 30px;
+    margin-bottom: 30px;
+    background: rgba(11, 15, 25, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+}
+
+.name-card h2 {
+    font-size: 1.6rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.name-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.name-card input {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 16px;
+    font-family: var(--font-ui);
+    font-size: 1.2rem;
+    text-align: center;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.name-card input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(6, 182, 212, 0.05);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.name-card input::placeholder {
+    color: #475569;
+}
+
+.name-card.invalid input {
+    border-color: var(--red, #ef4444);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
+}
+
 /* ---------- Footer ---------- */
 .footer {
     margin-top: 40px;

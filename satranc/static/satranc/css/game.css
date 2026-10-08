@@ -502,6 +502,37 @@ body {
     50% { transform: scale(1.05); }
 }
 
+.commentary {
+    position: relative;
+    padding: 12px 14px 12px 38px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid var(--accent-blue-glow);
+    color: var(--text-main);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    animation: commentary-in 0.25s ease;
+}
+
+.commentary::before {
+    content: '🎙️';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+}
+
+.commentary.speaking {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
+}
+
+@keyframes commentary-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .move-list {
     list-style: none;
     max-height: 280px;
