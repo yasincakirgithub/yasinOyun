@@ -7,7 +7,11 @@
     <title>Satranç - Oda {{ room_code }}</title>
     <link rel="stylesheet" href="{% static_v 'satranc/css/game.css' %}">
 </head>
-<body data-room-code="{{ room_code }}">
+<body data-room-code="{{ room_code }}"
+      data-audio-move="{% static 'satranc/audio/move.mp3' %}"
+      data-audio-capture="{% static 'satranc/audio/capture.mp3' %}"
+      data-audio-check="{% static 'satranc/audio/check.mp3' %}"
+      data-audio-rook="{% static 'satranc/audio/rook.mp3' %}">
     <div class="game-container">
         <div class="game-header">
             <h1>Satranç</h1>

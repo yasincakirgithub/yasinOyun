@@ -57,7 +57,63 @@ class ChessGame {
         this.toastEl = document.getElementById('toast');
 
         this.toastTimer = null;
+        this.sounds = {};
+        this.audioUnlocked = false;
+        this.initAudio();
         this.bindEvents();
+    }
+
+    // ------------------------------------------------------------------
+    // Ses
+    // ------------------------------------------------------------------
+    initAudio() {
+        const sources = {
+            move: document.body.dataset.audioMove,
+            capture: document.body.dataset.audioCapture,
+            check: document.body.dataset.audioCheck,
+            rook: document.body.dataset.audioRook,
+        };
+        Object.entries(sources).forEach(([key, src]) => {
+            if (!src) return;
+            const audio = new Audio(src);
+            audio.preload = 'auto';
+            audio.volume = 0.7;
+            this.sounds[key] = audio;
+        });
+
+        const unlock = () => {
+            if (this.audioUnlocked) return;
+            this.audioUnlocked = true;
+            document.removeEventListener('pointerdown', unlock);
+            document.removeEventListener('keydown', unlock);
+        };
+        document.addEventListener('pointerdown', unlock);
+        document.addEventListener('keydown', unlock);
+    }
+
+    playMoveSound(move) {
+        let key = 'move';
+        const san = (move && move.san) || '';
+        if (san.startsWith('O-O')) {
+            key = 'rook';
+        } else if (san.includes('x')) {
+            key = 'capture';
+        }
+        if (this.check) {
+            key = 'check';
+        }
+
+        const sound = this.sounds[key] || this.sounds.move;
+        if (!sound) return;
+        try {
+            sound.currentTime = 0;
+            const playPromise = sound.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(() => {});
+            }
+        } catch (err) {
+            console.warn('Hamle sesi çalınamadı', err);
+        }
     }
 
     bindEvents() {
@@ -188,7 +244,9 @@ class ChessGame {
         this.myColor = this.resolveMyColor();
 
         if (this.moves.length > previousMoveCount) {
-            this.announceMove(this.moves[this.moves.length - 1]);
+            const latestMove = this.moves[this.moves.length - 1];
+            this.playMoveSound(latestMove);
+            this.announceMove(latestMove);
         }
 
         this.selected = null;
