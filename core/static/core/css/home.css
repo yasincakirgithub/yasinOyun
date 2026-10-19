@@ -40,8 +40,13 @@ body {
     background-color: var(--bg-main);
     background-image:
         linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
-    background-size: 30px 30px;
+        linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(rgba(11, 15, 25, 0.88), rgba(11, 15, 25, 0.95)),
+        url('../img/background.png');
+    background-size: 30px 30px, 30px 30px, cover, cover;
+    background-position: center, center, center, center;
+    background-repeat: repeat, repeat, no-repeat, no-repeat;
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,13 +55,19 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 620px;
-    padding: 44px;
+    max-width: 900px;
+    padding: 50px;
     background: rgba(21, 26, 40, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 102, 241, 0.1);
+}
+
+/* Tek kartlık kurulum ekranları (Satranç) daha dar olsun */
+.game-container.narrow {
+    max-width: 620px;
+    padding: 44px;
 }
 
 /* ---------- Header ---------- */
@@ -81,6 +92,17 @@ body {
     font-size: 1.05rem;
     max-width: 480px;
     margin: 0 auto;
+}
+
+/* ---------- Site bannerı (üst görsel) ---------- */
+.site-banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(6, 182, 212, 0.1);
 }
 
 /* ---------- Oyuncu Adı ---------- */
@@ -225,6 +247,81 @@ body {
     display: none;
 }
 
+/* ---------- Kart tabanlı giriş (Amiral / Kim Bu? / Sayı) ---------- */
+.home-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.game-card {
+    padding: 40px 30px;
+    background: rgba(11, 15, 25, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+}
+
+.game-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
+}
+
+.game-card h2 {
+    font-size: 2rem;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.game-card p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    flex-grow: 1;
+}
+
+.game-card input {
+    width: 100%;
+    padding: 16px;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.game-card input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(6, 182, 212, 0.05);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.game-card input::placeholder {
+    color: #475569;
+    letter-spacing: 2px;
+    font-size: 1.2rem;
+}
+
+/* "Oyuna Katıl" kartındaki buton neon mavi (diğerinden ayrışsın) */
+.game-card:nth-child(2) .game-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #0b0f19;
+}
+
+.game-card:nth-child(2) .game-btn:not(:disabled):hover {
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+}
+
 /* ---------- Select ---------- */
 .setup-card select {
     width: 100%;
@@ -358,7 +455,135 @@ body {
     opacity: 0.8;
 }
 
+/* ---------- Yorumlar ---------- */
+.comments {
+    margin-top: 40px;
+    padding: 28px;
+    background: rgba(11, 15, 25, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.comments-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: var(--text-main);
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.comments-empty {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 18px 8px;
+}
+
+.comment-item {
+    padding: 14px 16px;
+    background: rgba(30, 41, 59, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 12px;
+}
+
+.comment-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.95rem;
+}
+
+.comment-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.comment-text {
+    color: var(--text-main);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-form .comment-name,
+.comment-form .comment-body {
+    width: 100%;
+    padding: 13px 15px;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.comment-form .comment-body {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.comment-form .comment-name:focus,
+.comment-form .comment-body:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(6, 182, 212, 0.05);
+    box-shadow: 0 0 18px rgba(6, 182, 212, 0.18);
+}
+
+.comment-form .comment-name::placeholder,
+.comment-form .comment-body::placeholder {
+    color: #64748b;
+}
+
+.comment-submit {
+    align-self: flex-end;
+    width: auto;
+    min-width: 190px;
+    padding: 13px 26px;
+}
+
+.comment-status {
+    min-height: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.comment-status.success { color: #34d399; }
+.comment-status.error { color: #f87171; }
+
 /* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    body { padding: 20px 12px; }
+    .game-container { padding: 30px 20px; border-radius: 16px; }
+    .game-header h1 { font-size: 2.5rem; }
+    .game-card { padding: 30px 20px; }
+    .game-card input { font-size: 1.3rem; letter-spacing: 4px; }
+}
+
 @media (max-width: 560px) {
     body { padding: 20px 12px; }
     .game-container { padding: 28px 20px; border-radius: 16px; }
@@ -366,4 +591,6 @@ body {
     .mode-tabs { grid-template-columns: 1fr; }
     .join-row { grid-template-columns: 1fr; }
     .choice-chip { min-width: 0; }
+    .comments { padding: 20px; }
+    .comment-submit { width: 100%; min-width: 0; }
 }

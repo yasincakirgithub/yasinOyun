@@ -134,11 +134,11 @@ def is_hit(ships, row, col):
     return any((row, col) in ship_cells(ship) for ship in ships)
 
 
-def sunk_ship_name(ships, shots, row, col):
-    """Return the name of the ship that became fully sunk by this shot, if any."""
+def sunk_ship(ships, shots, row, col):
+    """Return the ship that became fully sunk by this shot, if any."""
     for ship in ships:
         if (row, col) in ship_cells(ship) and is_sunk(ship, shots):
-            return ship['name']
+            return ship
     return None
 
 

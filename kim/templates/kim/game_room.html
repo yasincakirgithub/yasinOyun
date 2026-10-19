@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kim Bu? - Oda {{ room_code }}</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
     <link rel="stylesheet" href="{% static_v 'kim/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}">
+    {% include 'core/_navbar.html' %}
     {{ characters|json_script:"characters-data" }}
 
     <div class="game-container">

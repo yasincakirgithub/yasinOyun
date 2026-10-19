@@ -275,7 +275,7 @@ class ChessGame {
         this.playerIdentifier = sessionStorage.getItem(storageKey)
             || `guest_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
         sessionStorage.setItem(storageKey, this.playerIdentifier);
-        this.playerName = sessionStorage.getItem('satranc:playerName') || 'Oyuncu';
+        this.playerName = sessionStorage.getItem('satranc:playerName') || '';
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
         const wsUrl = `${wsScheme}://${window.location.host}/satranc/ws/game/${this.roomCode}/`;

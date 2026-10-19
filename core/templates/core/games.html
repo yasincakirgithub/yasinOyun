@@ -1,0 +1,346 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyunlar</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151a28;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #06b6d4;
+            --border-color: #1e293b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            background-image:
+                radial-gradient(circle at top, rgba(30, 27, 75, 0.65) 0%, rgba(11, 15, 25, 0.92) 55%),
+                url('{% static "core/img/background.png" %}');
+            background-size: cover, cover;
+            background-position: center, center;
+            background-repeat: no-repeat, no-repeat;
+            background-attachment: fixed;
+        }
+
+        .wrap {
+            width: min(1000px, 100%);
+            margin: 0 auto;
+        }
+
+        .catalog-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #c7d2fe, #6366f1, #06b6d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .games-search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: min(420px, 100%);
+        }
+
+        .games-search input {
+            flex: 1;
+            min-width: 0;
+            padding: 12px 16px;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text-main);
+            background: rgba(21, 26, 40, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .games-search input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
+        }
+
+        .games-search input::placeholder { color: #64748b; }
+
+        .games-search button {
+            flex: none;
+            padding: 12px 20px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .games-search button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.6);
+        }
+
+        .games-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .games-meta strong { color: var(--text-main); }
+
+        .games-meta a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .games-meta a:hover { text-decoration: underline; }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+        }
+
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 16px 30px -10px rgba(99, 102, 241, 0.35);
+        }
+
+        .game-card-image {
+            display: block;
+            width: calc(100% + 28px);
+            margin: -14px -14px 0;
+            aspect-ratio: 16 / 7;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+            transition: transform 0.35s ease;
+        }
+
+        .game-card:hover .game-card-image { transform: scale(1.05); }
+
+        .tag {
+            align-self: flex-start;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent);
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .game-card h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .game-card p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-muted);
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .play {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            margin-top: 2px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 12.5px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .game-card:hover .play { background: var(--primary-hover); }
+
+        .empty {
+            padding: 48px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            background: rgba(21, 26, 40, 0.7);
+            border: 1px dashed var(--border-color);
+            border-radius: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 28px;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-muted);
+            background: rgba(21, 26, 40, 0.85);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .pagination a:hover {
+            color: #fff;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .pagination .current {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            border-color: transparent;
+            box-shadow: 0 8px 18px -6px rgba(99, 102, 241, 0.7);
+        }
+
+        .pagination .disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 24px 14px; }
+            .catalog-head { align-items: stretch; }
+            .games-search { width: 100%; }
+            .games { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    {% include 'core/_navbar.html' %}
+    <div class="wrap">
+        <div class="catalog-head">
+            <h1 class="page-title">Oyunlar</h1>
+            <form class="games-search" method="get" action="{% url 'core:games' %}">
+                <input type="search" name="q" value="{{ query }}" placeholder="Oyun ara..." aria-label="Oyun ara">
+                <button type="submit">ARA</button>
+            </form>
+        </div>
+
+        <div class="games-meta">
+            <span>
+                {% if query %}
+                    &ldquo;{{ query }}&rdquo; için <strong>{{ total }}</strong> oyun bulundu.
+                {% else %}
+                    Toplam <strong>{{ total }}</strong> oyun
+                {% endif %}
+            </span>
+            {% if query %}<a href="{% url 'core:games' %}">Aramayı temizle</a>{% endif %}
+        </div>
+
+        {% if page_obj.object_list %}
+        <div class="games">
+            {% for game in page_obj %}
+            <a class="game-card" href="{% url game.url_name %}">
+                <img class="game-card-image" src="{% static_v game.image %}" alt="{{ game.title }}" loading="lazy">
+                <span class="tag">{{ game.tag }}</span>
+                <h2>{{ game.title }}</h2>
+                <p>{{ game.description }}</p>
+                <span class="play">Oyuna Başla &rarr;</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.paginator.num_pages > 1 %}
+        <nav class="pagination" aria-label="Sayfalar">
+            {% if page_obj.has_previous %}
+            <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Önceki sayfa">&lsaquo;</a>
+            {% else %}
+            <span class="disabled">&lsaquo;</span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                <span class="current">{{ num }}</span>
+                {% else %}
+                <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}page={{ page_obj.next_page_number }}" aria-label="Sonraki sayfa">&rsaquo;</a>
+            {% else %}
+            <span class="disabled">&rsaquo;</span>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <p class="empty">Aramanla eşleşen oyun bulunamadı.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

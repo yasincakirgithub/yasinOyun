@@ -99,8 +99,6 @@ def create_bot_game(request):
     try:
         data = json.loads(request.body or '{}')
         name = (data.get('name') or '').strip()[:30]
-        if not name:
-            return JsonResponse({'success': False, 'error': 'İsim gerekli.'}, status=400)
 
         try:
             level = int(data.get('level') or bot.DEFAULT_LEVEL)
@@ -179,9 +177,6 @@ def join_room(request):
 
         if not room_code:
             return JsonResponse({'success': False, 'error': 'Oda kodu gerekli.'}, status=400)
-
-        if not name:
-            return JsonResponse({'success': False, 'error': 'İsim gerekli.'}, status=400)
 
         room = GameRoom.objects.filter(room_code=room_code).first()
         if not room:

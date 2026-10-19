@@ -4,6 +4,7 @@ import uuid
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.templatetags.static import static
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -94,10 +95,14 @@ def join_room(request):
 def game_room(request, room_code):
     """Render the battleship game room interface."""
     code = room_code.upper()
+    fleet = [
+        {**ship, 'image': static(f"amiral/img/ship_{ship['size']}_unit.png")}
+        for ship in FLEET
+    ]
     context = {
         'room_code': code,
         'grid_size': GRID_SIZE,
-        'fleet': FLEET,
+        'fleet': fleet,
     }
     return render(request, 'amiral/game_room.html', context)
 

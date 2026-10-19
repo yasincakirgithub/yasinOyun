@@ -6,9 +6,10 @@ class BattleshipGame {
         this.playerIdentifier = null;
         this.ws = null;
 
-        this.gridSize = Number(document.body.dataset.gridSize) || 14;
+        this.gridSize = Number(document.body.dataset.gridSize) || 9;
         this.fleet = [];
-        this.columns = 'ABCDEFGHIJKLMN';
+        this.columns = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.slice(0, this.gridSize);
+        this.shipImgBase = document.body.dataset.shipImgBase || '/static/amiral/img/';
 
         this.orientation = 'h';
         this.selectedShipId = null;
@@ -20,6 +21,7 @@ class BattleshipGame {
         this.myShots = [];
         this.incomingShots = [];
         this.enemyShips = [];
+        this.sunkEnemyShips = [];
 
         this.status = 'WAITING';
         this.currentTurnIdentifier = null;
@@ -52,6 +54,8 @@ class BattleshipGame {
         this.gameArea = document.getElementById('game-area');
         this.ownGrid = document.getElementById('own-grid');
         this.enemyGrid = document.getElementById('enemy-grid');
+        this.ownFleet = document.getElementById('own-fleet');
+        this.enemyFleet = document.getElementById('enemy-fleet');
         this.enemyNote = document.getElementById('enemy-note');
         this.mobileTurn = document.getElementById('mobile-turn');
 
@@ -355,11 +359,13 @@ class BattleshipGame {
     applyState(data) {
         this.status = data.status;
         this.gridSize = data.grid_size || this.gridSize;
+        this.columns = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.slice(0, this.gridSize);
         this.currentTurnIdentifier = data.current_turn_identifier;
         this.winnerIdentifier = data.winner_identifier;
         this.myShots = data.my_shots || [];
         this.incomingShots = data.incoming_shots || [];
         this.enemyShips = data.enemy_ships || [];
+        this.sunkEnemyShips = data.sunk_enemy_ships || [];
 
         if (data.my_ships && data.my_ships.length) {
             this.myShips = data.my_ships;
@@ -441,6 +447,7 @@ class BattleshipGame {
         this.gameArea.classList.add('visible');
         this.renderOwnBoard();
         this.renderEnemyBoard();
+        this.renderFleets();
     }
 
     // ------------------------------------------------------------------
@@ -462,15 +469,11 @@ class BattleshipGame {
             const label = document.createElement('span');
             label.textContent = `${ship.name} (${ship.size})`;
 
-            const dots = document.createElement('span');
-            dots.className = 'ship-dots';
-            for (let i = 0; i < ship.size; i += 1) {
-                const dot = document.createElement('i');
-                dots.appendChild(dot);
-            }
+            const sprite = this.shipSprite(ship, true);
+            sprite.classList.add('ship-thumb');
 
             btn.appendChild(label);
-            btn.appendChild(dots);
+            btn.appendChild(sprite);
             btn.addEventListener('click', () => this.selectShip(ship.id));
             this.shipTray.appendChild(btn);
         });
@@ -765,6 +768,85 @@ class BattleshipGame {
         return sunk;
     }
 
+    shipImage(size) {
+        return `${this.shipImgBase}ship_${size}_unit.png`;
+    }
+
+    shipSprite(ship, useFleetImage) {
+        const sprite = document.createElement('span');
+        sprite.className = 'ship-sprite';
+        sprite.style.setProperty('--units', ship.size);
+
+        const img = document.createElement('img');
+        img.src = (useFleetImage && ship.image) || this.shipImage(ship.size);
+        img.alt = ship.name || '';
+        img.loading = 'lazy';
+        sprite.appendChild(img);
+        return sprite;
+    }
+
+    renderFleets() {
+        this.renderOwnFleet();
+        this.renderEnemyFleet();
+    }
+
+    renderOwnFleet() {
+        if (!this.ownFleet) return;
+        this.ownFleet.innerHTML = '';
+        if (!this.myShips.length) return;
+
+        const sunkIds = this.shipsSunk(this.myShips, this.incomingShots);
+        this.myShips.forEach((ship) => {
+            this.ownFleet.appendChild(this.fleetChip(ship, sunkIds.has(ship.id)));
+        });
+    }
+
+    renderEnemyFleet() {
+        if (!this.enemyFleet) return;
+        this.enemyFleet.innerHTML = '';
+
+        let sunk = this.sunkEnemyShips;
+        if (this.enemyShips.length) {
+            const sunkIds = this.shipsSunk(this.enemyShips, this.myShots);
+            sunk = this.enemyShips.filter((ship) => sunkIds.has(ship.id));
+        }
+
+        if (!sunk.length) {
+            const empty = document.createElement('span');
+            empty.className = 'fleet-empty';
+            empty.textContent = 'Henüz batan gemi yok';
+            this.enemyFleet.appendChild(empty);
+            return;
+        }
+
+        const seen = new Set();
+        sunk.forEach((ship) => {
+            if (seen.has(ship.id)) return;
+            seen.add(ship.id);
+            this.enemyFleet.appendChild(this.fleetChip(ship, true));
+        });
+    }
+
+    fleetChip(ship, sunk) {
+        const chip = document.createElement('div');
+        chip.className = sunk ? 'fleet-chip sunk' : 'fleet-chip';
+
+        const name = document.createElement('span');
+        name.className = 'fleet-name';
+        name.textContent = ship.name;
+
+        chip.appendChild(this.shipSprite(ship, false));
+        chip.appendChild(name);
+
+        if (sunk) {
+            const tag = document.createElement('span');
+            tag.className = 'fleet-tag';
+            tag.textContent = 'BATTI';
+            chip.appendChild(tag);
+        }
+        return chip;
+    }
+
     renderOwnBoard() {
         if (!this.ownGrid) return;
         this.buildBoard(this.ownGrid, null, false);
@@ -860,6 +942,9 @@ class BattleshipGame {
         const entry = { row: data.row, col: data.col, hit: data.hit };
         if (data.shooter_identifier === this.playerIdentifier) {
             this.myShots.push(entry);
+            if (data.sunk_ship) {
+                this.sunkEnemyShips.push(data.sunk_ship);
+            }
             if (data.hit) {
                 const label = data.sunk
                     ? `Vuruş! ${data.sunk} battı.`
@@ -879,6 +964,7 @@ class BattleshipGame {
 
         this.renderOwnBoard();
         this.renderEnemyBoard();
+        this.renderFleets();
 
         // Vuruş / karavana ses efekti.
         this.playEffect(data.hit ? 'hit' : 'miss');
@@ -898,6 +984,7 @@ class BattleshipGame {
         this.enemyShips = data.reveal ? this.extractEnemyShips(data.reveal) : this.enemyShips;
         this.renderOwnBoard();
         this.renderEnemyBoard();
+        this.renderFleets();
         this.showGameOver();
         this.disableBoard();
     }
@@ -922,6 +1009,7 @@ class BattleshipGame {
         this.myShots = [];
         this.incomingShots = [];
         this.enemyShips = [];
+        this.sunkEnemyShips = [];
         this.placementInitialized = false;
 
         this.gameOverEl.classList.add('hidden');

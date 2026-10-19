@@ -969,3 +969,14 @@ button,
 
     .game-over h2 { font-size: 1.8rem; }
 }
+
+/* ---------- Paylaşılan arka plan görseli ---------- */
+body {
+    background-image:
+        linear-gradient(rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.96)),
+        url('/static/core/img/background.png');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: fixed;
+}

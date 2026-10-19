@@ -5,13 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amiral Battı - Oda {{ room_code }}</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
     <link rel="stylesheet" href="{% static_v 'amiral/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}"
       data-grid-size="{{ grid_size }}"
+      data-ship-img-base="{% static 'amiral/img/' %}"
       data-audio-bg="{% static 'amiral/audio/background.mp3' %}"
       data-audio-hit="{% static 'amiral/audio/hit.mp3' %}"
       data-audio-miss="{% static 'amiral/audio/miss.mp3' %}">
+    {% include 'core/_navbar.html' %}
     {{ fleet|json_script:"fleet-data" }}
 
     <div class="game-container">
@@ -89,6 +92,10 @@
                     <div class="board-wrap">
                         <div class="board own-board" id="own-grid" aria-label="Kendi tahtan"></div>
                     </div>
+                    <div class="fleet-section">
+                        <span class="fleet-caption">Filon</span>
+                        <div class="fleet-strip" id="own-fleet"></div>
+                    </div>
                 </div>
 
                 <div class="board-panel enemy-panel">
@@ -98,6 +105,10 @@
                     </div>
                     <div class="board-wrap">
                         <div class="board enemy-board" id="enemy-grid" aria-label="Rakip tahtası"></div>
+                    </div>
+                    <div class="fleet-section">
+                        <span class="fleet-caption">Batan Gemiler</span>
+                        <div class="fleet-strip" id="enemy-fleet"></div>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modeHuman = document.getElementById('mode-human');
     const modeBot = document.getElementById('mode-bot');
     const roomCodeInput = document.getElementById('room-code-input');
-    const nameInput = document.getElementById('player-name-input');
 
     let botColor = 'w';
     let timeControl = 600;
@@ -66,29 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     roomCodeInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') joinGame();
     });
-    if (nameInput) {
-        nameInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') joinGame();
-        });
-        nameInput.addEventListener('input', () => {
-            const card = nameInput.closest('.name-card');
-            if (card) card.classList.remove('invalid');
-        });
-    }
-
-    function getPlayerName() {
-        const value = (nameInput && nameInput.value || '').trim();
-        const card = nameInput && nameInput.closest('.name-card');
-        if (!value) {
-            if (card) card.classList.add('invalid');
-            if (nameInput) nameInput.focus();
-            alert('Lütfen oyuna başlamadan önce adını gir.');
-            return null;
-        }
-        if (card) card.classList.remove('invalid');
-        sessionStorage.setItem('satranc:playerName', value);
-        return value;
-    }
 
     function storePlayer(roomCode, identifier) {
         sessionStorage.setItem(`satranc:player:${roomCode}`, identifier);
@@ -99,9 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createGame() {
-        const playerName = getPlayerName();
-        if (!playerName) return;
-
         createBtn.textContent = 'Oluşturuluyor...';
         createBtn.disabled = true;
 
@@ -120,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return fetch('/satranc/api/join/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ room_code: roomCode, name: playerName }),
+                body: JSON.stringify({ room_code: roomCode }),
             })
             .then((response) => response.json())
             .then((joinData) => {
@@ -140,9 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createBotGame() {
-        const playerName = getPlayerName();
-        if (!playerName) return;
-
         const level = botLevelSelect ? Number(botLevelSelect.value) : 4;
         createBotBtn.textContent = 'Hazırlanıyor...';
         createBotBtn.disabled = true;
@@ -151,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                name: playerName,
                 level,
                 color: botColor,
                 time_control: timeControl,
@@ -181,16 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const playerName = getPlayerName();
-        if (!playerName) return;
-
         joinBtn.textContent = 'Katılınıyor...';
         joinBtn.disabled = true;
 
         fetch('/satranc/api/join/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ room_code: roomCode, name: playerName }),
+            body: JSON.stringify({ room_code: roomCode }),
         })
         .then((response) => response.json())
         .then((data) => {

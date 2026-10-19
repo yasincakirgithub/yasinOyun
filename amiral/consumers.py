@@ -9,9 +9,10 @@ from .models import GRID_SIZE, GamePlayer, GameRoom, Shot
 from .services import (
     all_sunk,
     is_hit,
+    is_sunk,
     normalize_ships,
     remaining_ships,
-    sunk_ship_name,
+    sunk_ship,
 )
 
 logger = logging.getLogger(__name__)
@@ -142,6 +143,7 @@ class GameConsumer(AsyncWebsocketConsumer):
                 'col': col,
                 'hit': result['hit'],
                 'sunk': result['sunk'],
+                'sunk_ship': result['sunk_ship'],
                 'remaining': result['remaining'],
                 'game_over': result['game_over'],
                 'winner_identifier': result['winner_identifier'],
@@ -246,6 +248,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'col': event['col'],
             'hit': event['hit'],
             'sunk': event['sunk'],
+            'sunk_ship': event.get('sunk_ship'),
             'remaining': event['remaining'],
             'game_over': event['game_over'],
             'winner_identifier': event['winner_identifier'],
@@ -377,6 +380,9 @@ class GameConsumer(AsyncWebsocketConsumer):
         if not opponent:
             return {'error': 'Rakip bulunamadı.'}
 
+        if not (0 <= row < GRID_SIZE and 0 <= col < GRID_SIZE):
+            return {'error': 'Hedef tahtanın dışında.'}
+
         if Shot.objects.filter(
             game_room=room, shooter=player, row=row, col=col
         ).exists():
@@ -391,7 +397,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             (s.row, s.col)
             for s in Shot.objects.filter(game_room=room, shooter=player)
         ]
-        sunk = sunk_ship_name(opponent.ships, shots_against_opponent, row, col) if hit else None
+        sunk_ship_obj = sunk_ship(opponent.ships, shots_against_opponent, row, col) if hit else None
         remaining = remaining_ships(opponent.ships, shots_against_opponent)
         game_over = all_sunk(opponent.ships, shots_against_opponent)
 
@@ -417,7 +423,15 @@ class GameConsumer(AsyncWebsocketConsumer):
 
         return {
             'hit': hit,
-            'sunk': sunk,
+            'sunk': sunk_ship_obj['name'] if sunk_ship_obj else None,
+            'sunk_ship': (
+                {
+                    'id': sunk_ship_obj['id'],
+                    'name': sunk_ship_obj['name'],
+                    'size': sunk_ship_obj['size'],
+                }
+                if sunk_ship_obj else None
+            ),
             'remaining': remaining,
             'game_over': game_over,
             'winner_identifier': str(player.player_identifier) if game_over else None,
@@ -487,6 +501,7 @@ class GameConsumer(AsyncWebsocketConsumer):
         my_shots = []
         incoming_shots = []
         enemy_ships = []
+        sunk_enemy_ships = []
 
         if me:
             my_shots = [
@@ -500,6 +515,13 @@ class GameConsumer(AsyncWebsocketConsumer):
             ]
             if finished:
                 enemy_ships = list(opponent.ships)
+            if me:
+                shot_cells = [(s['row'], s['col']) for s in my_shots]
+                sunk_enemy_ships = [
+                    {'id': ship['id'], 'name': ship['name'], 'size': ship['size']}
+                    for ship in opponent.ships
+                    if is_sunk(ship, shot_cells)
+                ]
 
         return {
             'type': 'game_state',
@@ -524,4 +546,5 @@ class GameConsumer(AsyncWebsocketConsumer):
             'my_shots': my_shots,
             'incoming_shots': incoming_shots,
             'enemy_ships': enemy_ships,
+            'sunk_enemy_ships': sunk_enemy_ships,
         }

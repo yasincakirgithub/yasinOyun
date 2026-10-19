@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satranç - Oda {{ room_code }}</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
     <link rel="stylesheet" href="{% static_v 'satranc/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}"
@@ -12,6 +13,7 @@
       data-audio-capture="{% static 'satranc/audio/capture.mp3' %}"
       data-audio-check="{% static 'satranc/audio/check.mp3' %}"
       data-audio-rook="{% static 'satranc/audio/rook.mp3' %}">
+    {% include 'core/_navbar.html' %}
     <div class="game-container">
         <div class="game-header">
             <h1>Satranç</h1>

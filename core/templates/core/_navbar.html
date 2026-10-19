@@ -1,0 +1,195 @@
+{% load static static_version %}
+<nav class="site-nav">
+    <style>
+        body { padding-top: 92px !important; }
+        .site-nav {
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1020px, calc(100% - 24px));
+            z-index: 1000;
+            background: rgba(13, 18, 32, 0.72);
+            -webkit-backdrop-filter: blur(18px) saturate(150%);
+            backdrop-filter: blur(18px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 18px;
+            box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .site-nav::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(120deg, rgba(99, 102, 241, 0.55), rgba(6, 182, 212, 0.4), transparent 60%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        .site-nav.scrolled {
+            background: rgba(13, 18, 32, 0.88);
+            box-shadow: 0 24px 55px -18px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        }
+        .site-nav-inner {
+            position: relative;
+            height: 60px;
+            padding: 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .site-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            flex: none;
+            padding: 5px 12px 5px 5px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+        .site-nav-brand:hover { background: rgba(255, 255, 255, 0.05); }
+        .site-nav-logo {
+            width: 36px;
+            height: 36px;
+            flex: none;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #6366f1, #06b6d4);
+            box-shadow: 0 6px 16px -4px rgba(99, 102, 241, 0.75);
+        }
+        .site-nav-logo img {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            display: block;
+        }
+        .site-nav-brand .site-nav-name {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            background: linear-gradient(135deg, #f8fafc, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .site-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+            flex-wrap: nowrap;
+        }
+        .site-nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 9px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+            transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .site-nav-links a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.07);
+        }
+        .site-nav-links a.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(79, 70, 229, 0.95));
+            box-shadow: 0 6px 18px -6px rgba(99, 102, 241, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .site-nav-toggle { display: none; }
+        .site-nav-toggle-btn {
+            display: none;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            flex: none;
+            margin-left: auto;
+            border-radius: 12px;
+            color: #f8fafc;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        @media (max-width: 900px) {
+            body { padding-top: 84px !important; }
+            .site-nav { top: 10px; width: calc(100% - 20px); }
+            .site-nav-inner { height: 54px; padding: 0 10px; }
+            .site-nav-toggle-btn { display: grid; }
+            .site-nav-links {
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                margin: 0;
+                padding: 8px;
+                background: rgba(13, 18, 32, 0.96);
+                border: 1px solid rgba(255, 255, 255, 0.09);
+                border-radius: 16px;
+                box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.9);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px) scale(0.98);
+                transform-origin: top center;
+                transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            }
+            .site-nav-links a {
+                padding: 12px 14px;
+                font-size: 15px;
+                border-radius: 10px;
+            }
+            .site-nav-toggle:checked ~ .site-nav-links {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+    <div class="site-nav-inner">
+        <a class="site-nav-brand" href="{% url 'core:home' %}">
+            <span class="site-nav-logo">
+                <img src="{% static_v 'core/img/favicon.png' %}" alt="">
+            </span>
+            <span class="site-nav-name">Oyun Dünyası</span>
+        </a>
+        <input type="checkbox" id="site-nav-toggle" class="site-nav-toggle" hidden>
+        <label for="site-nav-toggle" class="site-nav-toggle-btn" aria-label="Menü">&#9776;</label>
+        <div class="site-nav-links">
+            <a href="{% url 'core:home' %}">Anasayfa</a>
+            <a href="{% url 'core:games' %}">Oyunlar</a>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var nav = document.querySelector('.site-nav');
+            if (!nav) return;
+            var path = window.location.pathname;
+            nav.querySelectorAll('.site-nav-links a').forEach(function (link) {
+                var href = link.getAttribute('href') || '';
+                if (!href || href.indexOf('#') !== -1) return;
+                var isActive = href === '/' ? path === '/' : path.indexOf(href) === 0;
+                link.classList.toggle('active', isActive);
+            });
+            var update = function () {
+                nav.classList.toggle('scrolled', window.scrollY > 8);
+            };
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+        })();
+    </script>
+</nav>

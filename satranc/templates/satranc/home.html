@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satranç - Online İki Kişilik</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
     <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
 </head>
 <body>
-    <div class="game-container">
+    {% include 'core/_navbar.html' %}
+    <div class="game-container narrow">
+        <img class="site-banner" src="{% static_v 'core/img/banner.png' %}"
+             alt="Yasincakir.com.tr — Oyun ve Eğlence Dünyası">
         <div class="game-header">
             <h1>Satranç</h1>
             <p>Rakibinle ya da Stockfish botuna karşı oyna. Modu, taş rengini ve süreyi sen seç.</p>
-        </div>
-
-        <div class="name-card">
-            <label for="player-name-input">Oyuncu Adı</label>
-            <input type="text" id="player-name-input" maxlength="20" placeholder="Adın" autocomplete="off">
         </div>
 
         <div class="setup-card">
@@ -72,6 +71,8 @@
                 <button id="create-bot-btn" class="game-btn" type="button">BOTA KARŞI OYNA</button>
             </div>
         </div>
+
+        {% include 'core/_comments.html' with comments_game='satranc' %}
 
         <div class="footer">
             <p>&copy; 2026 Satranç — İki kişilik strateji oyunu</p>

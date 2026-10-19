@@ -2,21 +2,18 @@ import uuid
 
 from django.db import models
 
-# Board is square: 14x14. Columns are labelled A-N, rows 1-14 in the UI.
-GRID_SIZE = 14
+# Board is square: 9x9. Columns are labelled A-I, rows 1-9 in the UI.
+GRID_SIZE = 9
 
-# Fleet used by both players. Total = 24 occupied cells out of 196.
+# Fleet used by both players. Total = 18 occupied cells out of 81.
 FLEET = [
     {'id': 'amiral', 'name': 'Amiral', 'size': 5},
     {'id': 'kruvazor', 'name': 'Kruvazör', 'size': 4},
-    {'id': 'denizalti1', 'name': 'Denizaltı 1', 'size': 3},
-    {'id': 'denizalti2', 'name': 'Denizaltı 2', 'size': 3},
+    {'id': 'denizalti', 'name': 'Denizaltı', 'size': 3},
     {'id': 'hucumbot1', 'name': 'Hücumbot 1', 'size': 2},
     {'id': 'hucumbot2', 'name': 'Hücumbot 2', 'size': 2},
-    {'id': 'hucumbot3', 'name': 'Hücumbot 3', 'size': 2},
     {'id': 'kesif1', 'name': 'Keşif 1', 'size': 1},
     {'id': 'kesif2', 'name': 'Keşif 2', 'size': 1},
-    {'id': 'kesif3', 'name': 'Keşif 3', 'size': 1},
 ]
 
 
