@@ -177,6 +177,21 @@ body {
     padding: 5px 10px;
 }
 
+.ghost-btn.danger:hover {
+    color: #fff;
+    background: rgba(239, 68, 68, 0.85);
+    border-color: rgba(239, 68, 68, 0.9);
+}
+
+.game-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.game-actions .ghost-btn {
+    flex: 1;
+}
+
 /* ---------- Giriş / Lobi (Home) ---------- */
 .home-content {
     display: grid;
@@ -286,6 +301,44 @@ body {
     border-color: rgba(16, 185, 129, 0.4);
 }
 
+.player-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.clock {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text-main);
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border-subtle);
+    transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.clock.running {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.45);
+    color: #93c5fd;
+}
+
+.clock.low {
+    color: #fecaca;
+    background: rgba(239, 68, 68, 0.22);
+    border-color: rgba(239, 68, 68, 0.6);
+    animation: clock-pulse 1s ease-in-out infinite;
+}
+
+@keyframes clock-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
 /* ---------- Satranç Tahtası ---------- */
 .board-wrap {
     position: relative;
@@ -375,6 +428,23 @@ body {
 
 .square.last-move {
     background-color: var(--highlight-move) !important;
+}
+
+.square.premove {
+    box-shadow: inset 0 0 0 3px rgba(192, 132, 252, 0.9);
+}
+
+.square.premove-to::after {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    border: 3px solid rgba(192, 132, 252, 0.9);
+    pointer-events: none;
+}
+
+.square.premove .piece {
+    opacity: 0.85;
 }
 
 .square.in-check {
@@ -502,35 +572,16 @@ body {
     50% { transform: scale(1.05); }
 }
 
-.commentary {
-    position: relative;
-    padding: 12px 14px 12px 38px;
-    border-radius: 10px;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid var(--accent-blue-glow);
-    color: var(--text-main);
-    font-size: 0.95rem;
-    line-height: 1.4;
-    animation: commentary-in 0.25s ease;
-}
-
-.commentary::before {
-    content: '🎙️';
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.1rem;
-}
-
-.commentary.speaking {
-    border-color: var(--accent-green);
-    box-shadow: 0 0 18px rgba(16, 185, 129, 0.25);
-}
-
-@keyframes commentary-in {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
+.premove-indicator {
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: #d8b4fe;
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.45);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .move-list {
@@ -563,7 +614,238 @@ body {
 .move-list .san {
     min-width: 56px;
     color: var(--text-main);
+    border-radius: 4px;
+    padding: 1px 4px;
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
 }
+
+.move-list .san:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.move-list .san.empty {
+    cursor: default;
+    color: transparent;
+}
+
+.move-list .san.active {
+    background: rgba(59, 130, 246, 0.35);
+    color: #fff;
+}
+
+/* Hamle sınıflandırma renkleri */
+.move-list .san.grade-excellent { color: #34d399; }
+.move-list .san.grade-best { color: #34d399; font-weight: 700; }
+.move-list .san.grade-good { color: #a3e635; }
+.move-list .san.grade-inaccuracy { color: #fbbf24; }
+.move-list .san.grade-mistake { color: #fb923c; }
+.move-list .san.grade-blunder { color: #f87171; font-weight: 700; }
+.move-list .san.active.grade-blunder,
+.move-list .san.active.grade-mistake { color: #fff; }
+
+.move-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.move-header h3 {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.move-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-btn {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 34px;
+    font-size: 1rem;
+    color: var(--text-main);
+    background: var(--bg-surface-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #262e3d;
+    border-color: var(--border-bright);
+}
+
+.nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.nav-position {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+.nav-position.live {
+    color: #34d399;
+}
+
+/* ---------- Oyun incelemesi ---------- */
+.review-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-subtle);
+}
+
+.review-loading {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    padding: 8px 0;
+}
+
+/* Değerlendirme çubuğu (eval bar) */
+.eval-bar {
+    position: relative;
+    height: 18px;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #1f2937;
+    border: 1px solid var(--border-subtle);
+}
+
+.eval-bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background: #e5e7eb;
+    transition: width 0.25s ease;
+}
+
+.eval-bar-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #111827;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.6);
+}
+
+.eval-bar-text.black-adv {
+    color: #e5e7eb;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+}
+
+.review-accuracy {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.review-side {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.acc-value {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.acc-value.w { color: #e5e7eb; }
+.acc-value.b { color: #94a3b8; }
+
+.review-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.grade-chip {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 1px 7px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+}
+
+.grade-chip.grade-excellent { color: #34d399; }
+.grade-chip.grade-good { color: #a3e635; }
+.grade-chip.grade-inaccuracy { color: #fbbf24; }
+.grade-chip.grade-mistake { color: #fb923c; }
+.grade-chip.grade-blunder { color: #f87171; }
+
+.review-depth {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-align: right;
+}
+
+.review-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 10px;
+}
+
+.review-move-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.review-line strong {
+    color: var(--text-main);
+    font-family: var(--font-mono);
+}
+
+.review-line.muted {
+    color: var(--text-dim);
+}
+
+.grade-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+}
+
+.grade-badge.grade-excellent,
+.grade-badge.grade-best { color: #34d399; }
+.grade-badge.grade-good { color: #a3e635; }
+.grade-badge.grade-inaccuracy { color: #fbbf24; }
+.grade-badge.grade-mistake { color: #fb923c; }
+.grade-badge.grade-blunder { color: #f87171; }
+.grade-badge.grade-unknown { color: var(--text-dim); }
 
 .hint {
     font-size: 0.8rem;

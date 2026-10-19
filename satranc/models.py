@@ -2,6 +2,7 @@ import uuid
 
 import chess
 from django.db import models
+from django.utils import timezone
 
 
 def initial_fen():
@@ -31,10 +32,41 @@ class GameRoom(models.Model):
     )
     # PGN-style result: '1-0', '0-1' or '1/2-1/2'.
     result = models.CharField(max_length=10, blank=True, default='')
+    # Bot (Stockfish API) game settings. ``bot_color`` is the color the engine
+    # plays, ``bot_level`` is the 1-8 difficulty level.
+    is_bot_game = models.BooleanField(default=False)
+    bot_level = models.PositiveSmallIntegerField(null=True, blank=True)
+    bot_color = models.CharField(max_length=1, blank=True, default='')
+    # Clock. ``time_control`` is the seconds each side starts with (0 = sınırsız),
+    # ``increment`` is the Fischer bonus (seconds) added after every move.
+    # ``*_time_left`` are the stored remaining seconds and ``turn_started_at`` is
+    # when the side to move started their clock (None while paused).
+    time_control = models.PositiveIntegerField(default=0)
+    increment = models.PositiveIntegerField(default=0)
+    white_time_left = models.FloatField(default=0)
+    black_time_left = models.FloatField(default=0)
+    turn_started_at = models.DateTimeField(null=True, blank=True)
+    # Bekleyen beraberlik teklifini yapan oyuncunun kimliği ('' = teklif yok).
+    draw_offer_by = models.CharField(max_length=100, blank=True, default='')
+    # Oyunun nasıl bittiği: checkmate, stalemate, insufficient, repetition,
+    # fifty, timeout, resign, agreement, abandon ('' = devam ediyor).
+    termination = models.CharField(max_length=20, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     started_at = models.DateTimeField(null=True, blank=True)
     finished_at = models.DateTimeField(null=True, blank=True)
+
+    def begin_clock(self, now=None):
+        """Initialize/restart both clocks and start the side to move."""
+        now = now or timezone.now()
+        if self.time_control:
+            self.white_time_left = float(self.time_control)
+            self.black_time_left = float(self.time_control)
+            self.turn_started_at = now
+        else:
+            self.white_time_left = 0.0
+            self.black_time_left = 0.0
+            self.turn_started_at = None
 
     def __str__(self):
         return f"Room {self.room_code}"

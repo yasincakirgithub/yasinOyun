@@ -7,9 +7,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /code
 
 # Install system dependencies
+# stockfish: yerel satranç motoru (bot hamleleri ve inceleme için; ağ gerekmez).
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     libpq-dev \
+    stockfish \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies

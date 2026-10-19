@@ -22,8 +22,11 @@
         <div class="game-layout">
             <div class="board-column">
                 <div class="player-bar top" id="opponent-bar">
-                    <span class="player-name" id="opponent-name">RAKİP</span>
-                    <span class="player-status" id="opponent-status">Bağlanıyor...</span>
+                    <div class="player-meta">
+                        <span class="player-name" id="opponent-name">RAKİP</span>
+                        <span class="player-status" id="opponent-status">Bağlanıyor...</span>
+                    </div>
+                    <span class="clock hidden" id="opponent-clock">10:00</span>
                 </div>
 
                 <div class="board-wrap">
@@ -35,22 +38,52 @@
                 </div>
 
                 <div class="player-bar bottom" id="self-bar">
-                    <span class="player-name" id="self-name">SEN</span>
-                    <span class="player-status" id="self-status">Bağlanıyor...</span>
+                    <div class="player-meta">
+                        <span class="player-name" id="self-name">SEN</span>
+                        <span class="player-status" id="self-status">Bağlanıyor...</span>
+                    </div>
+                    <span class="clock hidden" id="self-clock">10:00</span>
                 </div>
             </div>
 
             <aside class="side-panel">
                 <div id="turn-indicator" class="turn-indicator waiting">Rakip bekleniyor...</div>
                 <div id="check-indicator" class="check-indicator hidden">ŞAH!</div>
-                <div id="commentary" class="commentary hidden" aria-live="polite"></div>
+                <div id="premove-indicator" class="premove-indicator hidden">ÖN HAMLE HAZIR</div>
 
-                <h3>Hamleler</h3>
+                <div class="game-actions" id="game-actions">
+                    <button id="draw-btn" class="ghost-btn small" type="button">BERABERLİK</button>
+                    <button id="resign-btn" class="ghost-btn small danger" type="button">PES ET</button>
+                </div>
+
+                <div class="move-header">
+                    <h3>Hamleler</h3>
+                    <button id="review-btn" class="ghost-btn small" type="button">OYUN İNCELEMESİ</button>
+                </div>
+
+                <div class="move-nav">
+                    <button id="nav-first" class="nav-btn" type="button" title="Başa dön">&#8676;</button>
+                    <button id="nav-prev" class="nav-btn" type="button" title="Geri">&#8592;</button>
+                    <span id="nav-position" class="nav-position">Canlı</span>
+                    <button id="nav-next" class="nav-btn" type="button" title="İleri">&#8594;</button>
+                    <button id="nav-last" class="nav-btn" type="button" title="Sona git">&#8677;</button>
+                </div>
+
                 <ol id="move-list" class="move-list"></ol>
+
+                <div id="review-panel" class="review-panel hidden">
+                    <div class="review-loading" id="review-loading">Stockfish oyunu inceliyor...</div>
+                    <div id="eval-bar" class="eval-bar hidden">
+                        <div class="eval-bar-fill" id="eval-bar-fill"></div>
+                        <span class="eval-bar-text" id="eval-bar-text">0.00</span>
+                    </div>
+                    <div class="review-summary hidden" id="review-summary"></div>
+                    <div class="review-detail hidden" id="review-detail"></div>
+                </div>
 
                 <button id="play-again-btn" class="primary hidden" type="button">YENİDEN OYNA</button>
 
-                <p class="hint">Taşı sürükleyip bırakarak ya da önce taşa sonra hedef kareye tıklayarak oyna. Terfi için çıkan seçeneklerden birini seç.</p>
+                <p class="hint">Taşı sürükleyip bırakarak ya da önce taşa sonra hedef kareye tıklayarak oyna. Sıra rakipteyken taşına ve hedefe tıklayarak <strong>ön hamle</strong> hazırlayabilirsin; sıra sana gelince otomatik oynanır. &#8592; / &#8594; tuşlarıyla hamle geçmişinde gezinebilir, hamle listesine tıklayarak pozisyonları inceleyebilirsin.</p>
             </aside>
         </div>
     </div>
@@ -64,6 +97,17 @@
                 <button type="button" data-piece="r">&#9820;</button>
                 <button type="button" data-piece="b">&#9821;</button>
                 <button type="button" data-piece="n">&#9822;</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="draw-offer" class="modal-overlay hidden">
+        <div class="modal">
+            <h3>Beraberlik Teklifi</h3>
+            <p id="draw-offer-text">Rakibin beraberlik teklif ediyor. Kabul ediyor musun?</p>
+            <div class="modal-actions">
+                <button id="draw-decline-btn" class="ghost-btn" type="button">REDDET</button>
+                <button id="draw-accept-btn" class="primary" type="button">KABUL ET</button>
             </div>
         </div>
     </div>

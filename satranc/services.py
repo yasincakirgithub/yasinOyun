@@ -23,6 +23,41 @@ def is_check(fen):
     return board.is_check()
 
 
+def automatic_draw_reason(initial_fen_value, ucis):
+    """Üç tekrar ya da 50 hamle kuralı gereği otomatik beraberlik var mı?
+
+    Hamle geçmişi yeniden oynanarak kontrol edilir. Döner: ``'repetition'``,
+    ``'fifty'`` ya da ``None``.
+    """
+    board = chess.Board(initial_fen_value or chess.STARTING_FEN)
+    for uci in ucis:
+        try:
+            board.push(chess.Move.from_uci(uci))
+        except ValueError:
+            return None
+    if board.is_repetition(3):
+        return 'repetition'
+    if board.is_fifty_moves():
+        return 'fifty'
+    return None
+
+
+OUTCOME_TERMINATIONS = {
+    'CHECKMATE': 'checkmate',
+    'STALEMATE': 'stalemate',
+    'INSUFFICIENT_MATERIAL': 'insufficient',
+    'SEVENTYFIVE_MOVES': 'fifty',
+    'FIVEFOLD_REPETITION': 'repetition',
+}
+
+
+def outcome_termination(outcome):
+    """``chess.Outcome`` nesnesini kısa bir neden koduna çevirir."""
+    if outcome is None:
+        return None
+    return OUTCOME_TERMINATIONS.get(outcome.termination.name, outcome.termination.name.lower())
+
+
 def apply_move(fen, uci):
     """
     Validate and apply a move in UCI notation (e.g. ``e2e4`` or ``e7e8q``).
@@ -54,6 +89,6 @@ def apply_move(fen, uci):
         'check': board.is_check(),
         'game_over': outcome is not None,
         'result': outcome.result() if outcome else None,
-        'termination': outcome.termination.name if outcome else None,
+        'termination': outcome_termination(outcome),
         'winner_color': winner_color,
     }

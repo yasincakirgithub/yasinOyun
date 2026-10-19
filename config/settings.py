@@ -216,7 +216,7 @@ if SECURE_SSL_REDIRECT:
 
 
 # ---------------------------------------------------------------------------
-# Satranç sesli AI (chess-api.com Stockfish analizi + ElevenLabs TTS)
+# Satranç (chess-api.com Stockfish analizi)
 # ---------------------------------------------------------------------------
 # Ücretsiz uzak Stockfish servisi; yerel engine kurulumu gerekmez.
 SATRANC_STOCKFISH_API_URL = os.environ.get(
@@ -227,31 +227,22 @@ SATRANC_STOCKFISH_DEPTH = int(os.environ.get('SATRANC_STOCKFISH_DEPTH', '12'))
 SATRANC_STOCKFISH_THINKING_TIME = int(
     os.environ.get('SATRANC_STOCKFISH_THINKING_TIME', '50')
 )
-
-SATRANC_AI_COMMENTARY_ENABLED = (
-    os.environ.get('SATRANC_AI_COMMENTARY_ENABLED', 'true').lower() == 'true'
+# Yerel Stockfish: varsa uzak API yerine kullanılır (ağ gecikmesi olmadan hızlı
+# bot hamleleri). Engine yolu verilmezse PATH ve bilinen konumlar denenir.
+SATRANC_LOCAL_ENGINE = (
+    os.environ.get('SATRANC_LOCAL_ENGINE', 'true').lower() == 'true'
 )
-SATRANC_AI_COOLDOWN = float(os.environ.get('SATRANC_AI_COOLDOWN', '7'))
-SATRANC_AI_EVENT_COOLDOWN = float(os.environ.get('SATRANC_AI_EVENT_COOLDOWN', '20'))
+SATRANC_STOCKFISH_PATH = os.environ.get('SATRANC_STOCKFISH_PATH', '')
 
-# ElevenLabs TTS (API anahtarı ortam değişkeninden).
-ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY', '')
-ELEVENLABS_VOICE_ID = os.environ.get('ELEVENLABS_VOICE_ID', '21m00Tcm4TlvDq8ikWAM')
-# Hızlı ve Türkçe destekli modeller: eleven_flash_v2_5 / eleven_turbo_v2_5.
-ELEVENLABS_MODEL_ID = os.environ.get('ELEVENLABS_MODEL_ID', 'eleven_flash_v2_5')
-ELEVENLABS_OUTPUT_FORMAT = os.environ.get('ELEVENLABS_OUTPUT_FORMAT', 'pcm_24000')
-# Konuşma hızı (0.7 - 1.2). Daha yavaş ve anlaşılır bir ton için düşürüldü.
-ELEVENLABS_SPEED = float(os.environ.get('ELEVENLABS_SPEED', '0.9'))
-ELEVENLABS_BASE_URL = os.environ.get('ELEVENLABS_BASE_URL', 'https://api.elevenlabs.io/v1')
-
-# PCM örnekleme hızını çıktı formatından türet (ör. pcm_24000 -> 24000).
-try:
-    _tts_sample_rate = int(ELEVENLABS_OUTPUT_FORMAT.split('_')[-1])
-except (ValueError, IndexError):
-    _tts_sample_rate = 24000
-SATRANC_TTS_SAMPLE_RATE = int(
-    os.environ.get('SATRANC_TTS_SAMPLE_RATE', str(_tts_sample_rate))
+# Oyun incelemesi (hamle bazlı Stockfish değerlendirmesi).
+SATRANC_REVIEW_ENABLED = (
+    os.environ.get('SATRANC_REVIEW_ENABLED', 'true').lower() == 'true'
 )
+SATRANC_REVIEW_DEPTH = int(os.environ.get('SATRANC_REVIEW_DEPTH', '10'))
+SATRANC_REVIEW_THINKING_TIME = int(
+    os.environ.get('SATRANC_REVIEW_THINKING_TIME', '50')
+)
+SATRANC_REVIEW_WORKERS = int(os.environ.get('SATRANC_REVIEW_WORKERS', '2'))
 
 
 # ---------------------------------------------------------------------------

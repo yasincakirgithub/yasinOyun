@@ -9,17 +9,17 @@
     --bg-main: #0b0f19;
     --bg-card: #151a28;
     --bg-input: #1e293b;
-    
+
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    
+
     --border-color: #334155;
-    
+
     --primary: #6366f1; /* İndigo / Mor */
     --primary-hover: #4f46e5;
     --accent: #06b6d4; /* Neon Mavi (Cyan) */
     --accent-hover: #0891b2;
-    
+
     --font-ui: 'Poppins', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 }
@@ -38,8 +38,7 @@ body {
     min-height: 100vh;
     padding: 40px 16px;
     background-color: var(--bg-main);
-    /* Oyuncu hissiyatı veren hafif ızgara (grid) arka planı */
-    background-image: 
+    background-image:
         linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
     background-size: 30px 30px;
@@ -51,8 +50,8 @@ body {
 
 .game-container {
     width: 100%;
-    max-width: 900px;
-    padding: 50px;
+    max-width: 620px;
+    padding: 44px;
     background: rgba(21, 26, 40, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
@@ -63,11 +62,11 @@ body {
 /* ---------- Header ---------- */
 .game-header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .game-header h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
     font-weight: 700;
     letter-spacing: -1px;
     background: linear-gradient(135deg, #c7d2fe, #6366f1, #06b6d4);
@@ -79,172 +78,30 @@ body {
 
 .game-header p {
     color: var(--text-muted);
-    font-size: 1.15rem;
-    max-width: 600px;
+    font-size: 1.05rem;
+    max-width: 480px;
     margin: 0 auto;
-}
-
-.room-code {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 15px;
-    padding: 8px 20px;
-    font-family: var(--font-mono);
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    color: var(--accent);
-    background: rgba(6, 182, 212, 0.1);
-    border: 1px solid rgba(6, 182, 212, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
-}
-
-/* ---------- Home cards (Oyun Kur / Katıl Kartları) ---------- */
-.home-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.game-card {
-    padding: 40px 30px;
-    background: rgba(11, 15, 25, 0.6);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-align: center;
-}
-
-.game-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--primary);
-    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15), inset 0 0 20px rgba(99, 102, 241, 0.05);
-}
-
-.game-card h2 {
-    font-size: 2rem;
-    color: var(--text-main);
-    font-weight: 600;
-}
-
-.game-card p {
-    color: var(--text-muted);
-    font-size: 1rem;
-    flex-grow: 1;
-}
-
-/* ---------- Input Field (Oda Kodu Girişi) ---------- */
-.game-card input {
-    width: 100%;
-    padding: 16px;
-    font-family: var(--font-mono);
-    font-size: 1.5rem;
-    letter-spacing: 8px;
-    text-align: center;
-    text-transform: uppercase;
-    color: var(--text-main);
-    background: var(--bg-input);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-
-.game-card input:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: rgba(6, 182, 212, 0.05);
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
-}
-
-.game-card input::placeholder {
-    color: #475569;
-    letter-spacing: 2px;
-    font-size: 1.2rem;
-}
-
-/* ---------- Buttons ---------- */
-.game-btn, 
-.primary {
-    width: 100%;
-    padding: 16px 24px;
-    font-family: var(--font-ui);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.game-btn:not(:disabled):hover, 
-.primary:not(:disabled):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-}
-
-.game-btn:not(:disabled):active, 
-.primary:not(:disabled):active {
-    transform: translateY(1px);
-    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-}
-
-.game-btn:disabled, 
-.primary:disabled {
-    background: #334155;
-    color: #94a3b8;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* "Oyuna Katıl" kartındaki butonu Neon Mavi yaparak diğerinden ayırdık */
-.game-card:nth-child(2) .game-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-    color: #0b0f19; /* Açık renk arka planda okunabilirlik için koyu yazı */
-}
-
-.game-card:nth-child(2) .game-btn:not(:disabled):hover {
-    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
 }
 
 /* ---------- Oyuncu Adı ---------- */
 .name-card {
-    padding: 30px;
-    margin-bottom: 30px;
-    background: rgba(11, 15, 25, 0.6);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    text-align: center;
+    gap: 10px;
+    margin-bottom: 22px;
 }
 
-.name-card h2 {
-    font-size: 1.6rem;
-    color: var(--text-main);
+.name-card label {
+    font-size: 0.9rem;
     font-weight: 600;
-}
-
-.name-card p {
     color: var(--text-muted);
-    font-size: 0.95rem;
 }
 
 .name-card input {
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    padding: 16px;
+    padding: 15px 18px;
     font-family: var(--font-ui);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-align: center;
     color: var(--text-main);
     background: var(--bg-input);
@@ -269,20 +126,244 @@ body {
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
 }
 
+/* ---------- Kurulum Kartı ---------- */
+.setup-card {
+    padding: 24px;
+    background: rgba(11, 15, 25, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 6px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.mode-tab {
+    padding: 12px 10px;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mode-tab:hover {
+    color: var(--text-main);
+}
+
+.mode-tab.selected {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+.setup-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setup-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.choice-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.choice-chip {
+    flex: 1 1 0;
+    min-width: 84px;
+    padding: 11px 12px;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.choice-chip:hover {
+    border-color: var(--primary);
+    color: var(--text-main);
+}
+
+.choice-chip.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(6, 182, 212, 0.1);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+}
+
+.mode-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mode-panel.hidden {
+    display: none;
+}
+
+/* ---------- Select ---------- */
+.setup-card select {
+    width: 100%;
+    padding: 13px 14px;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.setup-card select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+/* ---------- Katıl satırı ---------- */
+.join-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+}
+
+.join-row input {
+    width: 100%;
+    padding: 14px;
+    font-family: var(--font-mono);
+    font-size: 1.3rem;
+    letter-spacing: 6px;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.join-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(6, 182, 212, 0.05);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+}
+
+.join-row input::placeholder {
+    color: #475569;
+    letter-spacing: 2px;
+    font-size: 1.05rem;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+/* ---------- Buttons ---------- */
+.game-btn,
+.primary {
+    width: 100%;
+    padding: 15px 24px;
+    font-family: var(--font-ui);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.game-btn:not(:disabled):hover,
+.primary:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+.game-btn:not(:disabled):active,
+.primary:not(:disabled):active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+
+.game-btn:disabled,
+.primary:disabled {
+    background: #334155;
+    color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.game-btn.accent {
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: #0b0f19;
+}
+
+.game-btn.accent:not(:disabled):hover {
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+}
+
+.join-row .game-btn {
+    width: auto;
+    white-space: nowrap;
+}
+
 /* ---------- Footer ---------- */
 .footer {
-    margin-top: 40px;
+    margin-top: 32px;
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     opacity: 0.8;
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 768px) {
+@media (max-width: 560px) {
     body { padding: 20px 12px; }
-    .game-container { padding: 30px 20px; border-radius: 16px; }
-    .game-header h1 { font-size: 2.5rem; }
-    .game-card { padding: 30px 20px; }
-    .game-card input { font-size: 1.3rem; letter-spacing: 4px; }
+    .game-container { padding: 28px 20px; border-radius: 16px; }
+    .game-header h1 { font-size: 2.4rem; }
+    .mode-tabs { grid-template-columns: 1fr; }
+    .join-row { grid-template-columns: 1fr; }
+    .choice-chip { min-width: 0; }
 }
