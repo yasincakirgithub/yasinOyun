@@ -12,6 +12,17 @@ const CLASSIFICATION_LABELS = {
     unknown: 'Bilinmiyor',
 };
 
+// Chess.com tarzı hamle kalitesi simgeleri.
+const CLASSIFICATION_ICONS = {
+    best: '★',
+    excellent: '!',
+    good: '✓',
+    inaccuracy: '?!',
+    mistake: '?',
+    blunder: '??',
+    unknown: '·',
+};
+
 const TERMINATION_LABELS = {
     checkmate: 'Mat',
     stalemate: 'Pat',
@@ -122,6 +133,7 @@ class ChessGame {
         this.gameActions = document.getElementById('game-actions');
         this.drawBtn = document.getElementById('draw-btn');
         this.resignBtn = document.getElementById('resign-btn');
+        this.giveTimeBtn = document.getElementById('give-time-btn');
         this.drawOfferModal = document.getElementById('draw-offer');
         this.drawOfferText = document.getElementById('draw-offer-text');
         this.drawAcceptBtn = document.getElementById('draw-accept-btn');
@@ -243,6 +255,9 @@ class ChessGame {
         if (this.resignBtn) {
             this.resignBtn.addEventListener('click', () => this.resignGame());
         }
+        if (this.giveTimeBtn) {
+            this.giveTimeBtn.addEventListener('click', () => this.giveTime());
+        }
         if (this.drawBtn) {
             this.drawBtn.addEventListener('click', () => this.offerDraw());
         }
@@ -343,6 +358,13 @@ class ChessGame {
                     this.showToast('Beraberlik teklifi reddedildi.', true);
                 } else {
                     this.showToast('Beraberlik teklifini reddettin.');
+                }
+                break;
+            case 'time_given':
+                if (data.by !== this.playerIdentifier) {
+                    this.showToast(`Rakibin sana ${data.seconds} saniye verdi.`);
+                } else {
+                    this.showToast(`Rakibine ${data.seconds} saniye verdin.`);
                 }
                 break;
             case 'error':
@@ -488,6 +510,12 @@ class ChessGame {
             this.drawBtn.textContent = offerMine ? 'TEKLİF GÖNDERİLDİ' : 'BERABERLİK';
         }
 
+        const canGiveTime = active && this.timeControl > 0 && !this.isBotGame;
+        if (this.giveTimeBtn) {
+            this.giveTimeBtn.classList.toggle('hidden', !canGiveTime);
+            this.giveTimeBtn.disabled = !canGiveTime;
+        }
+
         const showOffer = Boolean(this.drawOfferBy)
             && this.drawOfferBy !== this.playerIdentifier
             && this.myColor !== null
@@ -513,6 +541,11 @@ class ChessGame {
     offerDraw() {
         if (this.status !== 'IN_PROGRESS' || this.isBotGame) return;
         this.send({ type: 'draw_offer', player_identifier: this.playerIdentifier });
+    }
+
+    giveTime() {
+        if (this.status !== 'IN_PROGRESS' || !this.timeControl || this.isBotGame) return;
+        this.send({ type: 'give_time', player_identifier: this.playerIdentifier });
     }
 
     respondDraw(accept) {
@@ -635,6 +668,8 @@ class ChessGame {
             this.review = null;
             this.reviewPanel.classList.add('hidden');
             this.reviewBtn.textContent = 'OYUN İNCELEMESİ';
+            this.renderBoard();
+            this.renderEvalBar();
             return;
         }
         this.loadReview();
@@ -672,6 +707,8 @@ class ChessGame {
                 this.reviewBtn.textContent = 'İNCELEMEYİ KAPAT';
                 this.renderReview();
                 this.renderMoveList();
+                this.renderBoard();
+                this.renderEvalBar();
             })
             .catch((error) => {
                 if (requestId !== this.reviewRequestId) return;
@@ -742,6 +779,9 @@ class ChessGame {
                     detail.accuracy !== null && detail.accuracy !== undefined ? detail.accuracy + '%' : '-'
                 }</strong></div>
                 <div class="review-line">En iyi hamle: <strong>${detail.best_san || '-'}</strong></div>
+                ${detail.best_uci && detail.best_uci !== detail.uci
+                    ? '<div class="review-line muted">Yeşil ok tahtada oynanabilecek en iyi hamleyi gösterir.</div>'
+                    : ''}
             `;
             this.reviewDetailEl.classList.remove('hidden');
         } else {
@@ -886,6 +926,10 @@ class ChessGame {
         const lastMoveSquares = this.lastMoveSquares();
         const interactive = this.isMyTurn() || this.canPremove();
 
+        const reviewDetail = this.reviewDetailAt(this.currentIndex());
+        const reviewDest = reviewDetail ? reviewDetail.uci.slice(2, 4) : null;
+        const reviewArrow = this.reviewArrowAt(this.currentIndex());
+
         this.board.innerHTML = '';
         this.board.classList.toggle('locked', !interactive);
 
@@ -907,6 +951,12 @@ class ChessGame {
             }
             if (square === this.hoverSquare) cell.classList.add('drop-hover');
             if (this.drag && square === this.drag.from) cell.classList.add('dragging-source');
+            if (reviewDetail && reviewDest === square) {
+                cell.classList.add(
+                    'review-destination',
+                    `review-grade-${reviewDetail.classification || 'unknown'}`,
+                );
+            }
 
             const target = targets.get(square);
             if (target) {
@@ -922,8 +972,101 @@ class ChessGame {
                 cell.appendChild(span);
             }
 
+            if (reviewDetail && reviewDest === square) {
+                const cls = reviewDetail.classification || 'unknown';
+                const badge = document.createElement('span');
+                badge.className = `review-badge grade-${cls}`;
+                badge.textContent = CLASSIFICATION_ICONS[cls] || '?';
+                const lossText = reviewDetail.cp_loss !== null
+                    && reviewDetail.cp_loss !== undefined
+                    ? ` · ${reviewDetail.cp_loss} cp`
+                    : '';
+                badge.title = `${reviewDetail.classification_label
+                    || CLASSIFICATION_LABELS[cls] || ''}${lossText}`;
+                cell.appendChild(badge);
+            }
+
             this.board.appendChild(cell);
         });
+
+        this.renderReviewArrow(order, reviewArrow);
+    }
+
+    reviewDetailAt(index) {
+        if (!this.review || !Array.isArray(this.review.moves)) return null;
+        if (index <= 0) return null;
+        return this.review.moves[index - 1] || null;
+    }
+
+    reviewArrowAt(index) {
+        if (!this.review || !Array.isArray(this.review.moves)) return null;
+        if (index <= 0) {
+            const first = this.review.moves[0];
+            return first && first.best_uci ? first.best_uci : null;
+        }
+        const detail = this.review.moves[index - 1];
+        if (!detail || !detail.best_uci || detail.best_uci === detail.uci) {
+            return null;
+        }
+        return detail.best_uci;
+    }
+
+    renderReviewArrow(order, uci) {
+        if (!uci || uci.length < 4) return;
+        const fromIndex = order.indexOf(uci.slice(0, 2));
+        const toIndex = order.indexOf(uci.slice(2, 4));
+        if (fromIndex < 0 || toIndex < 0) return;
+
+        const fromX = (fromIndex % 8) + 0.5;
+        const fromY = Math.floor(fromIndex / 8) + 0.5;
+        const toX = (toIndex % 8) + 0.5;
+        const toY = Math.floor(toIndex / 8) + 0.5;
+        const dx = toX - fromX;
+        const dy = toY - fromY;
+        const length = Math.hypot(dx, dy);
+        if (!length) return;
+
+        const ux = dx / length;
+        const uy = dy / length;
+        const startOffset = Math.min(0.3, length * 0.16);
+        const endOffset = Math.min(0.36, length * 0.2);
+        const startX = fromX + ux * startOffset;
+        const startY = fromY + uy * startOffset;
+        const endX = toX - ux * endOffset;
+        const endY = toY - uy * endOffset;
+        const headLength = Math.min(0.36, length * 0.32);
+        const headHalf = Math.min(0.24, length * 0.22);
+        const baseX = endX - ux * headLength;
+        const baseY = endY - uy * headLength;
+        const px = -uy;
+        const py = ux;
+        const points = [
+            `${endX},${endY}`,
+            `${baseX + px * headHalf},${baseY + py * headHalf}`,
+            `${baseX - px * headHalf},${baseY - py * headHalf}`,
+        ].join(' ');
+
+        const svgNs = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNs, 'svg');
+        svg.setAttribute('class', 'review-arrow');
+        svg.setAttribute('viewBox', '0 0 8 8');
+        svg.setAttribute('preserveAspectRatio', 'none');
+        svg.setAttribute('aria-hidden', 'true');
+
+        const shaft = document.createElementNS(svgNs, 'line');
+        shaft.setAttribute('x1', startX);
+        shaft.setAttribute('y1', startY);
+        shaft.setAttribute('x2', baseX);
+        shaft.setAttribute('y2', baseY);
+        shaft.setAttribute('class', 'review-arrow-line');
+
+        const head = document.createElementNS(svgNs, 'polygon');
+        head.setAttribute('points', points);
+        head.setAttribute('class', 'review-arrow-head');
+
+        svg.appendChild(shaft);
+        svg.appendChild(head);
+        this.board.appendChild(svg);
     }
 
     renderMoveList() {

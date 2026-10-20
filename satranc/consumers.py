@@ -12,6 +12,9 @@ from .models import GamePlayer, GameRoom, Move, initial_fen
 
 logger = logging.getLogger(__name__)
 
+# "Rakibe süre ver" özelliğinde eklenecek saniye.
+GIVE_TIME_SECONDS = 15
+
 
 class GameConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -48,6 +51,7 @@ class GameConsumer(AsyncWebsocketConsumer):
             'draw_offer': self.handle_draw_offer,
             'draw_accept': self.handle_draw_accept,
             'draw_decline': self.handle_draw_decline,
+            'give_time': self.handle_give_time,
         }
         handler = handlers.get(message_type)
         if not handler:
@@ -184,6 +188,27 @@ class GameConsumer(AsyncWebsocketConsumer):
         )
         await self.broadcast_state()
 
+    async def handle_give_time(self, data):
+        """Oyuncu rakibinin saatine ek süre verir."""
+        identifier = self._identifier(data)
+        if not identifier:
+            await self.send_error("Oyuncu kimliği gerekli.")
+            return
+        result = await self.give_time(identifier)
+        if result.get('error'):
+            await self.send_error(result['error'])
+            return
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'time_given',
+                'by': identifier,
+                'seconds': result['seconds'],
+                'color': result['color'],
+            },
+        )
+        await self.broadcast_state()
+
     # ------------------------------------------------------------------
     # Bot hamlesi
     # ------------------------------------------------------------------
@@ -250,6 +275,14 @@ class GameConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'type': 'draw_declined',
             'by': event['by'],
+        }))
+
+    async def time_given(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'time_given',
+            'by': event['by'],
+            'seconds': event['seconds'],
+            'color': event['color'],
         }))
 
     async def send_error(self, message):
@@ -474,6 +507,35 @@ class GameConsumer(AsyncWebsocketConsumer):
             'turn_started_at', 'winner', 'updated_at',
         ])
         return {'ok': True}
+
+    @database_sync_to_async
+    def give_time(self, identifier):
+        """Oyuncunun rakibinin saatine ``GIVE_TIME_SECONDS`` ekler."""
+        room = GameRoom.objects.filter(room_code=self.room_code).first()
+        if not room or room.status != 'IN_PROGRESS':
+            return {'error': 'Oyun şu anda oynanmıyor.'}
+        if not room.time_control:
+            return {'error': 'Bu oyunda saat kullanılmıyor.'}
+        if room.is_bot_game:
+            return {'error': 'Bot oyununda rakibe süre verilemez.'}
+        player = room.players.filter(player_identifier=identifier).first()
+        if not player:
+            return {'error': 'Oyuncu bulunamadı.'}
+        if player.player_identifier.startswith('bot:'):
+            return {'error': 'Bot adına süre verilemez.'}
+
+        opponent = room.players.exclude(id=player.id).first()
+        if not opponent:
+            return {'error': 'Rakip bulunamadı.'}
+
+        field = 'white_time_left' if opponent.color == 'w' else 'black_time_left'
+        setattr(room, field, float(getattr(room, field) or 0) + GIVE_TIME_SECONDS)
+        room.save(update_fields=[field, 'updated_at'])
+        return {
+            'ok': True,
+            'seconds': GIVE_TIME_SECONDS,
+            'color': opponent.color,
+        }
 
     def _consume_clock(self, room, color, now):
         """Sırası gelen oyuncunun saatinden geçen süreyi düşer.
