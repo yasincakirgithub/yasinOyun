@@ -11,6 +11,8 @@ urlpatterns = [
     path('amiral/', include('amiral.urls')),
     # Two-player chess game (python-chess)
     path('satranc/', include('satranc.urls')),
+    # Multiplayer 101 Okey
+    path('101-okey/', include('okey101.urls')),
     # Landing page (last so it only matches the root)
     path('', include('core.urls')),
 ]

@@ -55,6 +55,17 @@ GAMES = [
         'tag': 'Zeka',
         'image': 'satranc/img/satranc.png',
     },
+    {
+        'slug': 'okey101',
+        'url_name': 'okey101:home',
+        'title': '101 Okey',
+        'description': (
+            '2-4 kişilik klasik 101 Okey. Oda kur, taş çek, perlerini aç '
+            've elini ilk bitiren ol.'
+        ),
+        'tag': 'Kart',
+        'image': 'okey101/img/okey101.svg',
+    },
 ]
 
 

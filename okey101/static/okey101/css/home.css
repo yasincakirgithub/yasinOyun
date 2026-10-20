@@ -1,0 +1,121 @@
+.name-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto 24px;
+    padding: 14px 20px;
+    max-width: 420px;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+}
+
+.name-field label {
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.name-field input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #1e293b;
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+.name-field input:focus {
+    border-color: #06b6d4;
+}
+
+.round-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding: 10px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.round-field select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #f8fafc;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.round-field select:focus {
+    border-color: #06b6d4;
+}
+
+.lobby-note {
+    margin: 26px 0 0;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
+}
+
+@media (max-width: 620px) {
+    .name-field {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.option-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px 14px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    color: #cbd5e1;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    cursor: pointer;
+}
+
+.option-field input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #06b6d4;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.option-field span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.option-field strong {
+    color: #f8fafc;
+    font-weight: 600;
+}
+
+.option-field small {
+    color: #94a3b8;
+    font-size: 0.8rem;
+}

@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'kim',
     'amiral',
     'satranc',
+    'okey101',
 ]
 
 MIDDLEWARE = [

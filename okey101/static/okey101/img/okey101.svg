@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-labelledby="title">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f87171"/>
+      <stop offset="1" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#93c5fd"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="yellow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="black" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#475569"/>
+      <stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="400" height="260" rx="22" fill="url(#bg)"/>
+  <circle cx="200" cy="128" r="102" fill="#10b981" opacity="0.09"/>
+  <circle cx="200" cy="128" r="70" fill="#22d3ee" opacity="0.07"/>
+
+  <g filter="url(#shadow)" transform="rotate(-16 175 150)">
+    <rect x="120" y="72" width="66" height="96" rx="9" fill="url(#yellow)" stroke="#fff7ed" stroke-width="2"/>
+    <text x="153" y="128" font-family="Poppins, Arial, sans-serif" font-size="34" font-weight="700" fill="#451a03" text-anchor="middle">7</text>
+    <text x="132" y="90" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700" fill="#451a03">7</text>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(-5 205 140)">
+    <rect x="165" y="66" width="70" height="102" rx="10" fill="url(#blue)" stroke="#eff6ff" stroke-width="2"/>
+    <text x="200" y="126" font-family="Poppins, Arial, sans-serif" font-size="38" font-weight="700" fill="#fff" text-anchor="middle">11</text>
+    <text x="178" y="86" font-family="Poppins, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">11</text>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(8 240 148)">
+    <rect x="212" y="74" width="68" height="100" rx="10" fill="url(#red)" stroke="#fef2f2" stroke-width="2"/>
+    <text x="246" y="130" font-family="Poppins, Arial, sans-serif" font-size="36" font-weight="700" fill="#fff" text-anchor="middle">3</text>
+    <text x="225" y="94" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="700" fill="#fff">3</text>
+  </g>
+
+  <g filter="url(#shadow)" transform="rotate(20 292 156)">
+    <rect x="266" y="84" width="64" height="94" rx="9" fill="url(#black)" stroke="#e2e8f0" stroke-width="2"/>
+    <text x="298" y="138" font-family="Poppins, Arial, sans-serif" font-size="34" font-weight="700" fill="#f8fafc" text-anchor="middle">13</text>
+    <text x="277" y="102" font-family="Poppins, Arial, sans-serif" font-size="11" font-weight="700" fill="#f8fafc">13</text>
+  </g>
+
+  <g transform="translate(62 40)">
+    <rect x="0" y="0" width="84" height="84" rx="18" fill="#0b3b2e" stroke="#22d3ee" stroke-width="2"/>
+    <text x="42" y="42" font-family="Poppins, Arial, sans-serif" font-size="30" font-weight="700" fill="#6ee7b7" text-anchor="middle">101</text>
+    <text x="42" y="62" font-family="Poppins, Arial, sans-serif" font-size="12" font-weight="600" fill="#a7f3d0" text-anchor="middle" letter-spacing="2">OKEY</text>
+  </g>
+
+  <text x="200" y="226" font-family="Poppins, Arial, sans-serif" font-size="20" font-weight="700" fill="#e2e8f0" text-anchor="middle">101 Okey</text>
+  <text x="200" y="246" font-family="Poppins, Arial, sans-serif" font-size="11" font-weight="500" fill="#94a3b8" text-anchor="middle" letter-spacing="2">2–4 OYUNCU · 106 TAŞ</text>
+</svg>

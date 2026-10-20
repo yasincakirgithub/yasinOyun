@@ -1,0 +1,171 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>101 Okey - Oda {{ room_code }}</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'okey101/css/game.css' %}">
+</head>
+<body data-room-code="{{ room_code }}" data-max-players="{{ max_players }}">
+    <div class="okey-app">
+        <header class="okey-topbar">
+            <div class="okey-brand">
+                <span class="brand-badge">101</span>
+                <div>
+                    <h1>Okey</h1>
+                    <p>Oda <strong id="room-code">{{ room_code }}</strong></p>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button id="copy-room-btn" class="ghost-btn small" type="button">Kodu Kopyala</button>
+                <button id="rules-btn" class="ghost-btn small" type="button">Kurallar</button>
+                <a class="ghost-btn small link-btn" href="{% url 'okey101:home' %}">Ana Sayfa</a>
+            </div>
+        </header>
+
+        <div class="okey-hud">
+            <div class="status-strip">
+                <div class="status-item"><span>El</span><strong id="round-info">1 / 5</strong></div>
+                <div class="status-item"><span>Açılış</span><strong id="points-threshold">101</strong></div>
+                <div class="status-item"><span>Çift</span><strong id="pairs-threshold">5</strong></div>
+                <div class="status-item"><span>Deste</span><strong id="stock-count">0</strong></div>
+            </div>
+            <div id="connection-bar" class="connection-bar">Bağlanıyor...</div>
+        </div>
+
+        <div id="turn-banner" class="turn-banner">Oda yükleniyor...</div>
+
+        <section id="players-strip" class="players-strip" aria-label="Oyuncular"></section>
+
+        <main class="table-layout">
+            <section class="table-felt" data-drop-zone="felt" aria-label="Masa">
+                <div class="table-felt-head">
+                    <div class="table-title">
+                        <span>Masa</span>
+                        <strong id="melds-count">0 per</strong>
+                    </div>
+                    <div class="table-specials">
+                        <div class="special">
+                            <span class="special-label">Gösterge</span>
+                            <div id="indicator-zone" class="special-tile"></div>
+                        </div>
+                        <div class="special">
+                            <span class="special-label">Okey</span>
+                            <div id="okey-zone" class="special-tile"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="melds" class="melds" data-drop-zone="table">
+                    <p class="empty-note">Henüz per açılmadı.</p>
+                </div>
+                <div class="table-center" aria-label="Deste ve atılan taşlar">
+                    <div class="table-piles">
+                        <button id="stock-pile" class="pile stock-pile" type="button" data-drag-source="stock" title="Desteden taş çekmek için eline sürükle">
+                            <span class="pile-stack" aria-hidden="true">
+                                <span class="stack-card"></span>
+                                <span class="stack-card"></span>
+                                <span class="stack-card"></span>
+                            </span>
+                            <span class="pile-label">Deste</span>
+                            <span class="pile-count" id="stock-pile-count">0</span>
+                            <span class="pile-hint">eline sürükle</span>
+                        </button>
+                        <button id="discard-pile" class="pile discard-pile" type="button" data-drop-zone="discard" title="Taşı atmak için buraya sürükle">
+                            <span class="pile-label">Atılan</span>
+                            <span id="discard-top" class="discard-top"></span>
+                            <span class="pile-hint">buraya bırak</span>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <aside class="side-rail" aria-label="Oyun kontrolleri">
+                <section class="rail-section">
+                    <div class="rail-head"><span>Hamleler</span></div>
+                    <div class="action-bar">
+                        <button id="draw-btn" class="primary" type="button">Desteden Çek</button>
+                        <button id="take-btn" class="primary" type="button">Atılanı Al</button>
+                        <button id="return-btn" type="button" title="Aldığın son atılan taşı geri bırak">Atılanı Geri Koy</button>
+                        <button id="open-btn" type="button" title="İstekadaki gruplarla elini aç">Elini Aç</button>
+                        <button id="auto-open-btn" type="button">Otomatik Aç</button>
+                        <button id="discard-btn" class="danger" type="button">Seçili Taşı At</button>
+                    </div>
+                </section>
+
+                <section class="rail-section">
+                    <div class="rail-head"><span>Masadaki per</span></div>
+                    <div class="process-actions">
+                        <select id="process-target" class="process-select" aria-label="İşlenecek per"></select>
+                        <button id="process-btn" type="button">Taşı İşle</button>
+                    </div>
+                    <p class="action-hint" id="action-hint">Sıra sende değil.</p>
+                </section>
+            </aside>
+
+            <section class="hand-rack" data-drop-zone="hand" aria-label="Senin elin">
+                <div class="rack-head">
+                    <span class="rack-label">Elin</span>
+                    <span id="my-meta" class="panel-note">Bağlanıyor...</span>
+                </div>
+                <p class="rack-tip">Grupla: taşı başka taşın üstüne bırak · Ayır: boş alana bırak · Açtıktan sonra peri tutamaçtan masaya sürükle</p>
+                <div id="my-hand" class="hand" data-drop-zone="rack">
+                    <p class="empty-note">Taşlar yükleniyor...</p>
+                </div>
+            </section>
+        </main>
+
+        <section id="waiting-box" class="info-box hidden">
+            <h2>Oyuncular bekleniyor</h2>
+            <p id="waiting-text">Oyun 4 oyuncuyla başlar.</p>
+            <button id="start-btn" class="primary" type="button">OYUNU BAŞLAT</button>
+        </section>
+
+        <section id="round-box" class="info-box hidden">
+            <h2 id="round-box-title">El bitti</h2>
+            <div id="round-summary" class="round-summary"></div>
+            <p id="round-host-note" class="info-note hidden">Sonraki eli oda kurucusu başlatacak.</p>
+            <button id="next-round-btn" class="primary" type="button">SONRAKİ EL</button>
+        </section>
+
+        <section id="finished-box" class="info-box hidden">
+            <h2>Oyun bitti</h2>
+            <p id="finished-winner" class="finished-winner"></p>
+            <div id="final-standings" class="final-standings"></div>
+            <p id="finished-host-note" class="info-note hidden">Yeniden başlatmayı oda kurucusu yapabilir.</p>
+            <button id="restart-btn" class="primary" type="button">YENİDEN OYNA</button>
+        </section>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+    <div id="rules-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h2 id="rules-title">101 Okey Kuralları</h2>
+                <button id="rules-close" class="ghost-btn small" type="button">Kapat</button>
+            </div>
+            <div class="rules-body">
+                <h3>Taşlar ve Okey</h3>
+                <p>106 taş vardır: 4 renk × 13 sayı × 2 kopya + 2 sahte okey. Gösterge taşının rengindeki bir büyük sayı okey olur (13’ün üstü 1’dir). Okey ve sahte okey joker gibi kullanılır; her perde en az bir gerçek taş bulunmalıdır.</p>
+                <h3>Dağıtım</h3>
+                <p>Her oyuncuya 21 taş dağıtılır. Başlayan oyuncu 22 taş alır ve ilk turda taş çekmeden bir taş atar.</p>
+                <h3>Perler</h3>
+                <p><strong>Seri:</strong> Aynı renkte ardışık en az 3 taş (12-13-1 dönmez). <strong>Grup:</strong> Aynı sayıda farklı renklerden 3 veya 4 taş. <strong>Çift:</strong> Aynı taştan iki kopya (biri okey olabilir, iki okey olmaz).</p>
+                <h3>Açılış</h3>
+                <p>Puanla açmak için perlerin toplamı en az 101 puan olmalıdır. Çiftle açmak için en az 5 çift gerekir. Açılış eşiği her başarılı açılıştan sonra 1 artar. Çiftle açan oyuncu sadece çift koyabilir; puanla açan oyuncu seri/grup koyabilir. Masada çiftle açan biri varsa puan rotasındaki oyuncular da çift koyabilir. Açılışta atacak en az bir taşın kalmalıdır.</p>
+                <h3>Sıra</h3>
+                <p>Sıradaki oyuncu desteden taş çeker veya son atılan taşı alır. Atılan taştan alınan taş kullanılmadan atılamaz; kullanmayacaksan “Atılanı Geri Koy” ile iade edebilirsin. Açtıktan sonra elindeki taşları mevcut perlere işleyebilir veya yeni perler koyabilir. Turu bir taş atarak bitirir. Taşları istekada gruplayarak elini açarsın; açtıktan sonra grupları tutamaçtan masaya sürükleyerek perleri koyarsın.</p>
+                <h3>Bitiş ve Puan</h3>
+                <p>Elini ilk bitiren oyuncu <strong>-101 × çarpan</strong> puan alır. Çarpan; elden bitiş, okey/sahte okey atarak bitiş ve çiftle bitiş için ayrı ayrı 2’şer katlanır. Katlamalar kapalıysa çarpan uygulanmaz. Açmayan oyuncu <strong>202 × çarpan</strong> ceza alır. Açan oyuncu elinde kalan taşların toplamı kadar ceza alır; okey/sahte okey elde 101 sayılır ve çift rotasında ceza 2 katına çıkar. Deste biterse el sahibi olmadan biter.</p>
+                <h3>Ceza</h3>
+                <p>Okey veya masaya işlenebilecek bir taşı atan oyuncu +101 ceza alır. Cezalar kapalıysa bu ceza uygulanmaz.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static_v 'okey101/js/game.js' %}"></script>
+</body>
+</html>
