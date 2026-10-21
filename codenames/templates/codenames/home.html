@@ -1,0 +1,62 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codenames — Online Kelime Çağrışım Oyunu</title>
+    <meta name="description" content="İki takım, gizli ajanlar ve tek kelimelik ipuçları. 4–10 kişilik canlı Codenames oyunu.">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
+    <link rel="stylesheet" href="{% static_v 'codenames/css/home.css' %}">
+</head>
+<body>
+    {% include 'core/_navbar.html' %}
+    <div id="main" tabindex="-1" class="game-container">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
+
+        <div class="game-header">
+            <h1>Codenames</h1>
+            <p>
+                Kırmızı ve mavi takım, 25 kelimelik gizli tahtada yarışır.
+                Spymaster tek kelimelik ipucu verir; operatifler doğru ajanları bulur.
+                Nötr kelime turu bitirir, suikastçı ise oyunu kaybettirir.
+            </p>
+        </div>
+
+        <div class="name-field">
+            <label for="player-name">Adın</label>
+            <input id="player-name" type="text" maxlength="30" autocomplete="nickname" placeholder="Adın">
+        </div>
+
+        <div class="home-content">
+            <div class="game-card">
+                <h2>Oda Kur</h2>
+                <p>Yeni bir Codenames masası aç, takımları kur ve oda kodunu arkadaşlarınla paylaş.</p>
+                <button id="create-btn" class="game-btn" type="button">ODA KUR</button>
+            </div>
+
+            <div class="game-card">
+                <h2>Oyuna Katıl</h2>
+                <p>Arkadaşının paylaştığı 6 haneli oda kodunu girerek takımına katıl.</p>
+                <input id="room-code-input" type="text" maxlength="6"
+                       autocomplete="off" spellcheck="false" placeholder="Oda Kodu"
+                       value="{{ invite_code }}">
+                <button id="join-btn" class="game-btn" type="button">KATIL</button>
+            </div>
+        </div>
+
+        <p id="home-error" class="home-error" role="alert" hidden></p>
+        <p class="lobby-note">4–10 oyuncu · 25 kelime · 2 takım · Her takımda 1 spymaster ve en az 1 operative</p>
+        <p class="lobby-note">Aynı odada aynı adı iki kez kullanamazsın. Farklı bir oyuncu olarak katılmak için farklı bir ad gir.</p>
+
+        {% include 'core/_comments.html' with comments_game='codenames' %}
+
+        <div class="footer">
+            <p>&copy; 2026 Codenames — Takım kelime oyunu</p>
+        </div>
+    </div>
+
+    <script src="{% static_v 'codenames/js/home.js' %}"></script>
+</body>
+</html>

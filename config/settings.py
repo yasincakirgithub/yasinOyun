@@ -8,6 +8,8 @@ Hosts all games in one project:
   - ``kim``     : "Kim Bu?" / Guess Who character guessing game
   - ``amiral``  : two-player Battleship game ("Amiral Battı")
   - ``satranc`` : two-player online chess game (python-chess)
+  - ``okey101`` : multiplayer 101 Okey game
+  - ``codenames``: real-time team word-association game
 
 The games share a single PostgreSQL database and Redis instance.
 """
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
     'amiral',
     'satranc',
     'okey101',
+    'codenames',
 ]
 
 MIDDLEWARE = [
@@ -247,6 +250,38 @@ SATRANC_REVIEW_WORKERS = int(os.environ.get('SATRANC_REVIEW_WORKERS', '2'))
 
 
 # ---------------------------------------------------------------------------
+# Codenames / DeepSeek
+# ---------------------------------------------------------------------------
+# The API key is intentionally read only on the server. Never expose these
+# values to templates or client-side code.
+DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '').strip()
+DEEPSEEK_BASE_URL = os.environ.get('DEEPSEEK_BASE_URL', 'https://api.deepseek.com')
+DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-flash')
+DEEPSEEK_TIMEOUT = float(os.environ.get('DEEPSEEK_TIMEOUT', '12'))
+DEEPSEEK_MAX_RETRIES = int(os.environ.get('DEEPSEEK_MAX_RETRIES', '2'))
+
+# Shared cache is required for distributed rate limiting. LocMem is safe for a
+# single-process development server.
+CACHE_URL = os.environ.get('CACHE_URL', '')
+if CACHE_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': CACHE_URL,
+        },
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'codenames-local',
+        },
+    }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get('DATA_UPLOAD_MAX_MEMORY_SIZE', '262144'))
+
+
+# ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
 
@@ -266,5 +301,6 @@ LOGGING = {
         'kim': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'amiral': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'satranc': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'codenames': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }

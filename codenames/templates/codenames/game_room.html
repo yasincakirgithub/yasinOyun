@@ -1,0 +1,291 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codenames — Oda {{ room_code }}</title>
+    <meta name="theme-color" content="#0B1020">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'codenames/css/game.css' %}">
+</head>
+<body class="cn-game-page" data-room-code="{{ room_code }}" data-room-exists="{{ room_exists|yesno:'1,0' }}">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+    <header class="cn-topbar">
+        <a class="cn-brand" href="{% url 'codenames:home' %}" aria-label="Codenames ana sayfa">
+            <span class="cn-brand-mark" aria-hidden="true">C</span>
+            <span class="cn-brand-name">Codenames</span>
+        </a>
+        <div class="cn-topbar-center">
+            <span class="cn-room-label">Oda</span>
+            <button id="copy-code-btn" class="cn-room-code" type="button" title="Oda kodunu kopyala">{{ room_code }}</button>
+            <button id="share-btn" class="cn-icon-btn" type="button" title="Davet bağlantısını kopyala" aria-label="Davet bağlantısını kopyala">↗</button>
+        </div>
+        <div class="cn-topbar-actions">
+            <span id="connection-pill" class="cn-connection is-connecting" role="status" aria-live="polite">Bağlanıyor…</span>
+            <button id="leave-btn" class="cn-ghost-btn" type="button">Odadan ayrıl</button>
+            <a class="cn-ghost-btn" href="{% url 'codenames:home' %}">Ana sayfa</a>
+        </div>
+    </header>
+
+    <main id="main" class="cn-app" tabindex="-1">
+        <section id="cn-loading" class="cn-loading" aria-live="polite">
+            <div class="cn-spinner" aria-hidden="true"></div>
+            <h1>Oda yükleniyor</h1>
+            <p id="loading-text">Bağlantı kuruluyor…</p>
+        </section>
+
+        <section id="cn-join-gate" class="cn-gate" hidden>
+            <div class="cn-gate-card">
+                <span class="cn-eyebrow">Davet edildin</span>
+                <h1 id="gate-title">Odaya katıl</h1>
+                <p id="gate-copy" class="cn-muted">Görünen adını girerek <strong>{{ room_code }}</strong> numaralı odaya katıl.</p>
+                <label class="cn-label" for="gate-name">Görünen adın</label>
+                <input id="gate-name" class="cn-input" type="text" maxlength="30" autocomplete="nickname" placeholder="Adın">
+                <p id="gate-error" class="cn-error" role="alert" hidden></p>
+                <button id="gate-join-btn" class="cn-btn cn-btn-primary" type="button">KATIL</button>
+                <button id="gate-resume-btn" class="cn-btn cn-btn-secondary" type="button" hidden>KAYITLI OTURUMLA DEVAM ET</button>
+                <a class="cn-link" href="{% url 'codenames:home' %}">Ana sayfaya dön</a>
+            </div>
+        </section>
+
+        <section id="cn-lobby" class="cn-lobby" hidden aria-labelledby="lobby-title">
+            <div class="cn-lobby-head">
+                <div>
+                    <span class="cn-eyebrow">Bekleme odası</span>
+                    <h1 id="lobby-title">Takımını kur, oyunu başlat.</h1>
+                    <p class="cn-muted">
+                        <strong id="lobby-count">0/10</strong> oyuncu ·
+                        <span id="lobby-status">Oyuncu bekleniyor</span> ·
+                        <span id="lobby-language">Türkçe</span>
+                    </p>
+                </div>
+                <div class="cn-lobby-actions">
+                    <button id="auto-assign-btn" class="cn-btn cn-btn-secondary cn-btn-inline" type="button">Otomatik dağıt</button>
+                    <button id="copy-invite-btn" class="cn-btn cn-btn-ghost cn-btn-inline" type="button">Davet linkini kopyala</button>
+                </div>
+            </div>
+
+            <div class="cn-lobby-grid">
+                <section class="cn-panel" aria-labelledby="players-title">
+                    <div class="cn-panel-head">
+                        <div>
+                            <h2 id="players-title">Oyuncular</h2>
+                            <p class="cn-muted">Kendi takımını ve rolünü seçebilirsin. Her takımda yalnızca 1 spymaster olabilir; host gerekirse herkesi düzenleyebilir.</p>
+                        </div>
+                        <span class="cn-badge" id="lobby-host-badge">Host: —</span>
+                    </div>
+                    <div id="lobby-players" class="cn-player-list" aria-live="polite"></div>
+
+                    <div class="cn-start-box">
+                        <div>
+                            <h3>Oyunu başlat</h3>
+                            <p id="start-copy" class="cn-muted">Her takımda 1 spymaster ve en az 1 operative olmalı.</p>
+                            <ul id="start-errors" class="cn-error-list" hidden></ul>
+                        </div>
+                        <button id="start-btn" class="cn-btn cn-btn-primary" type="button">OYUNU BAŞLAT</button>
+                    </div>
+                </section>
+
+                <section class="cn-panel" aria-labelledby="settings-title">
+                    <div class="cn-panel-head">
+                        <div>
+                            <h2 id="settings-title">Oyun ayarları</h2>
+                            <p class="cn-muted">Değişiklikler anında kaydedilir. Yalnızca host düzenleyebilir.</p>
+                        </div>
+                    </div>
+                    <form id="settings-form" class="cn-settings" autocomplete="off">
+                        <label>
+                            <span>Dil</span>
+                            <select id="set-language" name="language">
+                                {% for value, label in languages %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>
+                            <span>Başlangıç takımı</span>
+                            <select id="set-starting" name="starting_team">
+                                {% for value, label in starting_teams %}
+                                <option value="{{ value }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>
+                            <span>Tur süresi</span>
+                            <select id="set-timer" name="timer_seconds">
+                                {% for value in timer_choices %}
+                                <option value="{{ value }}">{% if value %}{{ value }} saniye{% else %}Kapalı{% endif %}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>
+                            <span>Minimum oyuncu</span>
+                            <select id="set-min" name="min_players">
+                                <option value="4">4 oyuncu</option>
+                                <option value="5">5 oyuncu</option>
+                                <option value="6">6 oyuncu</option>
+                                <option value="7">7 oyuncu</option>
+                                <option value="8">8 oyuncu</option>
+                                <option value="9">9 oyuncu</option>
+                                <option value="10">10 oyuncu</option>
+                            </select>
+                        </label>
+                        <label class="cn-check">
+                            <input id="set-zero" type="checkbox" name="allow_zero_clue">
+                            <span>
+                                <strong>Sıfır ipucuna izin ver</strong>
+                                <small>Spymaster “0” sayısıyla ipucu verebilir.</small>
+                            </span>
+                        </label>
+                        <label class="cn-check">
+                            <input id="set-extra" type="checkbox" name="extra_guess">
+                            <span>
+                                <strong>Fazladan tahmin hakkı</strong>
+                                <small>Takım, ipucu sayısından bir fazla tahmin yapabilir (klasik kural).</small>
+                            </span>
+                        </label>
+                    </form>
+                    <p id="settings-note" class="cn-note" hidden>Ayarları yalnızca oda sahibi değiştirebilir.</p>
+                </section>
+            </div>
+
+            <section class="cn-panel cn-chat-panel" aria-labelledby="lobby-chat-title">
+                <div class="cn-panel-head">
+                    <h2 id="lobby-chat-title">Oda sohbeti</h2>
+                </div>
+                <div class="cn-chat-list js-chat-list" aria-live="polite"></div>
+                <form class="cn-chat-form js-chat-form">
+                    <label class="cn-sr-only" for="lobby-chat-input">Mesaj</label>
+                    <input id="lobby-chat-input" class="cn-input js-chat-input" type="text" maxlength="400" placeholder="Takımına mesaj yaz…">
+                    <button class="cn-btn cn-btn-primary cn-btn-inline" type="submit">Gönder</button>
+                </form>
+            </section>
+        </section>
+
+        <section id="cn-game" class="cn-game" hidden aria-labelledby="game-title">
+            <h1 id="game-title" class="cn-sr-only">Codenames oyun tahtası</h1>
+            <div class="cn-hud">
+                <div class="cn-score is-red" id="red-score-card">
+                    <span class="cn-score-label"><span class="cn-dot"></span>Kırmızı</span>
+                    <strong id="red-score">9</strong>
+                    <span>ajan kaldı</span>
+                </div>
+                <div id="turn-card" class="cn-turn-card">
+                    <span id="turn-number" class="cn-turn-number">Tur 1</span>
+                    <strong id="turn-label">Kırmızı takım</strong>
+                    <span id="turn-message">Spymaster ipucu verecek.</span>
+                    <div class="cn-timer" id="timer-label" aria-live="polite">Süre kapalı</div>
+                    <span id="word-source" class="cn-source-badge" hidden></span>
+                </div>
+                <div class="cn-score is-blue" id="blue-score-card">
+                    <span class="cn-score-label"><span class="cn-dot"></span>Mavi</span>
+                    <strong id="blue-score">8</strong>
+                    <span>ajan kaldı</span>
+                </div>
+            </div>
+
+            <div class="cn-clue-strip">
+                <div class="cn-clue-display">
+                    <span class="cn-clue-eyebrow">Güncel ipucu</span>
+                    <strong id="clue-display">Henüz ipucu yok</strong>
+                    <span id="clue-hint">Sıradaki spymaster ipucunu bekliyor.</span>
+                </div>
+                <form id="clue-form" class="cn-clue-form" hidden autocomplete="off">
+                    <label>
+                        <span class="cn-sr-only">İpucu kelimesi</span>
+                        <input id="clue-word" class="cn-input" type="text" maxlength="32" placeholder="Tek kelime" required>
+                    </label>
+                    <label>
+                        <span class="cn-sr-only">İpucu sayısı</span>
+                        <input id="clue-number" class="cn-input cn-number-input" type="number" min="0" max="9" value="1" required>
+                    </label>
+                    <button class="cn-btn cn-btn-primary cn-btn-inline" type="submit">İpucunu ver</button>
+                </form>
+                <button id="end-turn-btn" class="cn-btn cn-btn-ghost cn-btn-inline" type="button" hidden>Turu bitir</button>
+            </div>
+
+            <div class="cn-game-grid">
+                <section class="cn-board-wrap" aria-label="Kelime tahtası">
+                    <div id="board" class="cn-board" role="grid" aria-label="25 kelimelik tahta"></div>
+                    <p id="board-status" class="cn-board-status" aria-live="polite">Tahta hazırlanıyor…</p>
+                    <div class="cn-spy-legend" id="spy-legend" hidden>
+                        <span><i class="is-red"></i>Kırmızı ajan</span>
+                        <span><i class="is-blue"></i>Mavi ajan</span>
+                        <span><i class="is-neutral"></i>Nötr</span>
+                        <span><i class="is-assassin"></i>Suikastçı</span>
+                    </div>
+                </section>
+
+                <aside class="cn-sidebar">
+                    <section class="cn-panel cn-side-panel" aria-labelledby="side-players-title">
+                        <div class="cn-panel-head">
+                            <h2 id="side-players-title">Oyuncular</h2>
+                            <span class="cn-badge"><span id="side-count">0/10</span></span>
+                        </div>
+                        <div id="game-players" class="cn-player-list cn-player-list-compact"></div>
+                    </section>
+
+                    <section class="cn-panel cn-side-panel" aria-labelledby="guess-history-title">
+                        <div class="cn-panel-head">
+                            <div>
+                                <h2 id="guess-history-title">Tahmin geçmişi</h2>
+                                <p class="cn-muted">Verilen ipuçları ve açılan kelimeler.</p>
+                            </div>
+                            <span id="guess-history-count" class="cn-badge">0 tur</span>
+                        </div>
+                        <div id="guess-history" class="cn-history-list" aria-live="polite"></div>
+                    </section>
+
+                    <section class="cn-panel cn-side-panel cn-chat-panel" aria-labelledby="game-chat-title">
+                        <div class="cn-panel-head cn-tabs">
+                            <h2 id="game-chat-title">Sohbet</h2>
+                            <div class="cn-tab-buttons" role="tablist" aria-label="Sohbet ve olaylar">
+                                <button class="cn-tab is-active" type="button" data-tab="chat" role="tab" aria-selected="true">Sohbet</button>
+                                <button class="cn-tab" type="button" data-tab="events" role="tab" aria-selected="false">Olaylar</button>
+                            </div>
+                        </div>
+                        <div class="cn-chat-list js-chat-list" data-panel="chat" aria-live="polite"></div>
+                        <div class="cn-events-list" data-panel="events" hidden aria-live="polite"></div>
+                        <form class="cn-chat-form js-chat-form" data-panel="chat">
+                            <label class="cn-sr-only" for="game-chat-input">Mesaj</label>
+                            <input id="game-chat-input" class="cn-input js-chat-input" type="text" maxlength="400" placeholder="Takımına mesaj yaz…">
+                            <button class="cn-btn cn-btn-primary cn-btn-inline" type="submit">Gönder</button>
+                        </form>
+                    </section>
+                </aside>
+            </div>
+        </section>
+
+        <section id="cn-gameover" class="cn-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+            <div class="cn-overlay-card">
+                <span class="cn-eyebrow">Oyun sonucu</span>
+                <h2 id="overlay-title">Kırmızı takım kazandı</h2>
+                <p id="overlay-reason" class="cn-muted">Tüm ajanlar açıldı.</p>
+                <div id="overlay-scores" class="cn-overlay-scores"></div>
+                <div class="cn-overlay-actions">
+                    <button id="overlay-close" class="cn-btn cn-btn-ghost cn-btn-inline" type="button">Tahtayı incele</button>
+                    <button id="overlay-new" class="cn-btn cn-btn-primary cn-btn-inline" type="button" hidden>Yeni oyun</button>
+                    <a class="cn-btn cn-btn-secondary cn-btn-inline" href="{% url 'codenames:home' %}">Ana sayfa</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="cn-toast" role="status" aria-live="polite" hidden></div>
+
+    <div id="confirm-modal" class="cn-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div class="cn-overlay-card">
+            <h2 id="confirm-title">Odadan ayrıl</h2>
+            <p class="cn-muted">Odadan ayrılmak istediğine emin misin? Oyun devam ediyorsa takımın etkilenebilir.</p>
+            <div class="cn-overlay-actions">
+                <button id="confirm-cancel" class="cn-btn cn-btn-ghost cn-btn-inline" type="button">Vazgeç</button>
+                <button id="confirm-leave" class="cn-btn cn-btn-danger cn-btn-inline" type="button">Ayrıl</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static_v 'codenames/js/game.js' %}"></script>
+</body>
+</html>

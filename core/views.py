@@ -60,6 +60,22 @@ GAMES = [
         'image_height': 497,
     },
     {
+        'slug': 'codenames',
+        'url_name': 'codenames:home',
+        'title': 'Codenames',
+        'description': (
+            'İki takım, gizli ajanlar ve tek kelimelik ipuçları. Spymaster '
+            'ipucunu ver, operatifler doğru kelimeleri bulmadan rakibine fırsat verme.'
+        ),
+        'tag': 'Parti',
+        'tone': 'cyan',
+        'players': '4–10 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/codenames.svg',
+        'image_width': 1600,
+        'image_height': 497,
+    },
+    {
         'slug': 'amiral',
         'url_name': 'amiral:home',
         'title': 'Amiral Battı',

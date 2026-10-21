@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="497" viewBox="0 0 1600 497" role="img" aria-label="Codenames">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101a34"/>
+      <stop offset="1" stop-color="#1b1233"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff6b6b"/><stop offset="1" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="497" fill="url(#bg)"/>
+  <circle cx="1390" cy="60" r="240" fill="#7c5cfc" opacity=".16"/>
+  <circle cx="120" cy="450" r="220" fill="#22d3ee" opacity=".12"/>
+  <g transform="translate(80 68)">
+    <rect width="130" height="88" rx="12" fill="#1e293b" stroke="#334155"/>
+    <rect x="148" width="130" height="88" rx="12" fill="url(#red)"/>
+    <rect x="296" width="130" height="88" rx="12" fill="#1e293b" stroke="#334155"/>
+    <rect x="444" width="130" height="88" rx="12" fill="url(#blue)"/>
+    <rect x="592" width="130" height="88" rx="12" fill="#1e293b" stroke="#334155"/>
+    <rect y="104" width="130" height="88" rx="12" fill="#1e293b" stroke="#334155"/>
+    <rect x="148" y="104" width="130" height="88" rx="12" fill="url(#blue)"/>
+    <rect x="296" y="104" width="130" height="88" rx="12" fill="#1e293b" stroke="#334155"/>
+    <rect x="444" y="104" width="130" height="88" rx="12" fill="#0f172a" stroke="#f59e0b" stroke-width="4"/>
+    <rect x="592" y="104" width="130" height="88" rx="12" fill="url(#red)"/>
+    <text x="65" y="54" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#cbd5e1">KÖPRÜ</text>
+    <text x="213" y="54" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#fff">KİTAP</text>
+    <text x="361" y="54" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#cbd5e1">ORMAN</text>
+    <text x="509" y="54" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#fff">ROKET</text>
+    <text x="657" y="54" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#cbd5e1">LİMON</text>
+    <text x="65" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#cbd5e1">DENİZ</text>
+    <text x="213" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#fff">SAAT</text>
+    <text x="361" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#cbd5e1">KEDİ</text>
+    <text x="509" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="800" fill="#f59e0b">✱</text>
+    <text x="657" y="158" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="700" fill="#fff">KULE</text>
+  </g>
+  <g transform="translate(880 92)">
+    <text font-family="Inter,Arial,sans-serif" font-size="68" font-weight="800" fill="#fff">CODENAMES</text>
+    <text y="58" font-family="Inter,Arial,sans-serif" font-size="26" font-weight="600" fill="#a5b4fc">Takımın için ipucu ver, ajanları bul.</text>
+    <g transform="translate(0 132)">
+      <rect width="450" height="64" rx="32" fill="rgba(124,92,252,.2)" stroke="#7c5cfc"/>
+      <text x="225" y="41" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="700" fill="#e0e7ff">2–10 oyuncu · Canlı çok oyunculu</text>
+    </g>
+  </g>
+</svg>

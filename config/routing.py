@@ -1,4 +1,5 @@
 from amiral.routing import websocket_urlpatterns as amiral_websocket_urlpatterns
+from codenames.routing import websocket_urlpatterns as codenames_websocket_urlpatterns
 from kim.routing import websocket_urlpatterns as kim_websocket_urlpatterns
 from okey101.routing import websocket_urlpatterns as okey101_websocket_urlpatterns
 from satranc.routing import websocket_urlpatterns as satranc_websocket_urlpatterns
@@ -12,4 +13,5 @@ websocket_urlpatterns = (
     + amiral_websocket_urlpatterns
     + satranc_websocket_urlpatterns
     + okey101_websocket_urlpatterns
+    + codenames_websocket_urlpatterns
 )
