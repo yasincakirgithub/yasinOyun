@@ -719,6 +719,10 @@ class GameConsumer(AsyncWebsocketConsumer):
             'initial_fen': initial_fen(),
             'turn': services.turn_color(room.fen),
             'legal_moves': services.legal_moves(room.fen),
+            'premove_moves': {
+                'w': services.premove_moves_for_color(room.fen, 'w'),
+                'b': services.premove_moves_for_color(room.fen, 'b'),
+            },
             'check': services.is_check(room.fen),
             'moves': moves,
             'result': room.result or None,

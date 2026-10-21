@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satranç - Oda {{ room_code }}</title>
     <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
     <link rel="stylesheet" href="{% static_v 'satranc/css/game.css' %}">
 </head>
 <body data-room-code="{{ room_code }}"
@@ -14,7 +15,7 @@
       data-audio-check="{% static 'satranc/audio/check.mp3' %}"
       data-audio-rook="{% static 'satranc/audio/rook.mp3' %}">
     {% include 'core/_navbar.html' %}
-    <div class="game-container">
+    <div id="main" tabindex="-1" class="game-container">
         <div class="game-header">
             <h1>Satranç</h1>
             <div class="room-code">Oda: {{ room_code }}</div>
@@ -51,7 +52,13 @@
             <aside class="side-panel">
                 <div id="turn-indicator" class="turn-indicator waiting">Rakip bekleniyor...</div>
                 <div id="check-indicator" class="check-indicator hidden">ŞAH!</div>
-                <div id="premove-indicator" class="premove-indicator hidden">ÖN HAMLE HAZIR</div>
+                <button id="premove-indicator" class="premove-indicator hidden" type="button" title="Ön hamleyi iptal et" aria-label="Ön hamleyi iptal et">
+                    <span class="premove-copy">
+                        <span class="premove-kicker">ÖN HAMLE HAZIR</span>
+                        <span id="premove-move" class="premove-move"></span>
+                    </span>
+                    <span class="premove-cancel">İPTAL</span>
+                </button>
 
                 <div class="game-actions" id="game-actions">
                     <button id="give-time-btn" class="ghost-btn small hidden" type="button" title="Rakibinin saatine 15 saniye ekle">RAKİBE +15 SN</button>
@@ -61,7 +68,7 @@
 
                 <div class="move-header">
                     <h3>Hamleler</h3>
-                    <button id="review-btn" class="ghost-btn small" type="button">OYUN İNCELEMESİ</button>
+                    <button id="review-btn" class="ghost-btn small locked" type="button" disabled title="Oyun bittikten sonra inceleme yapılabilir">İNCELEME KİLİTLİ</button>
                 </div>
 
                 <div class="move-nav">
@@ -75,8 +82,12 @@
                 <ol id="move-list" class="move-list"></ol>
 
                 <div id="review-panel" class="review-panel hidden">
-                    <div class="review-loading" id="review-loading">Stockfish oyunu inceliyor...</div>
-                    <div id="eval-bar" class="eval-bar hidden">
+                    <div class="review-loading" id="review-loading" role="status">
+                        <span class="review-spinner" aria-hidden="true"></span>
+                        <strong>Stockfish oyunu inceliyor</strong>
+                        <span>Her hamle tek tek değerlendiriliyor.</span>
+                    </div>
+                    <div id="eval-bar" class="eval-bar hidden" aria-hidden="true">
                         <div class="eval-bar-fill" id="eval-bar-fill"></div>
                         <span class="eval-bar-text" id="eval-bar-text">0.00</span>
                     </div>
@@ -86,7 +97,7 @@
 
                 <button id="play-again-btn" class="primary hidden" type="button">YENİDEN OYNA</button>
 
-                <p class="hint">Taşı sürükleyip bırakarak ya da önce taşa sonra hedef kareye tıklayarak oyna. Sıra rakipteyken taşına ve hedefe tıklayarak <strong>ön hamle</strong> hazırlayabilirsin; sıra sana gelince otomatik oynanır. &#8592; / &#8594; tuşlarıyla hamle geçmişinde gezinebilir, hamle listesine tıklayarak pozisyonları inceleyebilirsin. Oyun incelemesi açıkken hamlenin kalitesi taşın üzerinde rozetle, en iyi alternatif ise tahtada yeşil okla gösterilir. Süreli oyunlarda rakibine <strong>+15 sn</strong> verebilirsin.</p>
+                <p class="hint">Taşı sürükleyip bırakarak ya da önce taşa sonra hedef kareye tıklayarak oyna. Sıra rakipteyken taşına ve hedefe tıklayarak <strong>ön hamle</strong> hazırlayabilirsin; sıra sana gelince otomatik oynanır; yalnızca geçerli hedef karelerine ve rakibin alabileceği kendi taşlarının karelerine ön hamle yapabilirsin. &#8592; / &#8594; tuşlarıyla hamle geçmişinde gezinebilir, hamle listesine tıklayarak pozisyonları inceleyebilirsin. Oyun incelemesi açıkken hamlenin kalitesi taşın üzerinde rozetle, en iyi alternatif ise tahtada yeşil okla gösterilir. Oyun incelemesi yalnızca oyun bittikten sonra açılabilir. Süreli oyunlarda rakibine <strong>+15 sn</strong> verebilirsin. Ön hamleyi iptal etmek için üstteki uyarıya tıkla veya tahtada sağ tıkla.</p>
             </aside>
         </div>
     </div>

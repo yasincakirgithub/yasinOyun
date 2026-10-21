@@ -4,187 +4,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anasayfa</title>
+    <title>Oyun Dünyası — Online Satranç, Okey, Amiral Battı ve Daha Fazlası</title>
+    <meta name="description" content="Arkadaşlarınla oda kurup satranç, 101 Okey, Amiral Battı, Kim Bu? ve Sayı Tahmin oyunlarını online oyna.">
+    <meta name="theme-color" content="#0B1020">
     <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-        :root {
-            --bg-main: #0b0f19;
-            --bg-card: #151a28;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --primary: #6366f1; /* İndigo / Mor */
-            --primary-hover: #4f46e5;
-            --accent: #06b6d4; /* Neon Mavi */
-            --border-color: #1e293b;
-        }
-
-        * { 
-            box-sizing: border-box; 
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
-            color: var(--text-main);
-            background-color: var(--bg-main);
-            /* Arka plan görseli + koyu katman ve hafif parlaklık */
-            background-image:
-                radial-gradient(circle at top, rgba(30, 27, 75, 0.65) 0%, rgba(11, 15, 25, 0.92) 55%),
-                url('{% static "core/img/background.png" %}');
-            background-size: cover, cover;
-            background-position: center, center;
-            background-repeat: no-repeat, no-repeat;
-            background-attachment: fixed;
-        }
-
-        .site-banner {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-radius: 16px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(6, 182, 212, 0.1);
-        }
-
-        .wrap {
-            width: min(1000px, 100%);
-            padding: 20px;
-        }
-
-        .games {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 18px;
-        }
-
-        .game-card {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding: 14px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
-        }
-
-        /* Kartın üzerine gelindiğinde oluşan neon parıltı efekti */
-        .game-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.15), 
-                        0 0 15px rgba(99, 102, 241, 0.1);
-        }
-
-        /* Kart görseli: kenardan kenara */
-        .game-card-image {
-            display: block;
-            width: calc(100% + 28px);
-            margin: -14px -14px 0;
-            aspect-ratio: 16 / 7;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border-color);
-            transition: transform 0.35s ease;
-        }
-
-        .game-card:hover .game-card-image {
-            transform: scale(1.05);
-        }
-
-        .tag {
-            align-self: flex-start;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--accent);
-            font-size: 10.5px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .game-card h2 { 
-            margin: 0; 
-            font-size: 18px; 
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .game-card p { 
-            margin: 0; 
-            font-size: 13px; 
-            line-height: 1.5; 
-            color: var(--text-muted); 
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .play {
-            margin-top: 2px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            align-self: flex-start;
-            padding: 8px 14px;
-            border-radius: 8px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 12.5px;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-
-        .game-card:hover .play {
-            background: var(--primary-hover);
-        }
-
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/platform.css' %}">
 </head>
-<body>
+<body class="platform-page">
     {% include 'core/_navbar.html' %}
-    <div class="wrap">
-        <img class="site-banner" src="{% static_v 'core/img/banner.png' %}"
-             alt="Yasincakir.com.tr — Oyun ve Eğlence Dünyası">
 
-        <div class="games" id="oyunlar">
-            {% for game in games %}
-            <a class="game-card" href="{% url game.url_name %}">
-                {% if game.image %}
-                <img class="game-card-image" src="{% static_v game.image %}" alt="{{ game.title }}" loading="lazy">
-                {% endif %}
-                <span class="tag">{{ game.tag }}</span>
-                <h2>{{ game.title }}</h2>
-                <p>{{ game.description }}</p>
-                <span class="play">Oyuna Başla &rarr;</span>
-            </a>
-            {% endfor %}
-        </div>
+    <main class="platform-main" id="main" tabindex="-1">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow eyebrow-dot">Canlı çok oyunculu platform</span>
+                    <h1 id="hero-title">Stratejini kur,<br><span class="gradient-text">masaya otur.</span></h1>
+                    <p class="hero-lead">
+                        Satrançtan 101 Okey'e, Amiral Battı'dan karakter tahminine kadar
+                        sevdiğin oyunları tek yerde oyna. Oda kur, kodunu paylaş ve
+                        arkadaşlarınla aynı masada buluş.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#oyunlar">
+                            Oyunları Keşfet
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a class="btn btn-secondary" href="#nasil-oynanir">Nasıl çalışır?</a>
+                    </div>
+                    <ul class="hero-facts" aria-label="Platform özellikleri">
+                        <li><strong>5 oyun</strong> tek platformda</li>
+                        <li><strong>2–4 oyuncu</strong> canlı odalar</li>
+                        <li><strong>Oda kodu</strong> ile hızlı davet</li>
+                    </ul>
+                </div>
 
-        <div class="footer">&copy; 2026 Yasin Çakır</div>
-    </div>
+                <div class="hero-visual">
+                    <div class="hero-collage">
+                        <a class="hero-tile" href="{% url 'satranc:home' %}">
+                            <img src="{% static_v 'core/img/satranc.webp' %}" alt=""
+                                 width="1600" height="497" loading="eager" fetchpriority="high">
+                            <span class="hero-tile-label">Satranç</span>
+                        </a>
+                        <a class="hero-tile" href="{% url 'kim:home' %}">
+                            <img src="{% static_v 'core/img/kim_bu.webp' %}" alt=""
+                                 width="1600" height="497" loading="eager">
+                            <span class="hero-tile-label">Kim Bu?</span>
+                        </a>
+                        <a class="hero-tile" href="{% url 'okey101:home' %}">
+                            <img src="{% static_v 'core/img/okey.webp' %}" alt=""
+                                 width="1600" height="497" loading="eager">
+                            <span class="hero-tile-label">101 Okey</span>
+                        </a>
+                        <a class="hero-tile" href="{% url 'amiral:home' %}">
+                            <img src="{% static_v 'core/img/amiral_batti.webp' %}" alt=""
+                                 width="1600" height="497" loading="eager">
+                            <span class="hero-tile-label">Amiral Battı</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section games-section" id="oyunlar" aria-labelledby="games-title">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Oyun kütüphanesi</span>
+                        <h2 id="games-title">Bir oyun seç, masaya otur</h2>
+                        <p>Her oyun aynı platformda, aynı arayüzde. Oda kodunu paylaşman yeterli.</p>
+                    </div>
+                    <a class="section-link" href="{% url 'core:games' %}">
+                        Tüm oyunlar
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true">
+                            <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="games-grid">
+                    {% for game in games %}
+                        {% include 'core/_game_card.html' with game=game %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="section how-section" id="nasil-oynanir" aria-labelledby="how-title">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="eyebrow">Üç adımda başla</span>
+                        <h2 id="how-title">Nasıl oynanır?</h2>
+                    </div>
+                </div>
+                <div class="how-grid">
+                    <article class="step-card">
+                        <span class="step-index">01</span>
+                        <h3>Oyununu seç</h3>
+                        <p>Strateji, masa oyunu veya parti oyunları arasından sana uygun olanı aç.</p>
+                    </article>
+                    <article class="step-card">
+                        <span class="step-index">02</span>
+                        <h3>Oda kur ya da katıl</h3>
+                        <p>Yeni bir masa aç veya arkadaşının paylaştığı kısa oda kodunu gir.</p>
+                    </article>
+                    <article class="step-card">
+                        <span class="step-index">03</span>
+                        <h3>Kodu paylaş ve oyna</h3>
+                        <p>Oda kodunu arkadaşlarına gönder. Herkes bağlanınca oyun başlar.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'core/_site_footer.html' %}
 </body>
 </html>

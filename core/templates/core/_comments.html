@@ -1,14 +1,17 @@
 {% load static static_version %}
-<section class="comments" id="yorumlar" data-game="{{ comments_game }}">
-    <h2 class="comments-title">Yorumlar</h2>
+<section class="comments" id="yorumlar" data-game="{{ comments_game }}" aria-labelledby="comments-title">
+    <h2 class="comments-title" id="comments-title">Yorumlar</h2>
 
     <div class="comments-list" id="comments-list">
-        <p class="comments-empty">Yorumlar yükleniyor...</p>
+        <div class="comment-skeleton" aria-hidden="true"></div>
+        <div class="comment-skeleton" aria-hidden="true"></div>
     </div>
 
     <form class="comment-form" id="comment-form" autocomplete="off">
+        <label class="sr-only" for="comment-name">Adın (opsiyonel)</label>
         <input type="text" id="comment-name" class="comment-name" maxlength="30"
                placeholder="Adın (opsiyonel)">
+        <label class="sr-only" for="comment-body">Yorumun</label>
         <textarea id="comment-body" class="comment-body" maxlength="500" rows="3"
                   placeholder="Yorumunu yaz..." required></textarea>
         <button type="submit" class="game-btn comment-submit">YORUM GÖNDER</button>

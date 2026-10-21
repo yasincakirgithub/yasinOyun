@@ -13,6 +13,63 @@ def legal_moves(fen):
     return [move.uci() for move in board.legal_moves]
 
 
+def premove_moves_for_color(fen, color):
+    """Return premove destinations for ``color``.
+
+    Besides fully legal moves, this includes speculative moves onto squares
+    currently occupied by a friendly piece. If that piece is captured on the
+    opponent's next move, the destination becomes available and the premove can
+    be played. Pawn pushes onto a friendly piece are excluded; pawn diagonal
+    captures are included because the capturing enemy piece will occupy the
+    square.
+    """
+    if color not in ('w', 'b'):
+        return []
+
+    board = chess.Board(fen)
+    target_turn = chess.WHITE if color == 'w' else chess.BLACK
+    if board.turn != target_turn:
+        board.turn = target_turn
+        board.ep_square = None
+
+    moves = {move.uci() for move in board.legal_moves}
+
+    for square, piece in board.piece_map().items():
+        if piece.color != target_turn or piece.piece_type == chess.KING:
+            continue
+
+        probe = board.copy()
+        probe.remove_piece_at(square)
+        for move in probe.generate_pseudo_legal_moves():
+            if move.to_square != square:
+                continue
+            moving = probe.piece_at(move.from_square)
+            if (
+                moving
+                and moving.piece_type == chess.PAWN
+                and chess.square_file(move.from_square) == chess.square_file(square)
+            ):
+                # A pawn cannot move forward onto a square vacated by capture.
+                continue
+            moves.add(move.uci())
+
+        promotion_rank = 7 if target_turn == chess.WHITE else 0
+        for from_square in chess.SquareSet(
+            chess.BB_PAWN_ATTACKS[not target_turn][square]
+        ):
+            pawn = board.piece_at(from_square)
+            if not pawn or pawn.color != target_turn or pawn.piece_type != chess.PAWN:
+                continue
+            base = chess.square_name(from_square) + chess.square_name(square)
+            if chess.square_rank(square) == promotion_rank:
+                for promotion in ('q', 'r', 'b', 'n'):
+                    moves.add(base + promotion)
+            else:
+                moves.add(base)
+
+    return sorted(moves)
+
+
 def turn_color(fen):
     """Whose turn it is ('w' or 'b')."""
     return 'w' if chess.Board(fen).turn == chess.WHITE else 'b'

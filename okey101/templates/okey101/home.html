@@ -11,9 +11,8 @@
 </head>
 <body>
     {% include 'core/_navbar.html' %}
-    <div class="game-container">
-        <img class="site-banner" src="{% static_v 'core/img/banner.png' %}"
-             alt="Yasincakir.com.tr — Oyun ve Eğlence Dünyası">
+    <div id="main" tabindex="-1" class="game-container">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
         <div class="game-header">
             <h1>101 Okey</h1>
             <p>4 kişilik klasik 101 Okey. Tekli veya eşli oyna; oda dolunca perlerini aç ve elini ilk bitiren ol.</p>

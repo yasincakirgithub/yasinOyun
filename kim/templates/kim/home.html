@@ -10,9 +10,8 @@
 </head>
 <body>
     {% include 'core/_navbar.html' %}
-    <div class="game-container">
-        <img class="site-banner" src="{% static_v 'core/img/banner.png' %}"
-             alt="Yasincakir.com.tr — Oyun ve Eğlence Dünyası">
+    <div id="main" tabindex="-1" class="game-container">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
         <div class="game-header">
             <h1>Kim Bu?</h1>
             <p>Online, iki kişilik karakter tahmin oyunu. Sorular sor, karakterleri ele ve rakibininkini bul!</p>

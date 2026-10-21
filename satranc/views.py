@@ -260,6 +260,10 @@ def get_room_state(request, room_code):
         'fen': room.fen,
         'turn': services.turn_color(room.fen),
         'legal_moves': services.legal_moves(room.fen),
+        'premove_moves': {
+            'w': services.premove_moves_for_color(room.fen, 'w'),
+            'b': services.premove_moves_for_color(room.fen, 'b'),
+        },
         'check': services.is_check(room.fen),
         'result': room.result or None,
         'winner_color': room.winner.color if room.winner else None,
@@ -281,7 +285,7 @@ def get_room_state(request, room_code):
 
 
 def review_game(request, room_code):
-    """Review every move of a finished (or ongoing) game with Stockfish."""
+    """Review every move of a finished game with Stockfish."""
     if not review.review_enabled():
         return JsonResponse(
             {'success': False, 'error': 'Oyun incelemesi devre dışı.'},
@@ -295,6 +299,14 @@ def review_game(request, room_code):
     )
     if not room:
         return JsonResponse({'success': False, 'error': 'Oda bulunamadı.'}, status=404)
+    if room.status != 'FINISHED':
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'Oyun bitmeden inceleme yapılamaz.',
+            },
+            status=409,
+        )
 
     move_rows = [
         {

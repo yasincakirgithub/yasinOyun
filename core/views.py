@@ -12,15 +12,20 @@ from .models import Comment
 # Games shown on the landing page.
 GAMES = [
     {
-        'slug': 'sayi',
-        'url_name': 'sayi:home',
-        'title': 'Sayı Tahmin Oyunu',
+        'slug': 'satranc',
+        'url_name': 'satranc:home',
+        'title': 'Satranç',
         'description': (
-            'Rakibinin 4 basamaklı gizli sayısını artı/eksi ipuçlarıyla '
-            'tahmin etmeye çalış.'
+            'Klasik iki kişilik satranç. Oda kur, kodu paylaş ya da '
+            'Stockfish botuna karşı stratejini test et.'
         ),
-        'tag': 'Rakam',
-        'image': 'sayi/img/sayi_tahmin.png',
+        'tag': 'Strateji',
+        'tone': 'violet',
+        'players': '2 oyuncu',
+        'mode': 'Canlı / Bot',
+        'image': 'core/img/satranc.webp',
+        'image_width': 1600,
+        'image_height': 497,
     },
     {
         'slug': 'kim-bu',
@@ -28,10 +33,31 @@ GAMES = [
         'title': 'Kim Bu?',
         'description': (
             'Gizli karakterini seç, evet/hayır soruları sor ve rakibinin '
-            'karakterini bul.'
+            'karakterini herkesten önce bul.'
         ),
-        'tag': 'Karakter',
-        'image': 'kim/img/kim_bu.png',
+        'tag': 'Parti',
+        'tone': 'coral',
+        'players': '2 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/kim_bu.webp',
+        'image_width': 1600,
+        'image_height': 497,
+    },
+    {
+        'slug': 'okey101',
+        'url_name': 'okey101:home',
+        'title': '101 Okey',
+        'description': (
+            '2–4 kişilik klasik 101 Okey. Oda kur, taş çek, perlerini aç '
+            've elini ilk bitiren ol.'
+        ),
+        'tag': 'Masa Oyunu',
+        'tone': 'amber',
+        'players': '2–4 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/okey.webp',
+        'image_width': 1600,
+        'image_height': 497,
     },
     {
         'slug': 'amiral',
@@ -39,39 +65,38 @@ GAMES = [
         'title': 'Amiral Battı',
         'description': (
             'Gemilerini yerleştir, koordinatlara ateş et ve rakibinin tüm '
-            'filosunu batır.'
+            'filosunu batırmak için hamle yap.'
         ),
         'tag': 'Strateji',
-        'image': 'amiral/img/amiral_batti.png',
+        'tone': 'cyan',
+        'players': '2 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/amiral_batti.webp',
+        'image_width': 1600,
+        'image_height': 497,
     },
     {
-        'slug': 'satranc',
-        'url_name': 'satranc:home',
-        'title': 'Satranç',
+        'slug': 'sayi',
+        'url_name': 'sayi:home',
+        'title': 'Sayı Tahmin Oyunu',
         'description': (
-            'Klasik iki kişilik satranç. Oda kur, kodu paylaş ve rakibini '
-            'mat etmeye çalış.'
+            'Rakibinin 4 basamaklı gizli sayısını artı/eksi ipuçlarıyla '
+            'tahmin etmeye çalış.'
         ),
-        'tag': 'Zeka',
-        'image': 'satranc/img/satranc.png',
-    },
-    {
-        'slug': 'okey101',
-        'url_name': 'okey101:home',
-        'title': '101 Okey',
-        'description': (
-            '2-4 kişilik klasik 101 Okey. Oda kur, taş çek, perlerini aç '
-            've elini ilk bitiren ol.'
-        ),
-        'tag': 'Kart',
-        'image': 'okey101/img/okey101.svg',
+        'tag': 'Mantık',
+        'tone': 'rose',
+        'players': '2 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/sayi_tahmin.svg',
+        'image_width': 1200,
+        'image_height': 675,
     },
 ]
 
 
 GAME_SLUGS = {game['slug'] for game in GAMES}
 COMMENT_LIMIT = 100
-GAMES_PAGE_SIZE = 3
+GAMES_PAGE_SIZE = 6
 _TR_SEARCH_MAP = str.maketrans({
     'ç': 'c', 'Ç': 'c', 'ğ': 'g', 'Ğ': 'g', 'ı': 'i', 'I': 'i', 'İ': 'i',
     'ö': 'o', 'Ö': 'o', 'ş': 's', 'Ş': 's', 'ü': 'u', 'Ü': 'u',

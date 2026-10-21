@@ -47,7 +47,7 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
-    padding: 40px 16px;
+    padding: calc(var(--nav-height) + 24px) 16px 40px;
     background-color: var(--bg-main);
     background-image: radial-gradient(circle at top, #1e1b4b 0%, var(--bg-main) 60%);
     background-attachment: fixed;
@@ -838,7 +838,7 @@ button, .cell {
 }
 
 @media (max-width: 640px) {
-    body { padding: 16px 8px; font-size: 15px; }
+    body { padding: calc(var(--nav-height) + 16px) 8px 16px; font-size: 15px; }
     .game-container { padding: 24px 16px; border-radius: 12px; }
     .game-header h1 { font-size: 2rem; }
     .player-info { flex-direction: column; gap: 12px; }
@@ -865,7 +865,7 @@ button, .cell {
 body {
     background-image:
         linear-gradient(rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.96)),
-        url('/static/core/img/background.png');
+        url('/static/core/img/background.webp');
     background-size: cover, cover;
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;

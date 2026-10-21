@@ -1,0 +1,29 @@
+{% load static static_version %}
+<a class="game-card tone-{{ game.tone }}" href="{% url game.url_name %}">
+    <div class="game-card-media">
+        <img src="{% static_v game.image %}"
+             alt="{{ game.title }} oyunu"
+             width="{{ game.image_width }}"
+             height="{{ game.image_height }}"
+             {% if eager %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+        <span class="game-card-tag">{{ game.tag }}</span>
+    </div>
+    <div class="game-card-body">
+        <h3>{{ game.title }}</h3>
+        <p>{{ game.description }}</p>
+        <div class="game-card-footer">
+            <span class="game-card-meta">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M16 20v-1.7a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20M9 10.3a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 20v-1.7a4 4 0 0 0-3-3.9M16 2.3a4 4 0 0 1 0 7.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ game.players }}
+            </span>
+            <span class="game-card-cta">
+                Oyna
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+        </div>
+    </div>
+</a>

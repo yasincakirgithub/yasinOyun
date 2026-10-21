@@ -60,7 +60,7 @@ body {
     color: var(--text-main);
     line-height: 1.5;
     min-height: 100vh;
-    padding: 40px 16px;
+    padding: calc(var(--nav-height) + 24px) 16px 40px;
     background-color: var(--bg-body);
     background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 30%),
                       radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.06), transparent 30%);
@@ -939,7 +939,7 @@ button,
 }
 
 @media (max-width: 640px) {
-    body { padding: 16px 12px; }
+    body { padding: calc(var(--nav-height) + 16px) 12px 16px; }
     
     .game-container { padding: 24px 16px; border-radius: var(--radius-md); }
 
@@ -974,7 +974,7 @@ button,
 body {
     background-image:
         linear-gradient(rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.96)),
-        url('/static/core/img/background.png');
+        url('/static/core/img/background.webp');
     background-size: cover, cover;
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;

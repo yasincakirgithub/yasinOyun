@@ -50,6 +50,7 @@ class ChessGame {
         this.initialFen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
         this.turn = 'w';
         this.legalMoves = [];
+        this.premoveMoves = [];
         this.moves = [];
         this.status = 'WAITING';
         this.result = null;
@@ -129,6 +130,7 @@ class ChessGame {
         this.opponentClock = document.getElementById('opponent-clock');
         this.selfClock = document.getElementById('self-clock');
         this.premoveIndicator = document.getElementById('premove-indicator');
+        this.premoveMove = document.getElementById('premove-move');
 
         this.gameActions = document.getElementById('game-actions');
         this.drawBtn = document.getElementById('draw-btn');
@@ -223,10 +225,16 @@ class ChessGame {
             if (event.key === 'Escape') {
                 this.closeGameOver();
                 this.closePromotion();
+                if (this.premove) {
+                    this.cancelPremove();
+                }
             }
         });
         if (this.reviewBtn) {
             this.reviewBtn.addEventListener('click', () => this.toggleReview());
+        }
+        if (this.premoveIndicator) {
+            this.premoveIndicator.addEventListener('click', () => this.cancelPremove(true));
         }
         if (this.navFirst) {
             this.navFirst.addEventListener('click', () => this.goToIndex(0));
@@ -276,6 +284,11 @@ class ChessGame {
         }
 
         this.board.addEventListener('pointerdown', (event) => this.onPointerDown(event));
+        this.board.addEventListener('contextmenu', (event) => {
+            if (!this.premove) return;
+            event.preventDefault();
+            this.cancelPremove(true);
+        });
         window.addEventListener('pointermove', (event) => this.onPointerMove(event));
         window.addEventListener('pointerup', (event) => this.onPointerUp(event));
         window.addEventListener('pointercancel', () => this.cancelDrag());
@@ -417,6 +430,8 @@ class ChessGame {
         this.flagSent = false;
 
         this.myColor = this.resolveMyColor();
+        const premoveMoves = data.premove_moves || {};
+        this.premoveMoves = this.myColor ? (premoveMoves[this.myColor] || []) : [];
 
         if (this.moves.length > previousMoveCount) {
             const latestMove = this.moves[this.moves.length - 1];
@@ -436,7 +451,7 @@ class ChessGame {
                 // Yeni hamle incelemeyi geçersiz kılar.
                 this.review = null;
                 this.reviewPanel.classList.add('hidden');
-                this.reviewBtn.textContent = 'OYUN İNCELEMESİ';
+                this.updateReviewButton();
             }
         }
 
@@ -487,6 +502,7 @@ class ChessGame {
         this.renderGameActions();
         this.renderGameOver();
         this.renderNavigation();
+        this.renderReviewAvailability();
         this.renderReview();
         this.renderEvalBar();
     }
@@ -663,13 +679,55 @@ class ChessGame {
         }
     }
 
+    reviewAvailable() {
+        return this.status === 'FINISHED';
+    }
+
+    updateReviewButton() {
+        if (!this.reviewBtn) return;
+        if (this.reviewLoading) {
+            this.reviewBtn.disabled = true;
+            this.reviewBtn.classList.remove('locked');
+            this.reviewBtn.textContent = 'İNCELENİYOR...';
+            this.reviewBtn.title = 'Stockfish oyunu inceliyor';
+            return;
+        }
+        if (!this.reviewAvailable()) {
+            this.reviewBtn.disabled = true;
+            this.reviewBtn.classList.add('locked');
+            this.reviewBtn.textContent = 'İNCELEME KİLİTLİ';
+            this.reviewBtn.title = 'Oyun bitmeden inceleme yapılamaz.';
+            return;
+        }
+        this.reviewBtn.disabled = false;
+        this.reviewBtn.classList.remove('locked');
+        this.reviewBtn.textContent = this.review ? 'İNCELEMEYİ KAPAT' : 'OYUN İNCELEMESİ';
+        this.reviewBtn.title = this.review
+            ? 'İnceleme panelini kapat'
+            : 'Oyunu Stockfish ile incele';
+    }
+
+    renderReviewAvailability() {
+        if (!this.reviewAvailable() && this.review) {
+            // Oyun yeniden başladıysa eski inceleme geçersizdir.
+            this.review = null;
+            this.reviewPanel.classList.add('hidden');
+            this.evalBar.classList.add('hidden');
+        }
+        this.updateReviewButton();
+    }
+
     toggleReview() {
         if (this.review) {
             this.review = null;
             this.reviewPanel.classList.add('hidden');
-            this.reviewBtn.textContent = 'OYUN İNCELEMESİ';
+            this.updateReviewButton();
             this.renderBoard();
             this.renderEvalBar();
+            return;
+        }
+        if (!this.reviewAvailable()) {
+            this.showToast('Oyun bitmeden inceleme yapılamaz.', true);
             return;
         }
         this.loadReview();
@@ -677,6 +735,11 @@ class ChessGame {
 
     loadReview() {
         if (this.reviewLoading) return;
+        if (!this.reviewAvailable()) {
+            this.showToast('Oyun bitmeden inceleme yapılamaz.', true);
+            this.updateReviewButton();
+            return;
+        }
         if (!this.moves.length) {
             this.showToast('İncelenecek hamle yok.', true);
             return;
@@ -686,8 +749,7 @@ class ChessGame {
         this.reviewRequestId += 1;
         const requestId = this.reviewRequestId;
 
-        this.reviewBtn.disabled = true;
-        this.reviewBtn.textContent = 'İNCELENİYOR...';
+        this.updateReviewButton();
         this.reviewPanel.classList.remove('hidden');
         this.reviewSummaryEl.classList.add('hidden');
         this.reviewDetailEl.classList.add('hidden');
@@ -700,15 +762,17 @@ class ChessGame {
                 if (!data.success) {
                     throw new Error(data.error || 'İnceleme yapılamadı');
                 }
+                if (!this.reviewAvailable()) {
+                    this.reviewLoading = false;
+                    this.reviewLoadingEl.classList.add('hidden');
+                    this.updateReviewButton();
+                    return;
+                }
                 this.review = data;
                 this.reviewLoading = false;
                 this.reviewLoadingEl.classList.add('hidden');
-                this.reviewBtn.disabled = false;
-                this.reviewBtn.textContent = 'İNCELEMEYİ KAPAT';
-                this.renderReview();
-                this.renderMoveList();
-                this.renderBoard();
-                this.renderEvalBar();
+                this.updateReviewButton();
+                this.render();
             })
             .catch((error) => {
                 if (requestId !== this.reviewRequestId) return;
@@ -716,8 +780,7 @@ class ChessGame {
                 this.reviewLoading = false;
                 this.reviewLoadingEl.classList.add('hidden');
                 this.reviewPanel.classList.add('hidden');
-                this.reviewBtn.disabled = false;
-                this.reviewBtn.textContent = 'OYUN İNCELEMESİ';
+                this.updateReviewButton();
                 this.showToast('Oyun incelemesi yapılamadı: ' + error.message, true);
             });
     }
@@ -725,6 +788,7 @@ class ChessGame {
     renderReview() {
         if (!this.reviewPanel || !this.reviewSummaryEl || !this.reviewDetailEl) return;
         if (!this.review) {
+            this.reviewSummaryEl.classList.add('hidden');
             this.reviewDetailEl.classList.add('hidden');
             return;
         }
@@ -734,30 +798,48 @@ class ChessGame {
         const black = summary.b || {};
 
         const accuracyCell = (label, stat, color) => {
-            const acc = stat.accuracy !== null && stat.accuracy !== undefined
-                ? `${stat.accuracy}%`
-                : '-';
+            const hasAccuracy = stat.accuracy !== null && stat.accuracy !== undefined;
+            const acc = hasAccuracy ? `${stat.accuracy}%` : '—';
+            const accWidth = hasAccuracy
+                ? Math.max(0, Math.min(100, Number(stat.accuracy)))
+                : 0;
             const counts = ['best', 'excellent', 'good', 'inaccuracy', 'mistake', 'blunder']
                 .map((key) => {
                     const value = stat[key] || 0;
                     if (!value) return '';
-                    const cls = key === 'best' ? 'excellent' : key;
-                    return `<span class="grade-chip grade-${cls}" title="${
+                    const icon = CLASSIFICATION_ICONS[key] || '';
+                    return `<span class="grade-chip grade-${key}" title="${
                         CLASSIFICATION_LABELS[key] || key
-                    }">${value}</span>`;
+                    }: ${value}"><span class="chip-icon" aria-hidden="true">${icon}</span>${value}</span>`;
                 })
                 .join('');
             return `
-                <div class="review-accuracy">
-                    <div class="review-side">${label} <span class="acc-value ${color}">${acc}</span></div>
-                    <div class="review-counts">${counts}</div>
-                </div>
+                <section class="review-player-card ${color}">
+                    <div class="review-player-top">
+                        <span class="review-player-name"><span class="review-player-dot" aria-hidden="true"></span>${label}</span>
+                        <strong class="review-player-accuracy">${acc}</strong>
+                    </div>
+                    <div class="review-accuracy-track" aria-hidden="true">
+                        <span style="width:${accWidth}%"></span>
+                    </div>
+                    <div class="review-counts">${counts || '<span class="review-counts-empty">Kayıtlı hamle yok</span>'}</div>
+                </section>
             `;
         };
 
-        this.reviewSummaryEl.innerHTML = accuracyCell('Beyaz', white, 'w')
-            + accuracyCell('Siyah', black, 'b')
-            + `<div class="review-depth">Derinlik: ${this.review.depth || '-'}</div>`;
+        this.reviewSummaryEl.innerHTML = `
+            <div class="review-summary-head">
+                <div>
+                    <span class="review-eyebrow">Stockfish analizi</span>
+                    <h4>Maç raporu</h4>
+                </div>
+                <span class="review-depth-pill">Derinlik ${this.review.depth || '—'}</span>
+            </div>
+            <div class="review-players">
+                ${accuracyCell('Beyaz', white, 'white')}
+                ${accuracyCell('Siyah', black, 'black')}
+            </div>
+        `;
         this.reviewSummaryEl.classList.remove('hidden');
 
         const index = this.currentIndex();
@@ -768,24 +850,40 @@ class ChessGame {
             const cls = detail.classification || 'unknown';
             const lossText = detail.cp_loss !== null && detail.cp_loss !== undefined
                 ? `${detail.cp_loss} cp`
-                : '-';
+                : '—';
+            const accuracy = detail.accuracy !== null && detail.accuracy !== undefined
+                ? `${detail.accuracy}%`
+                : '—';
+            const bestSan = detail.best_san || '—';
+            const moveNumber = `${detail.move_number}${detail.color === 'w' ? '.' : '...'}`;
+            const hasBestAlternative = detail.best_uci && detail.best_uci !== detail.uci;
             this.reviewDetailEl.innerHTML = `
-                <div class="review-move-title">
-                    ${detail.move_number}.${detail.color === 'w' ? '' : '..'} ${detail.san}
-                    <span class="grade-badge grade-${cls}">${label}</span>
+                <div class="review-detail-head">
+                    <div class="review-move-title">
+                        <span class="review-move-index">${moveNumber}</span>
+                        <span>${detail.san}</span>
+                        <span class="grade-badge grade-${cls}">${label}</span>
+                    </div>
+                    <span class="review-eval">${evalText}</span>
                 </div>
-                <div class="review-line">Değerlendirme: <strong>${evalText}</strong></div>
-                <div class="review-line">Kayıp: <strong>${lossText}</strong> · Doğruluk: <strong>${
-                    detail.accuracy !== null && detail.accuracy !== undefined ? detail.accuracy + '%' : '-'
-                }</strong></div>
-                <div class="review-line">En iyi hamle: <strong>${detail.best_san || '-'}</strong></div>
-                ${detail.best_uci && detail.best_uci !== detail.uci
-                    ? '<div class="review-line muted">Yeşil ok tahtada oynanabilecek en iyi hamleyi gösterir.</div>'
+                <div class="review-metrics">
+                    <div class="review-metric"><span>Kayıp</span><strong>${lossText}</strong></div>
+                    <div class="review-metric"><span>Doğruluk</span><strong>${accuracy}</strong></div>
+                    <div class="review-metric"><span>En iyi</span><strong title="${bestSan}">${bestSan}</strong></div>
+                </div>
+                ${hasBestAlternative
+                    ? '<div class="review-tip"><span aria-hidden="true">↗</span><span>Yeşil ok, tahtada oynanabilecek en iyi hamleyi gösterir.</span></div>'
                     : ''}
             `;
             this.reviewDetailEl.classList.remove('hidden');
         } else {
-            this.reviewDetailEl.innerHTML = '<div class="review-line muted">İncelemek için bir hamleye tıkla.</div>';
+            this.reviewDetailEl.innerHTML = `
+                <div class="review-empty">
+                    <span class="review-empty-icon" aria-hidden="true">◎</span>
+                    <strong>Hamle seç</strong>
+                    <span>Tahtadaki ya da listedeki bir hamleye tıklayarak değerlendirmeyi gör.</span>
+                </div>
+            `;
             this.reviewDetailEl.classList.remove('hidden');
         }
     }
@@ -962,6 +1060,7 @@ class ChessGame {
             if (target) {
                 cell.classList.add('target');
                 if (target.capture) cell.classList.add('capture');
+                if (target.friendly) cell.classList.add('friendly-target');
             }
 
             const piece = pieces[square];
@@ -1309,9 +1408,24 @@ class ChessGame {
             && this.turn !== this.myColor;
     }
 
+    cancelPremove(notify = false) {
+        if (!this.premove) return;
+        this.premove = null;
+        this.selected = null;
+        this.render();
+        if (notify) {
+            this.showToast('Ön hamle iptal edildi.');
+        }
+    }
+
     handlePremoveClick(square) {
         const pieces = this.pieceMap();
         const piece = pieces[square];
+
+        if (this.premove && !this.selected && square === this.premove.to) {
+            this.cancelPremove(true);
+            return;
+        }
 
         if (this.selected) {
             const from = this.selected;
@@ -1320,17 +1434,23 @@ class ChessGame {
                 this.render();
                 return;
             }
-            if (piece && piece.color === this.myColor) {
-                this.selected = square;
+            const candidates = this.premoveMoves.filter(
+                (uci) => uci.slice(0, 2) === from && uci.slice(2, 4) === square
+            );
+            if (candidates.length === 0) {
+                if (piece && piece.color === this.myColor) {
+                    this.selected = square;
+                    this.render();
+                    return;
+                }
+                this.selected = null;
                 this.render();
+                this.showToast('Bu taş oraya gidemez.', true);
                 return;
             }
-            const moving = pieces[from];
-            const isPromo = moving && moving.type === 'p'
-                && ((moving.color === 'w' && square[1] === '8')
-                    || (moving.color === 'b' && square[1] === '1'));
+
             this.selected = null;
-            if (isPromo) {
+            if (candidates.some((uci) => uci.length === 5)) {
                 this.pendingPromotion = { from, to: square, premove: true };
                 const color = this.myColor || 'w';
                 this.promotionButtons.forEach((btn) => {
@@ -1392,6 +1512,9 @@ class ChessGame {
             && this.isLive()
             && this.status === 'IN_PROGRESS';
         this.premoveIndicator.classList.toggle('hidden', !active);
+        if (active && this.premoveMove) {
+            this.premoveMove.textContent = `${this.premove.from} → ${this.premove.to}`;
+        }
     }
 
     // ------------------------------------------------------------------
@@ -1432,14 +1555,20 @@ class ChessGame {
         const targets = new Map();
         if (!this.selected || !this.isLive()) return targets;
 
+        const moves = this.isMyTurn() ? this.legalMoves : this.premoveMoves;
         const pieces = this.pieceMap();
-        this.legalMoves
+        moves
             .filter((uci) => uci.slice(0, 2) === this.selected)
             .forEach((uci) => {
                 const to = uci.slice(2, 4);
-                const capture = Boolean(pieces[to]);
+                const occupant = pieces[to];
+                const capture = Boolean(occupant);
+                const friendly = Boolean(occupant && occupant.color === this.myColor);
                 const existing = targets.get(to);
-                targets.set(to, { capture: capture || (existing && existing.capture) });
+                targets.set(to, {
+                    capture: capture || (existing && existing.capture),
+                    friendly: friendly || (existing && existing.friendly),
+                });
             });
         return targets;
     }
@@ -1598,6 +1727,7 @@ class ChessGame {
         this.optimisticUci = uci;
         this.turn = color === 'w' ? 'b' : 'w';
         this.legalMoves = [];
+        this.premoveMoves = [];
         this.selected = null;
         this.premove = null;
         this.playOptimisticSound(applied);
