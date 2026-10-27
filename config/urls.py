@@ -17,6 +17,8 @@ urlpatterns = [
     path('101-okey/', include('okey101.urls')),
     # Codenames word association game
     path('codenames/', include('codenames.urls')),
+    # FC Manager football squad-building game
+    path('fcmanager/', include('fcmanager.urls')),
     path('healthz/', codenames_health, name='healthz'),
     # Landing page (last so it only matches the root)
     path('', include('core.urls')),

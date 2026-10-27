@@ -1,0 +1,334 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Manager — Oda {{ room_code }}</title>
+    <meta name="theme-color" content="#07140f">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'fcmanager/css/game.css' %}">
+</head>
+<body class="fc-game-page" data-room-code="{{ room_code }}" data-room-exists="{{ room_exists|yesno:'1,0' }}">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+    <header class="fc-topbar">
+        <a class="fc-brand" href="{% url 'fcmanager:home' %}" aria-label="FC Manager ana sayfa">
+            <span class="fc-brand-mark" aria-hidden="true">FC</span>
+            <span class="fc-brand-name">FC Manager</span>
+        </a>
+        <div class="fc-topbar-center">
+            <span class="fc-room-label">Oda</span>
+            <button id="copy-code-btn" class="fc-room-code" type="button" title="Oda kodunu kopyala">{{ room_code }}</button>
+            <button id="share-btn" class="fc-icon-btn" type="button" title="Davet bağlantısını kopyala" aria-label="Davet bağlantısını kopyala">↗</button>
+        </div>
+        <div class="fc-topbar-actions">
+            <span id="connection-pill" class="fc-connection is-connecting" role="status" aria-live="polite">Bağlanıyor…</span>
+            <button id="leave-btn" class="fc-ghost-btn" type="button">Odadan ayrıl</button>
+            <a class="fc-ghost-btn" href="{% url 'fcmanager:home' %}">Ana sayfa</a>
+        </div>
+    </header>
+
+    <main id="main" class="fc-app" tabindex="-1">
+        <section id="fc-loading" class="fc-loading" aria-live="polite">
+            <div class="fc-spinner" aria-hidden="true"></div>
+            <h1>Oda yükleniyor</h1>
+            <p id="loading-text">Bağlantı kuruluyor…</p>
+        </section>
+
+        <section id="fc-join-gate" class="fc-gate" hidden>
+            <div class="fc-gate-card">
+                <span class="fc-eyebrow">Davet edildin</span>
+                <h1 id="gate-title">Odaya katıl</h1>
+                <p id="gate-copy" class="fc-muted">Menajer adını girerek <strong>{{ room_code }}</strong> numaralı odaya katıl.</p>
+                <label class="fc-label" for="gate-name">Menajer adın</label>
+                <input id="gate-name" class="fc-input" type="text" maxlength="30" autocomplete="nickname" placeholder="Adın">
+                <p id="gate-error" class="fc-error" role="alert" hidden></p>
+                <button id="gate-join-btn" class="fc-btn fc-btn-primary" type="button">KATIL</button>
+                <button id="gate-resume-btn" class="fc-btn fc-btn-secondary" type="button" hidden>KAYITLI OTURUMLA DEVAM ET</button>
+                <a class="fc-link" href="{% url 'fcmanager:home' %}">Ana sayfaya dön</a>
+            </div>
+        </section>
+
+        <section id="fc-lobby" class="fc-lobby" hidden aria-labelledby="lobby-title">
+            <div class="fc-lobby-head">
+                <div>
+                    <span class="fc-eyebrow">Bekleme odası</span>
+                    <h1 id="lobby-title">Menajer masası hazır.</h1>
+                    <p class="fc-muted">
+                        <strong id="lobby-count">0/2</strong> menajer ·
+                        <span id="lobby-status">Rakip bekleniyor</span>
+                    </p>
+                </div>
+                <div class="fc-lobby-actions">
+                    <button id="lobby-copy-btn" class="fc-btn fc-btn-secondary fc-btn-inline" type="button">Davet linkini kopyala</button>
+                </div>
+            </div>
+
+            <div class="fc-lobby-grid">
+                <section class="fc-panel" aria-labelledby="lobby-players-title">
+                    <div class="fc-panel-head">
+                        <div>
+                            <h2 id="lobby-players-title">Menajerler</h2>
+                            <p class="fc-muted">Oda sahibi sezonu başlattığında bütçe, ortak görevler ve transfer piyasası açıklanır.</p>
+                        </div>
+                        <span id="lobby-host-badge" class="fc-badge">Host: —</span>
+                    </div>
+                    <div id="lobby-players" class="fc-player-list" aria-live="polite"></div>
+
+                    <div class="fc-start-box">
+                        <div>
+                            <h3>Sezonu başlat</h3>
+                            <p id="lobby-start-hint" class="fc-muted">Oyunu başlatmak için 2 menajer gerekli.</p>
+                            <ul id="lobby-start-errors" class="fc-error-list" hidden></ul>
+                        </div>
+                        <button id="lobby-start-btn" class="fc-btn fc-btn-primary" type="button" disabled>OYUNU BAŞLAT</button>
+                    </div>
+                </section>
+
+                <section class="fc-panel" aria-labelledby="lobby-rules-title">
+                    <div class="fc-panel-head">
+                        <h2 id="lobby-rules-title">Nasıl oynanır?</h2>
+                    </div>
+                    <ol class="fc-rules">
+                        <li><strong>Sezon açılır:</strong> Rastgele bir transfer bütçesi ve iki menajere ortak 4 görev verilir.</li>
+                        <li><strong>Kadronu kur:</strong> 80 oyuncu transfer piyasasından 4-3-3 dizilişine 11 oyuncu sürükle.</li>
+                        <li><strong>Görevleri tamamla:</strong> Ülke, lig, yaş, rating ve kadro yapısı hedeflerini tutturmaya çalış.</li>
+                        <li><strong>Kilitle ve maçı başlat:</strong> İki menajer de kadrosunu kilitleyince oda sahibi maçı başlatır.</li>
+                        <li><strong>Mini simülasyon:</strong> Kadro gücü, görev başarısı ve futbolun rastgeleliği skoru belirler.</li>
+                    </ol>
+                    <div class="fc-lobby-note">
+                        <span>💰</span>
+                        <p>Bütçe her sezon rastgele belirlenir. Pahalı yıldızlar her zaman daha iyi bir kadro anlamına gelmez; görev uyumu maç gücüne doğrudan yansır.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section id="fc-draft" class="fc-draft" hidden aria-labelledby="draft-title">
+            <h1 id="draft-title" class="fc-sr-only">FC Manager kadro kurma ekranı</h1>
+
+            <div class="fc-draft-top">
+                <article class="fc-budget-card">
+                    <span class="fc-card-eyebrow">Transfer bütçesi</span>
+                    <strong id="budget-eur">€—</strong>
+                    <span id="budget-try" class="fc-budget-try">₺—</span>
+                    <div class="fc-budget-meta">
+                        <span>Harcanan <b id="budget-spent">€0</b></span>
+                        <span>Kalan <b id="budget-remaining">€0</b></span>
+                    </div>
+                    <div class="fc-budget-bar"><span id="budget-bar"></span></div>
+                    <span id="budget-pct" class="fc-budget-pct">%0</span>
+                </article>
+
+                <article class="fc-draft-status-card">
+                    <div class="fc-you-row">
+                        <span id="you-side" class="fc-side-badge">EV</span>
+                        <strong id="you-name">—</strong>
+                        <span id="you-locked-badge" class="fc-badge">Kadro açık</span>
+                    </div>
+                    <div class="fc-status-grid">
+                        <div><span>Kadro</span><strong id="squad-count">0/11</strong></div>
+                        <div><span>Görev</span><strong id="challenge-summary">0/4</strong></div>
+                        <div><span>Durum</span><strong id="draft-status">Kadro kuruluyor</strong></div>
+                    </div>
+                </article>
+
+                <article class="fc-opponent-card">
+                    <div class="fc-opponent-head">
+                        <span class="fc-card-eyebrow">Rakip</span>
+                        <span id="opp-status" class="fc-badge">Bağlı</span>
+                    </div>
+                    <strong id="opp-name">Rakip bekleniyor</strong>
+                    <div class="fc-opponent-meta">
+                        <span id="opp-locked">Kadro açık</span>
+                        <span id="opp-squad-count">0/11</span>
+                        <span id="opp-spent">€0</span>
+                    </div>
+                    <div id="opp-challenges" class="fc-opp-challenges"></div>
+                    <div id="opp-squad" class="fc-opp-squad"></div>
+                </article>
+            </div>
+
+            <div class="fc-draft-grid">
+                <aside class="fc-panel fc-market-panel" aria-labelledby="market-title">
+                    <div class="fc-panel-head">
+                        <div>
+                            <h2 id="market-title">Transfer piyasası</h2>
+                            <p class="fc-muted">Oyuncuyu sahaya sürükle veya seçip mevkiye tıkla.</p>
+                        </div>
+                        <span id="market-count" class="fc-badge">80 oyuncu</span>
+                    </div>
+                    <div class="fc-market-controls">
+                        <input id="market-search" class="fc-input" type="search" placeholder="Oyuncu, kulüp, ülke ara…" autocomplete="off">
+                        <div id="market-groups" class="fc-chip-row" role="group" aria-label="Mevki filtresi">
+                            <button class="fc-chip is-active" type="button" data-group="all">Tümü</button>
+                            <button class="fc-chip" type="button" data-group="GK">GK</button>
+                            <button class="fc-chip" type="button" data-group="DEF">DEF</button>
+                            <button class="fc-chip" type="button" data-group="MID">MID</button>
+                            <button class="fc-chip" type="button" data-group="FWD">FWD</button>
+                        </div>
+                        <div class="fc-market-row">
+                            <label class="fc-select-label">Sırala
+                                <select id="market-sort" class="fc-select">
+                                    <option value="rating">Genel puan</option>
+                                    <option value="value_desc">Değer (yüksek)</option>
+                                    <option value="value_asc">Değer (düşük)</option>
+                                    <option value="age">Yaş (genç)</option>
+                                </select>
+                            </label>
+                            <label class="fc-check">
+                                <input id="market-affordable" type="checkbox">
+                                <span>Sadece bütçeme uygun</span>
+                            </label>
+                        </div>
+                        <div id="market-selected-hint" class="fc-selected-hint" hidden></div>
+                    </div>
+                    <div id="market-list" class="fc-market-list" aria-live="polite"></div>
+                </aside>
+
+                <section class="fc-panel fc-pitch-panel" aria-labelledby="pitch-title">
+                    <div class="fc-panel-head">
+                        <div>
+                            <h2 id="pitch-title">İlk 11’in</h2>
+                            <p class="fc-muted">4-3-3 · Mevki uyumuna dikkat et.</p>
+                        </div>
+                        <span id="pitch-badge" class="fc-badge">0/11</span>
+                    </div>
+                    <div class="fc-pitch-wrap">
+                        <div id="pitch" class="fc-pitch" aria-label="Futbol sahası">
+                            <div class="fc-pitch-stripes" aria-hidden="true"></div>
+                            <div class="fc-pitch-lines" aria-hidden="true">
+                                <span class="fc-pitch-halfway"></span>
+                                <span class="fc-pitch-center-circle"></span>
+                                <span class="fc-pitch-penalty fc-pitch-penalty-top"></span>
+                                <span class="fc-pitch-penalty fc-pitch-penalty-bottom"></span>
+                                <span class="fc-pitch-goal fc-pitch-goal-top"></span>
+                                <span class="fc-pitch-goal fc-pitch-goal-bottom"></span>
+                            </div>
+                            <div id="pitch-slots" class="fc-pitch-slots"></div>
+                        </div>
+                    </div>
+                    <div class="fc-pitch-footer">
+                        <span id="pitch-hint">Bir oyuncu kartını sürükle veya önce oyuncuya sonra mevkiye tıkla.</span>
+                        <button id="clear-squad-btn" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">Kadroyu temizle</button>
+                    </div>
+                </section>
+
+                <aside class="fc-draft-side">
+                    <section class="fc-panel fc-challenges-panel" aria-labelledby="challenges-title">
+                        <div class="fc-panel-head">
+                            <div>
+                                <h2 id="challenges-title">Ortak görevler</h2>
+                                <p class="fc-muted">İki menajer için aynı hedefler.</p>
+                            </div>
+                            <span id="challenge-badge" class="fc-badge">0/4</span>
+                        </div>
+                        <div id="challenge-list" class="fc-challenge-list"></div>
+                        <p class="fc-note">Tamamlanmayan her görev maç gücünden puan düşürür.</p>
+                    </section>
+
+                    <section class="fc-panel fc-actions-panel" aria-labelledby="actions-title">
+                        <div class="fc-panel-head">
+                            <h2 id="actions-title">Maç kontrolü</h2>
+                        </div>
+                        <p id="action-hint" class="fc-muted">11 mevki dolduğunda kadronu kilitle.</p>
+                        <div class="fc-action-stack">
+                            <button id="lock-btn" class="fc-btn fc-btn-primary" type="button" disabled>KADROYU KİLİTLE</button>
+                            <button id="unlock-btn" class="fc-btn fc-btn-secondary" type="button" hidden>KİLİDİ AÇ</button>
+                            <button id="start-match-btn" class="fc-btn fc-btn-gold" type="button" disabled>MAÇI BAŞLAT</button>
+                        </div>
+                        <p id="host-hint" class="fc-note">Maçı yalnızca oda sahibi başlatabilir.</p>
+                    </section>
+                </aside>
+            </div>
+        </section>
+
+        <section id="fc-match" class="fc-match" hidden aria-labelledby="match-title">
+            <h1 id="match-title" class="fc-sr-only">Maç simülasyonu</h1>
+            <div class="fc-match-scoreboard">
+                <div class="fc-match-team">
+                    <span class="fc-side-badge">EV</span>
+                    <strong id="match-home-name">—</strong>
+                    <small id="match-home-sub">—</small>
+                </div>
+                <div class="fc-match-center">
+                    <div class="fc-match-score">
+                        <strong id="match-home-score">0</strong>
+                        <span>:</span>
+                        <strong id="match-away-score">0</strong>
+                    </div>
+                    <div id="match-pen" class="fc-match-pen" hidden></div>
+                    <div class="fc-match-minute">
+                        <span id="match-minute">0'</span>
+                        <span id="match-phase">Maç başlıyor</span>
+                    </div>
+                    <div class="fc-match-progress"><span id="match-progress"></span></div>
+                </div>
+                <div class="fc-match-team is-away">
+                    <span class="fc-side-badge">DEP</span>
+                    <strong id="match-away-name">—</strong>
+                    <small id="match-away-sub">—</small>
+                </div>
+            </div>
+
+            <div class="fc-match-grid">
+                <section class="fc-panel fc-commentary-panel" aria-labelledby="commentary-title">
+                    <div class="fc-panel-head">
+                        <h2 id="commentary-title">Canlı anlatım</h2>
+                        <span id="match-event-count" class="fc-badge">0 olay</span>
+                    </div>
+                    <div id="match-commentary" class="fc-commentary" aria-live="polite"></div>
+                </section>
+
+                <aside class="fc-match-side">
+                    <section class="fc-panel" aria-labelledby="match-stats-title">
+                        <div class="fc-panel-head"><h2 id="match-stats-title">Maç istatistikleri</h2></div>
+                        <div id="match-stats" class="fc-stats"></div>
+                    </section>
+                    <section class="fc-panel" aria-labelledby="match-challenges-title">
+                        <div class="fc-panel-head"><h2 id="match-challenges-title">Görev sonuçları</h2></div>
+                        <div id="match-challenges" class="fc-match-challenges"></div>
+                    </section>
+                </aside>
+            </div>
+
+            <div class="fc-match-actions">
+                <button id="match-skip-btn" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">SİMÜLASYONU ATLA</button>
+                <button id="new-season-btn" class="fc-btn fc-btn-gold fc-btn-inline" type="button" hidden>YENİ SEZON</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="fc-toast" role="status" aria-live="polite" hidden></div>
+
+    <div id="fc-result" class="fc-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="result-title">
+        <div class="fc-result-card">
+            <span class="fc-eyebrow">Maç sonucu</span>
+            <h2 id="result-title">—</h2>
+            <p id="result-copy" class="fc-muted"></p>
+            <div id="result-score" class="fc-result-score"></div>
+            <div id="result-mvp" class="fc-result-mvp"></div>
+            <div id="result-stats" class="fc-result-stats"></div>
+            <div class="fc-result-actions">
+                <button id="result-close" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">Maçı incele</button>
+                <button id="result-new" class="fc-btn fc-btn-gold fc-btn-inline" type="button" hidden>YENİ SEZON</button>
+                <a class="fc-btn fc-btn-secondary fc-btn-inline" href="{% url 'fcmanager:home' %}">Ana sayfa</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="fc-confirm" class="fc-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div class="fc-result-card fc-confirm-card">
+            <h2 id="confirm-title">Odadan ayrıl</h2>
+            <p id="confirm-copy" class="fc-muted">Odadan ayrılmak istediğine emin misin? Devam eden sezon varsa rakibin etkilenebilir.</p>
+            <div class="fc-result-actions">
+                <button id="confirm-cancel" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">Vazgeç</button>
+                <button id="confirm-leave" class="fc-btn fc-btn-danger fc-btn-inline" type="button">Ayrıl</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static_v 'fcmanager/js/game.js' %}"></script>
+</body>
+</html>

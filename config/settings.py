@@ -10,6 +10,7 @@ Hosts all games in one project:
   - ``satranc`` : two-player online chess game (python-chess)
   - ``okey101`` : multiplayer 101 Okey game
   - ``codenames``: real-time team word-association game
+  - ``fcmanager``: two-player football squad-building and match simulation game
 
 The games share a single PostgreSQL database and Redis instance.
 """
@@ -55,6 +56,9 @@ CSRF_TRUSTED_ORIGINS = [
 # ---------------------------------------------------------------------------
 
 INSTALLED_APPS = [
+    # Put Daphne first so `manage.py runserver` serves the ASGI application and
+    # WebSocket routes work locally without a separate uvicorn/daphne process.
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +73,7 @@ INSTALLED_APPS = [
     'satranc',
     'okey101',
     'codenames',
+    'fcmanager',
 ]
 
 MIDDLEWARE = [
@@ -187,19 +192,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # NOTE: redis-py >= 8 defaults socket_timeout to 5s, which collides with the
 # layer's blocking BZPOPMIN (brpop_timeout = 5s) and raises redis TimeoutError.
 # Set socket_timeout=None so the blocking read never times out client-side.
+#
+# Redis is optional for local play. Without REDIS_URL we use the in-memory
+# layer, which keeps WebSockets working in a single-process dev server instead
+# of making every HTTP action wait for a failed Redis connection. Multi-process
+# deployments must set REDIS_URL so broadcasts reach every worker.
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [{
-                'address': os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379'),
-                'socket_timeout': None,
-                'socket_connect_timeout': 5,
-            }],
+REDIS_URL = os.environ.get('REDIS_URL', '').strip()
+# A single-process DEBUG server does not need Redis, and an unreachable Redis
+# would otherwise add its connect timeout to every HTTP action.
+if REDIS_URL and not DEBUG:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': [{
+                    'address': REDIS_URL,
+                    'socket_timeout': None,
+                    'socket_connect_timeout': 2,
+                }],
+            },
         },
-    },
-}
+    }
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        },
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -302,5 +322,6 @@ LOGGING = {
         'amiral': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'satranc': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'codenames': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'fcmanager': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }

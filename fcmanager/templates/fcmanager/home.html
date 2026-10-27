@@ -1,0 +1,145 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC Manager — Futbol Kadro Kurma ve Maç Simülasyonu</title>
+    <meta name="description" content="FC26 oyuncu verisiyle 2 kişilik menajerlik düellosu. Bütçeni yönet, ortak görevleri tamamla, sürükle-bırak ile kadronu kur ve mini maç simülasyonunda kazan.">
+    <meta name="theme-color" content="#07140f">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
+    <link rel="stylesheet" href="{% static_v 'fcmanager/css/home.css' %}">
+</head>
+<body class="fc-home-page">
+    {% include 'core/_navbar.html' %}
+    <div id="main" tabindex="-1" class="game-container fc-home">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
+
+        <section class="fc-hero" aria-labelledby="fc-title">
+            <div class="fc-hero-copy">
+                <span class="fc-kicker">
+                    <span class="fc-kicker-dot" aria-hidden="true"></span>
+                    FC26 verisi · 2 menajer · canlı oda
+                </span>
+                <h1 id="fc-title">FC Manager</h1>
+                <p class="fc-lead">
+                    Rastgele bir bütçe ve iki menajere ortak görevler verilir.
+                    Sürükle-bırak ile 11’ini kur, görevleri tamamla ve
+                    mini maç simülasyonunda rakibini devir.
+                </p>
+                <div class="fc-hero-chips" aria-label="Oyun özellikleri">
+                    <span>€400M – ₺1T bütçe</span>
+                    <span>Ortak görevler</span>
+                    <span>Sürükle-bırak kadro</span>
+                    <span>Mini maç simülasyonu</span>
+                </div>
+            </div>
+
+            <div class="fc-hero-art" aria-hidden="true">
+                <div class="fc-pitch-mini">
+                    <span class="fc-pitch-line fc-pitch-half"></span>
+                    <span class="fc-pitch-circle"></span>
+                    <span class="fc-pitch-box fc-pitch-box-left"></span>
+                    <span class="fc-pitch-box fc-pitch-box-right"></span>
+                    <span class="fc-dot fc-dot-1"></span>
+                    <span class="fc-dot fc-dot-2"></span>
+                    <span class="fc-dot fc-dot-3"></span>
+                    <span class="fc-dot fc-dot-4"></span>
+                    <span class="fc-dot fc-dot-5"></span>
+                    <span class="fc-dot fc-dot-6"></span>
+                    <span class="fc-dot fc-dot-7"></span>
+                </div>
+                <div class="fc-float-card fc-float-card-a">
+                    <span class="fc-float-rating">91</span>
+                    <span class="fc-float-name">Yıldız Santrfor</span>
+                    <span class="fc-float-meta">ST · 24 yaş</span>
+                    <span class="fc-float-value">€84,5M</span>
+                </div>
+                <div class="fc-float-card fc-float-card-b">
+                    <span class="fc-float-icon">🌍</span>
+                    <span>
+                        <strong>3 İspanyol oyuncu</strong>
+                        <small>2/3 tamamlandı</small>
+                    </span>
+                </div>
+                <div class="fc-ball" aria-hidden="true"></div>
+            </div>
+        </section>
+
+        <div class="fc-name-field">
+            <label for="player-name">Adın</label>
+            <input id="player-name" type="text" maxlength="30" autocomplete="nickname" placeholder="Menajer adın">
+        </div>
+
+        <div class="home-content fc-actions">
+            <div class="game-card">
+                <span class="fc-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4"/>
+                    </svg>
+                </span>
+                <h2>Oda Kur</h2>
+                <p>Yeni bir menajerlik odası aç, bütçeni ve ortak görevleri belirle, oda kodunu rakibinle paylaş.</p>
+                <button id="create-btn" class="game-btn" type="button">ODA KUR</button>
+            </div>
+
+            <div class="game-card">
+                <span class="fc-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <h2>Oyuna Katıl</h2>
+                <p>Rakibinin paylaştığı 6 haneli oda kodunu gir. Aynı görevler ve aynı transfer piyasası seni bekliyor.</p>
+                <input id="room-code-input" type="text" maxlength="6"
+                       autocomplete="off" spellcheck="false" placeholder="Oda Kodu"
+                       value="{{ invite_code }}">
+                <button id="join-btn" class="game-btn" type="button">KATIL</button>
+            </div>
+        </div>
+
+        <p id="home-error" class="home-error" role="alert" hidden></p>
+        <p class="lobby-note">2 oyuncu · 80 oyuncu transfer piyasası · 4 ortak görev · 11 kişilik kadro</p>
+        <p class="lobby-note">Aynı odada aynı adı iki kez kullanamazsın. Farklı bir menajer olarak katılmak için farklı bir ad gir.</p>
+
+        <section class="fc-steps" aria-labelledby="fc-steps-title">
+            <div class="fc-steps-head">
+                <span class="fc-kicker">Nasıl oynanır</span>
+                <h2 id="fc-steps-title">Dört adımda sahadaki yerini al.</h2>
+            </div>
+            <div class="fc-steps-grid">
+                <article class="fc-step">
+                    <span class="fc-step-number">01</span>
+                    <h3>Oda kur, rakibini çağır</h3>
+                    <p>Oda kodu ile arkadaşını davet et. İki menajer hazır olduğunda oda sahibi sezonu başlatır.</p>
+                </article>
+                <article class="fc-step">
+                    <span class="fc-step-number">02</span>
+                    <h3>Bütçeni ve görevleri gör</h3>
+                    <p>Rastgele bir transfer bütçesi ve iki taraf için ortak görevler açıklanır. Piyasa her iki menajer için aynıdır.</p>
+                </article>
+                <article class="fc-step">
+                    <span class="fc-step-number">03</span>
+                    <h3>11’ini sürükle-bırak</h3>
+                    <p>Oyuncu kartlarını sahaya taşı, mevki uyumuna ve bütçeye dikkat et. Görevleri tamamlayan kadro daha güçlü başlar.</p>
+                </article>
+                <article class="fc-step">
+                    <span class="fc-step-number">04</span>
+                    <h3>Maçı izle, kupayı kaldır</h3>
+                    <p>Oda sahibi maçı başlatır. Kadro gücü ve futbolun rastgeleliği mini simülasyonda buluşur.</p>
+                </article>
+            </div>
+        </section>
+
+        {% include 'core/_comments.html' with comments_game='fcmanager' %}
+
+        <div class="footer">
+            <p>&copy; 2026 FC Manager — Futbol menajerlik düellosu</p>
+        </div>
+    </div>
+
+    <script src="{% static_v 'fcmanager/js/home.js' %}"></script>
+</body>
+</html>

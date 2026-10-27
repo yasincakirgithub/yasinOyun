@@ -76,6 +76,22 @@ GAMES = [
         'image_height': 497,
     },
     {
+        'slug': 'fcmanager',
+        'url_name': 'fcmanager:home',
+        'title': 'FC Manager',
+        'description': (
+            'Bütçeni yönet, ortak görevleri tamamla ve sürükle-bırak ile '
+            'hayalindeki 11’i kur. Rakibinle mini maç simülasyonunda karşılaş.'
+        ),
+        'tag': 'Spor',
+        'tone': 'emerald',
+        'players': '2 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/fcmanager.svg',
+        'image_width': 1600,
+        'image_height': 497,
+    },
+    {
         'slug': 'amiral',
         'url_name': 'amiral:home',
         'title': 'Amiral Battı',

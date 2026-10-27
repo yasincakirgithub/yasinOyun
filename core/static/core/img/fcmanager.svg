@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="497" viewBox="0 0 1600 497" role="img" aria-labelledby="title desc">
+  <title id="title">FC Manager</title>
+  <desc id="desc">Futbol sahası, oyuncu kartları ve menajerlik teması</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#06150f"/>
+      <stop offset="0.45" stop-color="#0b1f17"/>
+      <stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.75" cy="0.2" r="0.7">
+      <stop offset="0" stop-color="#22c55e" stop-opacity=".34"/>
+      <stop offset="0.55" stop-color="#22c55e" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pitch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f5132"/>
+      <stop offset="1" stop-color="#072d1c"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6ee7b7"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#020617" flood-opacity=".55"/>
+    </filter>
+    <pattern id="stripes" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="80" height="80" fill="none"/>
+      <rect width="40" height="80" fill="#ffffff" opacity=".018"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="497" fill="url(#bg)"/>
+  <rect width="1600" height="497" fill="url(#glow)"/>
+  <rect width="1600" height="497" fill="url(#stripes)"/>
+
+  <!-- decorative dotted grid -->
+  <g fill="#6ee7b7" opacity=".12">
+    <circle cx="40" cy="430" r="2"/><circle cx="80" cy="430" r="2"/><circle cx="120" cy="430" r="2"/>
+    <circle cx="40" cy="460" r="2"/><circle cx="80" cy="460" r="2"/><circle cx="120" cy="460" r="2"/>
+    <circle cx="40" cy="490" r="2"/><circle cx="80" cy="490" r="2"/><circle cx="120" cy="490" r="2"/>
+  </g>
+
+  <!-- left copy -->
+  <g>
+    <rect x="92" y="92" width="258" height="34" rx="17" fill="#22c55e" opacity=".14" stroke="#4ade80" stroke-opacity=".38"/>
+    <circle cx="112" cy="109" r="5" fill="#4ade80"/>
+    <text x="128" y="115" fill="#bbf7d0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2.2">FUTBOL MENAJERLİK DÜELLOSU</text>
+
+    <text x="88" y="218" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="88" font-weight="900" letter-spacing="-3">FC MANAGER</text>
+    <text x="92" y="264" fill="url(#green)" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="700" letter-spacing="5">KADRONU KUR • BÜTÇENİ YÖNET • MAÇI KAZAN</text>
+
+    <text x="94" y="322" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="18">Sürükle-bırak ile 11’ini diz, ortak görevleri tamamla ve</text>
+    <text x="94" y="350" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="18">mini maç simülasyonunda rakibini devir.</text>
+
+    <g transform="translate(92 386)">
+      <rect width="148" height="46" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+      <text x="18" y="29" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">€400M — ₺1T</text>
+      <rect x="190" width="148" height="46" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+      <text x="208" y="29" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">11 OYUNCU</text>
+      <rect x="380" width="148" height="46" rx="12" fill="#ffffff" opacity=".06" stroke="#ffffff" stroke-opacity=".14"/>
+      <text x="398" y="29" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700">2 MENAJER</text>
+    </g>
+  </g>
+
+  <!-- right pitch -->
+  <g transform="translate(880 58) rotate(-3 300 190)" filter="url(#shadow)">
+    <rect x="0" y="0" width="600" height="380" rx="24" fill="url(#pitch)" stroke="#4ade80" stroke-opacity=".28"/>
+    <g stroke="#e2e8f0" stroke-opacity=".28" fill="none" stroke-width="2">
+      <rect x="22" y="20" width="556" height="340" rx="4"/>
+      <line x1="300" y1="20" x2="300" y2="360"/>
+      <circle cx="300" cy="190" r="54"/>
+      <circle cx="300" cy="190" r="3" fill="#e2e8f0" fill-opacity=".4"/>
+      <rect x="22" y="108" width="78" height="164"/>
+      <rect x="22" y="146" width="34" height="88"/>
+      <rect x="500" y="108" width="78" height="164"/>
+      <rect x="544" y="146" width="34" height="88"/>
+    </g>
+    <!-- player dots -->
+    <g>
+      <circle cx="118" cy="190" r="17" fill="#22d3ee" opacity=".9"/>
+      <circle cx="200" cy="106" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="200" cy="190" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="200" cy="274" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="300" cy="118" r="17" fill="#fbbf24" opacity=".95"/>
+      <circle cx="300" cy="190" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="300" cy="262" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="400" cy="106" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="400" cy="190" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="400" cy="274" r="17" fill="#f8fafc" opacity=".9"/>
+      <circle cx="500" cy="190" r="17" fill="#22c55e" opacity=".95"/>
+    </g>
+    <!-- connection lines -->
+    <g stroke="#6ee7b7" stroke-opacity=".28" stroke-width="2" stroke-dasharray="6 8">
+      <path d="M200 106 300 118 400 106"/>
+      <path d="M200 190 300 190 400 190"/>
+      <path d="M200 274 300 262 400 274"/>
+      <path d="M118 190 200 106M118 190 200 274"/>
+    </g>
+  </g>
+
+  <!-- floating player card -->
+  <g transform="translate(1208 304) rotate(6)" filter="url(#shadow)">
+    <rect width="196" height="128" rx="18" fill="#0f172a" stroke="#4ade80" stroke-opacity=".35"/>
+    <rect x="14" y="14" width="54" height="54" rx="14" fill="url(#gold)"/>
+    <text x="41" y="49" text-anchor="middle" fill="#111827" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="900">91</text>
+    <text x="82" y="38" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="800">YILDIZ</text>
+    <text x="82" y="58" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="12">ST • 24 yaş</text>
+    <rect x="14" y="82" width="168" height="8" rx="4" fill="#1e293b"/>
+    <rect x="14" y="82" width="132" height="8" rx="4" fill="url(#green)"/>
+    <text x="14" y="112" fill="#6ee7b7" font-family="Inter, Arial, sans-serif" font-size="12" font-weight="700">€84,5M</text>
+    <text x="182" y="112" text-anchor="end" fill="#94a3b8" font-family="Inter, Arial, sans-serif" font-size="12">+2 GÖREV</text>
+  </g>
+
+  <!-- floating challenge chip -->
+  <g transform="translate(1268 84) rotate(-5)" filter="url(#shadow)">
+    <rect width="230" height="58" rx="16" fill="#0f172a" stroke="#22d3ee" stroke-opacity=".35"/>
+    <circle cx="30" cy="29" r="14" fill="#22d3ee" opacity=".18"/>
+    <text x="30" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="15">🌍</text>
+    <text x="54" y="25" fill="#e2e8f0" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700">3 İspanyol oyuncu</text>
+    <text x="54" y="43" fill="#67e8f9" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="700">2/3 TAMAMLANDI</text>
+  </g>
+
+  <!-- football -->
+  <g transform="translate(848 388)" filter="url(#shadow)">
+    <circle r="34" fill="#f8fafc"/>
+    <circle r="34" fill="none" stroke="#0f172a" stroke-opacity=".15" stroke-width="2"/>
+    <path d="M0-16 15-5 9 13-9 13-15-5Z" fill="#0f172a"/>
+    <path d="M0-16 0-32M15-5 30-10M9 13 19 26M-9 13-19 26M-15-5-30-10" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
