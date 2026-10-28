@@ -47,6 +47,11 @@
     var slotByKey = {};
 
     var marketFilters = { q: '', group: 'all', sort: 'rating', affordable: false };
+    var marketPage = {
+        items: [], total: 0, page: 0, pages: 0, hasMore: true, loading: false,
+        loaded: false, requestId: 0
+    };
+    var marketTimer = null;
     var matchAnim = { id: null, timer: null, index: 0, done: false, started: false };
 
     var $ = function (id) { return document.getElementById(id); };
@@ -96,11 +101,13 @@
         marketAffordable: $('market-affordable'),
         marketHint: $('market-selected-hint'),
         marketList: $('market-list'),
+        marketMore: $('market-more'),
         marketPanel: document.querySelector('.fc-market-panel'),
         pitchBadge: $('pitch-badge'),
         pitchSlots: $('pitch-slots'),
         pitchHint: $('pitch-hint'),
         clearSquad: $('clear-squad-btn'),
+        autoSquad: $('auto-squad-btn'),
         challengeBadge: $('challenge-badge'),
         challengeList: $('challenge-list'),
         actionHint: $('action-hint'),
@@ -123,6 +130,7 @@
         matchCommentary: $('match-commentary'),
         matchStats: $('match-stats'),
         matchChallenges: $('match-challenges'),
+        matchPitch3D: $('match-pitch3d'),
         matchSkip: $('match-skip-btn'),
         newSeason: $('new-season-btn'),
         toast: $('toast'),
@@ -232,11 +240,34 @@
 
     function marketPlayer(id) {
         var wanted = String(id);
+        var loaded = marketPage.items || [];
+        for (var i = 0; i < loaded.length; i += 1) {
+            if (String(loaded[i].id) === wanted) return loaded[i];
+        }
         var market = (state && state.market) || [];
-        for (var i = 0; i < market.length; i += 1) {
-            if (String(market[i].id) === wanted) return market[i];
+        for (var j = 0; j < market.length; j += 1) {
+            if (String(market[j].id) === wanted) return market[j];
         }
         return null;
+    }
+
+    function currentPick(id) {
+        var wanted = String(id);
+        var picks = (state && state.market) || [];
+        for (var i = 0; i < picks.length; i += 1) {
+            if (String(picks[i].id) === wanted) return picks[i];
+        }
+        return null;
+    }
+
+    function pickedByOpponent(player) {
+        var pick = currentPick(player && player.id);
+        return !!(pick && pick.picked_by && !pick.picked_by_you);
+    }
+
+    function pickedByYou(player) {
+        var pick = currentPick(player && player.id);
+        return !!(pick && pick.picked_by_you);
     }
 
     function getToken() {
@@ -383,6 +414,14 @@
             lastMarketSignature = '';
             lastPitchSignature = '';
             lastChallengeSignature = '';
+            marketPage.items = [];
+            marketPage.total = 0;
+            marketPage.page = 0;
+            marketPage.pages = 0;
+            marketPage.hasMore = true;
+            marketPage.loading = false;
+            marketPage.loaded = false;
+            marketPage.requestId += 1;
         }
 
         state = next;
@@ -393,7 +432,7 @@
 
         if (selectedMarketId) {
             var picked = marketPlayer(selectedMarketId);
-            if (!picked || (picked.picked_by && !picked.picked_by_you)) selectedMarketId = null;
+            if (!picked || pickedByOpponent(picked)) selectedMarketId = null;
         }
         if (selectedSlot && !slotByKey[selectedSlot]) selectedSlot = null;
 
@@ -409,9 +448,11 @@
             el.newSeason.hidden = true;
             showOnly('draft');
             renderDraft();
+            if (!marketPage.loaded && !marketPage.loading) loadMarket(true);
         } else if (status === 'FINISHED') {
             showOnly('match');
             renderMatch(state.match);
+            if (window.FCMatch3D) window.FCMatch3D.start();
         } else {
             roomExists = false;
             showGate('Bu oda kapatılmış.');
@@ -625,6 +666,9 @@
         el.unlockBtn.hidden = !you.locked;
         el.lockBtn.disabled = actionBusy || !you.valid || !!you.locked;
         el.unlockBtn.disabled = actionBusy;
+        el.autoSquad.disabled = actionBusy || !!you.locked;
+        if (!actionBusy) setText(el.autoSquad, 'Otomatik kadro oluştur');
+        el.clearSquad.disabled = actionBusy || !!you.locked || !filled;
         el.startMatchBtn.disabled = actionBusy || !you.is_host || !bothLocked || !enoughPlayers;
 
         if (you.locked) {
@@ -646,61 +690,131 @@
         }
     }
 
+    function marketUrl(page) {
+        var params = [
+            'q=' + encodeURIComponent(marketFilters.q || ''),
+            'group=' + encodeURIComponent(marketFilters.group || 'all'),
+            'sort=' + encodeURIComponent(marketFilters.sort || 'rating'),
+            'page=' + page
+        ];
+        if (marketFilters.affordable) params.push('affordable=1');
+        return roomApi('market') + '?' + params.join('&');
+    }
+
+    async function loadMarket(reset) {
+        if (!state || state.room.status !== 'DRAFT') return;
+        if (marketPage.loading && !reset) return;
+        if (!reset && !marketPage.hasMore) return;
+
+        var requestId = marketPage.requestId + 1;
+        marketPage.requestId = requestId;
+        marketPage.loading = true;
+        if (reset) {
+            marketPage.page = 0;
+            marketPage.hasMore = true;
+        }
+        if (reset && !marketPage.items.length) {
+            setText(el.marketCount, 'Aranıyor…');
+        }
+        if (el.marketMore) {
+            el.marketMore.disabled = true;
+            el.marketMore.hidden = false;
+            setText(el.marketMore, 'YÜKLENİYOR…');
+        }
+
+        try {
+            var data = await api(marketUrl((reset ? 0 : marketPage.page) + 1));
+            if (requestId !== marketPage.requestId) return;
+            marketPage.page = Number(data.page) || 1;
+            marketPage.pages = Number(data.pages) || 1;
+            marketPage.total = Number(data.total) || 0;
+            marketPage.hasMore = !!data.has_more;
+            marketPage.items = reset
+                ? (data.players || [])
+                : marketPage.items.concat(data.players || []);
+            marketPage.loaded = true;
+            lastMarketSignature = '';
+            renderMarket();
+        } catch (error) {
+            if (requestId !== marketPage.requestId) return;
+            if (error.status === 401 || error.code === 'auth_required' || error.code === 'invalid_session') {
+                handleActionError(error);
+                return;
+            }
+            if (!marketPage.items.length) {
+                clearNode(el.marketList);
+                el.marketList.appendChild(createEl(
+                    'div', 'fc-market-empty',
+                    error.message || 'Transfer piyasası yüklenemedi. Tekrar dene.'
+                ));
+            } else {
+                showToast(error.message || 'Daha fazla oyuncu yüklenemedi.', true);
+            }
+        } finally {
+            if (requestId === marketPage.requestId) {
+                marketPage.loading = false;
+                renderMarket();
+            }
+        }
+    }
+
+    function scheduleMarketSearch() {
+        clearTimeout(marketTimer);
+        marketTimer = setTimeout(function () { loadMarket(true); }, 280);
+    }
+
     function renderMarket() {
         if (!state || state.room.status !== 'DRAFT') return;
-        var market = state.market || [];
+        var items = marketPage.items || [];
+        var picks = {};
+        (state.market || []).forEach(function (pick) {
+            picks[String(pick.id)] = pick;
+        });
+
         var signature = JSON.stringify({
             filters: marketFilters,
             selectedMarketId: selectedMarketId,
             selectedSlot: selectedSlot,
             locked: state.you.locked,
-            remaining: state.you.remaining,
-            picks: market.map(function (player) {
-                return [player.id, player.picked_by, player.picked_by_you, player.slot];
+            loading: marketPage.loading,
+            total: marketPage.total,
+            hasMore: marketPage.hasMore,
+            items: items.map(function (player) {
+                var pick = picks[String(player.id)];
+                return [player.id, pick ? [pick.picked_by, pick.picked_by_you, pick.slot] : null];
             })
         });
-        if (signature === lastMarketSignature) return;
+        if (signature === lastMarketSignature) {
+            if (el.marketMore) {
+                el.marketMore.hidden = !marketPage.hasMore;
+                el.marketMore.disabled = marketPage.loading || actionBusy;
+                setText(el.marketMore, marketPage.loading ? 'YÜKLENİYOR…' : 'DAHA FAZLA OYUNCU');
+            }
+            return;
+        }
         lastMarketSignature = signature;
 
         var scrollTop = el.marketList.scrollTop;
-        var query = marketFilters.q.trim().toLocaleLowerCase('tr-TR');
-        var remaining = Number(state.you.remaining) || 0;
-        var visible = market.filter(function (player) {
-            if (marketFilters.group !== 'all' && roleOf(player) !== marketFilters.group) return false;
-            if (marketFilters.affordable && !player.picked_by_you && Number(player.value_eur) > remaining) return false;
-            if (!query) return true;
-            var haystack = [
-                player.name, player.full_name, player.club, player.nationality,
-                player.nation_label, player.league, player.league_label,
-                (player.positions || []).join(' ')
-            ].join(' ').toLocaleLowerCase('tr-TR');
-            return haystack.indexOf(query) >= 0;
-        });
-
-        visible.sort(function (a, b) {
-            if (marketFilters.sort === 'value_desc') return Number(b.value_eur) - Number(a.value_eur);
-            if (marketFilters.sort === 'value_asc') return Number(a.value_eur) - Number(b.value_eur);
-            if (marketFilters.sort === 'age') {
-                if (Number(a.age) !== Number(b.age)) return Number(a.age) - Number(b.age);
-                return Number(b.overall) - Number(a.overall);
-            }
-            if (Number(b.overall) !== Number(a.overall)) return Number(b.overall) - Number(a.overall);
-            return Number(b.value_eur) - Number(a.value_eur);
-        });
-
-        setText(el.marketCount, visible.length + '/' + market.length + ' oyuncu');
+        setText(el.marketCount, trNumber(marketPage.total, 0) + ' oyuncu');
         clearNode(el.marketList);
 
-        if (!visible.length) {
-            el.marketList.appendChild(createEl('div', 'fc-market-empty', 'Bu filtrelerle oyuncu bulunamadı. Aramayı temizlemeyi dene.'));
+        if (!items.length) {
+            el.marketList.appendChild(createEl(
+                'div', 'fc-market-empty',
+                marketPage.loading
+                    ? 'Oyuncular yükleniyor…'
+                    : 'Bu filtrelerle oyuncu bulunamadı. Aramayı temizlemeyi dene.'
+            ));
         }
 
         var selectedSlotData = selectedSlot ? slotFor(selectedSlot) : null;
-        visible.forEach(function (player) {
-            var opponentPicked = !!player.picked_by && !player.picked_by_you;
+        items.forEach(function (player) {
+            var pick = picks[String(player.id)] || null;
+            var opponentPicked = !!(pick && pick.picked_by && !pick.picked_by_you);
+            var mine = !!(pick && pick.picked_by_you);
             var classes = ['fc-player-card'];
             if (opponentPicked) classes.push('is-picked');
-            if (player.picked_by_you) classes.push('is-mine');
+            if (mine) classes.push('is-mine');
             if (String(selectedMarketId) === String(player.id)) classes.push('is-selected');
             if (selectedSlotData && !slotAccepts(selectedSlotData, player)) classes.push('is-incompatible');
 
@@ -713,7 +827,7 @@
             card.title = player.name + ' · ' + (player.primary_position || '') + ' · ' + formatEur(player.value_eur);
 
             var avatar = createEl('span', 'fc-avatar', initials(player.name));
-            if (player.image_url && /^https?:\/\//i.test(player.image_url)) {
+            if (player.image_url && /^(?:https?:\/\/|\/)/i.test(player.image_url)) {
                 var image = document.createElement('img');
                 image.alt = '';
                 image.loading = 'lazy';
@@ -741,8 +855,8 @@
             side.appendChild(createEl('span', 'fc-value', formatEur(player.value_eur)));
             if (opponentPicked) {
                 side.appendChild(createEl('span', 'fc-picked-label', 'RAKİPTE'));
-            } else if (player.picked_by_you) {
-                var slotData = player.slot ? slotFor(player.slot) : null;
+            } else if (mine) {
+                var slotData = pick && pick.slot ? slotFor(pick.slot) : null;
                 side.appendChild(createEl('span', 'fc-picked-label is-mine', slotData ? 'SENDE · ' + slotData.label : 'SENDE'));
             }
             card.appendChild(avatar);
@@ -750,6 +864,12 @@
             card.appendChild(side);
             el.marketList.appendChild(card);
         });
+
+        if (el.marketMore) {
+            el.marketMore.hidden = !marketPage.hasMore;
+            el.marketMore.disabled = marketPage.loading || actionBusy;
+            setText(el.marketMore, marketPage.loading ? 'YÜKLENİYOR…' : 'DAHA FAZLA OYUNCU');
+        }
 
         el.marketList.scrollTop = scrollTop;
         renderSelectedHint();
@@ -867,7 +987,7 @@
         if (info.kind === 'market') {
             var player = marketPlayer(info.id);
             if (!player) return 'Oyuncu bulunamadı.';
-            if (player.picked_by && !player.picked_by_you) return 'Bu oyuncu rakibinin kadrosunda.';
+            if (pickedByOpponent(player)) return 'Bu oyuncu rakibinin kadrosunda.';
             if (!slotAccepts(toSlot, player)) return player.name + ' ' + toSlot.label + ' mevkisinde oynayamaz.';
             return '';
         }
@@ -957,7 +1077,7 @@
         if (!state || state.room.status !== 'DRAFT') return;
         var player = marketPlayer(marketId);
         if (!player) return;
-        if (player.picked_by && !player.picked_by_you) {
+        if (pickedByOpponent(player)) {
             showToast('Bu oyuncu rakibinin kadrosunda.', true);
             return;
         }
@@ -985,7 +1105,7 @@
         var player = marketPlayer(marketId);
         var slot = slotFor(slotKey);
         if (!player || !slot) return;
-        if (player.picked_by && !player.picked_by_you) {
+        if (pickedByOpponent(player)) {
             showToast('Bu oyuncu rakibinin kadrosunda.', true);
             return;
         }
@@ -993,7 +1113,8 @@
             showToast(player.name + ' ' + slot.label + ' mevkisinde oynayamaz.', true);
             return;
         }
-        if (player.picked_by_you && player.slot === slotKey) {
+        var ownPick = currentPick(player.id);
+        if (ownPick && ownPick.picked_by_you && ownPick.slot === slotKey) {
             selectedMarketId = null;
             selectedSlot = null;
             renderMarket();
@@ -1097,6 +1218,30 @@
             confirmLabel: 'Temizle',
             onConfirm: function () { perform('clear', {}); }
         });
+    }
+
+    function requestAutoSquad() {
+        if (!state || state.room.status !== 'DRAFT' || actionBusy) return;
+        if (state.you.locked) {
+            showToast('Kadron kilitli. Önce kilidi aç.', true);
+            return;
+        }
+        var run = function () {
+            setText(el.autoSquad, 'KADRO KURULUYOR...');
+            perform('auto-fill', {}).then(function (data) {
+                if (data) showToast('Görevlere uygun kadro kuruldu.');
+            });
+        };
+        if (state.you.slots_filled) {
+            openConfirm({
+                title: 'Otomatik kadro oluştur',
+                copy: 'Görevlere ve bütçeye uygun yeni bir 11 kişilik kadro kurulacak. Mevcut seçimlerin değiştirilecek.',
+                confirmLabel: 'Oluştur',
+                onConfirm: run
+            });
+            return;
+        }
+        run();
     }
 
     function openConfirm(options) {
@@ -1360,6 +1505,7 @@
     function stopMatchAnimation() {
         if (matchAnim.timer) clearTimeout(matchAnim.timer);
         matchAnim = { id: null, timer: null, index: 0, done: false, started: false };
+        if (window.FCMatch3D) window.FCMatch3D.pause();
     }
 
     function profileSub(profile) {
@@ -1429,6 +1575,10 @@
         if (matchAnim.timer) clearTimeout(matchAnim.timer);
         matchAnim = { id: match.id, timer: null, index: 0, done: false, started: true };
         resetMatchView();
+        if (window.FCMatch3D) {
+            window.FCMatch3D.setMatch(match);
+            window.FCMatch3D.start();
+        }
         var events = match.events || [];
 
         function step() {
@@ -1440,22 +1590,28 @@
             var event = events[matchAnim.index];
             matchAnim.index += 1;
             renderMatchEvent(event, match);
-            var delay = delayFor(events, matchAnim.index, event);
+            var delay = delayFor(events, event);
             matchAnim.timer = setTimeout(step, delay);
         }
 
         step();
     }
 
-    function delayFor(events, index, event) {
-        if (event.phase === 'penalties') return 640;
-        if (event.type === 'kickoff') return 650;
-        if (event.type === 'half') return 900;
-        if (event.type === 'full') return 950;
-        var next = events[index];
-        if (!next) return 700;
-        var diff = Math.max(1, Number(next.minute) - Number(event.minute));
-        return Math.min(1150, Math.max(160, diff * 155));
+    // The replay aims for about two minutes of viewing time. Each event gets
+    // an equal share, with goals and period breaks taking a little longer.
+    var REPLAY_TARGET_MS = 118000;
+    var REPLAY_BASE_MIN = 2500;
+    var REPLAY_BASE_MAX = 4200;
+
+    function delayFor(events, event) {
+        var count = Math.max(1, (events || []).length);
+        var base = Math.min(REPLAY_BASE_MAX, Math.max(REPLAY_BASE_MIN, REPLAY_TARGET_MS / count));
+        if (event.phase === 'penalties') return Math.round(Math.min(1900, base * 0.6));
+        if (event.type === 'goal') return Math.round(base * 1.5);
+        if (event.type === 'kickoff') return Math.round(base * 1.1);
+        if (event.type === 'half') return Math.round(base * 1.2);
+        if (event.type === 'full') return Math.round(base * 1.3);
+        return Math.round(base);
     }
 
     var EVENT_ICONS = {
@@ -1475,6 +1631,7 @@
     }
 
     function renderMatchEvent(event, match) {
+        if (window.FCMatch3D) window.FCMatch3D.onEvent(event);
         var row = createEl('div', 'fc-event' + eventClass(event.type));
         row.appendChild(createEl('span', 'fc-event-minute', event.phase === 'penalties' ? 'PEN' : event.minute + "'"));
         row.appendChild(createEl('span', 'fc-event-icon', EVENT_ICONS[event.type] || '•'));
@@ -1733,10 +1890,11 @@
         el.unlockBtn.addEventListener('click', requestUnlock);
         el.startMatchBtn.addEventListener('click', requestStartMatch);
         el.clearSquad.addEventListener('click', requestClearSquad);
+        el.autoSquad.addEventListener('click', requestAutoSquad);
 
         el.marketSearch.addEventListener('input', function () {
             marketFilters.q = el.marketSearch.value || '';
-            renderMarket();
+            scheduleMarketSearch();
         });
         var chips = el.marketGroups.querySelectorAll('[data-group]');
         for (var i = 0; i < chips.length; i += 1) {
@@ -1746,16 +1904,26 @@
                 for (var j = 0; j < all.length; j += 1) {
                     all[j].classList.toggle('is-active', all[j] === this);
                 }
-                renderMarket();
+                loadMarket(true);
             });
         }
         el.marketSort.addEventListener('change', function () {
             marketFilters.sort = el.marketSort.value;
-            renderMarket();
+            loadMarket(true);
         });
         el.marketAffordable.addEventListener('change', function () {
             marketFilters.affordable = !!el.marketAffordable.checked;
-            renderMarket();
+            loadMarket(true);
+        });
+        if (el.marketMore) {
+            el.marketMore.addEventListener('click', function () { loadMarket(false); });
+        }
+        el.marketList.addEventListener('scroll', function () {
+            if (marketPage.loading || !marketPage.hasMore) return;
+            var list = el.marketList;
+            if (list.scrollTop + list.clientHeight >= list.scrollHeight - 140) {
+                loadMarket(false);
+            }
         });
 
         el.pitchSlots.addEventListener('click', function (event) {
@@ -1802,7 +1970,7 @@
             var card = target.closest('.fc-player-card');
             if (!card) return;
             var player = marketPlayer(card.dataset.marketId);
-            if (!player || !state || state.you.locked || (player.picked_by && !player.picked_by_you)) {
+            if (!player || !state || state.you.locked || pickedByOpponent(player)) {
                 event.preventDefault();
                 return;
             }
@@ -1925,5 +2093,6 @@
     }
 
     bindEvents();
+    if (window.FCMatch3D && el.matchPitch3D) window.FCMatch3D.mount(el.matchPitch3D);
     boot();
 })();

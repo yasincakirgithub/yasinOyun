@@ -20,7 +20,7 @@ class WebSocketTests(TransactionTestCase):
         self.room, self.host, self.host_token, self.entries = create_room_with_players()
         self.away, self.away_token = self.entries[1]
         self.room = services.start_draft(self.room.room_code, self.host)
-        self.gk_id = available_candidates(self.room, 'gk')[0].pk
+        self.gk_id = available_candidates(self.room, 'gk')[0].player_id
 
     def path(self, room_code=None):
         return f'/fcmanager/ws/room/{room_code or self.room.room_code}/'
@@ -66,7 +66,8 @@ class WebSocketTests(TransactionTestCase):
         try:
             self.assertEqual(state['room']['code'], self.room.room_code)
             self.assertEqual(state['you']['name'], 'Player 1')
-            self.assertEqual(len(state['market']), 80)
+            self.assertEqual(state['market'], [])
+            self.assertGreater(state['market_total'], 40)
 
             await communicator.send_json_to({'type': 'get_state'})
             refreshed = await self.receive_type(communicator, 'state')

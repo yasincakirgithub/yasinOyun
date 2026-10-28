@@ -1,21 +1,41 @@
-"""FC26 CSV loading and draft-market generation.
+"""FC26 dataset loading, database import and market sampling.
 
-The dataset is a single CSV shipped with the game. Rows are loaded once and
-kept in memory; each room receives a frozen, balanced snapshot of 80 players.
+The dataset ships as a CSV under ``fcmanager/datasets/``. ``manage.py
+import_fc26`` loads every row into the :class:`fcmanager.models.Player` table;
+the draft screen then searches that table instead of using a fixed 80-player
+snapshot. The CSV stays the source of truth for re-imports.
 """
 
 from __future__ import annotations
 
 import csv
 import logging
+import os
 import random
+import threading
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 
+from django.db.models import Count, Max
+
 logger = logging.getLogger(__name__)
 
-CSV_PATH = Path(__file__).with_name('FC26_20250921.csv')
+DATASET_DIR = Path(__file__).resolve().parent / 'datasets'
+CSV_PATH = Path(
+    os.environ.get('FCMANAGER_DATASET') or (DATASET_DIR / 'FC26_20250921.csv')
+).expanduser()
+
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+#: Local copies of the FC26 face photos. The CDN only answers when the request
+#: carries a ``sofifa.com`` Referer, which a browser cannot send cross-origin,
+#: so ``fcmanager/download_player.py`` fetches the images once and the app
+#: serves them itself.
+PLAYER_IMAGE_DIR = Path(
+    os.environ.get('FCMANAGER_PLAYER_IMAGES')
+    or (PROJECT_DIR / 'media' / 'player_images')
+).expanduser()
+PLAYER_IMAGE_URL = '/fcmanager/photos/{player_id}.png'
 
 # The dataset stores values in EUR. The game displays a TRY equivalent so the
 # budget range from the brief (400M EUR -> 1T TRY) can be shown honestly.
@@ -150,14 +170,18 @@ def _positions(raw: str) -> list[str]:
 @lru_cache(maxsize=1)
 def load_players() -> tuple[dict, ...]:
     """Load the FC26 CSV once into a compact, immutable tuple of dicts."""
-    if not CSV_PATH.exists():
-        logger.error('FC26 dataset not found at %s', CSV_PATH)
+    return _read_csv(CSV_PATH)
+
+
+def _read_csv(path: Path) -> tuple[dict, ...]:
+    if not Path(path).exists():
+        logger.error('FC26 dataset not found at %s', path)
         return ()
 
     players: list[dict] = []
     seen: set[int] = set()
     try:
-        with CSV_PATH.open('r', encoding='utf-8-sig', newline='') as handle:
+        with Path(path).open('r', encoding='utf-8-sig', newline='') as handle:
             reader = csv.DictReader(handle)
             for row in reader:
                 player_id = _int(row.get('player_id'))
@@ -209,6 +233,7 @@ def load_players() -> tuple[dict, ...]:
                     'gk_positioning': _int(row.get('goalkeeping_positioning')),
                     'gk_reflexes': _int(row.get('goalkeeping_reflexes')),
                     'gk_speed': _int(row.get('goalkeeping_speed')),
+                    'mentality_penalties': _int(row.get('mentality_penalties')),
                     'image_url': (row.get('player_face_url') or '').strip(),
                 })
     except OSError:
@@ -217,6 +242,175 @@ def load_players() -> tuple[dict, ...]:
 
     logger.info('Loaded %s FC26 players from CSV', len(players))
     return tuple(players)
+
+
+#: Model columns copied from the CSV dict, in the order used by bulk import.
+PLAYER_FIELDS = (
+    'player_id', 'name', 'full_name', 'positions', 'primary_position', 'bucket',
+    'overall', 'potential', 'value_eur', 'wage_eur', 'age', 'nationality',
+    'league', 'club', 'height_cm', 'weight_kg', 'preferred_foot', 'weak_foot',
+    'skill_moves', 'international_reputation', 'pace', 'shooting', 'passing',
+    'dribbling', 'defending', 'physic', 'gk_diving', 'gk_handling', 'gk_kicking',
+    'gk_positioning', 'gk_reflexes', 'gk_speed', 'mentality_penalties', 'image_url',
+)
+# ``updated_at`` is auto-managed, so it is excluded from bulk upserts.
+PLAYER_UPDATE_FIELDS = tuple(
+    field for field in PLAYER_FIELDS if field not in ('player_id',)
+) + ('updated_at',)
+
+_PHOTO_CACHE: dict[str, object] = {'stamp': None, 'ids': frozenset()}
+_PHOTO_LOCK = threading.Lock()
+
+
+def downloaded_photo_ids() -> frozenset[str]:
+    """Player ids that already have a photo on disk.
+
+    The listing is cached and refreshed whenever the directory changes, so the
+    hot paths (market cards, match squads) never hit the filesystem per player.
+    """
+    try:
+        stamp = PLAYER_IMAGE_DIR.stat().st_mtime_ns
+    except OSError:
+        return frozenset()
+    with _PHOTO_LOCK:
+        if _PHOTO_CACHE['stamp'] == stamp:
+            return _PHOTO_CACHE['ids']  # type: ignore[return-value]
+    try:
+        ids = frozenset(path.stem for path in PLAYER_IMAGE_DIR.glob('*.png'))
+    except OSError:
+        ids = frozenset()
+    with _PHOTO_LOCK:
+        _PHOTO_CACHE['stamp'] = stamp
+        _PHOTO_CACHE['ids'] = ids
+    return ids
+
+
+def clear_photo_cache() -> None:
+    """Forget the downloaded-photo listing (used after a bulk download)."""
+    with _PHOTO_LOCK:
+        _PHOTO_CACHE['stamp'] = None
+        _PHOTO_CACHE['ids'] = frozenset()
+
+
+def photo_url(player_id, fallback: str = '') -> str:
+    """Local photo path when it exists, otherwise the dataset's CDN link."""
+    key = str(player_id or '')
+    if key and key in downloaded_photo_ids():
+        return PLAYER_IMAGE_URL.format(player_id=key)
+    return (fallback or '').strip()
+
+
+def with_photo(player: dict) -> dict:
+    """Copy of ``player`` whose ``image_url`` prefers the local photo."""
+    url = photo_url(player.get('player_id'), player.get('image_url'))
+    if not url or url == player.get('image_url'):
+        return player
+    updated = dict(player)
+    updated['image_url'] = url
+    return updated
+
+
+_CATALOGUE_CACHE: dict[str, object] = {'signature': None, 'players': ()}
+_CATALOGUE_LOCK = threading.Lock()
+
+
+def _catalogue_signature() -> dict:
+    """Cheap fingerprint of the catalogue table (one aggregate query)."""
+    from .models import Player
+
+    return Player.objects.aggregate(count=Count('pk'), latest=Max('updated_at'))
+
+
+def clear_catalogue_cache() -> None:
+    with _CATALOGUE_LOCK:
+        _CATALOGUE_CACHE['signature'] = None
+        _CATALOGUE_CACHE['players'] = ()
+
+
+def catalogue_players() -> tuple[dict, ...]:
+    """All catalogue players as dicts, cached until the table changes.
+
+    Auto-fill and challenge generation both need the whole pool, so loading it
+    once per process (instead of once per click) keeps drafting snappy. The
+    cache is keyed by ``(row count, latest update)`` and cleared by imports.
+    """
+    from .models import Player
+
+    try:
+        signature = _catalogue_signature()
+    except Exception:  # pragma: no cover - database unavailable in some tests
+        return ()
+    if not signature.get('count'):
+        return ()
+    with _CATALOGUE_LOCK:
+        if _CATALOGUE_CACHE['signature'] == signature:
+            return _CATALOGUE_CACHE['players']  # type: ignore[return-value]
+    players = tuple(dict(row) for row in Player.objects.values(*PLAYER_FIELDS))
+    with _CATALOGUE_LOCK:
+        _CATALOGUE_CACHE['signature'] = signature
+        _CATALOGUE_CACHE['players'] = players
+    return players
+
+
+def import_catalogue(path: Path | str | None = None, *, replace: bool = False) -> int:
+    """Load every CSV row into the ``Player`` table.
+
+    Existing rows are updated by ``player_id`` so the command is safe to run
+    again after a dataset refresh.
+    """
+    from .models import Player
+
+    players = _read_csv(Path(path or CSV_PATH))
+    if replace:
+        Player.objects.all().delete()
+    if not players:
+        return 0
+
+    objects = [Player(**{field: player[field] for field in PLAYER_FIELDS}) for player in players]
+    batch_size = 500
+    for start in range(0, len(objects), batch_size):
+        Player.objects.bulk_create(
+            objects[start:start + batch_size],
+            batch_size=batch_size,
+            update_conflicts=True,
+            unique_fields=['player_id'],
+            update_fields=list(PLAYER_UPDATE_FIELDS),
+        )
+    logger.info('Imported %s FC26 players into the database', len(objects))
+    clear_catalogue_cache()
+    return len(objects)
+
+
+def catalogue_size() -> int:
+    from .models import Player
+
+    try:
+        return Player.objects.count()
+    except Exception:  # pragma: no cover - database unavailable in some tests
+        return 0
+
+
+def ensure_catalogue(path: Path | str | None = None) -> int:
+    """Import the dataset on first use; return the number of stored players."""
+    size = catalogue_size()
+    if size:
+        return size
+    if not Path(path or CSV_PATH).exists():
+        return 0
+    import_catalogue(path)
+    return catalogue_size()
+
+
+def _catalogue_players(max_overall: bool = False) -> list[dict]:
+    """Read the player pool from the database, or ``[]`` when unavailable."""
+    try:
+        players = catalogue_players()
+    except Exception:  # pragma: no cover - DB unavailable (SimpleTestCase)
+        return []
+    if max_overall:
+        return [player for player in players if player['overall'] >= 73]
+    return list(players)
+
 
 
 def slot_accepts(slot_key: str, positions) -> bool:
@@ -263,8 +457,19 @@ def _replace_one(chosen: list[dict], new_player: dict, rng: random.Random, prote
 
 
 def build_market(rng: random.Random, size: int = 80) -> list[dict]:
-    """Create a balanced 80-player market from the FC26 dataset."""
-    all_players = list(load_players())
+    """Create a balanced sample used to design and verify challenges.
+
+    The playable market itself is the whole ``Player`` table; this balanced
+    sample keeps challenge generation honest (every proposed goal is proven
+    twice over a realistic pool) without scanning 15k rows per attempt.
+    """
+    all_players = _catalogue_players(max_overall=True)
+    if not all_players:
+        all_players = list(load_players())
+    return select_market(all_players, rng, size)
+
+
+def select_market(all_players: list[dict], rng: random.Random, size: int = 80) -> list[dict]:
     if len(all_players) < 50:
         raise ValueError('FC26 dataset is unavailable or too small.')
 

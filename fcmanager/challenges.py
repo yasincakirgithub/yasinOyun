@@ -280,19 +280,24 @@ def _squad_attempt(
     challenges: list[dict],
     rng: random.Random,
     reserved: set[int] | None = None,
+    *,
+    pool_by_slot: dict[str, list[dict]] | None = None,
+    with_slots: bool = False,
 ):
     # Players are unique inside a room, so a second manager must avoid every
     # player already used by the first one.
     used: set[int] = set(reserved or ())
     total = 0
     squad: list[dict] = []
+    assignment: list[tuple[dict, dict]] = []
     slots = list(SLOTS)
     rng.shuffle(slots)
     for index, slot in enumerate(slots):
         remaining_slots = len(slots) - index
         remaining_budget = budget - total
+        source = pool_by_slot.get(slot['key'], ()) if pool_by_slot is not None else market
         candidates = [
-            p for p in market
+            p for p in source
             if p['player_id'] not in used and slot_accepts(slot['key'], p['positions'])
         ]
         if not candidates:
@@ -313,11 +318,120 @@ def _squad_attempt(
         used.add(choice['player_id'])
         total += choice['value_eur']
         squad.append(choice)
+        assignment.append((slot, choice))
     if total > budget:
         return None
     if all(challenge_progress(c, squad)['satisfied'] for c in challenges):
-        return squad
+        return assignment if with_slots else squad
     return None
+
+
+def build_pools(
+    market: list[dict],
+    challenges: list[dict],
+    per_slot: int = 90,
+) -> dict[str, list[dict]]:
+    """Shortlist candidates per formation slot for the auto-squad solver.
+
+    Every slot pool keeps three kinds of players: the strongest overall, the
+    cheapest and the ones that help a challenge. That is enough for a good
+    squad while keeping the solver fast over the full 15k catalogue.
+    """
+    helpers = [p for p in market if any(_contributes(c, p, []) for c in challenges)]
+    helpers.sort(
+        key=lambda p: (p.get('overall', 0), -int(p.get('value_eur') or 0)),
+        reverse=True,
+    )
+    helpers = helpers[: per_slot * 2]
+
+    pools: dict[str, list[dict]] = {}
+    for slot in SLOTS:
+        candidates = [
+            p for p in market
+            if slot_accepts(slot['key'], p.get('positions', ()))
+        ]
+        if not candidates:
+            pools[slot['key']] = []
+            continue
+        stars = sorted(
+            candidates,
+            key=lambda p: (p.get('overall', 0), -int(p.get('value_eur') or 0)),
+            reverse=True,
+        )[:per_slot]
+        bargains = sorted(
+            candidates,
+            key=lambda p: (int(p.get('value_eur') or 0), -p.get('overall', 0)),
+        )[:per_slot]
+        shortlist: dict[int, dict] = {}
+        for player in stars + bargains + helpers:
+            if slot_accepts(slot['key'], player.get('positions', ())):
+                shortlist[player['player_id']] = player
+        pools[slot['key']] = list(shortlist.values())
+    return pools
+
+
+def build_squad(
+    market: list[dict],
+    budget: int,
+    challenges: list[dict],
+    rng: random.Random,
+    *,
+    attempts: int = 60,
+    reserved: set[int] | None = None,
+    pool_by_slot: dict[str, list[dict]] | None = None,
+) -> list[tuple[dict, dict]] | None:
+    """Return ``[(slot, player), ...]`` satisfying every challenge and the budget.
+
+    Runs several randomised greedy drafts (the same routine used to prove a
+    challenge set feasible) and keeps the strongest complete squad. ``None``
+    means no attempt produced a legal squad.
+    """
+    pools = pool_by_slot
+    if pools is None and len(market) > 400:
+        pools = build_pools(market, challenges)
+
+    best = None
+    best_score = -1
+    for _ in range(max(1, attempts)):
+        squad = _squad_attempt(
+            market,
+            budget,
+            challenges,
+            rng,
+            reserved=reserved,
+            pool_by_slot=pools,
+            with_slots=True,
+        )
+        if not squad:
+            continue
+        score = sum(player.get('overall', 0) for _slot, player in squad)
+        if score > best_score:
+            best = squad
+            best_score = score
+    return best
+
+
+def cheapest_squad(
+    market: list[dict],
+    budget: int,
+    reserved: set[int] | None = None,
+) -> list[tuple[dict, dict]] | None:
+    """Last-resort legal squad: the cheapest player for every slot."""
+    used: set[int] = set(reserved or ())
+    total = 0
+    squad: list[tuple[dict, dict]] = []
+    for slot in SLOTS:
+        candidates = [
+            p for p in market
+            if p['player_id'] not in used and slot_accepts(slot['key'], p.get('positions', ()))
+        ]
+        if not candidates:
+            return None
+        choice = min(candidates, key=lambda p: int(p.get('value_eur') or 0))
+        used.add(choice['player_id'])
+        total += int(choice.get('value_eur') or 0)
+        squad.append((slot, choice))
+    return squad if total <= budget else None
 
 
 def squad_feasible(market: list[dict], budget: int, challenges: list[dict], rng: random.Random, attempts: int = 220) -> bool:

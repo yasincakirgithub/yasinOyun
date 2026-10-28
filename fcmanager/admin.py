@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MarketPlayer, Match, Participant, Room
+from .models import MarketPlayer, Match, Participant, Player, Room
 
 
 class ParticipantInline(admin.TabularInline):
@@ -24,6 +24,15 @@ class ParticipantAdmin(admin.ModelAdmin):
     list_filter = ('side', 'connected', 'locked', 'left')
     search_fields = ('display_name', 'room__room_code')
     readonly_fields = ('id', 'session_token_hash', 'joined_at', 'last_seen_at')
+
+
+@admin.register(Player)
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('name', 'overall', 'primary_position', 'age', 'nationality', 'league', 'club', 'value_eur')
+    list_filter = ('bucket', 'nationality', 'league')
+    search_fields = ('name', 'full_name', 'club', 'nationality', 'league')
+    ordering = ('-overall', 'name')
+    readonly_fields = ('player_id', 'updated_at')
 
 
 @admin.register(MarketPlayer)

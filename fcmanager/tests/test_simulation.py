@@ -110,6 +110,16 @@ class SimulationTests(SimpleTestCase):
             full = next(event for event in result['events'] if event['type'] == 'full')
             self.assertEqual(full['score'], [result['home_score'], result['away_score']])
 
+    def test_timeline_is_busy_enough_for_a_two_minute_replay(self):
+        for seed in range(6):
+            result = self.run_match(seed)
+            chances = [
+                event for event in result['events']
+                if event['phase'] == 'match' and event['type'] not in ('kickoff', 'half', 'full')
+            ]
+            self.assertGreaterEqual(len(chances), 20, f'seed {seed}')
+            self.assertGreaterEqual(len(result['events']), 27, f'seed {seed}')
+
     def test_timeline_has_kickoff_half_full_and_is_ordered(self):
         result = self.run_match(3)
         events = result['events']
@@ -193,14 +203,53 @@ class SimulationTests(SimpleTestCase):
         strong = build_squad(90)
         weak = build_squad(70)
         wins = 0
-        runs = 24
+        goal_difference = 0
+        runs = 60
         for seed in range(runs):
             result = simulate_match(
                 strong, weak, [], [], 'Strong', 'Weak', rng=random.Random(seed),
             )
+            goal_difference += result['home_score'] - result['away_score']
             if result['winner_side'] == 'home':
                 wins += 1
-        self.assertGreater(wins, runs * 0.6, f'Strong side only won {wins}/{runs}')
+        self.assertGreater(wins, runs * 0.75, f'Strong side only won {wins}/{runs}')
+        self.assertGreater(goal_difference / runs, 1.0)
+
+    def test_bigger_rating_gap_means_higher_win_chance(self):
+        def win_rate(home_overall: int, away_overall: int, runs: int = 80) -> float:
+            wins = 0
+            for seed in range(runs):
+                result = simulate_match(
+                    build_squad(home_overall), build_squad(away_overall),
+                    [], [], 'Home', 'Away', rng=random.Random(seed),
+                )
+                if result['winner_side'] == 'home':
+                    wins += 1
+            return wins / runs
+
+        big_gap = win_rate(90, 70)
+        small_gap = win_rate(85, 75)
+        even = win_rate(80, 80)
+        self.assertGreater(big_gap, small_gap)
+        self.assertGreater(small_gap, even)
+        self.assertGreater(big_gap, 0.85)
+        self.assertLess(even, 0.62)
+
+    def test_completed_challenges_win_more_matches(self):
+        plain = build_squad(78)
+        rewarded = build_squad(78)
+        completed = [challenge(True), challenge(True), challenge(True)]
+        missing = [challenge(False), challenge(False), challenge(False)]
+        wins = 0
+        runs = 80
+        for seed in range(runs):
+            result = simulate_match(
+                rewarded, plain, completed, missing,
+                'Görevli', 'Düz', rng=random.Random(seed),
+            )
+            if result['winner_side'] == 'home':
+                wins += 1
+        self.assertGreater(wins, runs * 0.7, f'Challenge squad only won {wins}/{runs}')
 
     def test_empty_squads_do_not_score_without_events(self):
         result = simulate_match({}, {}, [], [], 'Empty A', 'Empty B', rng=random.Random(1))

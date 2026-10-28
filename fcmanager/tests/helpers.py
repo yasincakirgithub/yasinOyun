@@ -5,8 +5,84 @@ from __future__ import annotations
 import random
 
 from fcmanager import services
-from fcmanager.data import SLOTS, slot_accepts
-from fcmanager.models import Room
+from fcmanager.data import DESIRED_BUCKETS, REQUIRED_LEAGUES, REQUIRED_NATIONS, SLOTS, SLOT_BY_KEY, slot_accepts
+from fcmanager.models import MarketPlayer, Player, Room
+
+# Primary position used for each market bucket when seeding a small catalogue.
+SEED_POSITIONS = {
+    'gk': ('GK', 'GK'),
+    'cb': ('CB', 'CB'),
+    'lb': ('LB', 'LB'),
+    'rb': ('RB', 'RB'),
+    'cm': ('CM', 'CM'),
+    'cam': ('CAM', 'CAM'),
+    'wing': ('LW', 'RW'),
+    'st': ('ST', 'ST'),
+}
+
+
+def seed_catalogue() -> int:
+    """Create a compact 80-player catalogue so tests never import the CSV.
+
+    Production uses ``manage.py import_fc26``; the tests only need a small,
+    deterministic pool that satisfies every market bucket and challenge filter.
+    """
+    if Player.objects.exists():
+        return Player.objects.count()
+
+    rows = []
+    player_id = 900000
+    for bucket, count in DESIRED_BUCKETS.items():
+        positions = SEED_POSITIONS[bucket]
+        for index in range(count):
+            player_id += 1
+            primary = positions[index % len(positions)]
+            league = REQUIRED_LEAGUES[player_id % len(REQUIRED_LEAGUES)]
+            nationality = REQUIRED_NATIONS[player_id % len(REQUIRED_NATIONS)]
+            overall = 74 + (index * 3 + len(bucket)) % 17
+            value = (
+                5_000_000 + (index % 4) * 8_000_000
+                if index % 3
+                else 60_000_000 + (index % 3) * 10_000_000
+            )
+            rows.append(Player(
+                player_id=player_id,
+                name=f'{bucket.upper()} Oyuncu {index + 1}',
+                full_name=f'{bucket.upper()} Test Oyuncu {index + 1}',
+                positions=[primary],
+                primary_position=primary,
+                bucket=bucket,
+                overall=min(92, overall),
+                potential=min(94, overall + 2),
+                value_eur=value,
+                wage_eur=100_000,
+                age=19 + (index * 2) % 16,
+                nationality=nationality,
+                league=league,
+                club=f'Test Kulüp {player_id}',
+                height_cm=175 + index % 20,
+                weight_kg=70 + index % 15,
+                preferred_foot='Left' if index % 5 == 0 else 'Right',
+                weak_foot=3,
+                skill_moves=3 + index % 3,
+                international_reputation=2,
+                pace=70 + overall % 20,
+                shooting=70 + overall % 20,
+                passing=70 + overall % 20,
+                dribbling=70 + overall % 20,
+                defending=70 + overall % 20,
+                physic=70 + overall % 20,
+                gk_diving=75 if bucket == 'gk' else 10,
+                gk_handling=75 if bucket == 'gk' else 10,
+                gk_kicking=75 if bucket == 'gk' else 10,
+                gk_positioning=75 if bucket == 'gk' else 10,
+                gk_reflexes=75 if bucket == 'gk' else 10,
+                gk_speed=75 if bucket == 'gk' else 10,
+                mentality_penalties=70,
+                image_url='',
+            ))
+    Player.objects.bulk_create(rows, batch_size=200)
+    return len(rows)
 
 
 def create_room_with_players(count: int = 2, names: list[str] | None = None):
@@ -15,6 +91,7 @@ def create_room_with_players(count: int = 2, names: list[str] | None = None):
     ``entries`` contains ``(participant, token)`` pairs in join order so tests
     can authenticate as either manager.
     """
+    seed_catalogue()
     names = names or [f'Player {index + 1}' for index in range(count)]
     room, host, host_token = services.create_room(names[0])
     entries = [(host, host_token)]
@@ -26,6 +103,7 @@ def create_room_with_players(count: int = 2, names: list[str] | None = None):
 
 def start_draft(room: Room, host, budget_eur: int | None = None) -> Room:
     """Start the draft, optionally overriding the random budget."""
+    seed_catalogue()
     room = services.start_draft(room.room_code, host)
     if budget_eur is not None:
         Room.objects.filter(pk=room.pk).update(budget_eur=budget_eur)
@@ -34,12 +112,14 @@ def start_draft(room: Room, host, budget_eur: int | None = None) -> Room:
 
 
 def available_candidates(room: Room, slot_key: str, include_picked: bool = False) -> list:
-    return [
-        market_player
-        for market_player in room.market.select_related('picked_by').all()
-        if (include_picked or not market_player.picked_by_id)
-        and slot_accepts(slot_key, market_player.data.get('positions', ()))
-    ]
+    accepted = SLOT_BY_KEY[slot_key]['accept']
+    taken = set()
+    if not include_picked:
+        taken = set(
+            room.market.filter(picked_by__isnull=False).values_list('player_id', flat=True)
+        )
+    rows = Player.objects.filter(primary_position__in=accepted).order_by('value_eur', 'player_id')
+    return [row for row in rows if row.player_id not in taken]
 
 
 def fill_squad(room: Room, participant, budget_eur: int = 10_000_000_000, lock: bool = True) -> Room:
@@ -53,8 +133,8 @@ def fill_squad(room: Room, participant, budget_eur: int = 10_000_000_000, lock: 
         candidates = available_candidates(room, slot['key'])
         if not candidates:
             raise AssertionError(f'No market candidate for slot {slot["key"]}')
-        choice = min(candidates, key=lambda item: int(item.data.get('value_eur', 0) or 0))
-        services.pick_player(room.room_code, participant, choice.pk, slot['key'])
+        choice = min(candidates, key=lambda item: int(item.value_eur or 0))
+        services.pick_player(room.room_code, participant, choice.player_id, slot['key'])
     if lock:
         return services.lock_squad(room.room_code, participant)
     return Room.objects.get(pk=room.pk)

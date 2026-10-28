@@ -9,9 +9,9 @@ from django.core.cache import cache
 from django.test import SimpleTestCase, TestCase, override_settings
 
 from fcmanager import services
-from fcmanager.challenges import two_squads_feasible
-from fcmanager.data import EUR_TRY_RATE, SLOTS
-from fcmanager.models import MarketPlayer, Participant, Room
+from fcmanager.challenges import challenge_progress
+from fcmanager.data import EUR_TRY_RATE, SLOTS, SLOT_BY_KEY
+from fcmanager.models import MarketPlayer, Participant, Player, Room
 from fcmanager.tests.helpers import (
     available_candidates,
     create_room_with_players,
@@ -21,7 +21,7 @@ from fcmanager.tests.helpers import (
 from fcmanager.utils import ApiError
 
 IN_MEMORY = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
-MAX_BUDGET_EUR = 1_000_000_000_000 / EUR_TRY_RATE
+MAX_BUDGET_EUR = services.MAX_BUDGET_EUR
 
 
 @override_settings(CHANNEL_LAYERS=IN_MEMORY)
@@ -40,7 +40,7 @@ class BudgetTests(SimpleTestCase):
                 int(round(budget_eur * EUR_TRY_RATE / 10_000_000) * 10_000_000),
             )
         self.assertLess(min(values), 1_000_000_000)
-        self.assertGreater(max(values), 2_000_000_000)
+        self.assertGreater(max(values), 1_500_000_000)
 
 
 @override_settings(CHANNEL_LAYERS=IN_MEMORY)
@@ -107,7 +107,10 @@ class RoomLifecycleTests(TestCase):
         room = services.start_draft(room.room_code, host)
 
         self.assertEqual(room.status, 'DRAFT')
-        self.assertEqual(room.market.count(), 80)
+        # The playable pool is the shared Player table; a fresh draft has no
+        # picks yet.
+        self.assertEqual(room.market.count(), 0)
+        self.assertGreater(Player.objects.count(), 40)
         self.assertGreaterEqual(room.budget_eur, services.MIN_BUDGET_EUR)
         self.assertLessEqual(room.budget_eur, MAX_BUDGET_EUR)
         self.assertGreaterEqual(len(room.challenges), 3)
@@ -145,46 +148,48 @@ class DraftActionTests(TestCase):
 
     def test_pick_assigns_player_and_updates_spent(self):
         player = self.market_player('gk')
-        services.pick_player(self.room.room_code, self.host, player.pk, 'gk')
+        services.pick_player(self.room.room_code, self.host, player.player_id, 'gk')
 
-        picked = MarketPlayer.objects.get(pk=player.pk)
+        picked = MarketPlayer.objects.get(room=self.room, player_id=player.player_id)
         self.assertEqual(picked.picked_by_id, self.host.pk)
         self.assertEqual(picked.picked_slot, 'gk')
         state = services.build_room_state(Room.objects.get(pk=self.room.pk), self.host)
         self.assertEqual(state['you']['slots_filled'], 1)
         self.assertEqual(state['you']['spent'], picked.data['value_eur'])
-        entry = next(item for item in state['market'] if item['id'] == player.pk)
+        entry = next(item for item in state['market'] if item['id'] == player.player_id)
         self.assertTrue(entry['picked_by_you'])
         self.assertEqual(entry['slot'], 'gk')
 
     def test_pick_rejects_position_mismatch(self):
         player = self.market_player('gk')
         with self.assertRaises(ApiError) as ctx:
-            services.pick_player(self.room.room_code, self.host, player.pk, 'st')
+            services.pick_player(self.room.room_code, self.host, player.player_id, 'st')
         self.assertEqual(ctx.exception.code, 'position_mismatch')
 
     def test_pick_rejects_player_taken_by_opponent(self):
         player = self.market_player('gk')
-        services.pick_player(self.room.room_code, self.host, player.pk, 'gk')
+        services.pick_player(self.room.room_code, self.host, player.player_id, 'gk')
         with self.assertRaises(ApiError) as ctx:
-            services.pick_player(self.room.room_code, self.away, player.pk, 'gk')
+            services.pick_player(self.room.room_code, self.away, player.player_id, 'gk')
         self.assertEqual(ctx.exception.code, 'player_taken')
 
     def test_pick_respects_budget(self):
         player = self.market_player('gk')
         Room.objects.filter(pk=self.room.pk).update(budget_eur=1)
         with self.assertRaises(ApiError) as ctx:
-            services.pick_player(self.room.room_code, self.host, player.pk, 'gk')
+            services.pick_player(self.room.room_code, self.host, player.player_id, 'gk')
         self.assertEqual(ctx.exception.code, 'budget_exceeded')
 
     def test_replacing_a_slot_releases_the_old_player(self):
         first = self.market_player('gk')
         second = self.market_player('gk', skip=1)
-        services.pick_player(self.room.room_code, self.host, first.pk, 'gk')
-        services.pick_player(self.room.room_code, self.host, second.pk, 'gk')
+        services.pick_player(self.room.room_code, self.host, first.player_id, 'gk')
+        services.pick_player(self.room.room_code, self.host, second.player_id, 'gk')
 
-        self.assertIsNone(MarketPlayer.objects.get(pk=first.pk).picked_by_id)
-        picked = MarketPlayer.objects.get(pk=second.pk)
+        self.assertFalse(
+            MarketPlayer.objects.filter(room=self.room, player_id=first.player_id).exists()
+        )
+        picked = MarketPlayer.objects.get(room=self.room, player_id=second.player_id)
         self.assertEqual(picked.picked_by_id, self.host.pk)
         self.assertEqual(picked.picked_slot, 'gk')
         self.assertEqual(MarketPlayer.objects.filter(picked_by=self.host).count(), 1)
@@ -192,11 +197,13 @@ class DraftActionTests(TestCase):
     def test_remove_pick_and_clear_squad(self):
         gk = self.market_player('gk')
         st = self.market_player('st')
-        services.pick_player(self.room.room_code, self.host, gk.pk, 'gk')
-        services.pick_player(self.room.room_code, self.host, st.pk, 'st')
+        services.pick_player(self.room.room_code, self.host, gk.player_id, 'gk')
+        services.pick_player(self.room.room_code, self.host, st.player_id, 'st')
 
         services.remove_pick(self.room.room_code, self.host, 'gk')
-        self.assertIsNone(MarketPlayer.objects.get(pk=gk.pk).picked_by_id)
+        self.assertFalse(
+            MarketPlayer.objects.filter(room=self.room, player_id=gk.player_id).exists()
+        )
         self.assertEqual(MarketPlayer.objects.filter(picked_by=self.host).count(), 1)
 
         services.clear_squad(self.room.room_code, self.host)
@@ -205,26 +212,35 @@ class DraftActionTests(TestCase):
     def test_swap_to_empty_and_occupied_slots(self):
         first = self.market_player('cm1')
         second = self.market_player('cm1', skip=1)
-        services.pick_player(self.room.room_code, self.host, first.pk, 'cm1')
+        services.pick_player(self.room.room_code, self.host, first.player_id, 'cm1')
 
         services.swap_slots(self.room.room_code, self.host, 'cm1', 'cm2')
-        self.assertEqual(MarketPlayer.objects.get(pk=first.pk).picked_slot, 'cm2')
+        self.assertEqual(
+            MarketPlayer.objects.get(room=self.room, player_id=first.player_id).picked_slot,
+            'cm2',
+        )
 
-        services.pick_player(self.room.room_code, self.host, second.pk, 'cm1')
+        services.pick_player(self.room.room_code, self.host, second.player_id, 'cm1')
         services.swap_slots(self.room.room_code, self.host, 'cm1', 'cm2')
-        self.assertEqual(MarketPlayer.objects.get(pk=first.pk).picked_slot, 'cm1')
-        self.assertEqual(MarketPlayer.objects.get(pk=second.pk).picked_slot, 'cm2')
+        self.assertEqual(
+            MarketPlayer.objects.get(room=self.room, player_id=first.player_id).picked_slot,
+            'cm1',
+        )
+        self.assertEqual(
+            MarketPlayer.objects.get(room=self.room, player_id=second.player_id).picked_slot,
+            'cm2',
+        )
 
     def test_swap_rejects_incompatible_position(self):
         gk = self.market_player('gk')
-        services.pick_player(self.room.room_code, self.host, gk.pk, 'gk')
+        services.pick_player(self.room.room_code, self.host, gk.player_id, 'gk')
         with self.assertRaises(ApiError) as ctx:
             services.swap_slots(self.room.room_code, self.host, 'gk', 'st')
         self.assertEqual(ctx.exception.code, 'position_mismatch')
 
     def test_lock_requires_a_full_squad(self):
         gk = self.market_player('gk')
-        services.pick_player(self.room.room_code, self.host, gk.pk, 'gk')
+        services.pick_player(self.room.room_code, self.host, gk.player_id, 'gk')
         with self.assertRaises(ApiError) as ctx:
             services.lock_squad(self.room.room_code, self.host)
         self.assertEqual(ctx.exception.code, 'squad_incomplete')
@@ -232,9 +248,12 @@ class DraftActionTests(TestCase):
     def test_locked_squad_blocks_every_draft_action(self):
         fill_squad(self.room, self.host, lock=True)
         for action in (
-            lambda: services.pick_player(self.room.room_code, self.host, self.market_player('st').pk, 'st'),
+            lambda: services.pick_player(
+                self.room.room_code, self.host, self.market_player('st').player_id, 'st',
+            ),
             lambda: services.remove_pick(self.room.room_code, self.host, 'gk'),
             lambda: services.clear_squad(self.room.room_code, self.host),
+            lambda: services.auto_fill_squad(self.room.room_code, self.host),
             lambda: services.swap_slots(self.room.room_code, self.host, 'gk', 'gk'),
         ):
             with self.assertRaises(ApiError) as ctx:
@@ -247,6 +266,73 @@ class DraftActionTests(TestCase):
         self.assertFalse(Participant.objects.get(pk=self.host.pk).locked)
         services.remove_pick(self.room.room_code, self.host, 'gk')
         self.assertEqual(MarketPlayer.objects.filter(picked_by=self.host).count(), 10)
+
+
+@override_settings(CHANNEL_LAYERS=IN_MEMORY)
+class AutoSquadTests(TestCase):
+    def setUp(self):
+        cache.clear()
+        self.room, self.host, self.token, self.entries = create_room_with_players()
+        self.away = self.entries[1][0]
+
+    def squad(self):
+        room = Room.objects.get(pk=self.room.pk)
+        return room, list(MarketPlayer.objects.filter(room=room, picked_by=self.host))
+
+    def test_budget_is_capped_at_five_times_the_minimum(self):
+        self.assertEqual(services.MIN_BUDGET_EUR, 400_000_000)
+        self.assertEqual(services.MAX_BUDGET_EUR, 2_000_000_000)
+
+    def test_auto_fill_builds_a_full_challenge_aware_squad(self):
+        self.room = start_draft(self.room, self.host)
+        services.auto_fill_squad(self.room.room_code, self.host)
+
+        room, picks = self.squad()
+        self.assertEqual(len(picks), len(SLOTS))
+        self.assertEqual(
+            {pick.picked_slot for pick in picks},
+            {slot['key'] for slot in SLOTS},
+        )
+        spent = sum(int(pick.data['value_eur']) for pick in picks)
+        self.assertLessEqual(spent, room.budget_eur)
+
+        players = [pick.data for pick in picks]
+        for challenge in room.challenges:
+            self.assertTrue(
+                challenge_progress(challenge, players)['satisfied'],
+                f'{challenge["label"]} karşılanmadı',
+            )
+
+        for pick in picks:
+            accepted = set(SLOT_BY_KEY[pick.picked_slot]['accept'])
+            self.assertTrue(accepted.intersection(pick.data['positions']))
+
+    def test_auto_fill_replaces_existing_picks(self):
+        self.room = start_draft(self.room, self.host)
+        gk = available_candidates(self.room, 'gk')[0]
+        services.pick_player(self.room.room_code, self.host, gk.player_id, 'gk')
+
+        services.auto_fill_squad(self.room.room_code, self.host)
+
+        _room, picks = self.squad()
+        self.assertEqual(len(picks), len(SLOTS))
+        self.assertEqual(len({pick.player_id for pick in picks}), len(SLOTS))
+        self.assertEqual(len({pick.picked_slot for pick in picks}), len(SLOTS))
+
+    def test_auto_fill_avoids_players_taken_by_the_opponent(self):
+        self.room = start_draft(self.room, self.host)
+        gk = available_candidates(self.room, 'gk')[0]
+        services.pick_player(self.room.room_code, self.away, gk.player_id, 'gk')
+
+        services.auto_fill_squad(self.room.room_code, self.host)
+
+        _room, picks = self.squad()
+        self.assertNotIn(gk.player_id, {pick.player_id for pick in picks})
+
+    def test_auto_fill_requires_an_open_draft(self):
+        with self.assertRaises(ApiError) as ctx:
+            services.auto_fill_squad(self.room.room_code, self.host)
+        self.assertEqual(ctx.exception.code, 'draft_closed')
 
 
 @override_settings(CHANNEL_LAYERS=IN_MEMORY)
@@ -305,19 +391,14 @@ class MatchFlowTests(TestCase):
         self.assertEqual(room.status, 'DRAFT')
         self.assertIsNone(room.current_match_id)
         self.assertIsNone(room.finished_at)
-        self.assertEqual(room.market.count(), 80)
+        # New seasons clear picks; the catalogue itself is shared and global.
+        self.assertEqual(room.market.count(), 0)
         self.assertEqual(MarketPlayer.objects.filter(room=room, picked_by__isnull=False).count(), 0)
         self.assertFalse(room.players.filter(locked=True).exists())
         self.assertGreaterEqual(room.budget_eur, services.MIN_BUDGET_EUR)
         self.assertLessEqual(room.budget_eur, MAX_BUDGET_EUR)
         self.assertGreaterEqual(len(room.challenges), 3)
-        self.assertTrue(two_squads_feasible(
-            [market_player.data for market_player in room.market.all()],
-            room.budget_eur,
-            room.challenges,
-            random.Random(99),
-            attempts=300,
-        ))
+        self.assertGreater(Player.objects.count(), 40)
 
     def test_new_season_is_host_only(self):
         services.start_match(self.room.room_code, self.host)
@@ -404,18 +485,22 @@ class StateSerializationTests(TestCase):
         self.assertEqual(state['room']['code'], self.room.room_code)
         self.assertEqual(state['you']['name'], 'Player 1')
         self.assertEqual(state['opponent']['name'], 'Player 2')
-        self.assertEqual(len(state['market']), 80)
+        self.assertEqual(state['market'], [])
+        self.assertGreater(state['market_total'], 40)
         self.assertEqual(len(state['slots']), len(SLOTS))
         self.assertIsNone(state['match'])
         self.assertTrue(state['server_time'])
         self.assertNotIn('session_token', json.dumps(state))
         self.assertNotIn('session_token_hash', json.dumps(state))
 
-        market_player = state['market'][0]
-        self.assertIn('id', market_player)
-        self.assertIn('nation_label', market_player)
-        self.assertIn('league_label', market_player)
-        self.assertIsNone(market_player['picked_by'])
+        market = services.search_market(self.room, self.host, query='Oyuncu', page=1)
+        self.assertTrue(market['players'])
+        self.assertGreater(market['total'], 0)
+        first = market['players'][0]
+        self.assertIn('id', first)
+        self.assertIn('nation_label', first)
+        self.assertIn('league_label', first)
+        self.assertIsNone(first['picked_by'])
 
     def test_viewer_lock_state_is_fresh_after_lock(self):
         stale_host = Participant.objects.get(pk=self.host.pk)

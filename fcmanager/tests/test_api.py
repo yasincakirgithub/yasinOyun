@@ -9,7 +9,7 @@ from django.test import Client, TestCase, override_settings
 
 from fcmanager.data import SLOTS
 from fcmanager.models import Participant, Room
-from fcmanager.tests.helpers import available_candidates, fill_squad
+from fcmanager.tests.helpers import available_candidates, fill_squad, seed_catalogue
 
 IN_MEMORY = {'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'}}
 API = '/fcmanager/api/rooms/'
@@ -19,6 +19,7 @@ API = '/fcmanager/api/rooms/'
 class RoomApiTests(TestCase):
     def setUp(self):
         cache.clear()
+        seed_catalogue()
         self.client = Client()
 
     def post(self, path, payload=None, token=''):
@@ -89,20 +90,29 @@ class RoomApiTests(TestCase):
         self.assertEqual(started.status_code, 200, started.content)
         state = started.json()['state']
         self.assertEqual(state['room']['status'], 'DRAFT')
-        self.assertEqual(len(state['market']), 80)
+        self.assertEqual(state['market'], [])
+        self.assertGreater(state['market_total'], 40)
         self.assertEqual(len(state['slots']), len(SLOTS))
 
         room = Room.objects.get(room_code=code)
         gk = available_candidates(room, 'gk')[0]
         picked = self.post(
             API + code + '/pick/',
-            {'player_id': gk.pk, 'slot': 'gk'},
+            {'player_id': gk.player_id, 'slot': 'gk'},
             token,
         )
         self.assertEqual(picked.status_code, 200, picked.content)
-        entry = next(item for item in picked.json()['state']['market'] if item['id'] == gk.pk)
+        entry = next(item for item in picked.json()['state']['market'] if item['id'] == gk.player_id)
         self.assertTrue(entry['picked_by_you'])
         self.assertEqual(entry['slot'], 'gk')
+
+        # The catalogue search endpoint runs the market off the database.
+        search = self.get(API + code + '/market/?q=Oyuncu&group=GK&page=1', token)
+        self.assertEqual(search.status_code, 200, search.content)
+        results = search.json()
+        self.assertTrue(results['players'])
+        self.assertGreater(results['total'], 0)
+        self.assertTrue(all(item['bucket'] == 'gk' for item in results['players']))
 
         swapped = self.post(
             API + code + '/swap/',
@@ -115,6 +125,31 @@ class RoomApiTests(TestCase):
         self.assertEqual(cleared.status_code, 200, cleared.content)
         self.assertEqual(cleared.json()['state']['you']['slots_filled'], 0)
 
+    def test_auto_fill_api_returns_a_complete_squad(self):
+        created = self.create()
+        code = created['room_code']
+        token = created['session_token']
+        self.assertEqual(self.join(code, 'Guest').status_code, 200)
+        self.assertEqual(self.post(API + code + '/start-draft/', {}, token).status_code, 200)
+
+        response = self.post(API + code + '/auto-fill/', {}, token)
+        self.assertEqual(response.status_code, 200, response.content)
+        state = response.json()['state']
+        self.assertEqual(state['you']['slots_filled'], len(SLOTS))
+        self.assertTrue(state['you']['valid'])
+        self.assertLessEqual(state['you']['spent'], state['room']['budget_eur'])
+        self.assertEqual(len(state['market']), len(SLOTS))
+        for challenge in state['you']['challenges']:
+            self.assertTrue(challenge['satisfied'], challenge['label'])
+
+    def test_auto_fill_requires_authentication(self):
+        created = self.create()
+        code = created['room_code']
+        self.join(code, 'Guest')
+        self.post(API + code + '/start-draft/', {}, created['session_token'])
+        response = self.post(API + code + '/auto-fill/', {})
+        self.assertEqual(response.status_code, 401)
+
     def test_pick_validation_errors_are_json(self):
         created = self.create()
         code = created['room_code']
@@ -124,7 +159,7 @@ class RoomApiTests(TestCase):
         room = Room.objects.get(room_code=code)
         gk = available_candidates(room, 'gk')[0]
 
-        wrong_slot = self.post(API + code + '/pick/', {'player_id': gk.pk, 'slot': 'st'}, token)
+        wrong_slot = self.post(API + code + '/pick/', {'player_id': gk.player_id, 'slot': 'st'}, token)
         self.assertEqual(wrong_slot.status_code, 400)
         self.assertEqual(wrong_slot.json()['code'], 'position_mismatch')
 
@@ -170,7 +205,7 @@ class RoomApiTests(TestCase):
         self.assertIsNone(reset['match'])
         self.assertEqual(reset['you']['slots_filled'], 0)
         self.assertEqual(reset['opponent']['slots_filled'], 0)
-        self.assertEqual(len(reset['market']), 80)
+        self.assertEqual(reset['market'], [])
         self.assertGreaterEqual(len(reset['room']['challenges']), 3)
 
     def test_host_only_actions(self):

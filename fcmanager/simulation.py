@@ -338,12 +338,14 @@ def simulate_match(
     for side, items, team_name in (('home', home_items, home_name), ('away', away_items, away_name)):
         if not items:
             continue
-        for _ in range(rng.randint(3, 6)):
+        # A busy 90 minutes: roughly a dozen chances per side keeps the replay
+        # alive for about two minutes without turning it into a highlight reel.
+        for _ in range(rng.randint(12, 18)):
             minute = rng.randint(3, 89)
             player = _random_player(items, rng)
             kind = rng.choices(
                 ['save', 'miss', 'corner', 'card', 'offside', 'chance'],
-                weights=[24, 20, 16, 14, 10, 16],
+                weights=[26, 18, 16, 10, 10, 20],
                 k=1,
             )[0]
             if kind == 'save':

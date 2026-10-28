@@ -11,17 +11,28 @@ from django.db import IntegrityError, transaction
 from django.db.models import F
 from django.utils import timezone
 
-from .challenges import build_challenges, challenge_progress
+from .challenges import (
+    build_challenges,
+    build_pools,
+    build_squad,
+    challenge_progress,
+    cheapest_squad,
+)
 from .data import (
     EUR_TRY_RATE,
     SLOTS,
     SLOT_BY_KEY,
     build_market,
+    catalogue_players,
+    ensure_catalogue,
     format_league,
     format_nation,
+    load_players,
+    photo_url,
     slot_accepts,
+    with_photo,
 )
-from .models import MarketPlayer, Match, Participant, Room
+from .models import MarketPlayer, Match, Participant, Player, Room
 from .simulation import simulate_match
 from .utils import (
     ApiError,
@@ -37,7 +48,19 @@ logger = logging.getLogger(__name__)
 MAX_PLAYERS = 2
 ROOM_TTL_HOURS = 12
 MIN_BUDGET_EUR = 400_000_000
-MAX_BUDGET_TRY = 1_000_000_000_000
+MAX_BUDGET_MULTIPLIER = 5
+MAX_BUDGET_EUR = MIN_BUDGET_EUR * MAX_BUDGET_MULTIPLIER
+MARKET_PAGE_SIZE = 40
+MARKET_PAGE_SIZE_MAX = 100
+
+# Market position groups used by the search endpoint. The bucket names come
+# from ``data.POSITION_BUCKETS`` so the client's chips stay in sync.
+MARKET_GROUPS = {
+    'GK': ('gk',),
+    'DEF': ('cb', 'lb', 'rb'),
+    'MID': ('cm', 'cam'),
+    'FWD': ('wing', 'st'),
+}
 
 
 def _now():
@@ -55,15 +78,14 @@ def _lock_room(room_code: str) -> Room | None:
 
 
 def _random_budget(rng: random.Random) -> tuple[int, int]:
-    """Pick a budget between €400M and the € equivalent of ₺1T.
+    """Pick a budget between €400M and five times that (€2B).
 
     A squared uniform distribution keeps the low end common (a real transfer
-    budget) while still allowing the occasional billionaire season.
+    budget) while still allowing the occasional big-spending season.
     """
-    max_eur = MAX_BUDGET_TRY / EUR_TRY_RATE
-    factor = (max_eur / MIN_BUDGET_EUR) ** (rng.random() ** 2)
-    budget_eur = int(round(MIN_BUDGET_EUR * factor / 1_000_000) * 1_000_000)
-    budget_eur = max(MIN_BUDGET_EUR, min(int(max_eur), budget_eur))
+    factor = MAX_BUDGET_EUR / MIN_BUDGET_EUR
+    budget_eur = int(round(MIN_BUDGET_EUR * (factor ** (rng.random() ** 2)) / 1_000_000) * 1_000_000)
+    budget_eur = max(MIN_BUDGET_EUR, min(MAX_BUDGET_EUR, budget_eur))
     budget_try = int(round(budget_eur * EUR_TRY_RATE / 10_000_000) * 10_000_000)
     return budget_eur, budget_try
 
@@ -86,7 +108,9 @@ def _squad_value(room: Room, participant: Participant) -> int:
 
 def _build_snapshot(participant: Participant, room: Room) -> dict:
     picks = _squad_picks(room, participant)
-    squad = {mp.picked_slot: dict(mp.data) for mp in picks}
+    # Snapshots are what the 3D replay reads, so point the photos at the local
+    # copies (falling back to the dataset CDN link when one is missing).
+    squad = {mp.picked_slot: with_photo(dict(mp.data)) for mp in picks}
     players = [mp.data for mp in picks]
     challenges = [challenge_progress(c, players) for c in (room.challenges or [])]
     return {
@@ -290,20 +314,21 @@ def leave_room(room_code: str, participant: Participant) -> Room | None:
 def _generate_draft(room: Room):
     rng = random.Random(secrets.randbits(64))
     try:
-        market = build_market(rng)
+        stored = ensure_catalogue()
+        if not stored:
+            raise ApiError('FC26 oyuncu verisi yüklenemedi.', 503, 'dataset_unavailable')
+        sample = build_market(rng)
     except ValueError as exc:
         raise ApiError('FC26 oyuncu verisi yüklenemedi.', 503, 'dataset_unavailable') from exc
-    if len(market) < 40:
+    if len(sample) < 40:
         raise ApiError('FC26 oyuncu verisi yetersiz.', 503, 'dataset_unavailable')
 
     budget_eur, budget_try = _random_budget(rng)
-    challenges = build_challenges(market, budget_eur, rng)
+    challenges = build_challenges(sample, budget_eur, rng)
 
+    # Picks are created lazily as managers draft, so a new season only has to
+    # clear the previous picks; the catalogue itself is global.
     room.market.all().delete()
-    MarketPlayer.objects.bulk_create([
-        MarketPlayer(room=room, player_id=player['player_id'], data=player)
-        for player in market
-    ])
     room.budget_eur = budget_eur
     room.budget_try = budget_try
     room.challenges = challenges
@@ -342,13 +367,13 @@ def _get_member(room: Room, participant: Participant) -> Participant:
     return member
 
 
-def pick_player(room_code: str, participant: Participant, market_player_id, slot_key: str) -> Room:
+def pick_player(room_code: str, participant: Participant, player_id, slot_key: str) -> Room:
     slot_key = str(slot_key or '').strip()
     slot = SLOT_BY_KEY.get(slot_key)
     if not slot:
         raise ApiError('Geçersiz mevki.', 400, 'invalid_slot')
     try:
-        market_player_id = int(market_player_id)
+        player_id = int(player_id)
     except (TypeError, ValueError) as exc:
         raise ApiError('Geçersiz oyuncu.', 400, 'invalid_player') from exc
 
@@ -362,40 +387,56 @@ def pick_player(room_code: str, participant: Participant, market_player_id, slot
         if member.locked:
             raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
 
-        market_player = room.market.select_for_update().filter(pk=market_player_id).first()
-        if not market_player:
-            raise ApiError('Oyuncu bu odada bulunamadı.', 404, 'player_not_found')
-        if not slot_accepts(slot_key, market_player.data.get('positions', ())):
-            raise ApiError(
-                f'{market_player.data.get("name", "Oyuncu")} bu mevkide oynayamaz.',
-                400, 'position_mismatch',
-            )
-        if market_player.picked_by_id and market_player.picked_by_id != member.pk:
-            raise ApiError('Bu oyuncu rakibin tarafından seçildi.', 409, 'player_taken')
-
-        existing = room.market.select_for_update().filter(
+        slot_pick = room.market.select_for_update().filter(
             picked_by=member, picked_slot=slot_key,
         ).first()
-        if existing and existing.pk == market_player.pk:
+        player_pick = room.market.select_for_update().filter(player_id=player_id).first()
+        if player_pick and player_pick.picked_by_id not in (None, member.pk):
+            raise ApiError('Bu oyuncu rakibin tarafından seçildi.', 409, 'player_taken')
+        if player_pick and player_pick.picked_by_id == member.pk and player_pick.picked_slot == slot_key:
             return room
 
+        if player_pick:
+            data = dict(player_pick.data or {})
+        else:
+            catalogue_player = Player.objects.filter(player_id=player_id).first()
+            if not catalogue_player:
+                raise ApiError('Oyuncu veritabanında bulunamadı.', 404, 'player_not_found')
+            data = catalogue_player.to_dict()
+
+        if not slot_accepts(slot_key, data.get('positions', ())):
+            raise ApiError(
+                f'{data.get("name", "Oyuncu")} bu mevkide oynayamaz.',
+                400, 'position_mismatch',
+            )
+
         spent = _squad_value(room, member)
-        delta = int(market_player.data.get('value_eur', 0) or 0)
-        if existing:
-            delta -= int(existing.data.get('value_eur', 0) or 0)
-        if market_player.picked_by_id == member.pk:
-            delta -= int(market_player.data.get('value_eur', 0) or 0)
+        player_value = int(data.get('value_eur', 0) or 0)
+        delta = player_value
+        if slot_pick:
+            delta -= int(slot_pick.data.get('value_eur', 0) or 0)
+        if player_pick and player_pick.picked_by_id == member.pk:
+            # Moving a player the manager already owns between slots.
+            delta -= player_value
         if spent + delta > room.budget_eur:
             raise ApiError('Bu transfer bütçeni aşıyor.', 400, 'budget_exceeded')
 
-        if existing and existing.pk != market_player.pk:
-            existing.picked_by = None
-            existing.picked_slot = ''
-            existing.save(update_fields=['picked_by', 'picked_slot'])
+        if slot_pick is not None:
+            slot_pick.delete()
 
-        market_player.picked_by = member
-        market_player.picked_slot = slot_key
-        market_player.save(update_fields=['picked_by', 'picked_slot'])
+        if player_pick is not None:
+            player_pick.picked_by = member
+            player_pick.picked_slot = slot_key
+            player_pick.data = data
+            player_pick.save(update_fields=['picked_by', 'picked_slot', 'data'])
+        else:
+            MarketPlayer.objects.create(
+                room=room,
+                player_id=player_id,
+                data=data,
+                picked_by=member,
+                picked_slot=slot_key,
+            )
         member.last_seen_at = _now()
         member.save(update_fields=['last_seen_at'])
         room.save(update_fields=['updated_at'])
@@ -415,13 +456,7 @@ def remove_pick(room_code: str, participant: Participant, slot_key: str) -> Room
             raise ApiError('Kadro kurma aşaması kapalı.', 400, 'draft_closed')
         if member.locked:
             raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
-        market_player = room.market.select_for_update().filter(
-            picked_by=member, picked_slot=slot_key,
-        ).first()
-        if market_player:
-            market_player.picked_by = None
-            market_player.picked_slot = ''
-            market_player.save(update_fields=['picked_by', 'picked_slot'])
+        room.market.filter(picked_by=member, picked_slot=slot_key).delete()
         room.save(update_fields=['updated_at'])
         return room
 
@@ -436,7 +471,110 @@ def clear_squad(room_code: str, participant: Participant) -> Room:
             raise ApiError('Kadro kurma aşaması kapalı.', 400, 'draft_closed')
         if member.locked:
             raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
-        room.market.filter(picked_by=member).update(picked_by=None, picked_slot='')
+        room.market.filter(picked_by=member).delete()
+        member.last_seen_at = _now()
+        member.save(update_fields=['last_seen_at'])
+        room.save(update_fields=['updated_at'])
+        return room
+
+
+def _squad_candidates(room: Room, member: Participant) -> list[dict]:
+    """Every catalogue player the manager can still draft.
+
+    Players already picked by the opponent are removed because a player can
+    only appear once in the room.
+    """
+    taken = set(
+        room.market.filter(picked_by__isnull=False)
+        .exclude(picked_by=member)
+        .values_list('player_id', flat=True)
+    )
+    players = catalogue_players()
+    if not players:
+        ensure_catalogue()
+        players = catalogue_players() or load_players()
+    return [player for player in players if player['player_id'] not in taken]
+
+
+def auto_fill_squad(room_code: str, participant: Participant) -> Room:
+    """Fill the manager's eleven slots with a challenge-aware squad.
+
+    The squad is rebuilt from scratch: the server solves a fresh lineup that
+    satisfies the room's shared challenges inside the budget, preferring the
+    strongest complete squad. Existing picks are replaced, never merged.
+    """
+    with transaction.atomic():
+        room = _lock_room(room_code)
+        if not room:
+            raise ApiError('Oda bulunamadı.', 404, 'room_not_found')
+        member = _get_member(room, participant)
+        if room.status != 'DRAFT':
+            raise ApiError('Kadro kurma aşaması kapalı.', 400, 'draft_closed')
+        if member.locked:
+            raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
+
+        market = _squad_candidates(room, member)
+        if not market:
+            raise ApiError('FC26 oyuncu verisi yüklenemedi.', 503, 'dataset_unavailable')
+
+        rng = random.Random(secrets.randbits(64))
+        challenges = room.challenges or []
+        pools = build_pools(market, challenges) if len(market) > 400 else None
+
+        squad = None
+        tried: set[int] = set()
+        for size in (len(challenges), 3, 2, 1, 0):
+            if size in tried or size > len(challenges):
+                continue
+            tried.add(size)
+            squad = build_squad(
+                market,
+                room.budget_eur,
+                challenges[:size],
+                rng,
+                attempts=50,
+                pool_by_slot=pools,
+            )
+            if squad:
+                break
+        if not squad:
+            squad = cheapest_squad(market, room.budget_eur)
+        if not squad:
+            raise ApiError(
+                'Bu bütçeyle kurallara uyan bir kadro bulunamadı.',
+                409,
+                'auto_squad_failed',
+            )
+
+        room.market.filter(picked_by=member).delete()
+        player_ids = [player['player_id'] for _slot, player in squad]
+        existing = {
+            pick.player_id: pick
+            for pick in room.market.filter(player_id__in=player_ids)
+        }
+        updates: list[MarketPlayer] = []
+        creates: list[MarketPlayer] = []
+        for slot, player in squad:
+            pick = existing.get(player['player_id'])
+            if pick is not None:
+                pick.data = player
+                pick.picked_by = member
+                pick.picked_slot = slot['key']
+                updates.append(pick)
+            else:
+                creates.append(MarketPlayer(
+                    room=room,
+                    player_id=player['player_id'],
+                    data=player,
+                    picked_by=member,
+                    picked_slot=slot['key'],
+                ))
+        if updates:
+            MarketPlayer.objects.bulk_update(
+                updates, ['data', 'picked_by', 'picked_slot'],
+            )
+        if creates:
+            MarketPlayer.objects.bulk_create(creates)
         member.last_seen_at = _now()
         member.save(update_fields=['last_seen_at'])
         room.save(update_fields=['updated_at'])
@@ -626,8 +764,8 @@ def _iso(value):
 
 
 def serialize_market_player(market_player: MarketPlayer, viewer: Participant | None = None) -> dict:
-    payload = dict(market_player.data or {})
-    payload['id'] = market_player.pk
+    payload = with_photo(dict(market_player.data or {}))
+    payload['id'] = market_player.player_id
     payload['picked_by'] = market_player.picked_by.side if market_player.picked_by else None
     payload['picked_by_name'] = market_player.picked_by.display_name if market_player.picked_by else ''
     payload['picked_by_you'] = bool(viewer and market_player.picked_by_id == viewer.pk)
@@ -635,6 +773,109 @@ def serialize_market_player(market_player: MarketPlayer, viewer: Participant | N
     payload['nation_label'] = format_nation(payload.get('nationality', ''))
     payload['league_label'] = format_league(payload.get('league', ''))
     return payload
+
+
+def serialize_catalogue_player(player: Player, pick: MarketPlayer | None, viewer: Participant | None) -> dict:
+    """Compact player card for the searchable market."""
+    return {
+        'id': player.player_id,
+        'player_id': player.player_id,
+        'name': player.name,
+        'full_name': player.full_name,
+        'positions': list(player.positions or ()),
+        'primary_position': player.primary_position,
+        'bucket': player.bucket,
+        'overall': player.overall,
+        'potential': player.potential,
+        'value_eur': player.value_eur,
+        'age': player.age,
+        'nationality': player.nationality,
+        'nation_label': format_nation(player.nationality),
+        'league': player.league,
+        'league_label': format_league(player.league),
+        'club': player.club,
+        'image_url': photo_url(player.player_id, player.image_url),
+        'picked_by': pick.picked_by.side if pick and pick.picked_by else None,
+        'picked_by_name': pick.picked_by.display_name if pick and pick.picked_by else '',
+        'picked_by_you': bool(viewer and pick and pick.picked_by_id == viewer.pk),
+        'slot': (pick.picked_slot or None) if pick else None,
+    }
+
+
+def search_market(
+    room: Room,
+    viewer: Participant,
+    *,
+    query: str = '',
+    group: str = 'all',
+    sort: str = 'rating',
+    page: int = 1,
+    page_size: int = MARKET_PAGE_SIZE,
+    affordable: bool = False,
+) -> dict:
+    """Search the global player catalogue for the draft screen."""
+    from django.db.models import Q
+
+    queryset = Player.objects.all()
+    query = (query or '').strip()
+    if query:
+        queryset = queryset.filter(
+            Q(name__icontains=query)
+            | Q(full_name__icontains=query)
+            | Q(club__icontains=query)
+            | Q(nationality__icontains=query)
+            | Q(league__icontains=query)
+        )
+
+    buckets = MARKET_GROUPS.get((group or 'all').upper())
+    if buckets:
+        queryset = queryset.filter(bucket__in=buckets)
+
+    if affordable:
+        remaining = max(0, room.budget_eur - _squad_value(room, viewer))
+        queryset = queryset.filter(value_eur__lte=remaining)
+
+    if sort == 'value_desc':
+        queryset = queryset.order_by('-value_eur', '-overall', 'player_id')
+    elif sort == 'value_asc':
+        queryset = queryset.order_by('value_eur', '-overall', 'player_id')
+    elif sort == 'age':
+        queryset = queryset.order_by('age', '-overall', 'player_id')
+    else:
+        queryset = queryset.order_by('-overall', '-value_eur', 'player_id')
+
+    try:
+        page = max(1, int(page))
+    except (TypeError, ValueError):
+        page = 1
+    try:
+        page_size = max(1, min(MARKET_PAGE_SIZE_MAX, int(page_size)))
+    except (TypeError, ValueError):
+        page_size = MARKET_PAGE_SIZE
+
+    total = queryset.count()
+    pages = max(1, (total + page_size - 1) // page_size)
+    page = min(page, pages)
+    offset = (page - 1) * page_size
+    players = list(queryset[offset:offset + page_size])
+
+    picks = {
+        pick.player_id: pick
+        for pick in room.market.filter(
+            player_id__in=[player.player_id for player in players],
+        ).select_related('picked_by')
+    }
+    return {
+        'players': [
+            serialize_catalogue_player(player, picks.get(player.player_id), viewer)
+            for player in players
+        ],
+        'total': total,
+        'page': page,
+        'pages': pages,
+        'page_size': page_size,
+        'has_more': page < pages,
+    }
 
 
 def serialize_participant(
@@ -733,6 +974,8 @@ def build_room_state(room: Room, viewer: Participant) -> dict:
             for p in participants
         ],
         'market': [serialize_market_player(mp, viewer) for mp in market],
+        'market_total': Player.objects.count(),
+        'market_page_size': MARKET_PAGE_SIZE,
         'slots': [
             {**slot, 'accept': list(slot['accept'])}
             for slot in SLOTS

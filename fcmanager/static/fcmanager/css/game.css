@@ -593,6 +593,7 @@
 .fc-picked-label { color: #fca5a5; font-size: 8.5px; font-weight: 800; text-transform: uppercase; }
 .fc-picked-label.is-mine { color: #86efac; }
 .fc-market-empty { padding: 26px 12px; color: var(--color-text-muted); font-size: 12px; text-align: center; }
+.fc-market-more { width: calc(100% - 20px); margin: 0 10px 12px; }
 
 /* Pitch */
 .fc-pitch-panel { overflow: hidden; }
@@ -747,6 +748,14 @@
     font-size: 10.5px;
 }
 
+.fc-pitch-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
 /* Challenges */
 .fc-challenge-list { display: grid; gap: 7px; padding: 0 14px 14px; }
 .fc-challenge {
@@ -818,6 +827,17 @@
 .fc-match-progress span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #4ade80, #22d3ee); transition: width 0.18s linear; }
 
 .fc-match-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); gap: 14px; align-items: start; }
+.fc-pitch3d-panel { grid-column: 1 / -1; }
+.fc-pitch3d-wrap { padding: 0 12px 14px; }
+.fc-pitch3d-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.92 / 1;
+    border: 1px solid rgba(74, 222, 128, 0.18);
+    border-radius: 12px;
+    background: #07120d;
+    box-shadow: inset 0 0 60px rgba(2, 6, 23, 0.65);
+}
 .fc-commentary { display: grid; gap: 6px; max-height: 560px; min-height: 300px; padding: 0 16px 16px; overflow-y: auto; }
 .fc-commentary-empty { padding: 34px 12px; color: var(--color-text-muted); font-size: 12px; text-align: center; }
 .fc-event {

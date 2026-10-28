@@ -92,7 +92,7 @@
                     </div>
                     <ol class="fc-rules">
                         <li><strong>Sezon açılır:</strong> Rastgele bir transfer bütçesi ve iki menajere ortak 4 görev verilir.</li>
-                        <li><strong>Kadronu kur:</strong> 80 oyuncu transfer piyasasından 4-3-3 dizilişine 11 oyuncu sürükle.</li>
+                        <li><strong>Kadronu kur:</strong> Veritabanındaki tüm FC26 oyuncuları arasından ara, filtrele ve 4-3-3 dizilişine 11 oyuncu sürükle.</li>
                         <li><strong>Görevleri tamamla:</strong> Ülke, lig, yaş, rating ve kadro yapısı hedeflerini tutturmaya çalış.</li>
                         <li><strong>Kilitle ve maçı başlat:</strong> İki menajer de kadrosunu kilitleyince oda sahibi maçı başlatır.</li>
                         <li><strong>Mini simülasyon:</strong> Kadro gücü, görev başarısı ve futbolun rastgeleliği skoru belirler.</li>
@@ -155,9 +155,9 @@
                     <div class="fc-panel-head">
                         <div>
                             <h2 id="market-title">Transfer piyasası</h2>
-                            <p class="fc-muted">Oyuncuyu sahaya sürükle veya seçip mevkiye tıkla.</p>
+                            <p class="fc-muted">Tüm FC26 oyuncuları veritabanından sorgulanır. Ara, filtrele, sürükle.</p>
                         </div>
-                        <span id="market-count" class="fc-badge">80 oyuncu</span>
+                        <span id="market-count" class="fc-badge">— oyuncu</span>
                     </div>
                     <div class="fc-market-controls">
                         <input id="market-search" class="fc-input" type="search" placeholder="Oyuncu, kulüp, ülke ara…" autocomplete="off">
@@ -185,6 +185,7 @@
                         <div id="market-selected-hint" class="fc-selected-hint" hidden></div>
                     </div>
                     <div id="market-list" class="fc-market-list" aria-live="polite"></div>
+                    <button id="market-more" class="fc-btn fc-btn-secondary fc-btn-inline fc-market-more" type="button">DAHA FAZLA OYUNCU</button>
                 </aside>
 
                 <section class="fc-panel fc-pitch-panel" aria-labelledby="pitch-title">
@@ -211,7 +212,10 @@
                     </div>
                     <div class="fc-pitch-footer">
                         <span id="pitch-hint">Bir oyuncu kartını sürükle veya önce oyuncuya sonra mevkiye tıkla.</span>
-                        <button id="clear-squad-btn" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">Kadroyu temizle</button>
+                        <div class="fc-pitch-actions">
+                            <button id="auto-squad-btn" class="fc-btn fc-btn-secondary fc-btn-inline" type="button">Otomatik kadro oluştur</button>
+                            <button id="clear-squad-btn" class="fc-btn fc-btn-ghost fc-btn-inline" type="button">Kadroyu temizle</button>
+                        </div>
                     </div>
                 </section>
 
@@ -273,6 +277,19 @@
             </div>
 
             <div class="fc-match-grid">
+                <section class="fc-panel fc-pitch3d-panel" aria-labelledby="pitch3d-title">
+                    <div class="fc-panel-head">
+                        <div>
+                            <h2 id="pitch3d-title">3D saha</h2>
+                            <p class="fc-muted">Haxball tarzı canlı gösterim · top önce oyuncuya gider, sonra vuruş yapılır. İsimler ve CDN'den gelen fotoğraflar görünür.</p>
+                        </div>
+                        <span id="pitch3d-badge" class="fc-badge">Canlı</span>
+                    </div>
+                    <div class="fc-pitch3d-wrap">
+                        <canvas id="match-pitch3d" class="fc-pitch3d-canvas" aria-label="Maçın 3D saha gösterimi" role="img"></canvas>
+                    </div>
+                </section>
+
                 <section class="fc-panel fc-commentary-panel" aria-labelledby="commentary-title">
                     <div class="fc-panel-head">
                         <h2 id="commentary-title">Canlı anlatım</h2>
@@ -329,6 +346,7 @@
         </div>
     </div>
 
+    <script src="{% static_v 'fcmanager/js/match3d.js' %}"></script>
     <script src="{% static_v 'fcmanager/js/game.js' %}"></script>
 </body>
 </html>

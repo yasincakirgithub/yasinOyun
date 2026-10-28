@@ -4,7 +4,7 @@ import re
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.db import connection
-from django.http import JsonResponse
+from django.http import FileResponse, Http404, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -28,6 +28,22 @@ def home(request):
     return render(request, 'fcmanager/home.html', {
         'invite_code': room_code,
     })
+
+
+def player_photo(request, player_id):
+    """Serve a downloaded FC26 face photo.
+
+    The original CDN rejects browser requests (it requires a ``sofifa.com``
+    Referer), so the draft screen and the 3D replay use these local copies.
+    """
+    from .data import PLAYER_IMAGE_DIR
+
+    path = PLAYER_IMAGE_DIR / f'{int(player_id)}.png'
+    if not path.is_file():
+        raise Http404('Fotoğraf bulunamadı.')
+    response = FileResponse(path.open('rb'), content_type='image/png')
+    response['Cache-Control'] = 'public, max-age=31536000, immutable'
+    return response
 
 
 def game_room(request, room_code):
@@ -136,6 +152,32 @@ def api_room_state(request, room_code):
         return error_response(exc)
 
 
+@require_http_methods(['GET'])
+def api_market(request, room_code):
+    """Paginated, database-backed player search for the draft screen."""
+    try:
+        room, player = _authenticate(request, room_code)
+        if not allow_rate(f'market:{player.pk}', 300, 60):
+            raise ApiError('Çok fazla arama isteği. Biraz bekle.', 429, 'rate_limited')
+        data = services.search_market(
+            room,
+            player,
+            query=request.GET.get('q', ''),
+            group=request.GET.get('group', 'all'),
+            sort=request.GET.get('sort', 'rating'),
+            page=request.GET.get('page', 1),
+            page_size=request.GET.get('page_size', services.MARKET_PAGE_SIZE),
+            affordable=request.GET.get('affordable', '') in ('1', 'true', 'yes', 'on'),
+        )
+        response = JsonResponse({'success': True, **data})
+        response['Cache-Control'] = 'no-store'
+        return response
+    except Exception as exc:
+        if not isinstance(exc, ApiError):
+            logger.exception('FC Manager market search failed')
+        return error_response(exc)
+
+
 @csrf_exempt
 @require_http_methods(['POST'])
 def api_leave_room(request, room_code):
@@ -215,6 +257,22 @@ def api_clear_squad(request, room_code):
     except Exception as exc:
         if not isinstance(exc, ApiError):
             logger.exception('FC Manager clear squad failed')
+        return error_response(exc)
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def api_auto_fill(request, room_code):
+    try:
+        room, player = _authenticate(request, room_code)
+        if not allow_rate(f'auto:{player.pk}', 20, 60):
+            raise ApiError('Çok fazla otomatik kadro isteği. Biraz bekle.', 429, 'rate_limited')
+        room = services.auto_fill_squad(room_code.upper(), player)
+        _broadcast_state(room_code.upper())
+        return _state_payload(room, player)
+    except Exception as exc:
+        if not isinstance(exc, ApiError):
+            logger.exception('FC Manager auto squad failed')
         return error_response(exc)
 
 
