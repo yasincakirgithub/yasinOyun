@@ -181,6 +181,212 @@ def _random_player(items: list[tuple[str, dict]], rng: random.Random) -> dict:
     return rng.choice(items)[1]
 
 
+def _pick_defender(items: list[tuple[str, dict]], rng: random.Random) -> dict | None:
+    defenders = [
+        player for slot, player in items
+        if _role_of(slot) in ('DEF', 'MID') and 'GK' not in player.get('positions', ())
+    ]
+    if not defenders:
+        return _random_player(items, rng) if items else None
+    priority = [player for player in defenders if _role_of_player(player) == 'DEF']
+    return rng.choice(priority or defenders)
+
+
+def _role_of_player(player: dict) -> str:
+    positions = player.get('positions', ())
+    if 'GK' in positions:
+        return 'GK'
+    if any(position in positions for position in ('CB', 'LB', 'RB', 'LWB', 'RWB')):
+        return 'DEF'
+    if any(position in positions for position in ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM')):
+        return 'MID'
+    return 'FWD'
+
+
+def _pick_taker(items: list[tuple[str, dict]], rng: random.Random) -> dict:
+    """Corner/free-kick takers: wide midfielders and full-backs."""
+    takers = [
+        player for slot, player in items
+        if _role_of(slot) in ('MID', 'DEF') and 'GK' not in player.get('positions', ())
+    ]
+    return rng.choice(takers) if takers else _random_player(items, rng)
+
+
+def _sample_minutes(rng: random.Random, count: int) -> list[int]:
+    pool = list(range(1, 45)) + list(range(46, 90))
+    return rng.sample(pool, min(count, len(pool)))
+
+
+def _build_shot_events(
+    side: str,
+    team_name: str,
+    goals: int,
+    expected_goals: float,
+    items: list[tuple[str, dict]],
+    keeper: dict | None,
+    defenders: list[tuple[str, dict]],
+    rng: random.Random,
+) -> list[dict]:
+    """Build a shot-by-shot narrative, including exactly ``goals`` goals."""
+    if not items:
+        return []
+
+    shot_count = int(_clamp(
+        max(goals + 4, round(expected_goals * 6 + rng.randint(2, 6))),
+        6,
+        18,
+    ))
+    goal_indices = set(rng.sample(range(shot_count), goals))
+    minutes = _sample_minutes(rng, shot_count)
+    events: list[dict] = []
+
+    for index in range(shot_count):
+        _slot, shooter = _pick_scorer(items, rng)
+        assist_pair = _pick_assister(items, shooter.get('name', ''), rng)
+        assist = assist_pair[1] if assist_pair else None
+        minute = minutes[index]
+        shot_xg = round(_clamp(
+            (expected_goals / shot_count) * rng.uniform(0.45, 1.85),
+            0.02,
+            0.62,
+        ), 2)
+        player_name = shooter.get('name', 'Oyuncu')
+
+        if index in goal_indices:
+            body = rng.choices(
+                ['right_foot', 'left_foot', 'header', 'long_range'],
+                weights=[46, 24, 17, 13],
+                k=1,
+            )[0]
+            goal_type = {
+                'right_foot': 'open_play',
+                'left_foot': 'open_play',
+                'header': 'set_piece',
+                'long_range': 'long_range',
+            }[body]
+            if body == 'header':
+                text = f'GOOOL! {player_name} kafayla ağları havalandırdı.'
+            elif body == 'long_range':
+                text = f'GOOOL! {player_name} uzaktan patlattı, top ağlarda!'
+            else:
+                text = f'GOOOL! {player_name} düzgün bir vuruşla topu ağlara gönderdi.'
+            if assist:
+                text += f' Asist: {assist.get("name", "Oyuncu")}.'
+            events.append({
+                'minute': minute,
+                'phase': 'match',
+                'type': 'goal',
+                'side': side,
+                'team': team_name,
+                'player': player_name,
+                'assist': (assist or {}).get('name', ''),
+                'body_part': body,
+                'goal_type': goal_type,
+                'shot_xg': shot_xg,
+                'text': text,
+                'priority': 0,
+            })
+            continue
+
+        outcome = rng.choices(
+            ['save', 'miss', 'blocked', 'woodwork'],
+            weights=[47, 29, 17, 7],
+            k=1,
+        )[0]
+        keeper_name = (keeper or {}).get('name', 'kaleci')
+        if outcome == 'save':
+            text = f'{player_name} ceza sahası içinde vurdu, {keeper_name} kurtardı!'
+        elif outcome == 'miss':
+            text = f'{player_name} topu auta gönderdi.'
+        elif outcome == 'blocked':
+            blocker = _pick_defender(defenders, rng)
+            text = f'{player_name} vurdu, savunma son anda blokladı.' if not blocker else (
+                f'{player_name} vurdu, {blocker.get("name", "savunmacı")} blokladı.'
+            )
+        else:
+            text = f'{player_name} çok sert vurdu, top direkte!'
+        events.append({
+            'minute': minute,
+            'phase': 'match',
+            'type': outcome,
+            'side': side,
+            'team': team_name,
+            'player': player_name,
+            'keeper': keeper_name if outcome in ('save', 'woodwork') else '',
+            'shot_xg': shot_xg,
+            'text': text,
+            'priority': 1,
+        })
+
+    return events
+
+
+def _build_other_events(
+    side: str,
+    team_name: str,
+    items: list[tuple[str, dict]],
+    rng: random.Random,
+) -> list[dict]:
+    if not items:
+        return []
+
+    events: list[dict] = []
+    corner_count = rng.randint(2, 6)
+    for _ in range(corner_count):
+        taker = _pick_taker(items, rng)
+        events.append({
+            'minute': _sample_minutes(rng, 1)[0],
+            'phase': 'match',
+            'type': 'corner',
+            'side': side,
+            'team': team_name,
+            'player': taker.get('name', ''),
+            'text': f'{team_name} korner kazanıyor. {taker.get("name", "Oyuncu")} topun başında.',
+            'priority': 1,
+        })
+
+    for _ in range(rng.randint(0, 3)):
+        player = _random_player(items, rng)
+        events.append({
+            'minute': _sample_minutes(rng, 1)[0],
+            'phase': 'match',
+            'type': 'offside',
+            'side': side,
+            'team': team_name,
+            'player': player.get('name', ''),
+            'text': f'{player.get("name", "Oyuncu")} ofsayta takıldı.',
+            'priority': 1,
+        })
+
+    foul_count = rng.randint(3, 6)
+    cards = 0
+    for _ in range(foul_count):
+        player = _pick_defender(items, rng) or _random_player(items, rng)
+        roll = rng.random()
+        if roll < 0.028 and not any(event['type'] == 'red_card' for event in events):
+            kind = 'red_card'
+            text = f'{player.get("name", "Oyuncu")} kırmızı kartla oyun dışı kaldı!'
+        elif roll < 0.16 and cards < 3:
+            kind = 'yellow_card'
+            cards += 1
+            text = f'{player.get("name", "Oyuncu")} sert bir müdahaleden sonra sarı kart gördü.'
+        else:
+            kind = 'foul'
+            text = f'{player.get("name", "Oyuncu")} faul yaptı, hakem serbest vuruş verdi.'
+        events.append({
+            'minute': _sample_minutes(rng, 1)[0],
+            'phase': 'match',
+            'type': kind,
+            'side': side,
+            'team': team_name,
+            'player': player.get('name', ''),
+            'text': text,
+            'priority': 1,
+        })
+
+    return events
+
+
 def _shootout(home_squad: dict, away_squad: dict, home_name: str, away_name: str, rng: random.Random):
     home_items = _squad_items(home_squad)
     away_items = _squad_items(away_squad)
@@ -302,106 +508,38 @@ def simulate_match(
         home_goals = 0
     if not away_items:
         away_goals = 0
-    contributions: dict[str, dict] = {}
 
-    def contribution(player: dict, side: str):
-        key = f'{side}:{player.get("player_id", player.get("name"))}'
-        item = contributions.setdefault(key, {
-            'name': player.get('name', ''),
-            'side': side,
-            'team': home_name if side == 'home' else away_name,
-            'position': player.get('primary_position', ''),
-            'overall': player.get('overall', 0),
-            'goals': 0,
-            'assists': 0,
-        })
-        return item
+    home_gk = next((p for _, p in home_items if 'GK' in p.get('positions', ())), None)
+    away_gk = next((p for _, p in away_items if 'GK' in p.get('positions', ())), None)
 
-    goal_specs = []
-    for side, count, items in (('home', home_goals, home_items), ('away', away_goals, away_items)):
-        for _ in range(count):
-            if not items:
-                continue
-            scorer_slot, scorer = _pick_scorer(items, rng)
-            assist = _pick_assister(items, scorer.get('name', ''), rng)
-            goal_specs.append({
-                'minute': rng.randint(2, 90),
-                'side': side,
-                'scorer': scorer,
-                'assist': assist[1] if assist else None,
-            })
-            contribution(scorer, side)['goals'] += 1
-            if assist:
-                contribution(assist[1], side)['assists'] += 1
+    shot_events: list[dict] = []
+    shot_events.extend(_build_shot_events(
+        'home', home_name, home_goals, home_xg, home_items, away_gk, away_items, rng,
+    ))
+    shot_events.extend(_build_shot_events(
+        'away', away_name, away_goals, away_xg, away_items, home_gk, home_items, rng,
+    ))
 
-    other_events = []
-    for side, items, team_name in (('home', home_items, home_name), ('away', away_items, away_name)):
-        if not items:
-            continue
-        # A busy 90 minutes: roughly a dozen chances per side keeps the replay
-        # alive for about two minutes without turning it into a highlight reel.
-        for _ in range(rng.randint(12, 18)):
-            minute = rng.randint(3, 89)
-            player = _random_player(items, rng)
-            kind = rng.choices(
-                ['save', 'miss', 'corner', 'card', 'offside', 'chance'],
-                weights=[26, 18, 16, 10, 10, 20],
-                k=1,
-            )[0]
-            if kind == 'save':
-                text = f'{player.get("name", "Oyuncu")} ceza sahası içinde vurdu, kaleci kurtardı!'
-            elif kind == 'miss':
-                text = f'{player.get("name", "Oyuncu")} topu auta gönderdi.'
-            elif kind == 'corner':
-                text = f'{team_name} korner kazanıyor.'
-            elif kind == 'card':
-                text = f'{player.get("name", "Oyuncu")} sarı kart gördü.'
-            elif kind == 'offside':
-                text = f'{player.get("name", "Oyuncu")} ofsayta takıldı.'
-            else:
-                text = f'{team_name} hızlı hücuma çıktı, {player.get("name", "Oyuncu")} son vuruşu yapamadı.'
-            other_events.append({
-                'minute': minute,
-                'phase': 'match',
-                'type': kind,
-                'side': side,
-                'team': team_name,
-                'player': player.get('name', ''),
-                'text': text,
-                'priority': 1,
-            })
+    other_events: list[dict] = []
+    other_events.extend(_build_other_events('home', home_name, home_items, rng))
+    other_events.extend(_build_other_events('away', away_name, away_items, rng))
 
-    goal_events = []
-    for spec in goal_specs:
-        side = spec['side']
-        scorer = spec['scorer']
-        assist = spec['assist']
-        team_name = home_name if side == 'home' else away_name
-        text = f'GOOOL! {scorer.get("name", "Oyuncu")} ağları havalandırdı.'
-        if assist:
-            text += f' Asist: {assist.get("name", "Oyuncu")}.'
-        goal_events.append({
-            'minute': spec['minute'],
-            'phase': 'match',
-            'type': 'goal',
-            'side': side,
-            'team': team_name,
-            'player': scorer.get('name', ''),
-            'assist': (assist or {}).get('name', ''),
-            'text': text,
-            'priority': 0,
-        })
+    # The team that didn't start the match gets the second-half kick-off.
+    opening_side = rng.choice(('home', 'away'))
+    second_side = 'away' if opening_side == 'home' else 'home'
+    opening_team = home_name if opening_side == 'home' else away_name
+    second_team = home_name if second_side == 'home' else away_name
 
-    events = [{
+    events: list[dict] = [{
         'minute': 0,
         'phase': 'match',
         'type': 'kickoff',
-        'side': None,
-        'team': None,
-        'text': f'Maç başladı! {home_name} - {away_name}',
+        'side': opening_side,
+        'team': opening_team,
+        'text': f'Maç başladı! {opening_team} santrayı kullanıyor.',
         'priority': 0,
     }]
-    events.extend(goal_events)
+    events.extend(shot_events)
     events.extend(other_events)
     events.append({
         'minute': 45,
@@ -409,8 +547,17 @@ def simulate_match(
         'type': 'half',
         'side': None,
         'team': None,
-        'text': 'İlk yarı sona erdi.',
+        'text': 'İlk yarı sona erdi. Takımlar soyunma odasına gidiyor.',
         'priority': 2,
+    })
+    events.append({
+        'minute': 46,
+        'phase': 'match',
+        'type': 'kickoff',
+        'side': second_side,
+        'team': second_team,
+        'text': f'İkinci yarı başladı. {second_team} santrayı kullanıyor.',
+        'priority': 0,
     })
     events.append({
         'minute': 90,
@@ -418,10 +565,31 @@ def simulate_match(
         'type': 'full',
         'side': None,
         'team': None,
-        'text': '90 dakika sona erdi.',
+        'text': '90 dakika sona erdi. Hakem maçı bitirdi.',
         'priority': 2,
     })
     events.sort(key=lambda e: (e['minute'], e.get('priority', 1)))
+
+    # Every goal is followed by a real kick-off from the conceding side. If
+    # both teams scored in the same minute the beats are still chained in
+    # order because the kick-off is inserted directly after its goal.
+    with_kickoffs: list[dict] = []
+    for event in events:
+        with_kickoffs.append(event)
+        if event['type'] != 'goal':
+            continue
+        conceding_side = 'away' if event['side'] == 'home' else 'home'
+        conceding_team = away_name if conceding_side == 'away' else home_name
+        with_kickoffs.append({
+            'minute': event['minute'],
+            'phase': 'match',
+            'type': 'kickoff',
+            'side': conceding_side,
+            'team': conceding_team,
+            'text': f'{conceding_team} santrayı kullanıyor.',
+            'priority': 0.5,
+        })
+    events = with_kickoffs
 
     home_running = away_running = 0
     for event in events:
@@ -451,24 +619,81 @@ def simulate_match(
     ))
     possession_away = 100 - possession_home
 
-    def side_stats(xg, goals, profile, possession):
-        shots = max(goals + 1, round(xg * 7 + rng.randint(0, 5)))
-        on_target = min(shots, max(goals, round(shots * rng.uniform(0.34, 0.58))))
+    shot_types = ('goal', 'save', 'miss', 'blocked', 'woodwork')
+    card_types = ('yellow_card', 'red_card')
+    foul_types = ('foul',) + card_types
+
+    def side_stats(side: str, profile: dict, possession: int) -> dict:
+        side_events = [event for event in events if event.get('side') == side and event.get('phase') == 'match']
+        shots = sum(1 for event in side_events if event['type'] in shot_types)
+        on_target = sum(1 for event in side_events if event['type'] in ('goal', 'save'))
+        xg_total = sum(float(event.get('shot_xg') or 0) for event in side_events)
+        corners = sum(1 for event in side_events if event['type'] == 'corner')
+        fouls = sum(1 for event in side_events if event['type'] in foul_types)
+        yellow_cards = sum(1 for event in side_events if event['type'] in card_types)
         return {
             'possession': possession,
             'shots': shots,
-            'on_target': on_target,
-            'xg': round(xg, 2),
-            'corners': rng.randint(2, 9),
-            'fouls': rng.randint(5, 15),
-            'yellow_cards': rng.randint(0, 4),
+            'on_target': min(shots, on_target),
+            'xg': round(_clamp(xg_total, 0.2, 4.3), 2) if shots else 0.0,
+            'corners': corners,
+            'fouls': fouls,
+            'yellow_cards': yellow_cards,
             'pass_accuracy': round(_clamp(72 + (profile['passing'] - 70) * 0.7 + rng.uniform(-3, 3), 60, 94)),
         }
 
     stats = {
-        'home': side_stats(home_xg, home_goals, home_profile, possession_home),
-        'away': side_stats(away_xg, away_goals, away_profile, possession_away),
+        'home': side_stats('home', home_profile, possession_home),
+        'away': side_stats('away', away_profile, possession_away),
     }
+
+    contributions: dict[str, dict] = {}
+    by_side: dict[str, dict[str, dict]] = {'home': {}, 'away': {}}
+
+    def contribution(player: dict, side: str) -> dict:
+        key = f'{side}:{player.get("player_id", player.get("name"))}'
+        item = contributions.setdefault(key, {
+            'name': player.get('name', ''),
+            'side': side,
+            'team': home_name if side == 'home' else away_name,
+            'position': player.get('primary_position', ''),
+            'overall': player.get('overall', 0),
+            'goals': 0,
+            'assists': 0,
+            'saves': 0,
+            'shots': 0,
+            'cards': 0,
+        })
+        return item
+
+    for side, items in (('home', home_items), ('away', away_items)):
+        for _slot, player in items:
+            by_side[side][player.get('name', '')] = player
+            contribution(player, side)
+
+    for event in events:
+        if event.get('phase') != 'match':
+            continue
+        side = event.get('side')
+        if side not in ('home', 'away'):
+            continue
+        player = by_side[side].get(event.get('player', ''))
+        if player and event['type'] in shot_types:
+            item = contribution(player, side)
+            item['shots'] += 1
+            if event['type'] == 'goal':
+                item['goals'] += 1
+                assist_name = event.get('assist', '')
+                assist = by_side[side].get(assist_name)
+                if assist:
+                    contribution(assist, side)['assists'] += 1
+            elif event['type'] == 'save' and event.get('keeper'):
+                keeper_side = 'away' if side == 'home' else 'home'
+                keeper = by_side[keeper_side].get(event['keeper'])
+                if keeper:
+                    contribution(keeper, keeper_side)['saves'] += 1
+        if player and event['type'] in card_types:
+            contribution(player, side)['cards'] += 1
 
     top_players = []
     for key, item in contributions.items():
@@ -477,6 +702,9 @@ def simulate_match(
             + (item['overall'] - 75) * 0.03
             + item['goals'] * 1.1
             + item['assists'] * 0.7
+            + item['saves'] * 0.16
+            + item['shots'] * 0.05
+            - item['cards'] * 0.18
             + rng.uniform(-0.25, 0.45)
         )
         item['rating'] = round(_clamp(rating, 5.2, 10.0), 1)
@@ -498,5 +726,5 @@ def simulate_match(
         'challenges': {'home': home_challenges, 'away': away_challenges},
         'mvp': mvp,
         'top_players': top_players[:5],
-        'summary': f'{winner_name} kazandı!' if winner_side else 'Maç berabere bitti.',
+        'summary': f'{winner_name} {"penaltılarla " if home_pen is not None else ""}kazandı!',
     }

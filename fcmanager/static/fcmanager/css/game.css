@@ -404,6 +404,10 @@
     font-weight: 900;
     letter-spacing: 0.08em;
 }
+.fc-side-badge.is-away {
+    background: rgba(34, 211, 238, 0.16);
+    color: #a5f3fc;
+}
 .fc-status-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -603,32 +607,53 @@
     width: min(100%, 610px);
     aspect-ratio: 68 / 100;
     margin-inline: auto;
-    border: 1px solid rgba(134, 239, 172, 0.22);
+    border: 1px solid rgba(134, 239, 172, 0.26);
     border-radius: 18px;
     background:
-        radial-gradient(circle at 50% 0%, rgba(74, 222, 128, 0.08), transparent 60%),
-        linear-gradient(170deg, #0f5132, #072d1c);
+        radial-gradient(ellipse at 50% 0%, rgba(220, 252, 231, 0.12), transparent 52%),
+        radial-gradient(ellipse at 50% 100%, rgba(2, 6, 23, 0.3), transparent 60%),
+        linear-gradient(170deg, #126b3d, #06341d);
     overflow: hidden;
-    box-shadow: inset 0 0 80px rgba(2, 6, 23, 0.45);
+    box-shadow:
+        inset 0 0 90px rgba(2, 6, 23, 0.46),
+        0 24px 50px -34px rgba(2, 6, 23, 0.95);
+}
+.fc-pitch::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 50% 48%, transparent 50%, rgba(2, 6, 23, 0.38) 100%);
 }
 .fc-pitch-stripes {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(255, 255, 255, 0.026) 0 8.5%,
-        transparent 8.5% 17%
-    );
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.036) 0 7.1%,
+            rgba(2, 6, 23, 0.035) 7.1% 14.2%
+        ),
+        radial-gradient(ellipse at 50% 12%, rgba(255, 255, 255, 0.07), transparent 58%);
     pointer-events: none;
 }
-.fc-pitch-lines { position: absolute; inset: 3.5%; border: 1px solid rgba(226, 232, 240, 0.2); border-radius: 6px; pointer-events: none; }
-.fc-pitch-halfway { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(226, 232, 240, 0.2); }
+.fc-pitch-lines { position: absolute; inset: 3.5%; border: 1.4px solid rgba(248, 250, 252, 0.28); border-radius: 6px; pointer-events: none; }
+.fc-pitch-halfway { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(248, 250, 252, 0.28); }
 .fc-pitch-center-circle {
     position: absolute;
     top: 50%; left: 50%;
     width: 23%; aspect-ratio: 1;
-    border: 1px solid rgba(226, 232, 240, 0.2);
+    border: 1px solid rgba(248, 250, 252, 0.28);
     border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.fc-pitch-center-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(248, 250, 252, 0.65);
     transform: translate(-50%, -50%);
 }
 .fc-pitch-penalty {
@@ -636,18 +661,38 @@
     left: 50%;
     width: 54%;
     height: 15%;
-    border: 1px solid rgba(226, 232, 240, 0.2);
+    border: 1px solid rgba(248, 250, 252, 0.28);
+    transform: translateX(-50%);
+}
+.fc-pitch-penalty::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 3.5px;
+    height: 3.5px;
+    border-radius: 50%;
+    background: rgba(248, 250, 252, 0.65);
     transform: translateX(-50%);
 }
 .fc-pitch-penalty-top { top: -1px; border-top: 0; border-radius: 0 0 8px 8px; }
+.fc-pitch-penalty-top::after { top: 74%; }
 .fc-pitch-penalty-bottom { bottom: -1px; border-bottom: 0; border-radius: 8px 8px 0 0; }
+.fc-pitch-penalty-bottom::after { bottom: 74%; }
 .fc-pitch-goal {
     position: absolute;
     left: 50%;
     width: 26%;
     height: 5%;
-    border: 1px solid rgba(226, 232, 240, 0.18);
+    border: 1px solid rgba(248, 250, 252, 0.24);
     transform: translateX(-50%);
+}
+.fc-pitch-goal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(90deg, rgba(248, 250, 252, 0.12) 0 1px, transparent 1px 5px),
+        repeating-linear-gradient(0deg, rgba(248, 250, 252, 0.1) 0 1px, transparent 1px 4px);
 }
 .fc-pitch-goal-top { top: -1px; border-top: 0; }
 .fc-pitch-goal-bottom { bottom: -1px; border-bottom: 0; }
@@ -828,21 +873,147 @@
 
 .fc-match-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); gap: 14px; align-items: start; }
 .fc-pitch3d-panel { grid-column: 1 / -1; }
-.fc-pitch3d-wrap { padding: 0 12px 14px; }
+.fc-pitch3d-wrap {
+    position: relative;
+    padding: 0 12px 14px;
+}
+.fc-pitch3d-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0 12px 14px;
+    pointer-events: none;
+    border-radius: 12px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 0 90px rgba(2, 6, 23, 0.45);
+}
 .fc-pitch3d-canvas {
     display: block;
     width: 100%;
     aspect-ratio: 1.92 / 1;
     border: 1px solid rgba(74, 222, 128, 0.18);
     border-radius: 12px;
-    background: #07120d;
-    box-shadow: inset 0 0 60px rgba(2, 6, 23, 0.65);
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(34, 197, 94, 0.12), transparent 60%),
+        #07120d;
+    box-shadow: 0 24px 48px -28px rgba(2, 6, 23, 0.9), inset 0 0 60px rgba(2, 6, 23, 0.65);
 }
-.fc-commentary { display: grid; gap: 6px; max-height: 560px; min-height: 300px; padding: 0 16px 16px; overflow-y: auto; }
+
+/* Lineups */
+.fc-lineups-panel { grid-column: 1 / -1; }
+.fc-lineups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0 16px 16px;
+}
+.fc-lineup-team {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(15, 27, 38, 0.72), rgba(8, 15, 23, 0.55));
+}
+.fc-lineup-team.is-away { border-color: rgba(34, 211, 238, 0.16); }
+.fc-lineup-head { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.fc-lineup-head strong {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.fc-lineup-count {
+    margin-left: auto;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.1);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+}
+.fc-lineup-list {
+    display: grid;
+    gap: 4px;
+}
+.fc-lineup-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background: rgba(11, 18, 28, 0.45);
+    transition: background 0.15s var(--ease);
+}
+.fc-lineup-row:hover { background: rgba(34, 197, 94, 0.08); }
+.fc-lineup-avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 50%;
+    background: linear-gradient(160deg, #1e3a2f, #0d1f18);
+    color: #bbf7d0;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+}
+.fc-lineup-avatar img,
+.fc-event-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+}
+.fc-lineup-main { min-width: 0; display: grid; gap: 1px; }
+.fc-lineup-main strong {
+    overflow: hidden;
+    color: var(--color-text);
+    font-size: 11px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.fc-lineup-main small {
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: 8.5px;
+    letter-spacing: 0.02em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.fc-lineup-rating {
+    min-width: 24px;
+    padding: 2px 4px;
+    border-radius: 6px;
+    background: rgba(34, 197, 94, 0.14);
+    color: #86efac;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 800;
+    text-align: center;
+}
+.fc-lineup-team.is-away .fc-lineup-rating { background: rgba(34, 211, 238, 0.14); color: #a5f3fc; }
+
+.fc-commentary { display: grid; gap: 6px; max-height: 560px; min-height: 300px; padding: 0 16px 16px; overflow-y: auto; scrollbar-width: thin; }
 .fc-commentary-empty { padding: 34px 12px; color: var(--color-text-muted); font-size: 12px; text-align: center; }
 .fc-event {
     display: grid;
-    grid-template-columns: 34px 22px minmax(0, 1fr);
+    grid-template-columns: 34px 20px 26px minmax(0, 1fr);
     align-items: start;
     gap: 7px;
     padding: 8px 9px;
@@ -853,13 +1024,42 @@
 }
 @keyframes fc-event-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 .fc-event-minute { color: var(--color-text-muted); font-family: var(--font-mono); font-size: 9.5px; font-weight: 700; text-align: right; padding-top: 1px; }
-.fc-event-icon { font-size: 13px; line-height: 1; }
+.fc-event-icon { font-size: 13px; line-height: 1; padding-top: 1px; }
+.fc-event-avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    overflow: hidden;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 50%;
+    background: linear-gradient(160deg, #1e3a2f, #0d1f18);
+    color: #bbf7d0;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 800;
+}
+.fc-event-avatar.is-empty {
+    background: rgba(148, 163, 184, 0.08);
+    border-style: dashed;
+    color: var(--color-text-muted);
+    font-size: 11px;
+}
 .fc-event-text { font-size: 11.5px; line-height: 1.45; color: var(--color-text-secondary); }
+.fc-event.is-home { border-left: 2px solid rgba(74, 222, 128, 0.45); }
+.fc-event.is-away { border-left: 2px solid rgba(34, 211, 238, 0.45); }
 .fc-event.is-goal { border-color: rgba(74, 222, 128, 0.35); background: rgba(34, 197, 94, 0.1); }
 .fc-event.is-goal .fc-event-text { color: #dcfce7; font-weight: 700; }
 .fc-event.is-goal .fc-event-minute { color: #86efac; }
+.fc-event.is-goal .fc-event-avatar { border-color: rgba(74, 222, 128, 0.5); box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.16); }
 .fc-event.is-card { border-color: rgba(251, 191, 36, 0.24); }
 .fc-event.is-half, .fc-event.is-full { background: rgba(148, 163, 184, 0.05); }
+.fc-event.is-half .fc-event-text, .fc-event.is-full .fc-event-text { color: var(--color-text); font-weight: 700; }
+.fc-event.is-kickoff { background: rgba(56, 189, 248, 0.06); border-color: rgba(56, 189, 248, 0.18); }
+.fc-event.is-kickoff .fc-event-text { color: #bae6fd; }
+.fc-event.is-chance { border-color: rgba(250, 204, 21, 0.18); background: rgba(250, 204, 21, 0.04); }
 .fc-event.is-penalty { border-color: rgba(251, 191, 36, 0.3); background: rgba(251, 191, 36, 0.06); }
 .fc-event.is-penalty-missed .fc-event-text { color: #fca5a5; }
 
@@ -981,6 +1181,7 @@
     .fc-match-team small { display: none; }
     .fc-match-center { min-width: 130px; }
     .fc-match-side { grid-template-columns: 1fr; }
+    .fc-lineups { grid-template-columns: 1fr; }
     .fc-lobby-head { align-items: flex-start; flex-direction: column; }
     .fc-start-box { flex-direction: column; align-items: stretch; }
     .fc-pitch-footer { flex-direction: column; align-items: flex-start; }
@@ -998,6 +1199,8 @@
     .fc-result-card { padding: 22px 18px; }
     .fc-match-team strong { font-size: 1rem; }
     .fc-match-score { gap: 8px; }
+    .fc-event { grid-template-columns: 30px 18px 24px minmax(0, 1fr); gap: 6px; }
+    .fc-event-avatar { width: 24px; height: 24px; }
     .fc-status-grid { grid-template-columns: 1fr; }
     .fc-draft-top { gap: 10px; }
 }

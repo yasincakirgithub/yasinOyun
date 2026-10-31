@@ -44,6 +44,7 @@
     var lastMarketSignature = '';
     var lastPitchSignature = '';
     var lastChallengeSignature = '';
+    var lastLineupSignature = '';
     var slotByKey = {};
 
     var marketFilters = { q: '', group: 'all', sort: 'rating', affordable: false };
@@ -131,6 +132,8 @@
         matchStats: $('match-stats'),
         matchChallenges: $('match-challenges'),
         matchPitch3D: $('match-pitch3d'),
+        matchLineups: $('match-lineups'),
+        matchLineupsBadge: $('lineups-badge'),
         matchSkip: $('match-skip-btn'),
         newSeason: $('new-season-btn'),
         toast: $('toast'),
@@ -1505,6 +1508,7 @@
     function stopMatchAnimation() {
         if (matchAnim.timer) clearTimeout(matchAnim.timer);
         matchAnim = { id: null, timer: null, index: 0, done: false, started: false };
+        lastLineupSignature = '';
         if (window.FCMatch3D) window.FCMatch3D.pause();
     }
 
@@ -1516,6 +1520,66 @@
     function placeholder(node, text) {
         clearNode(node);
         if (node) node.appendChild(createEl('div', 'fc-commentary-empty', text));
+    }
+
+    function playerAvatar(player, className) {
+        var avatar = createEl('span', className || 'fc-lineup-avatar', initials(player && player.name));
+        if (player && player.image_url && /^(?:https?:\/\/|\/)/i.test(player.image_url)) {
+            var image = document.createElement('img');
+            image.alt = '';
+            image.loading = 'lazy';
+            image.referrerPolicy = 'no-referrer';
+            image.addEventListener('error', function () { image.remove(); });
+            image.src = player.image_url;
+            avatar.appendChild(image);
+        }
+        return avatar;
+    }
+
+    function renderMatchLineups(match) {
+        if (!match || !el.matchLineups) return;
+        if (lastLineupSignature === match.id) return;
+        lastLineupSignature = match.id;
+        clearNode(el.matchLineups);
+
+        var slots = state && state.slots && state.slots.length ? state.slots : FALLBACK_SLOTS;
+        var total = 0;
+        [
+            { key: 'home', label: 'EV' },
+            { key: 'away', label: 'DEP' }
+        ].forEach(function (side) {
+            var snapshot = match[side.key] || {};
+            var squad = snapshot.squad || {};
+            var block = createEl('div', 'fc-lineup-team is-' + side.key);
+            var head = createEl('div', 'fc-lineup-head');
+            head.appendChild(createEl('span', 'fc-side-badge is-' + side.key, side.label));
+            head.appendChild(createEl('strong', '', snapshot.name || (side.key === 'home' ? 'Ev sahibi' : 'Deplasman')));
+            var count = slots.filter(function (slot) { return !!squad[slot.key]; }).length;
+            total += count;
+            head.appendChild(createEl('span', 'fc-lineup-count', count + '/11'));
+            block.appendChild(head);
+
+            var list = createEl('div', 'fc-lineup-list');
+            slots.forEach(function (slot) {
+                var player = squad[slot.key];
+                if (!player) return;
+                var row = createEl('div', 'fc-lineup-row');
+                row.appendChild(playerAvatar(player));
+                var main = createEl('div', 'fc-lineup-main');
+                main.appendChild(createEl('strong', '', player.name || 'Oyuncu'));
+                var roleLabel = slot.full || slot.label || '';
+                var positionLabel = player.primary_position || '';
+                main.appendChild(createEl('small', '', roleLabel && positionLabel && roleLabel !== positionLabel
+                    ? roleLabel + ' · ' + positionLabel
+                    : (roleLabel || positionLabel)));
+                row.appendChild(main);
+                row.appendChild(createEl('span', 'fc-lineup-rating', player.overall || '—'));
+                list.appendChild(row);
+            });
+            block.appendChild(list);
+            el.matchLineups.appendChild(block);
+        });
+        setText(el.matchLineupsBadge, total + ' oyuncu');
     }
 
     function renderMatch(match) {
@@ -1532,6 +1596,9 @@
             placeholder(el.matchChallenges, 'Görev sonucu yok.');
             el.matchSkip.hidden = true;
             el.newSeason.hidden = true;
+            if (el.matchLineups) clearNode(el.matchLineups);
+            setText(el.matchLineupsBadge, '0 oyuncu');
+            lastLineupSignature = '';
             return;
         }
 
@@ -1542,6 +1609,7 @@
         setText(el.matchAwayName, away.name || 'Deplasman');
         setText(el.matchHomeSub, profileSub(profiles.home));
         setText(el.matchAwaySub, profileSub(profiles.away));
+        renderMatchLineups(match);
 
         if (matchAnim.id !== match.id) {
             dismissedResultFor = '';
@@ -1574,7 +1642,9 @@
         if (!match) return;
         if (matchAnim.timer) clearTimeout(matchAnim.timer);
         matchAnim = { id: match.id, timer: null, index: 0, done: false, started: true };
+        lastLineupSignature = '';
         resetMatchView();
+        renderMatchLineups(match);
         if (window.FCMatch3D) {
             window.FCMatch3D.setMatch(match);
             window.FCMatch3D.start();
@@ -1606,35 +1676,64 @@
     function delayFor(events, event) {
         var count = Math.max(1, (events || []).length);
         var base = Math.min(REPLAY_BASE_MAX, Math.max(REPLAY_BASE_MIN, REPLAY_TARGET_MS / count));
-        if (event.phase === 'penalties') return Math.round(Math.min(1900, base * 0.6));
-        if (event.type === 'goal') return Math.round(base * 1.5);
-        if (event.type === 'kickoff') return Math.round(base * 1.1);
-        if (event.type === 'half') return Math.round(base * 1.2);
-        if (event.type === 'full') return Math.round(base * 1.3);
+        if (event.phase === 'penalties') return Math.round(Math.min(2100, base * 0.62));
+        if (event.type === 'goal') return Math.round(base * 1.45);
+        if (event.type === 'kickoff') return Math.round(base * 0.85);
+        if (event.type === 'half') return Math.round(base * 1.35);
+        if (event.type === 'full') return Math.round(base * 1.45);
+        if (event.type === 'yellow_card' || event.type === 'red_card') return Math.round(base * 0.92);
         return Math.round(base);
     }
 
     var EVENT_ICONS = {
         goal: '⚽', save: '🧤', miss: '😮', corner: '🚩', card: '🟨',
-        offside: '🚫', chance: '⚡', kickoff: '🏁', half: '⏸️', full: '⏹️',
-        penalty_scored: '⚽', penalty_missed: '❌'
+        yellow_card: '🟨', red_card: '🟥', foul: '🦵', blocked: '🛡️',
+        woodwork: '🥅', offside: '🚫', chance: '⚡', kickoff: '🏁',
+        half: '⏸️', full: '⏹️', penalty_scored: '⚽', penalty_missed: '❌'
     };
 
     function eventClass(type) {
         if (type === 'goal') return ' is-goal';
-        if (type === 'card') return ' is-card';
+        if (type === 'card' || type === 'yellow_card') return ' is-card';
+        if (type === 'red_card' || type === 'penalty_missed') return ' is-penalty-missed';
         if (type === 'half') return ' is-half';
         if (type === 'full') return ' is-full';
+        if (type === 'kickoff') return ' is-kickoff';
         if (type === 'penalty_scored') return ' is-penalty';
-        if (type === 'penalty_missed') return ' is-penalty-missed';
+        if (type === 'blocked' || type === 'woodwork' || type === 'save') return ' is-chance';
         return '';
+    }
+
+    function eventPlayer(event, match) {
+        if (!event || !event.player || !match) return null;
+        var snapshot = match[event.side === 'away' ? 'away' : 'home'] || {};
+        var squad = snapshot.squad || {};
+        var slots = state && state.slots && state.slots.length ? state.slots : FALLBACK_SLOTS;
+        for (var i = 0; i < slots.length; i += 1) {
+            var player = squad[slots[i].key];
+            if (player && player.name === event.player) return player;
+        }
+        var keys = Object.keys(squad);
+        for (var j = 0; j < keys.length; j += 1) {
+            if (squad[keys[j]] && squad[keys[j]].name === event.player) return squad[keys[j]];
+        }
+        return null;
     }
 
     function renderMatchEvent(event, match) {
         if (window.FCMatch3D) window.FCMatch3D.onEvent(event);
         var row = createEl('div', 'fc-event' + eventClass(event.type));
+        if (event.side === 'home' || event.side === 'away') {
+            row.classList.add('is-' + event.side);
+        }
         row.appendChild(createEl('span', 'fc-event-minute', event.phase === 'penalties' ? 'PEN' : event.minute + "'"));
         row.appendChild(createEl('span', 'fc-event-icon', EVENT_ICONS[event.type] || '•'));
+        var player = eventPlayer(event, match);
+        if (player) {
+            row.appendChild(playerAvatar(player, 'fc-event-avatar'));
+        } else {
+            row.appendChild(createEl('span', 'fc-event-avatar is-empty', '•'));
+        }
         row.appendChild(createEl('span', 'fc-event-text', event.text || ''));
         el.matchCommentary.appendChild(row);
         el.matchCommentary.scrollTop = el.matchCommentary.scrollHeight;
@@ -1659,7 +1758,7 @@
         setText(el.matchMinute, minute + "'");
         if (el.matchProgress) el.matchProgress.style.width = Math.min(100, (minute / 90) * 100) + '%';
 
-        if (event.type === 'kickoff') setText(el.matchPhase, 'İlk yarı');
+        if (event.type === 'kickoff') setText(el.matchPhase, minute > 45 ? 'İkinci yarı' : 'İlk yarı');
         else if (event.type === 'half') setText(el.matchPhase, 'İlk yarı sonu');
         else if (event.type === 'full') {
             setText(el.matchPhase, match.home_pen === null || match.home_pen === undefined ? 'Maç sonu' : 'Penaltılar');
@@ -1678,6 +1777,7 @@
             renderMatchEvent(event, match);
         }
         matchAnim.done = true;
+        if (window.FCMatch3D) window.FCMatch3D.endMatch();
         renderFinalMatch(match);
     }
 

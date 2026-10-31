@@ -137,6 +137,34 @@ class SimulationTests(SimpleTestCase):
             self.assertIn('text', event)
             self.assertTrue(event['text'])
 
+    def test_every_goal_is_followed_by_a_kickoff_for_the_conceding_side(self):
+        for seed in range(12):
+            events = self.run_match(seed)['events']
+            for index, event in enumerate(events):
+                if event['type'] != 'goal':
+                    continue
+                self.assertLess(index + 1, len(events), f'seed {seed}')
+                restart = events[index + 1]
+                self.assertEqual(restart['type'], 'kickoff', f'seed {seed}')
+                self.assertEqual(restart['minute'], event['minute'], f'seed {seed}')
+                conceding = 'away' if event['side'] == 'home' else 'home'
+                self.assertEqual(restart['side'], conceding, f'seed {seed}')
+
+    def test_full_time_stops_play_and_penalties_only_follow_it(self):
+        for seed in range(40):
+            result = self.run_match(seed)
+            events = result['events']
+            full_index = next(
+                index for index, event in enumerate(events) if event['type'] == 'full'
+            )
+            after_full = events[full_index + 1:]
+            self.assertTrue(
+                all(event['phase'] == 'penalties' for event in after_full),
+                f'seed {seed}',
+            )
+            if result['home_pen'] is None:
+                self.assertEqual(full_index, len(events) - 1, f'seed {seed}')
+
     def test_non_draw_has_no_penalties(self):
         for seed in range(40):
             result = self.run_match(seed)
