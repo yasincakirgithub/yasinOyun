@@ -67,89 +67,87 @@
                 </div>
             </div>
 
-            <div class="cn-lobby-grid">
-                <section class="cn-panel" aria-labelledby="players-title">
-                    <div class="cn-panel-head">
-                        <div>
-                            <h2 id="players-title">Oyuncular</h2>
-                            <p class="cn-muted">Kendi takımını ve rolünü seçebilirsin. Her takımda yalnızca 1 spymaster olabilir; host gerekirse herkesi düzenleyebilir.</p>
-                        </div>
-                        <span class="cn-badge" id="lobby-host-badge">Host: —</span>
+            <section class="cn-panel cn-team-select" aria-labelledby="team-select-title">
+                <div class="cn-panel-head">
+                    <div>
+                        <h2 id="team-select-title">Takımını ve rolünü seç</h2>
+                        <p class="cn-muted">Kırmızı veya mavi takımın rolüne tıklayarak katıl. Her takımda 1 spymaster, birden fazla operative olabilir.</p>
                     </div>
-                    <div id="lobby-players" class="cn-player-list" aria-live="polite"></div>
+                    <span id="team-select-badge" class="cn-badge">Kırmızı 0 · Mavi 0</span>
+                </div>
+                <div id="team-panels" class="cn-team-panels"></div>
+            </section>
 
-                    <div class="cn-start-box">
-                        <div>
-                            <h3>Oyunu başlat</h3>
-                            <p id="start-copy" class="cn-muted">Her takımda 1 spymaster ve en az 1 operative olmalı.</p>
-                            <ul id="start-errors" class="cn-error-list" hidden></ul>
-                        </div>
-                        <button id="start-btn" class="cn-btn cn-btn-primary" type="button">OYUNU BAŞLAT</button>
+            <section class="cn-panel" aria-labelledby="settings-title">
+                <div class="cn-panel-head">
+                    <div>
+                        <h2 id="settings-title">Oyun ayarları</h2>
+                        <p class="cn-muted">Değişiklikler anında kaydedilir. Yalnızca host düzenleyebilir.</p>
                     </div>
-                </section>
+                </div>
+                <form id="settings-form" class="cn-settings" autocomplete="off">
+                    <label>
+                        <span>Dil</span>
+                        <select id="set-language" name="language">
+                            {% for value, label in languages %}
+                            <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>Başlangıç takımı</span>
+                        <select id="set-starting" name="starting_team">
+                            {% for value, label in starting_teams %}
+                            <option value="{{ value }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>Tur süresi</span>
+                        <select id="set-timer" name="timer_seconds">
+                            {% for value in timer_choices %}
+                            <option value="{{ value }}">{% if value %}{{ value }} saniye{% else %}Kapalı{% endif %}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>Minimum oyuncu</span>
+                        <select id="set-min" name="min_players">
+                            <option value="4">4 oyuncu</option>
+                            <option value="5">5 oyuncu</option>
+                            <option value="6">6 oyuncu</option>
+                            <option value="7">7 oyuncu</option>
+                            <option value="8">8 oyuncu</option>
+                            <option value="9">9 oyuncu</option>
+                            <option value="10">10 oyuncu</option>
+                        </select>
+                    </label>
+                    <label class="cn-check">
+                        <input id="set-zero" type="checkbox" name="allow_zero_clue">
+                        <span>
+                            <strong>Sıfır ipucuna izin ver</strong>
+                            <small>Spymaster “0” sayısıyla ipucu verebilir.</small>
+                        </span>
+                    </label>
+                    <label class="cn-check">
+                        <input id="set-extra" type="checkbox" name="extra_guess">
+                        <span>
+                            <strong>Fazladan tahmin hakkı</strong>
+                            <small>Takım, ipucu sayısından bir fazla tahmin yapabilir (klasik kural).</small>
+                        </span>
+                    </label>
+                </form>
+                <p id="settings-note" class="cn-note" hidden>Ayarları yalnızca oda sahibi değiştirebilir.</p>
 
-                <section class="cn-panel" aria-labelledby="settings-title">
-                    <div class="cn-panel-head">
-                        <div>
-                            <h2 id="settings-title">Oyun ayarları</h2>
-                            <p class="cn-muted">Değişiklikler anında kaydedilir. Yalnızca host düzenleyebilir.</p>
-                        </div>
+                <div class="cn-start-box">
+                    <div>
+                        <h3>Oyunu başlat</h3>
+                        <p id="start-copy" class="cn-muted">Her takımda 1 spymaster ve en az 1 operative olmalı.</p>
+                        <ul id="start-errors" class="cn-error-list" hidden></ul>
                     </div>
-                    <form id="settings-form" class="cn-settings" autocomplete="off">
-                        <label>
-                            <span>Dil</span>
-                            <select id="set-language" name="language">
-                                {% for value, label in languages %}
-                                <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
-                        <label>
-                            <span>Başlangıç takımı</span>
-                            <select id="set-starting" name="starting_team">
-                                {% for value, label in starting_teams %}
-                                <option value="{{ value }}">{{ label }}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
-                        <label>
-                            <span>Tur süresi</span>
-                            <select id="set-timer" name="timer_seconds">
-                                {% for value in timer_choices %}
-                                <option value="{{ value }}">{% if value %}{{ value }} saniye{% else %}Kapalı{% endif %}</option>
-                                {% endfor %}
-                            </select>
-                        </label>
-                        <label>
-                            <span>Minimum oyuncu</span>
-                            <select id="set-min" name="min_players">
-                                <option value="4">4 oyuncu</option>
-                                <option value="5">5 oyuncu</option>
-                                <option value="6">6 oyuncu</option>
-                                <option value="7">7 oyuncu</option>
-                                <option value="8">8 oyuncu</option>
-                                <option value="9">9 oyuncu</option>
-                                <option value="10">10 oyuncu</option>
-                            </select>
-                        </label>
-                        <label class="cn-check">
-                            <input id="set-zero" type="checkbox" name="allow_zero_clue">
-                            <span>
-                                <strong>Sıfır ipucuna izin ver</strong>
-                                <small>Spymaster “0” sayısıyla ipucu verebilir.</small>
-                            </span>
-                        </label>
-                        <label class="cn-check">
-                            <input id="set-extra" type="checkbox" name="extra_guess">
-                            <span>
-                                <strong>Fazladan tahmin hakkı</strong>
-                                <small>Takım, ipucu sayısından bir fazla tahmin yapabilir (klasik kural).</small>
-                            </span>
-                        </label>
-                    </form>
-                    <p id="settings-note" class="cn-note" hidden>Ayarları yalnızca oda sahibi değiştirebilir.</p>
-                </section>
-            </div>
+                    <button id="start-btn" class="cn-btn cn-btn-primary" type="button">OYUNU BAŞLAT</button>
+                </div>
+            </section>
 
             <section class="cn-panel cn-chat-panel" aria-labelledby="lobby-chat-title">
                 <div class="cn-panel-head">
@@ -218,8 +216,12 @@
                     </div>
                 </section>
 
-                <aside class="cn-sidebar">
-                    <section class="cn-panel cn-side-panel" aria-labelledby="side-players-title">
+                <aside class="cn-sidebar" id="game-sidebar" data-active="players" aria-label="Oyun panelleri">
+                    <div class="cn-sheet-head">
+                        <strong id="sheet-title">Oyuncular</strong>
+                        <button id="sidebar-close" class="cn-icon-btn" type="button" aria-label="Paneli kapat">✕</button>
+                    </div>
+                    <section class="cn-panel cn-side-panel" data-side-panel="players" aria-labelledby="side-players-title">
                         <div class="cn-panel-head">
                             <h2 id="side-players-title">Oyuncular</h2>
                             <span class="cn-badge"><span id="side-count">0/10</span></span>
@@ -227,7 +229,7 @@
                         <div id="game-players" class="cn-player-list cn-player-list-compact"></div>
                     </section>
 
-                    <section class="cn-panel cn-side-panel" aria-labelledby="guess-history-title">
+                    <section class="cn-panel cn-side-panel" data-side-panel="history" aria-labelledby="guess-history-title">
                         <div class="cn-panel-head">
                             <div>
                                 <h2 id="guess-history-title">Tahmin geçmişi</h2>
@@ -238,7 +240,7 @@
                         <div id="guess-history" class="cn-history-list" aria-live="polite"></div>
                     </section>
 
-                    <section class="cn-panel cn-side-panel cn-chat-panel" aria-labelledby="game-chat-title">
+                    <section class="cn-panel cn-side-panel cn-chat-panel" data-side-panel="chat" aria-labelledby="game-chat-title">
                         <div class="cn-panel-head cn-tabs">
                             <h2 id="game-chat-title">Sohbet</h2>
                             <div class="cn-tab-buttons" role="tablist" aria-label="Sohbet ve olaylar">
@@ -256,6 +258,22 @@
                     </section>
                 </aside>
             </div>
+
+            <div class="cn-mobile-dock" id="game-mobile-dock" role="toolbar" aria-label="Oyun panelleri">
+                <button type="button" class="cn-mobile-dock-btn is-active" data-mobile-panel="players" aria-controls="game-sidebar" aria-expanded="false">
+                    <span class="cn-mobile-dock-icon" aria-hidden="true">◉</span>
+                    <span>Oyuncular</span>
+                </button>
+                <button type="button" class="cn-mobile-dock-btn" data-mobile-panel="history" aria-controls="game-sidebar" aria-expanded="false">
+                    <span class="cn-mobile-dock-icon" aria-hidden="true">☰</span>
+                    <span>Geçmiş</span>
+                </button>
+                <button type="button" class="cn-mobile-dock-btn" data-mobile-panel="chat" aria-controls="game-sidebar" aria-expanded="false">
+                    <span class="cn-mobile-dock-icon" aria-hidden="true">✎</span>
+                    <span>Sohbet</span>
+                </button>
+            </div>
+            <div class="cn-sheet-backdrop" id="sidebar-backdrop" hidden></div>
         </section>
 
         <section id="cn-gameover" class="cn-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="overlay-title">

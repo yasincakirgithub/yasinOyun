@@ -120,9 +120,9 @@ GAMES = [
         'tone': 'rose',
         'players': '2 oyuncu',
         'mode': 'Canlı',
-        'image': 'core/img/sayi_tahmin.svg',
-        'image_width': 1200,
-        'image_height': 675,
+        'image': 'core/img/sayi_tahmin.jpeg',
+        'image_width': 1408,
+        'image_height': 768,
     },
 ]
 

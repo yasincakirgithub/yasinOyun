@@ -36,8 +36,8 @@
         lobbyCount: $('lobby-count'),
         lobbyStatus: $('lobby-status'),
         lobbyLanguage: $('lobby-language'),
-        lobbyHost: $('lobby-host-badge'),
-        lobbyPlayers: $('lobby-players'),
+        teamPanels: $('team-panels'),
+        teamSelectBadge: $('team-select-badge'),
         startBtn: $('start-btn'),
         startCopy: $('start-copy'),
         startErrors: $('start-errors'),
@@ -75,6 +75,11 @@
         spyLegend: $('spy-legend'),
         sideCount: $('side-count'),
         gamePlayers: $('game-players'),
+        sidebar: $('game-sidebar'),
+        sidebarClose: $('sidebar-close'),
+        sidebarBackdrop: $('sidebar-backdrop'),
+        sheetTitle: $('sheet-title'),
+        mobileDock: $('game-mobile-dock'),
         gameover: $('cn-gameover'),
         overlayTitle: $('overlay-title'),
         overlayReason: $('overlay-reason'),
@@ -296,6 +301,32 @@
         else if (getToken()) setTimeout(initRetry, Math.min(10000, reconnectDelay += 1000));
     }
 
+    var MOBILE_PANEL_TITLES = { players: 'Oyuncular', history: 'Tahmin geçmişi', chat: 'Sohbet' };
+
+    function openMobilePanel(panel) {
+        if (!el.sidebar) return;
+        el.sidebar.dataset.active = panel;
+        el.sidebar.classList.add('is-open');
+        el.sidebarBackdrop.hidden = false;
+        document.body.classList.add('cn-sheet-open');
+        if (el.sheetTitle) el.sheetTitle.textContent = MOBILE_PANEL_TITLES[panel] || 'Panel';
+        document.querySelectorAll('.cn-mobile-dock-btn').forEach(function (button) {
+            var active = button.dataset.mobilePanel === panel;
+            button.classList.toggle('is-active', active);
+            button.setAttribute('aria-expanded', active ? 'true' : 'false');
+        });
+    }
+
+    function closeMobilePanel() {
+        if (!el.sidebar) return;
+        el.sidebar.classList.remove('is-open');
+        el.sidebarBackdrop.hidden = true;
+        document.body.classList.remove('cn-sheet-open');
+        document.querySelectorAll('.cn-mobile-dock-btn').forEach(function (button) {
+            button.setAttribute('aria-expanded', 'false');
+        });
+    }
+
     function bindEvents() {
         el.gateJoin.addEventListener('click', joinFromGate);
         el.gateResume.addEventListener('click', resumeSession);
@@ -304,6 +335,25 @@
         });
         el.startBtn.addEventListener('click', startGame);
         el.autoAssign.addEventListener('click', autoAssign);
+        if (el.mobileDock) {
+            el.mobileDock.addEventListener('click', function (event) {
+                var button = event.target.closest('[data-mobile-panel]');
+                if (!button) return;
+                openMobilePanel(button.dataset.mobilePanel);
+            });
+        }
+        if (el.sidebarClose) el.sidebarClose.addEventListener('click', closeMobilePanel);
+        if (el.sidebarBackdrop) el.sidebarBackdrop.addEventListener('click', closeMobilePanel);
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && el.sidebar && el.sidebar.classList.contains('is-open')) {
+                closeMobilePanel();
+            }
+        });
+        el.teamPanels.addEventListener('click', function (event) {
+            var seat = event.target.closest('.cn-team-seat');
+            if (!seat || seat.disabled) return;
+            chooseSeat(seat.dataset.team, seat.dataset.role);
+        });
         el.settingsForm.addEventListener('change', saveSettings);
         el.clueForm.addEventListener('submit', submitClue);
         el.endTurn.addEventListener('click', endTurnAction);
@@ -611,14 +661,11 @@
     function renderLobby() {
         var room = state.room;
         var me = state.me;
-        var players = state.players || [];
         el.lobbyCount.textContent = room.player_count + '/' + room.max_players;
         el.lobbyStatus.textContent = statusLabel(room.status);
         el.lobbyLanguage.textContent = room.language === 'en' ? 'English' : 'Türkçe';
-        var host = players.filter(function (player) { return player.is_host; })[0];
-        el.lobbyHost.textContent = 'Host: ' + (host ? host.display_name : '—');
 
-        renderPlayerList(el.lobbyPlayers, players, true);
+        renderTeamPanels();
 
         el.autoAssign.disabled = !state.permissions.can_assign;
         el.startBtn.disabled = !state.permissions.can_start;
@@ -653,7 +700,85 @@
         }
     }
 
-    function renderPlayerList(container, players, withControls) {
+    function renderTeamPanels() {
+        var room = state.room;
+        var me = state.me;
+        var canChoose = !!(me && state.permissions.can_choose_role && room.status === 'WAITING');
+        el.teamPanels.textContent = '';
+        el.teamPanels.hidden = !canChoose;
+        if (!canChoose) {
+            el.teamSelectBadge.textContent = '';
+            return;
+        }
+        var players = state.players || [];
+        var redCount = players.filter(function (player) { return player.team === 'red'; }).length;
+        var blueCount = players.filter(function (player) { return player.team === 'blue'; }).length;
+        el.teamSelectBadge.textContent = 'Kırmızı ' + redCount + ' · Mavi ' + blueCount;
+
+        ['red', 'blue'].forEach(function (team) {
+            var teamPlayers = players.filter(function (player) { return player.team === team; });
+            var spymasters = teamPlayers.filter(function (player) { return player.role === 'spymaster'; });
+            var operatives = teamPlayers.filter(function (player) { return player.role === 'operative'; });
+
+            var panel = createEl('div', 'cn-team-panel is-' + team);
+            panel.setAttribute('role', 'group');
+            panel.setAttribute('aria-label', teamLabel(team) + ' takımı');
+            var head = createEl('div', 'cn-team-panel-head');
+            head.appendChild(createEl('span', 'cn-team-dot is-' + team));
+            head.appendChild(createEl('h3', '', teamLabel(team) + ' Takım'));
+            head.appendChild(createEl('span', 'cn-badge cn-team-panel-count', String(teamPlayers.length)));
+            panel.appendChild(head);
+            panel.appendChild(buildSeat(team, 'spymaster', spymasters));
+            panel.appendChild(buildSeat(team, 'operative', operatives));
+            el.teamPanels.appendChild(panel);
+        });
+    }
+
+    function buildSeat(team, role, occupants) {
+        var me = state.me;
+        var isMine = !!(me && me.team === team && me.role === role);
+        var takenByOther = role === 'spymaster' && occupants.length > 0 && !isMine;
+        var seat = document.createElement('button');
+        seat.type = 'button';
+        seat.className = 'cn-team-seat is-' + role +
+            (isMine ? ' is-mine' : '') +
+            (occupants.length ? '' : ' is-empty') +
+            (takenByOther ? ' is-taken' : '');
+        seat.dataset.team = team;
+        seat.dataset.role = role;
+        seat.disabled = takenByOther;
+
+        var names = occupants.map(function (player) {
+            return player.display_name + (me && player.id === me.id ? ' (sen)' : '');
+        }).join(', ');
+        var action = 'Katıl';
+        if (isMine) action = 'Senin yerin';
+        else if (takenByOther) action = 'Dolu';
+        else if (role === 'spymaster') action = 'Bu role geç';
+
+        var namesNode = createEl('span', 'cn-seat-names');
+        if (occupants.length) {
+            occupants.forEach(function (player) {
+                var chip = createEl('span', 'cn-seat-player' +
+                    (me && player.id === me.id ? ' is-me' : ''), player.display_name);
+                if (me && player.id === me.id) {
+                    chip.appendChild(createEl('span', 'cn-seat-you', ' (sen)'));
+                }
+                namesNode.appendChild(chip);
+            });
+        } else {
+            namesNode.appendChild(createEl('span', 'cn-seat-empty', 'Boş'));
+        }
+
+        seat.appendChild(createEl('span', 'cn-seat-role', roleLabel(role)));
+        seat.appendChild(namesNode);
+        seat.appendChild(createEl('span', 'cn-seat-action', action));
+        seat.setAttribute('aria-label',
+            teamLabel(team) + ' takımı ' + roleLabel(role) + ' yeri: ' + (names || 'boş'));
+        return seat;
+    }
+
+    function renderPlayerList(container, players) {
         container.textContent = '';
         if (!players.length) {
             container.appendChild(createEl('p', 'cn-chat-empty', 'Henüz oyuncu yok.'));
@@ -669,87 +794,26 @@
             var sub = createEl('div', 'cn-player-sub');
             sub.appendChild(createEl('span', 'cn-online-dot' + (player.connected ? '' : ' is-offline')));
             sub.appendChild(createEl('span', 'cn-muted', player.connected ? 'Bağlı' : 'Çevrimdışı'));
-            sub.appendChild(createEl('span', 'cn-role-badge is-' + player.role, roleLabel(player.role)));
             if (player.is_host) sub.appendChild(createEl('span', 'cn-host-badge', 'HOST'));
             if (state.me && player.id === state.me.id) sub.appendChild(createEl('span', 'cn-muted', 'sen'));
             text.appendChild(sub);
             main.appendChild(text);
             row.appendChild(main);
-
-            var isMe = !!(state.me && player.id === state.me.id);
-            var canManage = withControls && state.permissions.can_assign;
-            var canChooseSelf = withControls && isMe && state.permissions.can_choose_role;
-            if (canManage || canChooseSelf) {
-                var controls = createEl('div', 'cn-assign-controls');
-                controls.title = canManage ? 'Takım ve rolü düzenle' : 'Kendi takım ve rolünü seç';
-                controls.appendChild(buildSelect(player, 'team', [
-                    { value: 'red', label: 'Kırmızı' },
-                    { value: 'blue', label: 'Mavi' },
-                ], canChooseSelf && !canManage));
-                controls.appendChild(buildSelect(player, 'role', [
-                    { value: 'operative', label: 'Operative' },
-                    { value: 'spymaster', label: 'Spymaster' },
-                ], canChooseSelf && !canManage));
-                row.appendChild(controls);
-            } else {
-                row.appendChild(createEl('span', 'cn-role-badge is-' + player.role, roleLabel(player.role)));
-            }
+            row.appendChild(createEl('span', 'cn-role-badge is-' + player.role, roleLabel(player.role)));
             container.appendChild(row);
         });
     }
 
-    function buildSelect(player, field, options, selfService) {
-        var select = document.createElement('select');
-        select.setAttribute('aria-label', player.display_name + ' ' + (field === 'team' ? 'takımı' : 'rolü'));
-        options.forEach(function (option) {
-            var node = document.createElement('option');
-            node.value = option.value;
-            node.textContent = option.label;
-            select.appendChild(node);
-        });
-        select.value = player[field];
-        select.addEventListener('change', function () {
-            if (selfService) {
-                changePreference(field, select.value);
-            } else {
-                changeAssignment(player, field, select.value);
-            }
-        });
-        return select;
-    }
-
-    async function changePreference(field, value) {
-        if (!state.me) return;
-        var team = field === 'team' ? value : state.me.team;
-        var role = field === 'role' ? value : state.me.role;
+    async function chooseSeat(team, role) {
+        if (!state.me || !state.permissions.can_choose_role) return;
+        if (state.me.team === team && state.me.role === role) return;
         try {
             var data = await api(roomApi('preference'), 'POST', { team: team, role: role });
             if (data.state) applyState(data.state);
+            showToast(teamLabel(team) + ' takımında ' + roleLabel(role).toLowerCase() + ' olarak katıldın.', true);
         } catch (error) {
             showToast(error.message);
-            render();
-        }
-    }
-
-    async function changeAssignment(player, field, value) {
-        var assignments = [];
-        if (field === 'role' && value === 'spymaster') {
-            (state.players || []).forEach(function (other) {
-                if (other.id !== player.id && other.team === player.team && other.role === 'spymaster') {
-                    assignments.push({ player_id: other.id, team: other.team, role: 'operative' });
-                }
-            });
-        }
-        var target = { player_id: player.id };
-        target.team = field === 'team' ? value : player.team;
-        target.role = field === 'role' ? value : player.role;
-        assignments.push(target);
-        try {
-            var data = await api('/codenames/api/rooms/' + encodeURIComponent(roomCode) + '/assign-roles/', 'POST', { assignments: assignments });
-            if (data.state) applyState(data.state);
-        } catch (error) {
-            showToast(error.message);
-            render();
+            if (error.status === 409) pollState();
         }
     }
 
@@ -849,7 +913,7 @@
             if (!zeroAllowed && el.clueNumber.value === '0') el.clueNumber.value = '1';
         }
 
-        renderPlayerList(el.gamePlayers, state.players || [], false);
+        renderPlayerList(el.gamePlayers, state.players || []);
         renderBoard(session);
         renderOverlay();
 

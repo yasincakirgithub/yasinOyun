@@ -18,8 +18,9 @@ spymasters can see the secret colour map.
 ## Rules implemented
 
 - Each team needs exactly one spymaster and at least one operative. In the
-  lobby every player can choose their own team and role; choosing spymaster
-  fails if that team already has one. The host can still override everyone.
+  lobby every player can join a team and role by clicking the red or blue
+  team panel; choosing spymaster fails if that team already has one. The host
+  can still redistribute everyone with automatic assignment.
 - The starting team receives 9 agents, the other team 8. Neutral and assassin
   cards complete the board.
 - A spymaster gives one word and a number from 0–9. The clue cannot match a
