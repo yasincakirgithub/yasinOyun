@@ -72,7 +72,7 @@ GAMES = [
         'tone': 'cyan',
         'players': '4–10 oyuncu',
         'mode': 'Canlı',
-        'image': 'core/img/codenames.svg',
+        'image': 'core/img/codenames.jpeg',
         'image_width': 1600,
         'image_height': 497,
     },
