@@ -70,7 +70,12 @@ def _defense_rating(player: dict) -> float:
     )
 
 
-def compute_profile(squad: dict, challenges: list[dict], home_advantage: float = 0.0) -> dict:
+def compute_profile(
+    squad: dict,
+    challenges: list[dict],
+    home_advantage: float = 0.0,
+    tactics: dict | None = None,
+) -> dict:
     totals = {'attack': 0.0, 'midfield': 0.0, 'defense': 0.0, 'gk': 0.0}
     weights = {'attack': 0.0, 'midfield': 0.0, 'defense': 0.0, 'gk': 0.0}
     overalls = []
@@ -105,6 +110,24 @@ def compute_profile(squad: dict, challenges: list[dict], home_advantage: float =
     unmet = max(0, len(challenges) - completed)
     challenge_mod = completed * 1.25 - unmet * 2.5
 
+    tactics = tactics or {}
+    mentality = {
+        'defensive': {'attack': 0.94, 'midfield': 0.99, 'defense': 1.07},
+        'attacking': {'attack': 1.07, 'midfield': 1.01, 'defense': 0.93},
+    }.get(tactics.get('mentality'), {})
+    pressing = {
+        'low': {'attack': 0.99, 'midfield': 0.97, 'defense': 1.04},
+        'high': {'attack': 0.99, 'midfield': 1.06, 'defense': 0.97},
+    }.get(tactics.get('pressing'), {})
+    for key in ('attack', 'midfield', 'defense'):
+        factor = mentality.get(key, 1.0) * pressing.get(key, 1.0)
+        if key == 'attack':
+            attack *= factor
+        elif key == 'midfield':
+            midfield *= factor
+        else:
+            defense *= factor
+
     strength = (
         attack * 0.42
         + midfield * 0.26
@@ -126,6 +149,7 @@ def compute_profile(squad: dict, challenges: list[dict], home_advantage: float =
         'squad_value': squad_value,
         'completed_challenges': completed,
         'unmet_challenges': unmet,
+        'tactics': tactics,
     }
 
 
@@ -483,14 +507,20 @@ def simulate_match(
     home_name: str,
     away_name: str,
     rng: random.Random | None = None,
+    home_tactics: dict | None = None,
+    away_tactics: dict | None = None,
 ) -> dict:
     rng = rng or random.Random()
 
     home_challenges = home_challenges or []
     away_challenges = away_challenges or []
 
-    home_profile = compute_profile(home_squad, home_challenges, home_advantage=0.8)
-    away_profile = compute_profile(away_squad, away_challenges, home_advantage=0.0)
+    home_profile = compute_profile(
+        home_squad, home_challenges, home_advantage=0.8, tactics=home_tactics,
+    )
+    away_profile = compute_profile(
+        away_squad, away_challenges, home_advantage=0.0, tactics=away_tactics,
+    )
 
     home_xg = _expected_goals(home_profile, away_profile) * rng.uniform(0.82, 1.18)
     away_xg = _expected_goals(away_profile, home_profile) * rng.uniform(0.82, 1.18)

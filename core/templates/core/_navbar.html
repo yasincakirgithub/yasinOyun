@@ -32,6 +32,13 @@
                 </svg>
             </a>
         </nav>
+
+        <div class="nav-gold" data-nav-gold aria-label="Anlık altın fiyatı">
+            <span class="nav-gold-label">Altın</span>
+            <span class="nav-gold-value" id="nav-gold-value">--</span>
+            <span class="nav-gold-unit" id="nav-gold-unit">TL / gram</span>
+            <span class="nav-gold-change" id="nav-gold-change"></span>
+        </div>
     </div>
 </header>
 <script>
@@ -96,5 +103,55 @@
         };
         window.addEventListener('scroll', updateShadow, { passive: true });
         updateShadow();
+    })();
+</script>
+
+<script>
+    (function () {
+        var valueEl = document.getElementById('nav-gold-value');
+        var changeEl = document.getElementById('nav-gold-change');
+        var widget = document.querySelector('[data-nav-gold]');
+        if (!valueEl || !widget) return;
+
+        var endpoint = '{% url "core:gold_price" %}';
+        var lastChangeClass = null;
+
+        function setChange(direction) {
+            if (!changeEl) return;
+            changeEl.classList.remove('is-up', 'is-down', 'is-neutral');
+            if (direction) {
+                changeEl.classList.add('is-' + direction);
+            }
+            var labels = { up: '▲', down: '▼', neutral: '' };
+            changeEl.textContent = labels[direction] || '';
+        }
+
+        function renderError() {
+            valueEl.textContent = '--';
+            setChange('neutral');
+        }
+
+        function fetchGold() {
+            fetch(endpoint, { credentials: 'same-origin' })
+                .then(function (response) {
+                    if (!response.ok) throw new Error('Sunucu hatası');
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (!data || !data.success) {
+                        renderError();
+                        return;
+                    }
+                    valueEl.textContent = data.value.toLocaleString('tr-TR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                    });
+                    setChange(data.change || 'neutral');
+                })
+                .catch(renderError);
+        }
+
+        fetchGold();
+        setInterval(fetchGold, 60000);
     })();
 </script>

@@ -41,21 +41,159 @@ PLAYER_IMAGE_URL = '/fcmanager/photos/{player_id}.png'
 # budget range from the brief (400M EUR -> 1T TRY) can be shown honestly.
 EUR_TRY_RATE = 47.0
 
+def _slot(key, label, role, full, accept, x, y):
+    return {
+        'key': key,
+        'label': label,
+        'role': role,
+        'full': full,
+        'accept': accept,
+        'x': x,
+        'y': y,
+    }
+
+
+# The draft pitch, the 3D replay and the match engine all read their shape from
+# these presets. Keys are stable across formations when a position means the
+# same thing (``gk``, ``lb``, ``cb2``...), while new roles such as ``lm`` or
+# ``cdm1`` get their own keys.
 SLOTS = (
-    {'key': 'gk', 'label': 'GK', 'role': 'GK', 'full': 'Kaleci', 'accept': ('GK',), 'x': 50, 'y': 88},
-    {'key': 'lb', 'label': 'LB', 'role': 'DEF', 'full': 'Sol bek', 'accept': ('LB', 'LWB'), 'x': 13, 'y': 69},
-    {'key': 'cb1', 'label': 'CB', 'role': 'DEF', 'full': 'Stoper', 'accept': ('CB',), 'x': 36, 'y': 73},
-    {'key': 'cb2', 'label': 'CB', 'role': 'DEF', 'full': 'Stoper', 'accept': ('CB',), 'x': 64, 'y': 73},
-    {'key': 'rb', 'label': 'RB', 'role': 'DEF', 'full': 'Sağ bek', 'accept': ('RB', 'RWB'), 'x': 87, 'y': 69},
-    {'key': 'cm1', 'label': 'CM', 'role': 'MID', 'full': 'Orta saha', 'accept': ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 'x': 24, 'y': 48},
-    {'key': 'cm2', 'label': 'CM', 'role': 'MID', 'full': 'Orta saha', 'accept': ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 'x': 50, 'y': 53},
-    {'key': 'cm3', 'label': 'CM', 'role': 'MID', 'full': 'Orta saha', 'accept': ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 'x': 76, 'y': 48},
-    {'key': 'lw', 'label': 'LW', 'role': 'FWD', 'full': 'Sol kanat', 'accept': ('LW', 'LM', 'LF'), 'x': 17, 'y': 22},
-    {'key': 'st', 'label': 'ST', 'role': 'FWD', 'full': 'Santrfor', 'accept': ('ST', 'CF', 'LS', 'RS'), 'x': 50, 'y': 14},
-    {'key': 'rw', 'label': 'RW', 'role': 'FWD', 'full': 'Sağ kanat', 'accept': ('RW', 'RM', 'RF'), 'x': 83, 'y': 22},
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 69),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 73),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 73),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 69),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 24, 48),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 50, 53),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM', 'LAM', 'RAM'), 76, 48),
+    _slot('lw', 'LW', 'FWD', 'Sol kanat', ('LW', 'LM', 'LF'), 17, 22),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+    _slot('rw', 'RW', 'FWD', 'Sağ kanat', ('RW', 'RM', 'RF'), 83, 22),
 )
-SLOT_BY_KEY = {slot['key']: slot for slot in SLOTS}
+
+_FOUR_FOUR_TWO = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 69),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 72),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 72),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 69),
+    _slot('lm', 'LM', 'MID', 'Sol orta saha', ('LM', 'LW', 'LF', 'LWB'), 13, 45),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 38, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 62, 50),
+    _slot('rm', 'RM', 'MID', 'Sağ orta saha', ('RM', 'RW', 'RF', 'RWB'), 87, 45),
+    _slot('st1', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 38, 17),
+    _slot('st2', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 62, 17),
+)
+
+_FOUR_TWO_THREE_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 70),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 74),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 74),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 70),
+    _slot('cdm1', 'CDM', 'MID', 'Ön libero', ('CDM', 'CM', 'LDM', 'RDM'), 39, 58),
+    _slot('cdm2', 'CDM', 'MID', 'Ön libero', ('CDM', 'CM', 'LDM', 'RDM'), 61, 58),
+    _slot('lam', 'LAM', 'MID', 'Sol kanat', ('LAM', 'LW', 'LM', 'LF'), 17, 36),
+    _slot('cam', 'CAM', 'MID', 'Ofansif orta saha', ('CAM', 'CM', 'LAM', 'RAM'), 50, 36),
+    _slot('ram', 'RAM', 'MID', 'Sağ kanat', ('RAM', 'RW', 'RM', 'RF'), 83, 36),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
+_THREE_FIVE_TWO = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 27, 75),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 50, 77),
+    _slot('cb3', 'CB', 'DEF', 'Stoper', ('CB',), 73, 75),
+    _slot('lwb', 'LWB', 'DEF', 'Sol kanat bek', ('LWB', 'LB', 'LM'), 9, 52),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 34, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 50, 55),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 66, 50),
+    _slot('rwb', 'RWB', 'DEF', 'Sağ kanat bek', ('RWB', 'RB', 'RM'), 91, 52),
+    _slot('st1', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 38, 17),
+    _slot('st2', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 62, 17),
+)
+
+_FIVE_THREE_TWO = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 9, 66),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 30, 76),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 50, 78),
+    _slot('cb3', 'CB', 'DEF', 'Stoper', ('CB',), 70, 76),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 91, 66),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 30, 48),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 50, 53),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 70, 48),
+    _slot('st1', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 38, 16),
+    _slot('st2', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 62, 16),
+)
+
+FORMATIONS = {
+    '4-3-3': {
+        'label': '4-3-3',
+        'description': 'Dengeli hücum · geniş kanatlar',
+        'slots': SLOTS,
+    },
+    '4-4-2': {
+        'label': '4-4-2',
+        'description': 'Klasik iki forvet · sağlam orta saha',
+        'slots': _FOUR_FOUR_TWO,
+    },
+    '4-2-3-1': {
+        'label': '4-2-3-1',
+        'description': 'Çift ön libero · yaratıcı on numara',
+        'slots': _FOUR_TWO_THREE_ONE,
+    },
+    '3-5-2': {
+        'label': '3-5-2',
+        'description': 'Kanat bekleriyle geniş hücum',
+        'slots': _THREE_FIVE_TWO,
+    },
+    '5-3-2': {
+        'label': '5-3-2',
+        'description': 'Kapalı savunma · hızlı kontra',
+        'slots': _FIVE_THREE_TWO,
+    },
+}
+DEFAULT_FORMATION = '4-3-3'
+
+# ``SLOT_BY_KEY`` still exposes every formation slot so the match engine can
+# resolve a role from any picked slot key.
+SLOT_BY_KEY = {}
+for _formation in FORMATIONS.values():
+    for _definition in _formation['slots']:
+        SLOT_BY_KEY.setdefault(_definition['key'], _definition)
 SLOT_KEYS = tuple(slot['key'] for slot in SLOTS)
+
+TACTIC_OPTIONS = {
+    'mentality': (
+        {'value': 'defensive', 'label': 'Defansif', 'hint': 'Savunma önceliği'},
+        {'value': 'balanced', 'label': 'Dengeli', 'hint': 'Ne fazla risk ne fazla çekilme'},
+        {'value': 'attacking', 'label': 'Hücum', 'hint': 'Daha fazla risk, daha fazla gol'},
+    ),
+    'pressing': (
+        {'value': 'low', 'label': 'Düşük', 'hint': 'Bloğu geride tut'},
+        {'value': 'balanced', 'label': 'Dengeli', 'hint': 'Orta saha kontrolü'},
+        {'value': 'high', 'label': 'Yüksek', 'hint': 'Rakibi hataya zorla'},
+    ),
+}
+DEFAULT_TACTICS = {'mentality': 'balanced', 'pressing': 'balanced'}
+
+
+def formation_slots(formation: str) -> tuple[dict, ...]:
+    """Slots for ``formation``, falling back to the default 4-3-3."""
+    return FORMATIONS.get(formation or DEFAULT_FORMATION, FORMATIONS[DEFAULT_FORMATION])['slots']
+
+
+def validate_tactics(tactics: dict | None) -> dict:
+    """Keep only known tactic values and fill missing keys with defaults."""
+    tactics = tactics or {}
+    result = dict(DEFAULT_TACTICS)
+    for key, options in TACTIC_OPTIONS.items():
+        values = {option['value'] for option in options}
+        value = tactics.get(key)
+        if value in values:
+            result[key] = value
+    return result
 
 POSITION_BUCKETS = {
     'GK': 'gk',

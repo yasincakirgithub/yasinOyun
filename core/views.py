@@ -1,4 +1,5 @@
 import json
+import urllib.request
 
 from django.core.paginator import Paginator
 from django.http import JsonResponse
@@ -200,3 +201,56 @@ def games(request):
         'query': query,
         'total': paginator.count,
     })
+
+
+# --- Anlık altın fiyatı proxy ------------------------------------------------
+
+GRAM_PER_OZ = 31.1034768
+_GOLD_CACHE = {'value': None, 'updated_at': None}
+
+
+def _fetch_json(url, timeout=10):
+    with urllib.request.urlopen(url, timeout=timeout) as resp:
+        return json.loads(resp.read().decode('utf-8'))
+
+
+@csrf_exempt
+@require_http_methods(['GET'])
+def gold_price(request):
+    """Anlık gram altın fiyatı (TL) — dış API'leri sunucu tarafından birleştirir."""
+    try:
+        xau = _fetch_json('https://api.gold-api.com/price/XAU')
+        rates = _fetch_json('https://open.er-api.com/v6/latest/USD')
+
+        price_usd_oz = float(xau.get('price') or 0)
+        usd_try = float((rates.get('rates') or {}).get('TRY') or 0)
+
+        if price_usd_oz <= 0 or usd_try <= 0:
+            raise ValueError('Geçersiz altın/döviz verisi')
+
+        gram_tl = (price_usd_oz / GRAM_PER_OZ) * usd_try
+
+        previous = _GOLD_CACHE['value']
+        if previous is not None:
+            if gram_tl > previous:
+                change = 'up'
+            elif gram_tl < previous:
+                change = 'down'
+            else:
+                change = 'neutral'
+        else:
+            change = 'neutral'
+
+        _GOLD_CACHE['value'] = gram_tl
+        _GOLD_CACHE['updated_at'] = xau.get('updatedAt') or rates.get('time_last_update_utc')
+
+        return JsonResponse({
+            'success': True,
+            'value': round(gram_tl, 2),
+            'change': change,
+            'unit': 'gram',
+            'currency': 'TL',
+            'updated_at': _GOLD_CACHE['updated_at'],
+        })
+    except Exception as exc:  # pragma: no cover - external dependency
+        return JsonResponse({'success': False, 'error': str(exc)}, status=502)

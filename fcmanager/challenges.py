@@ -282,6 +282,7 @@ def _squad_attempt(
     reserved: set[int] | None = None,
     *,
     pool_by_slot: dict[str, list[dict]] | None = None,
+    slots: list[dict] | tuple[dict, ...] | None = None,
     with_slots: bool = False,
 ):
     # Players are unique inside a room, so a second manager must avoid every
@@ -290,7 +291,7 @@ def _squad_attempt(
     total = 0
     squad: list[dict] = []
     assignment: list[tuple[dict, dict]] = []
-    slots = list(SLOTS)
+    slots = list(slots or SLOTS)
     rng.shuffle(slots)
     for index, slot in enumerate(slots):
         remaining_slots = len(slots) - index
@@ -330,6 +331,7 @@ def build_pools(
     market: list[dict],
     challenges: list[dict],
     per_slot: int = 90,
+    slots: list[dict] | tuple[dict, ...] | None = None,
 ) -> dict[str, list[dict]]:
     """Shortlist candidates per formation slot for the auto-squad solver.
 
@@ -345,7 +347,7 @@ def build_pools(
     helpers = helpers[: per_slot * 2]
 
     pools: dict[str, list[dict]] = {}
-    for slot in SLOTS:
+    for slot in (slots or SLOTS):
         candidates = [
             p for p in market
             if slot_accepts(slot['key'], p.get('positions', ()))
@@ -379,6 +381,7 @@ def build_squad(
     attempts: int = 60,
     reserved: set[int] | None = None,
     pool_by_slot: dict[str, list[dict]] | None = None,
+    slots: list[dict] | tuple[dict, ...] | None = None,
 ) -> list[tuple[dict, dict]] | None:
     """Return ``[(slot, player), ...]`` satisfying every challenge and the budget.
 
@@ -388,7 +391,7 @@ def build_squad(
     """
     pools = pool_by_slot
     if pools is None and len(market) > 400:
-        pools = build_pools(market, challenges)
+        pools = build_pools(market, challenges, slots=slots)
 
     best = None
     best_score = -1
@@ -400,6 +403,7 @@ def build_squad(
             rng,
             reserved=reserved,
             pool_by_slot=pools,
+            slots=slots,
             with_slots=True,
         )
         if not squad:

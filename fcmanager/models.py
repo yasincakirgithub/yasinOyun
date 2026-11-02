@@ -72,6 +72,8 @@ class Participant(models.Model):
     connection_count = models.PositiveSmallIntegerField(default=0)
     left = models.BooleanField(default=False)
     locked = models.BooleanField(default=False)
+    formation = models.CharField(max_length=12, default='4-3-3')
+    tactics = models.JSONField(default=dict, blank=True)
     joined_at = models.DateTimeField(auto_now_add=True)
     last_seen_at = models.DateTimeField(default=timezone.now)
 
