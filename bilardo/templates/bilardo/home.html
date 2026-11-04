@@ -1,0 +1,133 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilardo - Online ve Bota Karşı İki Kişilik Bilardo</title>
+    <meta name="description" content="3 Bant, 8 Top, 9 Top ve Düz Bilardo modlarıyla iki kişilik bilardo. İstekanı seç, gücü ve falsoyu ayarla, arkadaşınla veya bota karşı oyna.">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
+    <link rel="stylesheet" href="{% static_v 'bilardo/css/bilardo.css' %}">
+</head>
+<body class="bilardo-home-page">
+    {% include 'core/_navbar.html' %}
+    <div id="main" tabindex="-1" class="game-container">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
+        <div class="game-header">
+            <span class="bilardo-kicker">İki kişilik masa oyunu</span>
+            <h1>Bilardo</h1>
+            <p>İstekanı seç, gücü ve falsoyu ayarla. 3 Bant'ta bantları kullan, pool modlarında topları deliğe gönder.</p>
+        </div>
+
+        <div class="setup-card bilardo-setup">
+            <div class="mode-tabs" id="play-tabs">
+                <button type="button" class="mode-tab selected" data-play="online">Rakiple Online</button>
+                <button type="button" class="mode-tab" data-play="bot">Bota Karşı</button>
+            </div>
+
+            <div class="setup-row">
+                <span class="setup-label">Oyun tipi</span>
+                <div class="choice-group" id="mode-choices">
+                    {% for mode in modes %}
+                    <button type="button"
+                            class="choice-chip{% if mode.id == default_mode %} selected{% endif %}"
+                            data-mode="{{ mode.id }}"
+                            data-target="{{ mode.default_target }}">
+                        {{ mode.name }}
+                    </button>
+                    {% endfor %}
+                </div>
+                <p class="bilardo-mode-description" id="mode-description"></p>
+            </div>
+
+            <div class="setup-row" id="target-row">
+                <span class="setup-label">Hedef</span>
+                <div class="choice-group" id="target-choices"></div>
+            </div>
+
+            <div class="setup-row">
+                <span class="setup-label">İsteka</span>
+                <div class="cue-grid" id="cue-grid">
+                    {% for cue in cues %}
+                    <button type="button"
+                            class="cue-card{% if cue.id == default_cue %} selected{% endif %}"
+                            data-cue="{{ cue.id }}"
+                            style="--cue-color: {{ cue.color }}; --cue-accent: {{ cue.accent }};">
+                        <span class="cue-card-top">
+                            <span class="cue-card-stick" aria-hidden="true"></span>
+                            <span class="cue-card-name">{{ cue.name }}</span>
+                        </span>
+                        <span class="cue-card-sub">{{ cue.subtitle }}</span>
+                        <span class="cue-stats">
+                            <span><em>Güç</em><i style="--v: {{ cue.power }}"></i></span>
+                            <span><em>Falso</em><i style="--v: {{ cue.spin }}"></i></span>
+                            <span><em>Kontrol</em><i style="--v: {{ cue.control }}"></i></span>
+                        </span>
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mode-panel" id="panel-online">
+                <div class="setup-row">
+                    <label class="setup-label" for="player-name">Adın</label>
+                    <input id="player-name" class="name-input" type="text" maxlength="30" placeholder="Oyuncu adın" autocomplete="nickname">
+                </div>
+
+                <button id="create-btn" class="game-btn" type="button">ODA KUR</button>
+
+                <div class="divider"><span>veya</span></div>
+
+                <div class="join-row">
+                    <input type="text" id="room-code-input" maxlength="6" placeholder="Oda Kodu" autocomplete="off">
+                    <button id="join-btn" class="game-btn accent" type="button">KATIL</button>
+                </div>
+            </div>
+
+            <div class="mode-panel hidden" id="panel-bot">
+                <div class="setup-row">
+                    <span class="setup-label">Bot seviyesi</span>
+                    <div class="choice-group" id="level-choices">
+                        <button type="button" class="choice-chip" data-level="kolay">Kolay</button>
+                        <button type="button" class="choice-chip selected" data-level="normal">Normal</button>
+                        <button type="button" class="choice-chip" data-level="zor">Zor</button>
+                    </div>
+                </div>
+                <button id="bot-btn" class="game-btn" type="button">BOTA KARŞI OYNA</button>
+            </div>
+
+            <p class="bilardo-status" id="home-status" role="status" aria-live="polite"></p>
+        </div>
+
+        <section class="bilardo-feature-grid" aria-label="Bilardo özellikleri">
+            <article class="bilardo-feature">
+                <span class="bilardo-feature-icon">🎯</span>
+                <h2>Falso ve spin</h2>
+                <p>İsteka topunun sağına, soluna, üstüne veya altına vur. Top falsolu gitsin, banttan farklı açıyla dönsün.</p>
+            </article>
+            <article class="bilardo-feature">
+                <span class="bilardo-feature-icon">💪</span>
+                <h2>Basılı tut, gücü ayarla</h2>
+                <p>Fareyle nişan al, basılı tutarak güç çubuğunu doldur ve bırak. İnce ayar için klavye de hazır.</p>
+            </article>
+            <article class="bilardo-feature">
+                <span class="bilardo-feature-icon">🎱</span>
+                <h2>Dört oyun modu</h2>
+                <p>3 Bant, 8 Top, 9 Top ve Düz Bilardo. Her modun kendi kuralları, skoru ve kazananı var.</p>
+            </article>
+        </section>
+
+        {% include 'core/_comments.html' with comments_game='bilardo' %}
+
+        <div class="footer">
+            <p>&copy; 2026 Bilardo — İki kişilik masa oyunu</p>
+        </div>
+    </div>
+
+    {{ modes|json_script:"bilardo-modes" }}
+    {{ cues|json_script:"bilardo-cues" }}
+    <script src="{% static_v 'bilardo/js/home.js' %}"></script>
+</body>
+</html>

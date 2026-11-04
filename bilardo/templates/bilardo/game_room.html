@@ -1,0 +1,236 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilardo{% if online_mode %} - Oda {{ room_code }}{% else %} - {{ room_mode.name }}{% endif %}</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'bilardo/css/bilardo.css' %}">
+</head>
+<body class="bilardo-game-page"
+      data-room-code="{{ room_code }}"
+      data-online="{% if online_mode %}1{% else %}0{% endif %}"
+      data-local="{% if local_mode %}1{% else %}0{% endif %}"
+      data-bot="{% if bot_mode %}1{% else %}0{% endif %}"
+      data-bot-level="{{ bot_level|default:'normal' }}"
+      data-mode="{{ room_mode.id }}"
+      data-target="{{ room_target }}"
+      data-default-cue="{{ default_cue }}">
+    {% include 'core/_navbar.html' %}
+
+    <main id="main" class="bilardo-shell">
+        <header class="bilardo-topbar">
+            <div class="bilardo-topbar-left">
+                <a class="game-back" href="{% url 'bilardo:home' %}">Bilardo</a>
+                <span class="bilardo-mode-badge">{{ room_mode.name }}</span>
+                {% if online_mode %}
+                <span class="room-code">Oda: {{ room_code }}</span>
+                <button id="copy-room-btn" class="ghost-btn small" type="button">Kodu Kopyala</button>
+                {% else %}
+                <span class="bilardo-mode-badge alt">{{ room_mode.tag }}</span>
+                {% endif %}
+            </div>
+            <div class="bilardo-topbar-right">
+                <span class="connection-pill" id="connection-status">
+                    <i></i><span>{% if online_mode %}Bağlanıyor...{% else %}Hazır{% endif %}</span>
+                </span>
+                <button id="help-btn" class="ghost-btn small" type="button">Kurallar</button>
+            </div>
+        </header>
+
+        <section class="scoreboard" aria-label="Skorboard">
+            <article class="player-card" id="player-card-0">
+                <span class="player-turn-dot" aria-hidden="true"></span>
+                <div class="player-card-main">
+                    <strong id="player-name-0">Oyuncu 1</strong>
+                    <span id="player-meta-0">Sıra bekleniyor</span>
+                </div>
+                <span class="player-score" id="player-score-0">0</span>
+            </article>
+
+            <div class="scoreboard-center">
+                <span class="scoreboard-kicker" id="target-label">Hedef 10 sayı</span>
+                <strong id="turn-label">Sıra: Oyuncu 1</strong>
+                <span id="break-label">İlk vuruş</span>
+            </div>
+
+            <article class="player-card" id="player-card-1">
+                <span class="player-turn-dot" aria-hidden="true"></span>
+                <div class="player-card-main">
+                    <strong id="player-name-1">Oyuncu 2</strong>
+                    <span id="player-meta-1">Sıra bekleniyor</span>
+                </div>
+                <span class="player-score" id="player-score-1">0</span>
+            </article>
+        </section>
+
+        <div class="table-layout">
+            <section class="table-column">
+                <div class="canvas-wrap" id="canvas-wrap">
+                    <canvas id="table-canvas" aria-label="Bilardo masası"></canvas>
+
+                    <div class="canvas-overlay" id="waiting-overlay">
+                        <div class="overlay-card">
+                            <span class="overlay-spinner" aria-hidden="true"></span>
+                            <h2>Rakip bekleniyor</h2>
+                            <p>Oda kodunu paylaş. İkinci oyuncu katılınca oyun otomatik başlar.</p>
+                            <div class="overlay-code" id="waiting-room-code">{{ room_code }}</div>
+                            <button class="ghost-btn small" id="waiting-copy-btn" type="button">KODU KOPYALA</button>
+                        </div>
+                    </div>
+
+                    <div class="canvas-overlay hidden" id="connection-overlay">
+                        <div class="overlay-card">
+                            <span class="overlay-spinner" aria-hidden="true"></span>
+                            <h2>Bağlantı kuruluyor</h2>
+                            <p id="connection-message">Odaya yeniden bağlanılıyor...</p>
+                        </div>
+                    </div>
+
+                    <div class="shot-toast" id="shot-toast" role="status" aria-live="polite"></div>
+                </div>
+
+                <div class="shot-controls">
+                    <div class="power-control">
+                        <span class="control-label">Güç</span>
+                        <div class="power-track" aria-hidden="true">
+                            <div class="power-fill" id="power-fill"></div>
+                        </div>
+                        <span class="power-value" id="power-value">0%</span>
+                    </div>
+                    <button id="shoot-btn" class="game-btn shoot-btn" type="button">
+                        BASILI TUT &amp; BIRAK
+                    </button>
+                    <button id="spin-reset-btn" class="ghost-btn small" type="button">FALSOSUZ</button>
+                </div>
+
+                <p class="table-hint" id="table-hint">
+                    Nişan almak için fareyi masada gezdir. Vuruş gücü için basılı tut, bırakınca vurursun.
+                </p>
+            </section>
+
+            <aside class="bilardo-side">
+                <div class="side-card spin-card">
+                    <div class="side-card-head">
+                        <h2>Falso</h2>
+                        <button id="spin-reset" class="mini-btn" type="button">Sıfırla</button>
+                    </div>
+                    <div class="spin-widget" id="spin-widget" role="slider" aria-label="İsteka topuna vuruş noktası" aria-valuemin="-100" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                        <div class="spin-ball" id="spin-ball">
+                            <span class="spin-axis-h"></span>
+                            <span class="spin-axis-v"></span>
+                            <span class="spin-dot" id="spin-dot"></span>
+                        </div>
+                    </div>
+                    <div class="spin-readout">
+                        <span>Yatay <b id="spin-x">0</b></span>
+                        <span>Dikey <b id="spin-y">0</b></span>
+                    </div>
+                    <p class="spin-hint">Üst = takip, alt = çekme, yanlar = yan falso.</p>
+                </div>
+
+                <div class="side-card cue-card">
+                    <div class="side-card-head">
+                        <h2>İsteka</h2>
+                        <span class="cue-chip" id="cue-chip">Klasik</span>
+                    </div>
+                    <div class="cue-preview" id="cue-preview"><span></span></div>
+                    <strong class="cue-name" id="cue-name">Klasik Ahşap</strong>
+                    <div class="cue-stats" id="cue-stats"></div>
+                </div>
+
+                <div class="side-card">
+                    <div class="side-card-head">
+                        <h2>Ayarlar</h2>
+                    </div>
+                    <label class="toggle-row"><input type="checkbox" id="guide-toggle" checked> <span>Nişan kılavuzu</span></label>
+                    <label class="toggle-row"><input type="checkbox" id="sound-toggle" checked> <span>Ses efektleri</span></label>
+                    <button id="fullscreen-btn" class="ghost-btn small wide" type="button">TAM EKRAN</button>
+                </div>
+
+                <div class="side-card history-card">
+                    <div class="side-card-head">
+                        <h2>Vuruş geçmişi</h2>
+                    </div>
+                    <ol id="shot-history" class="shot-history">
+                        <li class="history-empty">Henüz vuruş yok.</li>
+                    </ol>
+                </div>
+
+                <div class="side-card emote-card" id="emote-card">
+                    <div class="side-card-head">
+                        <h2>Hızlı mesaj</h2>
+                    </div>
+                    <div class="emote-grid" id="emote-grid">
+                        <button type="button" data-emote="İyi vuruş!">İyi vuruş!</button>
+                        <button type="button" data-emote="Yaklaştın!">Yaklaştın!</button>
+                        <button type="button" data-emote="Hadi bakalım">Hadi bakalım</button>
+                        <button type="button" data-emote="Bu benim masam">Bu benim masam</button>
+                        <button type="button" data-emote="😅">😅</button>
+                        <button type="button" data-emote="🎱">🎱</button>
+                    </div>
+                    <div class="emote-log" id="emote-log"></div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <div id="game-over-modal" class="modal-overlay hidden">
+        <div class="modal bilardo-modal">
+            <span class="modal-kicker" id="game-over-kicker">Oyun bitti</span>
+            <h2 id="game-over-title">Kazanan</h2>
+            <p id="game-over-message"></p>
+            <div class="game-over-score" id="game-over-score"></div>
+            <div class="modal-actions">
+                <a class="ghost-btn" href="{% url 'bilardo:home' %}">YENİ ODA</a>
+                <button id="rematch-btn" class="primary" type="button">YENİDEN OYNA</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="help-modal" class="modal-overlay hidden">
+        <div class="modal bilardo-modal help-modal">
+            <span class="modal-kicker">Nasıl oynanır?</span>
+            <h2>Bilardo kontrol rehberi</h2>
+            <div class="help-grid">
+                <div>
+                    <h3>Nişan ve güç</h3>
+                    <p>Fareyi masada gezdirerek nişan al. Sol tuşu basılı tutunca güç çubuğu dolar; bırakınca isteka topa vurur. Klavyede <kbd>Boşluk</kbd> da aynı işi yapar.</p>
+                </div>
+                <div>
+                    <h3>Falso</h3>
+                    <p>Sağdaki top widget'ında noktayı sürükle. Üst kısım takip (follow), alt kısım çekme (draw), yanlar yan falso verir. <kbd>W A S D</kbd> ile de ince ayar yapabilirsin.</p>
+                </div>
+                <div>
+                    <h3>3 Bant</h3>
+                    <p>İsteka topu en az üç banda çarpmalı ve ardından iki hedef topa da dokunmalı. Başarılı vuruş +1 sayı, sıra sende kalır. Hedef sayıya ilk ulaşan kazanır.</p>
+                </div>
+                <div>
+                    <h3>8 Top / 9 Top</h3>
+                    <p>8 Top'ta düz/çizgili grubunu temizleyip 8'i en son deliğe sok. 9 Top'ta her vuruşta en küçük numaralı topa ilk dokun; 9'u sokan kazanır. Faulde rakibin elinde top olur.</p>
+                </div>
+                <div>
+                    <h3>Düz Bilardo</h3>
+                    <p>Her delik bir sayıdır. Delik yapmaya devam ettiğin sürece masada kalırsın. Hedef puana ilk ulaşan kazanır.</p>
+                </div>
+                <div>
+                    <h3>Kısayollar</h3>
+                    <p><kbd>Boşluk</kbd> güç, <kbd>W/A/S/D</kbd> falso, <kbd>R</kbd> falsosuz, <kbd>G</kbd> kılavuz, <kbd>M</kbd> ses. Top elindeyken masaya tıklayarak yerleştir.</p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button id="help-close-btn" class="primary" type="button">ANLADIM</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    {{ cues|json_script:"bilardo-cues" }}
+    <script src="{% static_v 'bilardo/js/physics.js' %}"></script>
+    <script src="{% static_v 'bilardo/js/rules.js' %}"></script>
+    <script src="{% static_v 'bilardo/js/game.js' %}"></script>
+</body>
+</html>

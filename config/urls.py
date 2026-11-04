@@ -19,6 +19,8 @@ urlpatterns = [
     path('codenames/', include('codenames.urls')),
     # FC Manager football squad-building game
     path('fcmanager/', include('fcmanager.urls')),
+    # Two-player billiards (3 cushion, 8-ball, 9-ball, straight)
+    path('bilardo/', include('bilardo.urls')),
     path('healthz/', codenames_health, name='healthz'),
     # Landing page (last so it only matches the root)
     path('', include('core.urls')),

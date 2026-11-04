@@ -1,0 +1,22 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oda Bulunamadı - Bilardo</title>
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
+</head>
+<body>
+    {% include 'core/_navbar.html' %}
+    <div id="main" tabindex="-1" class="game-container narrow">
+        <div class="game-header">
+            <h1>Oda Bulunamadı</h1>
+            <p>Aradığın bilardo odası kapanmış veya kodu yanlış girilmiş olabilir.</p>
+        </div>
+        <a class="game-btn" href="{% url 'bilardo:home' %}">BİLARDO ANA SAYFASI</a>
+    </div>
+</body>
+</html>

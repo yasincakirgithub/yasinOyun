@@ -29,6 +29,22 @@ GAMES = [
         'image_height': 497,
     },
     {
+        'slug': 'bilardo',
+        'url_name': 'bilardo:home',
+        'title': 'Bilardo',
+        'description': (
+            '3 Bant, 8 Top, 9 Top ve Düz Bilardo modlarıyla iki kişilik masa '
+            'oyunu. İstekanı seç, gücü ve falsoyu ayarla, isabetli vuruşlarla rakibini geç.'
+        ),
+        'tag': 'Spor',
+        'tone': 'emerald',
+        'players': '2 oyuncu',
+        'mode': 'Canlı / Yerel',
+        'image': 'core/img/bilardo.svg',
+        'image_width': 1600,
+        'image_height': 900,
+    },
+    {
         'slug': 'kim-bu',
         'url_name': 'kim:home',
         'title': 'Kim Bu?',

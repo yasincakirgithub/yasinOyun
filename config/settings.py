@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'okey101',
     'codenames',
     'fcmanager',
+    'bilardo',
 ]
 
 MIDDLEWARE = [
