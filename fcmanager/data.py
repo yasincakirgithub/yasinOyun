@@ -127,6 +127,91 @@ _FIVE_THREE_TWO = (
     _slot('st2', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 62, 16),
 )
 
+# --- Additional formations ---
+_THREE_FOUR_THREE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 27, 75),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 50, 77),
+    _slot('cb3', 'CB', 'DEF', 'Stoper', ('CB',), 73, 75),
+    _slot('lwb', 'LWB', 'DEF', 'Sol kanat bek', ('LWB', 'LB', 'LM'), 9, 52),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 34, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 66, 50),
+    _slot('rwb', 'RWB', 'DEF', 'Sağ kanat bek', ('RWB', 'RB', 'RM'), 91, 52),
+    _slot('lw', 'LW', 'FWD', 'Sol kanat', ('LW', 'LM', 'LF'), 17, 22),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+    _slot('rw', 'RW', 'FWD', 'Sağ kanat', ('RW', 'RM', 'RF'), 83, 22),
+)
+
+_FOUR_FIVE_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 69),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 72),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 72),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 69),
+    _slot('cdm', 'CDM', 'MID', 'Ön libero', ('CDM', 'CM', 'LDM', 'RDM'), 50, 58),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 24, 45),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 50, 45),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 76, 45),
+    _slot('cam', 'CAM', 'MID', 'Ofansif orta saha', ('CAM', 'CM', 'LAM', 'RAM'), 50, 30),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
+_FOUR_ONE_FOUR_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 69),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 72),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 72),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 69),
+    _slot('cdm', 'CDM', 'MID', 'Ön libero', ('CDM', 'CM', 'LDM', 'RDM'), 50, 58),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 24, 45),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 50, 45),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 76, 45),
+    _slot('cam', 'CAM', 'MID', 'Ofansif orta saha', ('CAM', 'CM', 'LAM', 'RAM'), 50, 30),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
+_THREE_FOUR_TWO_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 27, 75),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 50, 77),
+    _slot('cb3', 'CB', 'DEF', 'Stoper', ('CB',), 73, 75),
+    _slot('lwb', 'LWB', 'DEF', 'Sol kanat bek', ('LWB', 'LB', 'LM'), 9, 52),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 34, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 66, 50),
+    _slot('rwb', 'RWB', 'DEF', 'Sağ kanat bek', ('RWB', 'RB', 'RM'), 91, 52),
+    _slot('lam', 'LAM', 'MID', 'Sol yaratıcı', ('LAM', 'LW', 'LM', 'LF'), 30, 30),
+    _slot('ram', 'RAM', 'MID', 'Sağ yaratıcı', ('RAM', 'RW', 'RM', 'RF'), 70, 30),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
+_FIVE_FOUR_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 9, 66),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 30, 76),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 50, 78),
+    _slot('cb3', 'CB', 'DEF', 'Stoper', ('CB',), 70, 76),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 91, 66),
+    _slot('lm', 'LM', 'MID', 'Sol orta saha', ('LM', 'LW', 'LF', 'LWB'), 17, 45),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 38, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 62, 50),
+    _slot('rm', 'RM', 'MID', 'Sağ orta saha', ('RM', 'RW', 'RF', 'RWB'), 83, 45),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
+_FOUR_THREE_TWO_ONE = (
+    _slot('gk', 'GK', 'GK', 'Kaleci', ('GK',), 50, 88),
+    _slot('lb', 'LB', 'DEF', 'Sol bek', ('LB', 'LWB'), 13, 69),
+    _slot('cb1', 'CB', 'DEF', 'Stoper', ('CB',), 36, 72),
+    _slot('cb2', 'CB', 'DEF', 'Stoper', ('CB',), 64, 72),
+    _slot('rb', 'RB', 'DEF', 'Sağ bek', ('RB', 'RWB'), 87, 69),
+    _slot('cm1', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 30, 50),
+    _slot('cm2', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 50, 53),
+    _slot('cm3', 'CM', 'MID', 'Orta saha', ('CM', 'CDM', 'CAM', 'LCM', 'RCM', 'LDM', 'RDM'), 70, 50),
+    _slot('lam', 'LAM', 'MID', 'Sol yaratıcı', ('LAM', 'LW', 'LM', 'LF'), 30, 30),
+    _slot('ram', 'RAM', 'MID', 'Sağ yaratıcı', ('RAM', 'RW', 'RM', 'RF'), 70, 30),
+    _slot('st', 'ST', 'FWD', 'Santrfor', ('ST', 'CF', 'LS', 'RS'), 50, 14),
+)
+
 FORMATIONS = {
     '4-3-3': {
         'label': '4-3-3',
@@ -152,6 +237,36 @@ FORMATIONS = {
         'label': '5-3-2',
         'description': 'Kapalı savunma · hızlı kontra',
         'slots': _FIVE_THREE_TWO,
+    },
+    '3-4-3': {
+        'label': '3-4-3',
+        'description': 'Üç stoper · kanat beklerle genişlik',
+        'slots': _THREE_FOUR_THREE,
+    },
+    '4-5-1': {
+        'label': '4-5-1',
+        'description': 'Beşli orta saha · tek forvet',
+        'slots': _FOUR_FIVE_ONE,
+    },
+    '4-1-4-1': {
+        'label': '4-1-4-1',
+        'description': 'Ön libero · dörtlü orta saha',
+        'slots': _FOUR_ONE_FOUR_ONE,
+    },
+    '3-4-2-1': {
+        'label': '3-4-2-1',
+        'description': 'Üçlü savunma · çift on numara',
+        'slots': _THREE_FOUR_TWO_ONE,
+    },
+    '5-4-1': {
+        'label': '5-4-1',
+        'description': 'Beşli savunma · kontrol orta sahası',
+        'slots': _FIVE_FOUR_ONE,
+    },
+    '4-3-2-1': {
+        'label': '4-3-2-1',
+        'description': 'Ağaç kurma (Christmas Tree) · dar hücum',
+        'slots': _FOUR_THREE_TWO_ONE,
     },
 }
 DEFAULT_FORMATION = '4-3-3'

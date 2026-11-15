@@ -1,0 +1,300 @@
+{
+  "characters": [
+    {
+      "id": "dc_superman",
+      "name": "Superman",
+      "universe": "dc",
+      "power": 98,
+      "image": "/static/auction/themes/dc/dc_superman.webp",
+      "description": "Clark Kent, the Last Son of Krypton, Earth's greatest hero."
+    },
+    {
+      "id": "dc_batman",
+      "name": "Batman",
+      "universe": "dc",
+      "power": 90,
+      "image": "/static/auction/themes/dc/dc_batman.webp",
+      "description": "Bruce Wayne, the Dark Knight of Gotham City."
+    },
+    {
+      "id": "dc_wonder_woman",
+      "name": "Wonder Woman",
+      "universe": "dc",
+      "power": 95,
+      "image": "/static/auction/themes/dc/dc_wonder_woman.webp",
+      "description": "Diana of Themyscira, Amazonian princess and demigoddess."
+    },
+    {
+      "id": "dc_flash",
+      "name": "The Flash",
+      "universe": "dc",
+      "power": 92,
+      "image": "/static/auction/themes/dc/dc_flash.webp",
+      "description": "Barry Allen, fastest man alive, connected to the Speed Force."
+    },
+    {
+      "id": "dc_darkseid",
+      "name": "Darkseid",
+      "universe": "dc",
+      "power": 100,
+      "image": "/static/auction/themes/dc/dc_darkseid.webp",
+      "description": "Lord of Apokolips, seeker of the Anti-Life Equation."
+    },
+    {
+      "id": "dc_joker",
+      "name": "Joker",
+      "universe": "dc",
+      "power": 75,
+      "image": "/static/auction/themes/dc/dc_joker.webp",
+      "description": "Clown Prince of Crime, Batman's arch-nemesis."
+    },
+    {
+      "id": "dc_aquaman",
+      "name": "Aquaman",
+      "universe": "dc",
+      "power": 88,
+      "image": "/static/auction/themes/dc/dc_aquaman.webp",
+      "description": "Arthur Curry, King of Atlantis, master of the seas."
+    },
+    {
+      "id": "dc_green_lantern",
+      "name": "Green Lantern (Hal Jordan)",
+      "universe": "dc",
+      "power": 91,
+      "image": "/static/auction/themes/dc/dc_green_lantern.webp",
+      "description": "Hal Jordan, wielder of the most powerful weapon in the universe."
+    },
+    {
+      "id": "dc_supergirl",
+      "name": "Supergirl",
+      "universe": "dc",
+      "power": 94,
+      "image": "/static/auction/themes/dc/dc_supergirl.webp",
+      "description": "Kara Zor-El, Superman's cousin, last daughter of Krypton."
+    },
+    {
+      "id": "dc_shazam",
+      "name": "Shazam",
+      "universe": "dc",
+      "power": 93,
+      "image": "/static/auction/themes/dc/dc_shazam.webp",
+      "description": "Billy Batson, empowered by six legendary gods and heroes."
+    },
+    {
+      "id": "dc_cyborg",
+      "name": "Cyborg",
+      "universe": "dc",
+      "power": 87,
+      "image": "/static/auction/themes/dc/dc_cyborg.webp",
+      "description": "Victor Stone, technologically enhanced Justice League member."
+    },
+    {
+      "id": "dc_martian_manhunter",
+      "name": "Martian Manhunter",
+      "universe": "dc",
+      "power": 94,
+      "image": "/static/auction/themes/dc/martian_manhunter.webp",
+      "description": "J'onn J'onzz, last Green Martian, powerful telepath."
+    },
+    {
+      "id": "dc_green_arrow",
+      "name": "Green Arrow",
+      "universe": "dc",
+      "power": 78,
+      "image": "/static/auction/themes/dc/dc_green_arrow.webp",
+      "description": "Oliver Queen, billionaire archer and social justice warrior."
+    },
+    {
+      "id": "dc_black_canary",
+      "name": "Black Canary",
+      "universe": "dc",
+      "power": 82,
+      "image": "/static/auction/themes/dc/dc_black_canary.webp",
+      "description": "Dinah Lance, master martial artist with sonic scream."
+    },
+    {
+      "id": "dc_hawkman",
+      "name": "Hawkman",
+      "universe": "dc",
+      "power": 85,
+      "image": "/static/auction/themes/dc/dc_hawkman.webp",
+      "description": "Carter Hall, reincarnated warrior with Nth metal wings."
+    },
+    {
+      "id": "dc_zatanna",
+      "name": "Zatanna",
+      "universe": "dc",
+      "power": 89,
+      "image": "/static/auction/themes/dc/dc_zatanna.webp",
+      "description": "Zatanna Zatara, master magician who speaks spells backwards."
+    },
+    {
+      "id": "dc_constantine",
+      "name": "John Constantine",
+      "universe": "dc",
+      "power": 80,
+      "image": "/static/auction/themes/dc/dc_constantine.webp",
+      "description": "Occult detective and master of dark magic."
+    },
+    {
+      "id": "dc_lex_luthor",
+      "name": "Lex Luthor",
+      "universe": "dc",
+      "power": 85,
+      "image": "/static/auction/themes/dc/dc_lex_luthor.webp",
+      "description": "Genius billionaire, Superman's greatest intellectual rival."
+    },
+    {
+      "id": "dc_brainiac",
+      "name": "Brainiac",
+      "universe": "dc",
+      "power": 92,
+      "image": "/static/auction/themes/dc/dc_brainiac.webp",
+      "description": "Coluan superintelligence, collector of worlds."
+    },
+    {
+      "id": "dc_sinestro",
+      "name": "Sinestro",
+      "universe": "dc",
+      "power": 90,
+      "image": "/static/auction/themes/dc/dc_sinestro.webp",
+      "description": "Former Green Lantern, wielder of the Yellow Power Ring."
+    },
+    {
+      "id": "dc_black_adam",
+      "name": "Black Adam",
+      "universe": "dc",
+      "power": 96,
+      "image": "/static/auction/themes/dc/dc_black_adam.webp",
+      "description": "Teth-Adam, ancient Egyptian empowered by six gods."
+    },
+    {
+      "id": "dc_reverse_flash",
+      "name": "Reverse-Flash",
+      "universe": "dc",
+      "power": 93,
+      "image": "/static/auction/themes/dc/dc_reverse_flash.webp",
+      "description": "Eobard Thawne, Flash's nemesis from the 25th century."
+    },
+    {
+      "id": "dc_deathstroke",
+      "name": "Deathstroke",
+      "universe": "dc",
+      "power": 86,
+      "image": "/static/auction/themes/dc/dc_deathstroke.webp",
+      "description": "Slade Wilson, world's deadliest assassin."
+    },
+    {
+      "id": "dc_harley_quinn",
+      "name": "Harley Quinn",
+      "universe": "dc",
+      "power": 78,
+      "image": "/static/auction/themes/dc/dc_harley_quinn.webp",
+      "description": "Harleen Quinzel, Joker's partner in chaos."
+    },
+    {
+      "id": "dc_catwoman",
+      "name": "Catwoman",
+      "universe": "dc",
+      "power": 77,
+      "image": "/static/auction/themes/dc/dc_catwoman.webp",
+      "description": "Selina Kyle, master thief and Batman's complex ally."
+    },
+    {
+      "id": "dc_ra_al_ghul",
+      "name": "Ra's al Ghul",
+      "universe": "dc",
+      "power": 85,
+      "image": "/static/auction/themes/dc/ra_al_ghul.webp",
+      "description": "Immortal eco-terrorist, leader of the League of Assassins."
+    },
+    {
+      "id": "dc_general_zod",
+      "name": "General Zod",
+      "universe": "dc",
+      "power": 95,
+      "image": "/static/auction/themes/dc/general_zod.webp",
+      "description": "Kryptonian military leader, sworn enemy of Superman."
+    },
+    {
+      "id": "dc_star_sapphire",
+      "name": "Star Sapphire (Carol Ferris)",
+      "universe": "dc",
+      "power": 88,
+      "image": "/static/auction/themes/dc/star_sapphire.webp",
+      "description": "Wielder of the Violet Power Ring, powered by love."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "dc_justice_league",
+      "name": "Justice League",
+      "description": "The world's greatest superheroes united.",
+      "required_character_ids": [
+        "dc_superman",
+        "dc_batman",
+        "dc_wonder_woman",
+        "dc_flash"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "dc_dark_trinity",
+      "name": "Dark Trinity",
+      "description": "Gotham's most infamous trio.",
+      "required_character_ids": [
+        "dc_batman",
+        "dc_joker",
+        "dc_harley_quinn"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "dc_kryptonian_power",
+      "name": "Kryptonian Power",
+      "description": "Children of Krypton united.",
+      "required_character_ids": [
+        "dc_superman",
+        "dc_supergirl",
+        "dc_general_zod"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "dc_speed_force",
+      "name": "Speed Force",
+      "description": "Masters of the Speed Force.",
+      "required_character_ids": [
+        "dc_flash",
+        "dc_reverse_flash"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 25
+      }
+    },
+    {
+      "id": "dc_lantern_corps",
+      "name": "Lantern Corps",
+      "description": "Wielders of the emotional spectrum.",
+      "required_character_ids": [
+        "dc_green_lantern",
+        "dc_sinestro",
+        "dc_star_sapphire"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    }
+  ]
+}

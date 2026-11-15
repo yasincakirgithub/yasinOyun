@@ -1,0 +1,309 @@
+{
+  "characters": [
+    {
+      "id": "vg_kratos",
+      "name": "Kratos",
+      "universe": "video_games",
+      "power": 98,
+      "image": "/static/auction/themes/video_games/kratos.webp",
+      "description": "Ghost of Sparta, God of War, slayer of gods across mythologies."
+    },
+    {
+      "id": "vg_master_chief",
+      "name": "Master Chief (John-117)",
+      "universe": "video_games",
+      "power": 92,
+      "image": "/static/auction/themes/video_games/master_chief.webp",
+      "description": "Spartan-II supersoldier, savior of humanity, Halo's protagonist."
+    },
+    {
+      "id": "vg_lara_croft",
+      "name": "Lara Croft",
+      "universe": "video_games",
+      "power": 88,
+      "image": "/static/auction/themes/video_games/lara_croft.webp",
+      "description": "Tomb Raider, archaeologist, survivor of impossible odds."
+    },
+    {
+      "id": "vg_geralt",
+      "name": "Geralt of Rivia",
+      "universe": "video_games",
+      "power": 90,
+      "image": "/static/auction/themes/video_games/geralt.webp",
+      "description": "Witcher, monster hunter, the White Wolf of Kaer Morhen."
+    },
+    {
+      "id": "vg_sonic",
+      "name": "Sonic the Hedgehog",
+      "universe": "video_games",
+      "power": 90,
+      "image": "/static/auction/themes/video_games/sonic.webp",
+      "description": "Blue Blur, fastest thing alive, defender of Mobius."
+    },
+    {
+      "id": "vg_mario",
+      "name": "Mario",
+      "universe": "video_games",
+      "power": 87,
+      "image": "/static/auction/themes/video_games/mario.webp",
+      "description": "Nintendo's mascot, plumber, savior of the Mushroom Kingdom."
+    },
+    {
+      "id": "vg_doom_slayer",
+      "name": "Doom Slayer",
+      "universe": "video_games",
+      "power": 99,
+      "image": "/static/auction/themes/video_games/doom_slayer.webp",
+      "description": "Hellwalker, scourge of demons, ancient nightmare of the Dark Realm."
+    },
+    {
+      "id": "vg_link",
+      "name": "Link",
+      "universe": "video_games",
+      "power": 91,
+      "image": "/static/auction/themes/video_games/link.webp",
+      "description": "Hero of Hyrule, wielder of the Master Sword, reincarnated legend."
+    },
+    {
+      "id": "vg_samus",
+      "name": "Samus Aran",
+      "universe": "video_games",
+      "power": 92,
+      "image": "/static/auction/themes/video_games/samus.webp",
+      "description": "Bounty hunter, Chozo-raised, Metroid's protagonist."
+    },
+    {
+      "id": "vg_cloud",
+      "name": "Cloud Strife",
+      "universe": "video_games",
+      "power": 93,
+      "image": "/static/auction/themes/video_games/cloud.webp",
+      "description": "Former SOLDIER, Buster Sword wielder, savior of Gaia."
+    },
+    {
+      "id": "vg_sephiroth",
+      "name": "Sephiroth",
+      "universe": "video_games",
+      "power": 97,
+      "image": "/static/auction/themes/video_games/sephiroth.webp",
+      "description": "One-Winged Angel, Jenova's legacy, Cloud's nemesis."
+    },
+    {
+      "id": "vg_dante",
+      "name": "Dante",
+      "universe": "video_games",
+      "power": 95,
+      "image": "/static/auction/themes/video_games/dante.webp",
+      "description": "Son of Sparda, devil hunter, Devil May Cry protagonist."
+    },
+    {
+      "id": "vg_vergil",
+      "name": "Vergil",
+      "universe": "video_games",
+      "power": 96,
+      "image": "/static/auction/themes/video_games/vergil.webp",
+      "description": "Dante's twin, seeker of power, Yamato wielder."
+    },
+    {
+      "id": "vg_ezio",
+      "name": "Ezio Auditore",
+      "universe": "video_games",
+      "power": 87,
+      "image": "/static/auction/themes/video_games/ezio.webp",
+      "description": "Master Assassin, Mentor of the Italian Brotherhood."
+    },
+    {
+      "id": "vg_altair",
+      "name": "Altaïr Ibn-La'Ahad",
+      "universe": "video_games",
+      "power": 88,
+      "image": "/static/auction/themes/video_games/altair.webp",
+      "description": "Mentor of the Levantine Assassins, Apple of Eden bearer."
+    },
+    {
+      "id": "vg_arthas",
+      "name": "Arthas Menethil (Lich King)",
+      "universe": "video_games",
+      "power": 96,
+      "image": "/static/auction/themes/video_games/arthas.webp",
+      "description": "Prince of Lordaeron, wielder of Frostmourne, Lich King."
+    },
+    {
+      "id": "vg_illidan",
+      "name": "Illidan Stormrage",
+      "universe": "video_games",
+      "power": 94,
+      "image": "/static/auction/themes/video_games/illidan.webp",
+      "description": "The Betrayer, Demon Hunter, warden of the Burning Legion's jailor."
+    },
+    {
+      "id": "vg_sylvanas",
+      "name": "Sylvanas Windrunner",
+      "universe": "video_games",
+      "power": 92,
+      "image": "/static/auction/themes/video_games/sylvanas.webp",
+      "description": "Banshee Queen, Ranger-General, Warchief of the Horde."
+    },
+    {
+      "id": "vg_john_marston",
+      "name": "John Marston",
+      "universe": "video_games",
+      "power": 82,
+      "image": "/static/auction/themes/video_games/john_marston.webp",
+      "description": "Former outlaw, Red Dead Redemption's tragic hero."
+    },
+    {
+      "id": "vg_arthur_morgan",
+      "name": "Arthur Morgan",
+      "universe": "video_games",
+      "power": 84,
+      "image": "/static/auction/themes/video_games/arthur_morgan.webp",
+      "description": "Dutch's right hand, Red Dead Redemption 2's protagonist."
+    },
+    {
+      "id": "vg_cj",
+      "name": "Carl 'CJ' Johnson",
+      "universe": "video_games",
+      "power": 80,
+      "image": "/static/auction/themes/video_games/cj.webp",
+      "description": "Grove Street leader, San Andreas' kingpin."
+    },
+    {
+      "id": "vg_tommy_vercetti",
+      "name": "Tommy Vercetti",
+      "universe": "video_games",
+      "power": 83,
+      "image": "/static/auction/themes/video_games/tommy_vercetti.webp",
+      "description": "Vice City's kingpin, former Forelli soldier."
+    },
+    {
+      "id": "vg_niko_bellic",
+      "name": "Niko Bellic",
+      "universe": "video_games",
+      "power": 82,
+      "image": "/static/auction/themes/video_games/niko_bellic.webp",
+      "description": "Eastern European immigrant, Liberty City's deadliest."
+    },
+    {
+      "id": "vg_kazuma_kiryu",
+      "name": "Kazuma Kiryu",
+      "universe": "video_games",
+      "power": 89,
+      "image": "/static/auction/themes/video_games/kazuma_kiryu.webp",
+      "description": "Dragon of Dojima, Yakuza legend, orphanage father."
+    },
+    {
+      "id": "vg_goro_majima",
+      "name": "Goro Majima",
+      "universe": "video_games",
+      "power": 90,
+      "image": "/static/auction/themes/video_games/goro_majima.webp",
+      "description": "Mad Dog of Shimano, Tojo Clan patriarch, Kiryu's rival."
+    },
+    {
+      "id": "vg_luigi",
+      "name": "Luigi",
+      "universe": "video_games",
+      "power": 85,
+      "image": "/static/auction/themes/video_games/luigi.webp",
+      "description": "Mario's brother, green-clad hero, mansion explorer."
+    },
+    {
+      "id": "vg_crash_bandicoot",
+      "name": "Crash Bandicoot",
+      "universe": "video_games",
+      "power": 85,
+      "image": "/static/auction/themes/video_games/crash_bandicoot.webp",
+      "description": "Genetically enhanced bandicoot, spin-attack master, N. Sanity Island hero."
+    },
+    {
+      "id": "vg_nathan_drake",
+      "name": "Nathan Drake",
+      "universe": "video_games",
+      "power": 88,
+      "image": "/static/auction/themes/video_games/nathan_drake.webp",
+      "description": "Treasure hunter, Uncharted protagonist, descendant of Francis Drake."
+    },
+    {
+      "id": "vg_indiana_jones",
+      "name": "Indiana Jones",
+      "universe": "video_games",
+      "power": 87,
+      "image": "/static/auction/themes/video_games/indiana_jones.webp",
+      "description": "Archaeologist, whip-wielding adventurer, seeker of lost artifacts."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "vg_god_killers",
+      "name": "God Killers",
+      "description": "Those who have slain deities and cosmic horrors.",
+      "required_character_ids": [
+        "vg_kratos",
+        "vg_doom_slayer",
+        "vg_master_chief"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "vg_legendary_heroes",
+      "name": "Legendary Heroes",
+      "description": "Icons who defined their franchises.",
+      "required_character_ids": [
+        "vg_geralt",
+        "vg_link",
+        "vg_cloud"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "vg_speed_legends",
+      "name": "Speed Legends",
+      "description": "The fastest beings in gaming.",
+      "required_character_ids": [
+        "vg_sonic",
+        "vg_doom_slayer",
+        "vg_crash_bandicoot"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "vg_nintendo_legends",
+      "name": "Nintendo Legends",
+      "description": "The pillars of the House of Mario.",
+      "required_character_ids": [
+        "vg_mario",
+        "vg_luigi",
+        "vg_link",
+        "vg_samus"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "vg_tomb_raiders",
+      "name": "Tomb Raiders",
+      "description": "Explorers of ancient mysteries.",
+      "required_character_ids": [
+        "vg_lara_croft",
+        "vg_nathan_drake",
+        "vg_indiana_jones"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    }
+  ]
+}

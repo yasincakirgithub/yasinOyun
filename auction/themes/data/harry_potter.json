@@ -1,0 +1,276 @@
+{
+  "characters": [
+    {
+      "id": "hp_harry_potter",
+      "name": "Harry Potter",
+      "universe": "harry_potter",
+      "power": 85,
+      "image": "/static/auction/themes/harry_potter/harry_potter.webp",
+      "description": "The Boy Who Lived, defeater of Voldemort."
+    },
+    {
+      "id": "hp_voldemort",
+      "name": "Lord Voldemort",
+      "universe": "harry_potter",
+      "power": 98,
+      "image": "/static/auction/themes/harry_potter/voldemort.webp",
+      "description": "Tom Riddle, the most dangerous dark wizard of all time."
+    },
+    {
+      "id": "hp_dumbledore",
+      "name": "Albus Dumbledore",
+      "universe": "harry_potter",
+      "power": 96,
+      "image": "/static/auction/themes/harry_potter/dumbledore.webp",
+      "description": "Greatest wizard of his age, Headmaster of Hogwarts."
+    },
+    {
+      "id": "hp_snape",
+      "name": "Severus Snape",
+      "universe": "harry_potter",
+      "power": 90,
+      "image": "/static/auction/themes/harry_potter/snape.webp",
+      "description": "Potions Master, double agent, bravest man Harry knew."
+    },
+    {
+      "id": "hp_hermione",
+      "name": "Hermione Granger",
+      "universe": "harry_potter",
+      "power": 88,
+      "image": "/static/auction/themes/harry_potter/hermione.webp",
+      "description": "Brightest witch of her age, master of logic and spells."
+    },
+    {
+      "id": "hp_grindelwald",
+      "name": "Gellert Grindelwald",
+      "universe": "harry_potter",
+      "power": 94,
+      "image": "/static/auction/themes/harry_potter/grindelwald.webp",
+      "description": "Dark wizard who sought wizard dominance over Muggles."
+    },
+    {
+      "id": "hp_bellatrix",
+      "name": "Bellatrix Lestrange",
+      "universe": "harry_potter",
+      "power": 87,
+      "image": "/static/auction/themes/harry_potter/bellatrix.webp",
+      "description": "Voldemort's most fanatical and cruel Death Eater."
+    },
+    {
+      "id": "hp_mcgonagall",
+      "name": "Minerva McGonagall",
+      "universe": "harry_potter",
+      "power": 89,
+      "image": "/static/auction/themes/harry_potter/mcgonagall.webp",
+      "description": "Transfiguration Master, Deputy Headmistress of Hogwarts."
+    },
+    {
+      "id": "hp_sirius",
+      "name": "Sirius Black",
+      "universe": "harry_potter",
+      "power": 84,
+      "image": "/static/auction/themes/harry_potter/sirius.webp",
+      "description": "Harry's godfather, escaped prisoner of Azkaban."
+    },
+    {
+      "id": "hp_lupin",
+      "name": "Remus Lupin",
+      "universe": "harry_potter",
+      "power": 83,
+      "image": "/static/auction/themes/harry_potter/lupin.webp",
+      "description": "Werewolf, former Defense Against Dark Arts professor."
+    },
+    {
+      "id": "hp_james_potter",
+      "name": "James Potter",
+      "universe": "harry_potter",
+      "power": 85,
+      "image": "/static/auction/themes/harry_potter/james_potter.webp",
+      "description": "Harry's father, talented Animagus and Marauder."
+    },
+    {
+      "id": "hp_lily_potter",
+      "name": "Lily Potter",
+      "universe": "harry_potter",
+      "power": 86,
+      "image": "/static/auction/themes/harry_potter/lily_potter.webp",
+      "description": "Harry's mother, whose sacrifice gave him protection."
+    },
+    {
+      "id": "hp_molly_weasley",
+      "name": "Molly Weasley",
+      "universe": "harry_potter",
+      "power": 88,
+      "image": "/static/auction/themes/harry_potter/molly_weasley.webp",
+      "description": "Matriarch of the Weasleys, defeated Bellatrix in duel."
+    },
+    {
+      "id": "hp_arthur_weasley",
+      "name": "Arthur Weasley",
+      "universe": "harry_potter",
+      "power": 78,
+      "image": "/static/auction/themes/harry_potter/arthur_weasley.webp",
+      "description": "Muggle-enthusiast, father of the Weasley clan."
+    },
+    {
+      "id": "hp_ron_weasley",
+      "name": "Ron Weasley",
+      "universe": "harry_potter",
+      "power": 80,
+      "image": "/static/auction/themes/harry_potter/ron_weasley.webp",
+      "description": "Harry's loyal best friend, chess master."
+    },
+    {
+      "id": "hp_ginny_weasley",
+      "name": "Ginny Weasley",
+      "universe": "harry_potter",
+      "power": 84,
+      "image": "/static/auction/themes/harry_potter/ginny_weasley.webp",
+      "description": "Powerful witch, accomplished Quidditch player."
+    },
+    {
+      "id": "hp_fred_george",
+      "name": "Fred & George Weasley",
+      "universe": "harry_potter",
+      "power": 82,
+      "image": "/static/auction/themes/harry_potter/fred_george.webp",
+      "description": "Twin pranksters, founders of Weasleys' Wizard Wheezes."
+    },
+    {
+      "id": "hp_neville",
+      "name": "Neville Longbottom",
+      "universe": "harry_potter",
+      "power": 85,
+      "image": "/static/auction/themes/harry_potter/neville.webp",
+      "description": "Courageous leader of Dumbledore's Army, killed Nagini."
+    },
+    {
+      "id": "hp_luna",
+      "name": "Luna Lovegood",
+      "universe": "harry_potter",
+      "power": 81,
+      "image": "/static/auction/themes/harry_potter/luna.webp",
+      "description": "Dreamy Ravenclaw, believer in the extraordinary."
+    },
+    {
+      "id": "hp_draco",
+      "name": "Draco Malfoy",
+      "universe": "harry_potter",
+      "power": 78,
+      "image": "/static/auction/themes/harry_potter/draco.webp",
+      "description": "Harry's rival, Death Eater's son, ultimately chose right."
+    },
+    {
+      "id": "hp_lucius_malfoy",
+      "name": "Lucius Malfoy",
+      "universe": "harry_potter",
+      "power": 82,
+      "image": "/static/auction/themes/harry_potter/lucius_malfoy.webp",
+      "description": "Aristocratic Death Eater, father of Draco."
+    },
+    {
+      "id": "hp_kingsley",
+      "name": "Kingsley Shacklebolt",
+      "universe": "harry_potter",
+      "power": 87,
+      "image": "/static/auction/themes/harry_potter/kingsley.webp",
+      "description": "Auror, Order member, future Minister of Magic."
+    },
+    {
+      "id": "hp_moody",
+      "name": "Alastor Moody",
+      "universe": "harry_potter",
+      "power": 89,
+      "image": "/static/auction/themes/harry_potter/moody.webp",
+      "description": "Legendary Auror, 'Constant Vigilance'."
+    },
+    {
+      "id": "hp_tonks",
+      "name": "Nymphadora Tonks",
+      "universe": "harry_potter",
+      "power": 84,
+      "image": "/static/auction/themes/harry_potter/tonks.webp",
+      "description": "Metamorphmagus Auror, member of the Order."
+    },
+    {
+      "id": "hp_cedric",
+      "name": "Cedric Diggory",
+      "universe": "harry_potter",
+      "power": 79,
+      "image": "/static/auction/themes/harry_potter/cedric.webp",
+      "description": "Hufflepuff champion, model of fair play."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "hp_golden_trio",
+      "name": "The Golden Trio",
+      "description": "Harry, Ron, and Hermione - inseparable friends.",
+      "required_character_ids": [
+        "hp_harry_potter",
+        "hp_ron_weasley",
+        "hp_hermione"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "hp_hogwarts_legends",
+      "name": "Hogwarts Legends",
+      "description": "The greatest professors of Hogwarts.",
+      "required_character_ids": [
+        "hp_dumbledore",
+        "hp_mcgonagall",
+        "hp_snape"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "hp_dark_arts",
+      "name": "Dark Arts Masters",
+      "description": "Practitioners of the most dangerous magic.",
+      "required_character_ids": [
+        "hp_voldemort",
+        "hp_bellatrix",
+        "hp_lucius_malfoy"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "hp_marauders",
+      "name": "The Marauders",
+      "description": "Moony, Wormtail, Padfoot, and Prongs.",
+      "required_character_ids": [
+        "hp_james_potter",
+        "hp_sirius",
+        "hp_lupin"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "hp_deathly_hallows",
+      "name": "Deathly Hallows",
+      "description": "Masters of the Elder Wand, Stone, and Cloak.",
+      "required_character_ids": [
+        "hp_harry_potter",
+        "hp_dumbledore",
+        "hp_grindelwald"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    }
+  ]
+}

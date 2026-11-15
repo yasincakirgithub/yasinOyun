@@ -8,6 +8,8 @@ from collections import Counter
 
 from .data import (
     SLOTS,
+    FORMATIONS,
+    DEFAULT_FORMATION,
     format_league,
     format_nation,
     slot_accepts,

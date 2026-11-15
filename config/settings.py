@@ -11,6 +11,7 @@ Hosts all games in one project:
   - ``okey101`` : multiplayer 101 Okey game
   - ``codenames``: real-time team word-association game
   - ``fcmanager``: two-player football squad-building and match simulation game
+  - ``auction``: real-time multiplayer character auction game
 
 The games share a single PostgreSQL database and Redis instance.
 """
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
     'okey101',
     'codenames',
     'fcmanager',
+    'auction',
     'bilardo',
 ]
 
@@ -324,5 +326,6 @@ LOGGING = {
         'satranc': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'codenames': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
         'fcmanager': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
+        'auction': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }

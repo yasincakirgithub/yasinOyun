@@ -107,6 +107,8 @@
         pitchBadge: $('pitch-badge'),
         pitchSlots: $('pitch-slots'),
         pitchHint: $('pitch-hint'),
+        pitchFormationDesc: $('pitch-formation-desc'),
+        formationSelect: $('formation-select'),
         clearSquad: $('clear-squad-btn'),
         autoSquad: $('auto-squad-btn'),
         challengeBadge: $('challenge-badge'),
@@ -239,6 +241,39 @@
 
     function slotFor(key) {
         return slotByKey[key] || null;
+    }
+
+    function populateFormationSelect(formations, currentFormation) {
+        if (!el.formationSelect) return;
+        var currentValue = el.formationSelect.value;
+        clearNode(el.formationSelect);
+        formations.forEach(function (formation) {
+            var option = createEl('option', '', formation.label + ' — ' + formation.description);
+            option.value = formation.key;
+            if (formation.key === currentFormation) option.selected = true;
+            el.formationSelect.appendChild(option);
+        });
+        // Restore selection if it was already set
+        if (currentValue && el.formationSelect.querySelector('option[value="' + currentValue + '"]')) {
+            el.formationSelect.value = currentValue;
+        }
+        // Update formation description
+        updateFormationDescription(currentFormation || (state.you && state.you.formation) || '4-3-3');
+    }
+
+    function updateFormationDescription(formationKey) {
+        if (!el.pitchFormationDesc) return;
+        var formations = (state && state.formations) || [];
+        var formation = formations.find(function (f) { return f.key === formationKey; });
+        if (formation) {
+            setText(el.pitchFormationDesc, formation.label + ' — ' + formation.description);
+        }
+    }
+
+    function getFormationSlotCount(formationKey) {
+        // All formations have 11 slots (1 GK + 10 outfield)
+        // This is a fallback in case we can't determine from state
+        return 11;
     }
 
     function marketPlayer(id) {
@@ -433,6 +468,11 @@
         var slots = state.slots && state.slots.length ? state.slots : FALLBACK_SLOTS;
         slots.forEach(function (slot) { slotByKey[slot.key] = slot; });
 
+        // Populate formation dropdown if available
+        if (state.formations && el.formationSelect) {
+            populateFormationSelect(state.formations, state.you ? state.you.formation : null);
+        }
+
         if (selectedMarketId) {
             var picked = marketPlayer(selectedMarketId);
             if (!picked || pickedByOpponent(picked)) selectedMarketId = null;
@@ -532,6 +572,8 @@
             ? Math.max(0, budget - spent)
             : Number(you.remaining);
         var pct = budget > 0 ? (spent / budget) * 100 : 0;
+        // Use formation-specific slot count
+        var totalSlots = (state.slots && state.slots.length) ? state.slots.length : MAX_SLOTS;
 
         setText(el.budgetEur, formatEur(budget));
         setText(el.budgetTry, '≈ ' + formatTry(state.room.budget_try));
@@ -549,7 +591,7 @@
         setText(el.youName, you.name);
         setText(el.youLocked, you.locked ? 'Kadro kilitli' : 'Kadro açık');
         el.youLocked.classList.toggle('is-green', !!you.locked);
-        setText(el.squadCount, (you.slots_filled || 0) + '/' + MAX_SLOTS);
+        setText(el.squadCount, (you.slots_filled || 0) + '/' + totalSlots);
 
         var challenges = you.challenges || [];
         var done = challenges.filter(function (challenge) { return challenge.satisfied; }).length;
@@ -580,9 +622,20 @@
             return;
         }
 
+        // Get opponent's formation slot count
+        var oppTotalSlots = MAX_SLOTS;
+        if (opponent.formation && state.formations) {
+            var oppFormation = state.formations.find(function (f) { return f.key === opponent.formation; });
+            if (oppFormation && state.slots) {
+                // We need to find the slot count for opponent's formation
+                // Since we don't have all formation slots in state, use a mapping
+                oppTotalSlots = getFormationSlotCount(opponent.formation);
+            }
+        }
+
         setText(el.oppName, opponent.name);
         setText(el.oppLocked, opponent.locked ? 'Kadro kilitli' : 'Kadro açık');
-        setText(el.oppSquadCount, (opponent.slots_filled || 0) + '/' + MAX_SLOTS);
+        setText(el.oppSquadCount, (opponent.slots_filled || 0) + '/' + oppTotalSlots);
         setText(el.oppSpent, formatEur(opponent.spent));
         setText(el.oppStatus, opponent.connected ? 'BAĞLI' : 'KOPUK');
         el.oppStatus.classList.toggle('is-green', !!opponent.connected);
@@ -1208,6 +1261,16 @@
     function requestUnlock() { perform('unlock', {}); }
     function requestStartMatch() { perform('start-match', {}); }
     function requestNewSeason() { perform('new-season', {}); }
+    function requestFormationChange() {
+        if (!state || state.room.status !== 'DRAFT') return;
+        if (state.you.locked) {
+            showToast('Kadron kilitli. Önce kilidi aç.', true);
+            return;
+        }
+        var formation = el.formationSelect ? el.formationSelect.value : '';
+        if (!formation) return;
+        perform('formation', { formation: formation });
+    }
 
     function requestClearSquad() {
         if (!state || state.room.status !== 'DRAFT') return;
@@ -1991,6 +2054,9 @@
         el.startMatchBtn.addEventListener('click', requestStartMatch);
         el.clearSquad.addEventListener('click', requestClearSquad);
         el.autoSquad.addEventListener('click', requestAutoSquad);
+        if (el.formationSelect) {
+            el.formationSelect.addEventListener('change', requestFormationChange);
+        }
 
         el.marketSearch.addEventListener('input', function () {
             marketFilters.q = el.marketSearch.value || '';

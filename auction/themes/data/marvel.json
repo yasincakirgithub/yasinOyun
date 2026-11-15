@@ -1,0 +1,333 @@
+{
+  "characters": [
+    {
+      "id": "marvel_iron_man",
+      "name": "Iron Man",
+      "universe": "marvel",
+      "power": 92,
+      "image": "/static/auction/themes/marvel/iron_man.webp",
+      "description": "Tony Stark, genius billionaire in powered armor."
+    },
+    {
+      "id": "marvel_thor",
+      "name": "Thor",
+      "universe": "marvel",
+      "power": 95,
+      "image": "/static/auction/themes/marvel/marvel_thor.webp",
+      "description": "Asgardian God of Thunder, wielder of Mjolnir."
+    },
+    {
+      "id": "marvel_hulk",
+      "name": "Hulk",
+      "universe": "marvel",
+      "power": 97,
+      "image": "/static/auction/themes/marvel/marvel_hulk.webp",
+      "description": "Bruce Banner's gamma-irradiated alter ego, strongest there is."
+    },
+    {
+      "id": "marvel_spider_man",
+      "name": "Spider-Man",
+      "universe": "marvel",
+      "power": 85,
+      "image": "/static/auction/themes/marvel/marvel_spider_man.webp",
+      "description": "Peter Parker, web-slinging hero of New York."
+    },
+    {
+      "id": "marvel_thanos",
+      "name": "Thanos",
+      "universe": "marvel",
+      "power": 100,
+      "image": "/static/auction/themes/marvel/marvel_thanos.webp",
+      "description": "The Mad Titan, seeker of the Infinity Stones."
+    },
+    {
+      "id": "marvel_doctor_strange",
+      "name": "Doctor Strange",
+      "universe": "marvel",
+      "power": 93,
+      "image": "/static/auction/themes/marvel/doctor_strange.webp",
+      "description": "Sorcerer Supreme, master of the mystic arts."
+    },
+    {
+      "id": "marvel_captain_america",
+      "name": "Captain America",
+      "universe": "marvel",
+      "power": 88,
+      "image": "/static/auction/themes/marvel/captain_america.webp",
+      "description": "Steve Rogers, super-soldier and living symbol of freedom."
+    },
+    {
+      "id": "marvel_loki",
+      "name": "Loki",
+      "universe": "marvel",
+      "power": 87,
+      "image": "/static/auction/themes/marvel/marvel_loki.webp",
+      "description": "God of Mischief, Thor's adoptive brother."
+    },
+    {
+      "id": "marvel_black_panther",
+      "name": "Black Panther",
+      "universe": "marvel",
+      "power": 89,
+      "image": "/static/auction/themes/marvel/black_panther.webp",
+      "description": "T'Challa, king of Wakanda, enhanced by the Heart-Shaped Herb."
+    },
+    {
+      "id": "marvel_captain_marvel",
+      "name": "Captain Marvel",
+      "universe": "marvel",
+      "power": 96,
+      "image": "/static/auction/themes/marvel/captain_marvel.webp",
+      "description": "Carol Danvers, cosmic-powered hero with binary form."
+    },
+    {
+      "id": "marvel_scarlet_witch",
+      "name": "Scarlet Witch",
+      "universe": "marvel",
+      "power": 94,
+      "image": "/static/auction/themes/marvel/scarlet_witch.webp",
+      "description": "Wanda Maximoff, wielder of chaos magic."
+    },
+    {
+      "id": "marvel_vision",
+      "name": "Vision",
+      "universe": "marvel",
+      "power": 91,
+      "image": "/static/auction/themes/marvel/marvel_vision.webp",
+      "description": "Synthezoid created from the Mind Stone and Vibranium."
+    },
+    {
+      "id": "marvel_ant_man",
+      "name": "Ant-Man",
+      "universe": "marvel",
+      "power": 78,
+      "image": "/static/auction/themes/marvel/marvel_ant_man.webp",
+      "description": "Scott Lang, hero who can shrink and grow using Pym Particles."
+    },
+    {
+      "id": "marvel_wasp",
+      "name": "The Wasp",
+      "universe": "marvel",
+      "power": 80,
+      "image": "/static/auction/themes/marvel/wasp.webp",
+      "description": "Hope van Dyne, master of shrinking and bio-electric stings."
+    },
+    {
+      "id": "marvel_black_widow",
+      "name": "Black Widow",
+      "universe": "marvel",
+      "power": 75,
+      "image": "/static/auction/themes/marvel/black_widow.webp",
+      "description": "Natasha Romanoff, world-class spy and assassin."
+    },
+    {
+      "id": "marvel_hawkeye",
+      "name": "Hawkeye",
+      "universe": "marvel",
+      "power": 73,
+      "image": "/static/auction/themes/marvel/marvel_hawkeye.webp",
+      "description": "Clint Barton, master archer and marksman."
+    },
+    {
+      "id": "marvel_winter_soldier",
+      "name": "Winter Soldier",
+      "universe": "marvel",
+      "power": 82,
+      "image": "/static/auction/themes/marvel/winter_soldier.webp",
+      "description": "Bucky Barnes, enhanced super-soldier with cybernetic arm."
+    },
+    {
+      "id": "marvel_falcon",
+      "name": "Falcon",
+      "universe": "marvel",
+      "power": 77,
+      "image": "/static/auction/themes/marvel/marvel_falcon.webp",
+      "description": "Sam Wilson, airborne hero with EXO-7 wingsuit."
+    },
+    {
+      "id": "marvel_war_machine",
+      "name": "War Machine",
+      "universe": "marvel",
+      "power": 86,
+      "image": "/static/auction/themes/marvel/war_machine.webp",
+      "description": "James Rhodes, armored Avenger with heavy weaponry."
+    },
+    {
+      "id": "marvel_spider_man_miles",
+      "name": "Spider-Man (Miles Morales)",
+      "universe": "marvel",
+      "power": 84,
+      "image": "/static/auction/themes/marvel/spider_man_miles.webp",
+      "description": "Miles Morales, Spider-Man with bio-electric venom blast."
+    },
+    {
+      "id": "marvel_venom",
+      "name": "Venom",
+      "universe": "marvel",
+      "power": 88,
+      "image": "/static/auction/themes/marvel/marvel_venom.webp",
+      "description": "Eddie Brock bonded with alien symbiote."
+    },
+    {
+      "id": "marvel_carnage",
+      "name": "Carnage",
+      "universe": "marvel",
+      "power": 90,
+      "image": "/static/auction/themes/marvel/marvel_carnage.webp",
+      "description": "Cletus Kasady bonded with offspring of Venom symbiote."
+    },
+    {
+      "id": "marvel_deadpool",
+      "name": "Deadpool",
+      "universe": "marvel",
+      "power": 83,
+      "image": "/static/auction/themes/marvel/marvel_deadpool.webp",
+      "description": "Wade Wilson, mercenary with accelerated healing factor."
+    },
+    {
+      "id": "marvel_wolverine",
+      "name": "Wolverine",
+      "universe": "marvel",
+      "power": 87,
+      "image": "/static/auction/themes/marvel/marvel_wolverine.webp",
+      "description": "Logan, mutant with adamantium claws and healing factor."
+    },
+    {
+      "id": "marvel_magneto",
+      "name": "Magneto",
+      "universe": "marvel",
+      "power": 92,
+      "image": "/static/auction/themes/marvel/magneto.webp",
+      "description": "Erik Lehnsherr, master of magnetism."
+    },
+    {
+      "id": "marvel_professor_x",
+      "name": "Professor X",
+      "universe": "marvel",
+      "power": 90,
+      "image": "/static/auction/themes/marvel/professor_x.webp",
+      "description": "Charles Xavier, world's most powerful telepath."
+    },
+    {
+      "id": "marvel_phoenix",
+      "name": "Phoenix (Jean Grey)",
+      "universe": "marvel",
+      "power": 98,
+      "image": "/static/auction/themes/marvel/phoenix.webp",
+      "description": "Jean Grey as host of the cosmic Phoenix Force."
+    },
+    {
+      "id": "marvel_silver_surfer",
+      "name": "Silver Surfer",
+      "universe": "marvel",
+      "power": 96,
+      "image": "/static/auction/themes/marvel/silver_surfer.webp",
+      "description": "Norrin Radd, herald of Galactus with Power Cosmic."
+    },
+    {
+      "id": "marvel_galactus",
+      "name": "Galactus",
+      "universe": "marvel",
+      "power": 100,
+      "image": "/static/auction/themes/marvel/galactus.webp",
+      "description": "Devourer of Worlds, cosmic entity of immense power."
+    },
+    {
+      "id": "marvel_odin",
+      "name": "Odin",
+      "universe": "marvel",
+      "power": 97,
+      "image": "/static/auction/themes/marvel/marvel_odin.webp",
+      "description": "All-Father of Asgard, father of Thor and Loki, ruler of the Nine Realms."
+    },
+    {
+      "id": "marvel_she_hulk",
+      "name": "She-Hulk",
+      "universe": "marvel",
+      "power": 90,
+      "image": "/static/auction/themes/marvel/marvel_she_hulk.webp",
+      "description": "Jennifer Walters, cousin of Bruce Banner, gamma-powered attorney."
+    },
+    {
+      "id": "marvel_abomination",
+      "name": "Abomination",
+      "universe": "marvel",
+      "power": 92,
+      "image": "/static/auction/themes/marvel/abomination.webp",
+      "description": "Emil Blonsky, gamma-irradiated monstrosity, Hulk's nemesis."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "marvel_avengers_assemble",
+      "name": "Avengers Assemble",
+      "description": "Earth's Mightiest Heroes united.",
+      "required_character_ids": [
+        "marvel_iron_man",
+        "marvel_thor",
+        "marvel_captain_america",
+        "marvel_hulk"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "marvel_infinity_power",
+      "name": "Infinity Power",
+      "description": "Wielders of the Infinity Stones' power.",
+      "required_character_ids": [
+        "marvel_thanos",
+        "marvel_doctor_strange",
+        "marvel_vision"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "marvel_spider_verse",
+      "name": "Spider-Verse",
+      "description": "Spider-People from across the multiverse.",
+      "required_character_ids": [
+        "marvel_spider_man",
+        "marvel_spider_man_miles",
+        "marvel_venom"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "marvel_asgardian_bloodline",
+      "name": "Asgardian Bloodline",
+      "description": "Sons of Odin united.",
+      "required_character_ids": [
+        "marvel_thor",
+        "marvel_loki",
+        "marvel_odin"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 25
+      }
+    },
+    {
+      "id": "marvel_gamma_force",
+      "name": "Gamma Force",
+      "description": "Those transformed by gamma radiation.",
+      "required_character_ids": [
+        "marvel_hulk",
+        "marvel_she_hulk",
+        "marvel_abomination"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 20
+      }
+    }
+  ]
+}

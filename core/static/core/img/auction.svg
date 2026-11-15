@@ -1,0 +1,84 @@
+<svg width="1600" height="497" viewBox="0 0 1600 497" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="497" fill="#1a0d2e"/>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1600" y2="497" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f0a1a"/>
+      <stop offset="50%" stop-color="#1a0d2e"/>
+      <stop offset="100%" stop-color="#0f0a1a"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="50%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="497" fill="url(#bgGrad)"/>
+  
+  <!-- Decorative particles -->
+  <circle cx="200" cy="100" r="2" fill="#fbbf24" opacity="0.6">
+    <animate attributeName="cy" values="100;80;100" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="400" cy="300" r="1.5" fill="#c084fc" opacity="0.5">
+    <animate attributeName="cy" values="300;280;300" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1200" cy="150" r="2.5" fill="#ec4899" opacity="0.5">
+    <animate attributeName="cy" values="150;130;150" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1400" cy="350" r="1" fill="#fbbf24" opacity="0.4">
+    <animate attributeName="cy" values="350;330;350" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Central auction hammer -->
+  <g transform="translate(800, 248)">
+    <!-- Hammer handle -->
+    <rect x="-8" y="40" width="16" height="120" rx="8" fill="#3d2a1a"/>
+    <rect x="-6" y="42" width="12" height="116" rx="6" fill="#5d3a1a"/>
+    
+    <!-- Hammer head -->
+    <ellipse cx="0" cy="40" rx="70" ry="30" fill="#2d1a0a"/>
+    <ellipse cx="0" cy="40" rx="65" ry="25" fill="#3d2a1a"/>
+    <ellipse cx="0" cy="35" rx="60" ry="20" fill="#4a3520"/>
+    
+    <!-- Gold accent on hammer -->
+    <ellipse cx="0" cy="30" rx="55" ry="15" fill="url(#goldGrad)" opacity="0.3"/>
+    
+    <!-- Purple glow -->
+    <ellipse cx="0" cy="40" rx="80" ry="40" fill="url(#purpleGrad)" opacity="0.15" filter="blur(20px)"/>
+  </g>
+  
+  <!-- Character cards floating around -->
+  <g opacity="0.7">
+    <!-- Card 1 -->
+    <g transform="translate(150, 180) rotate(-15)">
+      <rect x="0" y="0" width="120" height="170" rx="12" fill="#1a0d2e" stroke="#c084fc" stroke-width="2" opacity="0.8"/>
+      <rect x="10" y="10" width="100" height="130" rx="8" fill="url(#purpleGrad)" opacity="0.3"/>
+      <text x="60" y="100" text-anchor="middle" fill="#fbbf24" font-family="system-ui" font-size="14" font-weight="bold">⚔</text>
+    </g>
+    
+    <!-- Card 2 -->
+    <g transform="translate(1300, 200) rotate(10)">
+      <rect x="0" y="0" width="110" height="155" rx="12" fill="#1a0d2e" stroke="#ec4899" stroke-width="2" opacity="0.8"/>
+      <rect x="8" y="8" width="94" height="118" rx="8" fill="url(#purpleGrad)" opacity="0.3"/>
+      <text x="55" y="90" text-anchor="middle" fill="#fbbf24" font-family="system-ui" font-size="14" font-weight="bold">🛡</text>
+    </g>
+    
+    <!-- Card 3 -->
+    <g transform="translate(300, 380) rotate(5)">
+      <rect x="0" y="0" width="100" height="140" rx="12" fill="#1a0d2e" stroke="#fbbf24" stroke-width="2" opacity="0.8"/>
+      <rect x="8" y="8" width="84" height="104" rx="8" fill="url(#goldGrad)" opacity="0.3"/>
+      <text x="50" y="85" text-anchor="middle" fill="#fbbf24" font-family="system-ui" font-size="14" font-weight="bold">👑</text>
+    </g>
+  </g>
+  
+  <!-- Title text -->
+  <text x="800" y="100" text-anchor="middle" fill="url(#goldGrad)" font-family="system-ui, sans-serif" font-size="36" font-weight="900" letter-spacing="-1">CHARACTER AUCTION</text>
+  <text x="800" y="135" text-anchor="middle" fill="#c084fc" font-family="system-ui, sans-serif" font-size="16" font-weight="500" letter-spacing="0.5">Efsanevi karakterleri topla, açık artırmada kazan</text>
+  
+  <!-- Bottom tagline -->
+  <text x="800" y="460" text-anchor="middle" fill="#6b5b7b" font-family="system-ui, sans-serif" font-size="13" font-weight="500">2–8 Oyuncu • Gerçek Zamanlı • Senarji Sistemi</text>
+</svg>

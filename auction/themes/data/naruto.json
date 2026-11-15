@@ -1,0 +1,304 @@
+{
+  "characters": [
+    {
+      "id": "naruto_naruto",
+      "name": "Naruto Uzumaki",
+      "universe": "naruto",
+      "power": 96,
+      "image": "/static/auction/themes/naruto/naruto.webp",
+      "description": "Seventh Hokage, jinchūriki of Kurama, hero of the Fourth Shinobi War."
+    },
+    {
+      "id": "naruto_sasuke",
+      "name": "Sasuke Uchiha",
+      "universe": "naruto",
+      "power": 96,
+      "image": "/static/auction/themes/naruto/sasuke.webp",
+      "description": "Last Uchiha, wielder of Rinnegan, Naruto's eternal rival."
+    },
+    {
+      "id": "naruto_madara",
+      "name": "Madara Uchiha",
+      "universe": "naruto",
+      "power": 99,
+      "image": "/static/auction/themes/naruto/madara.webp",
+      "description": "Legendary Uchiha, co-founder of Konoha, master of the Sharingan."
+    },
+    {
+      "id": "naruto_hashirama",
+      "name": "Hashirama Senju",
+      "universe": "naruto",
+      "power": 98,
+      "image": "/static/auction/themes/naruto/hashirama.webp",
+      "description": "First Hokage, God of Shinobi, master of Wood Release."
+    },
+    {
+      "id": "naruto_itachi",
+      "name": "Itachi Uchiha",
+      "universe": "naruto",
+      "power": 93,
+      "image": "/static/auction/themes/naruto/itachi.webp",
+      "description": "Prodigy of the Uchiha, pacifist who sacrificed everything for peace."
+    },
+    {
+      "id": "naruto_kakashi",
+      "name": "Kakashi Hatake",
+      "universe": "naruto",
+      "power": 90,
+      "image": "/static/auction/themes/naruto/kakashi.webp",
+      "description": "Copy Ninja, Sixth Hokage, master of a thousand jutsu."
+    },
+    {
+      "id": "naruto_pain",
+      "name": "Pain (Nagato)",
+      "universe": "naruto",
+      "power": 95,
+      "image": "/static/auction/themes/naruto/pain.webp",
+      "description": "Leader of Akatsuki, wielder of the Rinnegan, god of Amegakure."
+    },
+    {
+      "id": "naruto_minato",
+      "name": "Minato Namikaze",
+      "universe": "naruto",
+      "power": 94,
+      "image": "/static/auction/themes/naruto/minato.webp",
+      "description": "Fourth Hokage, Yellow Flash, creator of the Rasengan."
+    },
+    {
+      "id": "naruto_obito",
+      "name": "Obito Uchiha",
+      "universe": "naruto",
+      "power": 97,
+      "image": "/static/auction/themes/naruto/obito.webp",
+      "description": "Masked Man, Ten-Tails jinchūriki, architect of the Fourth War."
+    },
+    {
+      "id": "naruto_jiraiya",
+      "name": "Jiraiya",
+      "universe": "naruto",
+      "power": 91,
+      "image": "/static/auction/themes/naruto/naruto_jiraiya.webp",
+      "description": "Toad Sage, one of the Legendary Sannin, Naruto's godfather."
+    },
+    {
+      "id": "naruto_tsunade",
+      "name": "Tsunade Senju",
+      "universe": "naruto",
+      "power": 92,
+      "image": "/static/auction/themes/naruto/tsunade.webp",
+      "description": "Fifth Hokage, greatest medical ninja, granddaughter of Hashirama."
+    },
+    {
+      "id": "naruto_orochimaru",
+      "name": "Orochimaru",
+      "universe": "naruto",
+      "power": 92,
+      "image": "/static/auction/themes/naruto/naruto_orochimaru.webp",
+      "description": "Legendary Sannin, seeker of immortality and all jutsu."
+    },
+    {
+      "id": "naruto_sakura",
+      "name": "Sakura Haruno",
+      "universe": "naruto",
+      "power": 87,
+      "image": "/static/auction/themes/naruto/sakura.webp",
+      "description": "Greatest medical ninja after Tsunade, monstrous strength."
+    },
+    {
+      "id": "naruto_shikamaru",
+      "name": "Shikamaru Nara",
+      "universe": "naruto",
+      "power": 85,
+      "image": "/static/auction/themes/naruto/shikamaru.webp",
+      "description": "Genius strategist, IQ over 200, shadow manipulation master."
+    },
+    {
+      "id": "naruto_gaara",
+      "name": "Gaara",
+      "universe": "naruto",
+      "power": 91,
+      "image": "/static/auction/themes/naruto/naruto_gaara.webp",
+      "description": "Fifth Kazekage, former jinchūriki of Shukaku, master of sand."
+    },
+    {
+      "id": "naruto_killer_bee",
+      "name": "Killer Bee",
+      "universe": "naruto",
+      "power": 92,
+      "image": "/static/auction/themes/naruto/killer_bee.webp",
+      "description": "Jinchūriki of Gyūki, perfect jinchūriki, rapper."
+    },
+    {
+      "id": "naruto_might_guy",
+      "name": "Might Guy",
+      "universe": "naruto",
+      "power": 93,
+      "image": "/static/auction/themes/naruto/might_guy.webp",
+      "description": "Master of taijutsu, opener of the Eight Gates."
+    },
+    {
+      "id": "naruto_rock_lee",
+      "name": "Rock Lee",
+      "universe": "naruto",
+      "power": 84,
+      "image": "/static/auction/themes/naruto/rock_lee.webp",
+      "description": "Taijutsu specialist who cannot use ninjutsu or genjutsu."
+    },
+    {
+      "id": "naruto_neji",
+      "name": "Neji Hyūga",
+      "universe": "naruto",
+      "power": 86,
+      "image": "/static/auction/themes/naruto/neji.webp",
+      "description": "Hyūga prodigy, master of Gentle Fist and Byakugan."
+    },
+    {
+      "id": "naruto_hinata",
+      "name": "Hinata Hyūga",
+      "universe": "naruto",
+      "power": 85,
+      "image": "/static/auction/themes/naruto/hinata.webp",
+      "description": "Hyūga princess, mastered Gentle Fist, Naruto's wife."
+    },
+    {
+      "id": "naruto_kabuto",
+      "name": "Kabuto Yakushi",
+      "universe": "naruto",
+      "power": 89,
+      "image": "/static/auction/themes/naruto/kabuto.webp",
+      "description": "Medical ninja, master of Sage Mode, Orochimaru's spy."
+    },
+    {
+      "id": "naruto_kisame",
+      "name": "Kisame Hoshigaki",
+      "universe": "naruto",
+      "power": 88,
+      "image": "/static/auction/themes/naruto/kisame.webp",
+      "description": "Monster of the Hidden Mist, wielder of Samehada."
+    },
+    {
+      "id": "naruto_deidara",
+      "name": "Deidara",
+      "universe": "naruto",
+      "power": 85,
+      "image": "/static/auction/themes/naruto/deidara.webp",
+      "description": "Explosive artist, clay manipulation, Akatsuki member."
+    },
+    {
+      "id": "naruto_sasori",
+      "name": "Sasori",
+      "universe": "naruto",
+      "power": 87,
+      "image": "/static/auction/themes/naruto/sasori.webp",
+      "description": "Master puppeteer, turned himself into a puppet."
+    },
+    {
+      "id": "naruto_hidan",
+      "name": "Hidan",
+      "universe": "naruto",
+      "power": 82,
+      "image": "/static/auction/themes/naruto/naruto_hidan.webp",
+      "description": "Immortal Jashinist, ritualistic killer, Akatsuki member."
+    },
+    {
+      "id": "naruto_kakuzu",
+      "name": "Kakuzu",
+      "universe": "naruto",
+      "power": 88,
+      "image": "/static/auction/themes/naruto/naruto_kakuzu.webp",
+      "description": "Bounty hunter, five hearts, Earth Grudge Fear technique."
+    },
+    {
+      "id": "naruto_konan",
+      "name": "Konan",
+      "universe": "naruto",
+      "power": 86,
+      "image": "/static/auction/themes/naruto/naruto_konan.webp",
+      "description": "Paper Angel, origami master, Pain's childhood friend."
+    },
+    {
+      "id": "naruto_tobirama",
+      "name": "Tobirama Senju",
+      "universe": "naruto",
+      "power": 94,
+      "image": "/static/auction/themes/naruto/tobirama.webp",
+      "description": "Second Hokage, creator of many jutsu, master of Water Release."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "naruto_team_7",
+      "name": "Team 7",
+      "description": "The legendary team that changed the shinobi world.",
+      "required_character_ids": [
+        "naruto_naruto",
+        "naruto_sasuke",
+        "naruto_sakura",
+        "naruto_kakashi"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "naruto_uchiha_legacy",
+      "name": "Uchiha Legacy",
+      "description": "The cursed clan's most powerful members.",
+      "required_character_ids": [
+        "naruto_itachi",
+        "naruto_sasuke",
+        "naruto_madara",
+        "naruto_obito"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 45
+      }
+    },
+    {
+      "id": "naruto_legendary_sannin",
+      "name": "Legendary Sannin",
+      "description": "Three students of the Third Hokage who became legends.",
+      "required_character_ids": [
+        "naruto_jiraiya",
+        "naruto_tsunade",
+        "naruto_orochimaru"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "naruto_hokage_legacy",
+      "name": "Hokage Legacy",
+      "description": "The shadows of the Fire Village, generation after generation.",
+      "required_character_ids": [
+        "naruto_hashirama",
+        "naruto_tobirama",
+        "naruto_minato",
+        "naruto_naruto"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "naruto_akatsuki",
+      "name": "Akatsuki",
+      "description": "The organization of S-rank missing-nin.",
+      "required_character_ids": [
+        "naruto_pain",
+        "naruto_itachi",
+        "naruto_kisame",
+        "naruto_deidara"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    }
+  ]
+}

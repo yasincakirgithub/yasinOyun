@@ -601,6 +601,14 @@
 
 /* Pitch */
 .fc-pitch-panel { overflow: hidden; }
+.fc-pitch-controls {
+    display: flex;
+    justify-content: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(134, 239, 172, 0.14);
+    background: rgba(2, 6, 23, 0.28);
+}
+.fc-pitch-controls .fc-select-label { color: var(--color-text-secondary); }
 .fc-pitch-wrap { padding: 0 12px; }
 .fc-pitch {
     position: relative;

@@ -1,0 +1,285 @@
+{
+  "characters": [
+    {
+      "id": "got_jon_snow",
+      "name": "Jon Snow",
+      "universe": "game_of_thrones",
+      "power": 88,
+      "image": "/static/auction/themes/game_of_thrones/jon_snow.webp",
+      "description": "Aegon Targaryen, King in the North, shield of the realms of men."
+    },
+    {
+      "id": "got_daenerys",
+      "name": "Daenerys Targaryen",
+      "universe": "game_of_thrones",
+      "power": 94,
+      "image": "/static/auction/themes/game_of_thrones/daenerys.webp",
+      "description": "Mother of Dragons, Breaker of Chains, rightful Queen."
+    },
+    {
+      "id": "got_night_king",
+      "name": "Night King",
+      "universe": "game_of_thrones",
+      "power": 97,
+      "image": "/static/auction/themes/game_of_thrones/night_king.webp",
+      "description": "Leader of the White Walkers, bringer of the Long Night."
+    },
+    {
+      "id": "got_arya_stark",
+      "name": "Arya Stark",
+      "universe": "game_of_thrones",
+      "power": 90,
+      "image": "/static/auction/themes/game_of_thrones/arya_stark.webp",
+      "description": "Faceless assassin, slayer of the Night King."
+    },
+    {
+      "id": "got_tyrion",
+      "name": "Tyrion Lannister",
+      "universe": "game_of_thrones",
+      "power": 82,
+      "image": "/static/auction/themes/game_of_thrones/tyrion.webp",
+      "description": "Hand of the Queen, brilliant strategist, wine enthusiast."
+    },
+    {
+      "id": "got_cersei",
+      "name": "Cersei Lannister",
+      "universe": "game_of_thrones",
+      "power": 78,
+      "image": "/static/auction/themes/game_of_thrones/cersei.webp",
+      "description": "Queen of the Seven Kingdoms, ruthless protector of her children."
+    },
+    {
+      "id": "got_jaime",
+      "name": "Jaime Lannister",
+      "universe": "game_of_thrones",
+      "power": 85,
+      "image": "/static/auction/themes/game_of_thrones/jaime.webp",
+      "description": "Kingslayer, greatest swordsman of his generation."
+    },
+    {
+      "id": "got_sansa_stark",
+      "name": "Sansa Stark",
+      "universe": "game_of_thrones",
+      "power": 75,
+      "image": "/static/auction/themes/game_of_thrones/sansa_stark.webp",
+      "description": "Lady of Winterfell, Queen in the North, survivor."
+    },
+    {
+      "id": "got_bran_stark",
+      "name": "Bran Stark",
+      "universe": "game_of_thrones",
+      "power": 92,
+      "image": "/static/auction/themes/game_of_thrones/bran_stark.webp",
+      "description": "Three-Eyed Raven, keeper of all memories."
+    },
+    {
+      "id": "got_robb_stark",
+      "name": "Robb Stark",
+      "universe": "game_of_thrones",
+      "power": 84,
+      "image": "/static/auction/themes/game_of_thrones/robb_stark.webp",
+      "description": "Young Wolf, King in the North, undefeated in battle."
+    },
+    {
+      "id": "got_jorah_mormont",
+      "name": "Jorah Mormont",
+      "universe": "game_of_thrones",
+      "power": 80,
+      "image": "/static/auction/themes/game_of_thrones/jorah_mormont.webp",
+      "description": "Exiled knight, devoted protector of Daenerys."
+    },
+    {
+      "id": "got_brienne",
+      "name": "Brienne of Tarth",
+      "universe": "game_of_thrones",
+      "power": 86,
+      "image": "/static/auction/themes/game_of_thrones/brienne.webp",
+      "description": "Knight of the Seven Kingdoms, paragon of honor."
+    },
+    {
+      "id": "got_the_hound",
+      "name": "The Hound (Sandor Clegane)",
+      "universe": "game_of_thrones",
+      "power": 87,
+      "image": "/static/auction/themes/game_of_thrones/the_hound.webp",
+      "description": "Brutal warrior, scarred by fire, brother of the Mountain."
+    },
+    {
+      "id": "got_the_mountain",
+      "name": "The Mountain (Gregor Clegane)",
+      "universe": "game_of_thrones",
+      "power": 90,
+      "image": "/static/auction/themes/game_of_thrones/the_mountain.webp",
+      "description": "Tywin's monster, near-invincible warrior."
+    },
+    {
+      "id": "got_tywin_lannister",
+      "name": "Tywin Lannister",
+      "universe": "game_of_thrones",
+      "power": 83,
+      "image": "/static/auction/themes/game_of_thrones/tywin_lannister.webp",
+      "description": "Lord of Casterly Rock, most powerful man in Westeros."
+    },
+    {
+      "id": "got_stannis",
+      "name": "Stannis Baratheon",
+      "universe": "game_of_thrones",
+      "power": 82,
+      "image": "/static/auction/themes/game_of_thrones/stannis.webp",
+      "description": "Rightful heir by law, unyielding in duty."
+    },
+    {
+      "id": "got_melisandre",
+      "name": "Melisandre",
+      "universe": "game_of_thrones",
+      "power": 88,
+      "image": "/static/auction/themes/game_of_thrones/got_melisandre.webp",
+      "description": "Red Priestess of R'hllor, shadowbinder."
+    },
+    {
+      "id": "got_davos",
+      "name": "Davos Seaworth",
+      "universe": "game_of_thrones",
+      "power": 76,
+      "image": "/static/auction/themes/game_of_thrones/davos.webp",
+      "description": "Onion Knight, loyal advisor, fewest fingers in Westeros."
+    },
+    {
+      "id": "got_samwell_tarly",
+      "name": "Samwell Tarly",
+      "universe": "game_of_thrones",
+      "power": 70,
+      "image": "/static/auction/themes/game_of_thrones/samwell_tarly.webp",
+      "description": "Steward of the Night's Watch, slayer of White Walkers."
+    },
+    {
+      "id": "got_jeor_mormont",
+      "name": "Jeor Mormont",
+      "universe": "game_of_thrones",
+      "power": 81,
+      "image": "/static/auction/themes/game_of_thrones/jeor_mormont.webp",
+      "description": "Lord Commander of the Night's Watch, the Old Bear."
+    },
+    {
+      "id": "got_mance_rayder",
+      "name": "Mance Rayder",
+      "universe": "game_of_thrones",
+      "power": 83,
+      "image": "/static/auction/themes/game_of_thrones/mance_rayder.webp",
+      "description": "King-Beyond-the-Wall, unifier of the Free Folk."
+    },
+    {
+      "id": "got_ygritte",
+      "name": "Ygritte",
+      "universe": "game_of_thrones",
+      "power": 78,
+      "image": "/static/auction/themes/game_of_thrones/got_ygritte.webp",
+      "description": "Wildling spearwife, 'You know nothing, Jon Snow.'"
+    },
+    {
+      "id": "got_rhaegar",
+      "name": "Rhaegar Targaryen",
+      "universe": "game_of_thrones",
+      "power": 89,
+      "image": "/static/auction/themes/game_of_thrones/rhaegar.webp",
+      "description": "Prince of Dragonstone, Jon Snow's true father."
+    },
+    {
+      "id": "got_aegon_targaryen",
+      "name": "Aegon Targaryen (Young Griff)",
+      "universe": "game_of_thrones",
+      "power": 85,
+      "image": "/static/auction/themes/game_of_thrones/aegon_targaryen.webp",
+      "description": "Claimed son of Rhaegar, possible heir to the Iron Throne."
+    },
+    {
+      "id": "got_varys",
+      "name": "Lord Varys",
+      "universe": "game_of_thrones",
+      "power": 79,
+      "image": "/static/auction/themes/game_of_thrones/varys.webp",
+      "description": "Master of Whisperers, servant of the realm."
+    },
+    {
+      "id": "got_littlefinger",
+      "name": "Petyr Baelish",
+      "universe": "game_of_thrones",
+      "power": 77,
+      "image": "/static/auction/themes/game_of_thrones/littlefinger.webp",
+      "description": "Master of Coin, chaos is a ladder."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "got_stark_family",
+      "name": "Stark Family",
+      "description": "The lone wolf dies, but the pack survives.",
+      "required_character_ids": [
+        "got_jon_snow",
+        "got_arya_stark",
+        "got_sansa_stark",
+        "got_bran_stark"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "got_house_targaryen",
+      "name": "House Targaryen",
+      "description": "Fire and Blood - the dragon's legacy.",
+      "required_character_ids": [
+        "got_daenerys",
+        "got_rhaegar",
+        "got_aegon_targaryen"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "got_the_lannisters",
+      "name": "The Lannisters",
+      "description": "Hear Me Roar - a family that pays its debts.",
+      "required_character_ids": [
+        "got_tywin_lannister",
+        "got_cersei",
+        "got_jaime",
+        "got_tyrion"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "got_nights_watch",
+      "name": "The Night's Watch",
+      "description": "Shield that guards the realms of men.",
+      "required_character_ids": [
+        "got_jon_snow",
+        "got_samwell_tarly",
+        "got_jeor_mormont"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "got_white_walkers",
+      "name": "White Walkers",
+      "description": "Winter is here, the dead march south.",
+      "required_character_ids": [
+        "got_night_king",
+        "got_the_mountain"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    }
+  ]
+}

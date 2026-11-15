@@ -1,0 +1,81 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Auction — Online Karakter Açık Artırması</title>
+    <meta name="description" content="Efsanevi evrenlerden karakterleri açık artırmayla topla. 2–8 oyuncu, 10 tema, senarji bonusları ve anti-snipe süre uzatması.">
+    <meta name="theme-color" content="#0B1020">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/home.css' %}">
+    <link rel="stylesheet" href="{% static_v 'auction/css/home.css' %}">
+</head>
+<body class="auction-home-page">
+    {% include 'core/_navbar.html' %}
+
+    <div id="main" tabindex="-1" class="game-container auction-home">
+        <a class="game-back" href="{% url 'core:games' %}">Tüm Oyunlar</a>
+
+        <div class="game-header auction-game-header">
+            <span class="auction-kicker">Canlı çok oyunculu açık artırma</span>
+            <h1>Character Auction</h1>
+            <p>
+                Efsanevi evrenlerden karakterleri açık artırmayla topla. Bütçeni yönet,
+                senarjileri aktif et ve en güçlü koleksiyonu kurarak masayı kazan.
+            </p>
+            <div class="auction-hero-chips" aria-label="Oyun özellikleri">
+                <span>10 Tema · 250+ Karakter</span>
+                <span>2–8 Oyuncu</span>
+                <span>Senarji Sistemi</span>
+                <span>Anti-Snipe</span>
+            </div>
+        </div>
+
+        <div class="name-field auction-name-field">
+            <label for="player-name">Adın</label>
+            <input id="player-name" type="text" maxlength="30" autocomplete="nickname" placeholder="Oyuncu adın">
+        </div>
+
+        <div class="home-content auction-home-content">
+            <div class="game-card auction-game-card">
+                <span class="auction-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4"/>
+                    </svg>
+                </span>
+                <h2>Oda Kur</h2>
+                <p>Yeni bir açık artırma masası aç, temayı seç, bütçeyi ayarla ve oda kodunu arkadaşlarınla paylaş.</p>
+                <button id="create-btn" class="game-btn auction-btn-create" type="button">ODA KUR</button>
+            </div>
+
+            <div class="game-card auction-game-card">
+                <span class="auction-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <h2>Oyuna Katıl</h2>
+                <p>Arkadaşının paylaştığı 6 haneli oda kodunu girerek açık artırmaya katıl.</p>
+                <input id="room-code-input" type="text" maxlength="6"
+                       autocomplete="off" spellcheck="false" placeholder="Oda Kodu"
+                       value="{{ invite_code }}">
+                <button id="join-btn" class="game-btn auction-btn-join" type="button">KATIL</button>
+            </div>
+        </div>
+
+        <p id="home-error" class="home-error" role="alert" hidden></p>
+        <p class="lobby-note">2–8 oyuncu · 10 tema · 250+ karakter · Senarji bonusları · Anti-snipe mekanikası</p>
+        <p class="lobby-note">Aynı odada aynı adı iki kez kullanamazsın. Farklı bir oyuncu olarak katılmak için farklı bir ad gir.</p>
+
+        {% include 'core/_comments.html' with comments_game='auction' %}
+
+        <div class="footer">
+            <p>Character Auction — Gerçek zamanlı çok oyunculu karakter açık artırması</p>
+        </div>
+    </div>
+
+    <script src="{% static_v 'auction/js/home.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+{% load static static_version %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Auction — Oda {{ room_code }}</title>
+    <meta name="theme-color" content="#1a0d2e">
+    <link rel="icon" type="image/png" href="{% static_v 'core/img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static_v 'core/css/theme.css' %}">
+    <link rel="stylesheet" href="{% static_v 'auction/css/game.css' %}">
+</head>
+<body class="auction-game-page" data-room-code="{{ room_code }}" data-room-exists="{{ room_exists|yesno:'1,0' }}">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+
+    <header class="auction-topbar">
+        <a class="auction-brand" href="{% url 'auction:home' %}" aria-label="Character Auction ana sayfa">
+            <span class="auction-brand-mark" aria-hidden="true">⚖</span>
+            <span class="auction-brand-name">Character Auction</span>
+        </a>
+        <div class="auction-topbar-center">
+            <span class="auction-room-label">Oda</span>
+            <button id="copy-code-btn" class="auction-room-code" type="button" title="Oda kodunu kopyala">{{ room_code }}</button>
+            <button id="share-btn" class="auction-icon-btn" type="button" title="Davet bağlantısını kopyala" aria-label="Davet bağlantısını kopyala">↗</button>
+        </div>
+        <div class="auction-topbar-actions">
+            <span id="connection-pill" class="auction-connection is-connecting" role="status" aria-live="polite">Bağlanıyor…</span>
+            <button id="leave-btn" class="auction-ghost-btn" type="button">Odadan ayrıl</button>
+            <a class="auction-ghost-btn" href="{% url 'auction:home' %}">Ana sayfa</a>
+        </div>
+    </header>
+
+    <main id="main" class="auction-app" tabindex="-1">
+        <section id="auction-loading" class="auction-loading" aria-live="polite">
+            <div class="auction-spinner" aria-hidden="true"></div>
+            <h1>Oda yükleniyor</h1>
+            <p id="loading-text">Bağlantı kuruluyor…</p>
+        </section>
+
+        <section id="auction-join-gate" class="auction-gate" hidden>
+            <div class="auction-gate-card">
+                <span class="auction-eyebrow">Davet edildin</span>
+                <h1 id="gate-title">Odaya katıl</h1>
+                <p id="gate-copy" class="auction-muted">Oyuncu adını girerek <strong>{{ room_code }}</strong> numaralı odaya katıl.</p>
+                <label class="auction-label" for="gate-name">Oyuncu adın</label>
+                <input id="gate-name" class="auction-input" type="text" maxlength="30" autocomplete="nickname" placeholder="Adın">
+                <p id="gate-error" class="auction-error" role="alert" hidden></p>
+                <button id="gate-join-btn" class="auction-btn auction-btn-primary" type="button">KATIL</button>
+                <button id="gate-resume-btn" class="auction-btn auction-btn-secondary" type="button" hidden>KAYITLI OTURUMLA DEVAM ET</button>
+                <a class="auction-link" href="{% url 'auction:home' %}">Ana sayfaya dön</a>
+            </div>
+        </section>
+
+        <section id="auction-lobby" class="auction-lobby" hidden aria-labelledby="lobby-title">
+            <div class="auction-lobby-head">
+                <div>
+                    <span class="auction-eyebrow">Bekleme odası</span>
+                    <h1 id="lobby-title">Açık artırma masası hazır.</h1>
+                    <p class="auction-muted">
+                        <strong id="lobby-count">0/2</strong> oyuncu ·
+                        <span id="lobby-status">Oyuncular bekleniyor</span>
+                    </p>
+                </div>
+                <div class="auction-lobby-actions">
+                    <button id="lobby-copy-btn" class="auction-btn auction-btn-secondary auction-btn-inline" type="button">Davet linkini kopyala</button>
+                </div>
+            </div>
+
+            <div class="auction-lobby-grid">
+                <section class="auction-panel" aria-labelledby="lobby-players-title">
+                    <div class="auction-panel-head">
+                        <div>
+                            <h2 id="lobby-players-title">Oyuncular</h2>
+                            <p class="auction-muted">Oda sahibi ayarları yapıp temayı seçtikten sonra açık artırma başlar.</p>
+                        </div>
+                        <span id="lobby-host-badge" class="auction-badge">Host: —</span>
+                    </div>
+                    <div id="lobby-players" class="auction-player-list" aria-live="polite"></div>
+
+                    <div class="auction-start-box">
+                        <div>
+                            <h3>Oyunu Başlat</h3>
+                            <p id="lobby-start-hint" class="auction-muted">Oyunu başlatmak için en az 2 oyuncu gerekli.</p>
+                            <ul id="lobby-start-errors" class="auction-error-list" hidden></ul>
+                        </div>
+                        <button id="lobby-start-btn" class="auction-btn auction-btn-primary" type="button" disabled>OYUNU BAŞLAT</button>
+                    </div>
+                </section>
+
+                <section class="auction-panel" aria-labelledby="lobby-settings-title">
+                    <div class="auction-panel-head">
+                        <h2 id="lobby-settings-title">Oyun Ayarları</h2>
+                    </div>
+                    <div id="lobby-settings" class="auction-settings"></div>
+                </section>
+
+                <section class="auction-panel" aria-labelledby="lobby-theme-title">
+                    <div class="auction-panel-head">
+                        <h2 id="lobby-theme-title">Tema Seçimi</h2>
+                    </div>
+                    <div id="lobby-theme-select" class="auction-theme-select"></div>
+                </section>
+            </div>
+        </section>
+
+        <section id="auction-arena" class="auction-arena" hidden aria-labelledby="arena-title">
+            <h1 id="arena-title" class="auction-sr-only">Açık artırma arenası</h1>
+
+            <div class="auction-arena-top">
+                <div class="auction-progress-bar">
+                    <div class="auction-progress-track">
+                        <span id="progress-current" class="auction-progress-current">1</span>
+                        <span class="auction-progress-sep">/</span>
+                        <span id="progress-total" class="auction-progress-total">10</span>
+                    </div>
+                    <div class="auction-progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="auction-arena-grid">
+                <aside class="auction-panel auction-sidebar" aria-labelledby="sidebar-title">
+                    <div class="auction-panel-head">
+                        <h2 id="sidebar-title">Oyuncular</h2>
+                    </div>
+                    <div id="player-list" class="auction-player-cards"></div>
+                </aside>
+
+                <section class="auction-panel auction-main-stage" aria-labelledby="stage-title">
+                    <div class="auction-panel-head">
+                        <h2 id="stage-title">Açık Artırma</h2>
+                    </div>
+
+                    <div class="auction-character-showcase" id="character-showcase">
+                        <div class="auction-character-card" id="character-card">
+                            <div class="auction-character-image-wrapper">
+                                <img id="character-image" src="" alt="" loading="eager">
+                                <div class="auction-character-glow" aria-hidden="true"></div>
+                            </div>
+                            <div class="auction-character-info">
+                                <h3 id="character-name">—</h3>
+                                <p id="character-description" class="auction-muted">—</p>
+                                <div class="auction-character-stats">
+                                    <span class="auction-stat-item">
+                                        <span class="auction-stat-label">Güç</span>
+                                        <span id="character-power" class="auction-stat-value">—</span>
+                                    </span>
+                                    <span class="auction-stat-item">
+                                        <span class="auction-stat-label">Mevcut Teklif</span>
+                                        <span id="current-bid" class="auction-stat-value">$0</span>
+                                    </span>
+                                    <span class="auction-stat-item">
+                                        <span class="auction-stat-label">En Yüksek Teklif Veren</span>
+                                        <span id="highest-bidder" class="auction-stat-value">—</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="auction-timer-section">
+                        <div class="auction-timer-display" id="timer-display">
+                            <span id="timer-value" class="auction-timer-value">20</span>
+                            <span class="auction-timer-unit">sn</span>
+                        </div>
+                        <div class="auction-timer-bar">
+                            <div id="timer-bar-fill" class="auction-timer-bar-fill"></div>
+                        </div>
+                        <p id="timer-extended" class="auction-timer-extended" hidden>⚡ SÜRE UZATILDI +5sn</p>
+                    </div>
+
+                    <div class="auction-bid-section">
+                        <div class="auction-bid-row">
+                            <label class="auction-bid-label">Senin Bütçen</label>
+                            <span id="my-budget" class="auction-bid-budget">$20.00</span>
+                        </div>
+                        <div class="auction-bid-controls">
+                            <button class="auction-bid-btn auction-bid-quick" type="button" data-amount="100">+$1</button>
+                            <button class="auction-bid-btn auction-bid-quick" type="button" data-amount="500">+$5</button>
+                            <button class="auction-bid-btn auction-bid-quick" type="button" data-amount="1000">+$10</button>
+                        </div>
+                        <div class="auction-bid-custom">
+                            <input id="custom-bid" class="auction-input auction-bid-input" type="number" min="1" step="1" inputmode="decimal" placeholder="Özel teklif ($)">
+                            <button id="place-bid-btn" class="auction-btn auction-btn-gold" type="button">TEKLİF VER</button>
+                        </div>
+                        <p id="bid-hint" class="auction-bid-hint">Teklifin mevcut en yüksek tekliften yüksek olmalı.</p>
+                    </div>
+                </section>
+
+                <aside class="auction-panel auction-collection-panel" aria-labelledby="collection-title">
+                    <div class="auction-panel-head">
+                        <h2 id="collection-title">Koleksiyonun</h2>
+                    </div>
+                    <div id="my-collection" class="auction-collection-grid"></div>
+                    <div class="auction-synergy-section">
+                        <h3>Aktif Senarjiler</h3>
+                        <div id="active-synergies" class="auction-synergy-list"></div>
+                        <h3>Yaklaşan Senarjiler</h3>
+                        <div id="incomplete-synergies" class="auction-synergy-list"></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="auction-results" class="auction-results" hidden aria-labelledby="results-title">
+            <h1 id="results-title" class="auction-sr-only">Açık artırma sonuçları</h1>
+            <div class="auction-results-header">
+                <span class="auction-eyebrow">Açık Artırma Tamamlandı</span>
+                <h2 id="results-winner">—</h2>
+                <p id="results-subtitle" class="auction-muted">Final skorları</p>
+            </div>
+            <div class="auction-final-rankings" id="final-rankings"></div>
+            <div class="auction-results-actions">
+                <button id="play-again-btn" class="auction-btn auction-btn-gold auction-btn-inline" type="button">TEKRAR OYNA</button>
+                <button id="back-to-lobby-btn" class="auction-btn auction-btn-secondary auction-btn-inline" type="button">LOBİYE DÖN</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="auction-toast" class="auction-toast" role="status" aria-live="polite" hidden></div>
+
+    <div id="auction-confirm" class="auction-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <div class="auction-confirm-card">
+            <h2 id="confirm-title">Onayla</h2>
+            <p id="confirm-copy" class="auction-muted"></p>
+            <div class="auction-confirm-actions">
+                <button id="confirm-cancel" class="auction-btn auction-btn-ghost auction-btn-inline" type="button">Vazgeç</button>
+                <button id="confirm-ok" class="auction-btn auction-btn-danger auction-btn-inline" type="button">Onayla</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static_v 'auction/js/game.js' %}"></script>
+</body>
+</html>

@@ -22,6 +22,11 @@ from .data import (
     EUR_TRY_RATE,
     SLOTS,
     SLOT_BY_KEY,
+    FORMATIONS,
+    DEFAULT_FORMATION,
+    TACTIC_OPTIONS,
+    DEFAULT_TACTICS,
+    validate_tactics,
     build_market,
     catalogue_players,
     ensure_catalogue,
@@ -517,9 +522,12 @@ def auto_fill_squad(room_code: str, participant: Participant) -> Room:
         if not market:
             raise ApiError('FC26 oyuncu verisi yüklenemedi.', 503, 'dataset_unavailable')
 
+        # Use participant's formation for slot definitions
+        formation_slots = FORMATIONS.get(member.formation, FORMATIONS[DEFAULT_FORMATION])['slots']
+
         rng = random.Random(secrets.randbits(64))
         challenges = room.challenges or []
-        pools = build_pools(market, challenges) if len(market) > 400 else None
+        pools = build_pools(market, challenges, slots=formation_slots) if len(market) > 400 else None
 
         squad = None
         tried: set[int] = set()
@@ -534,11 +542,12 @@ def auto_fill_squad(room_code: str, participant: Participant) -> Room:
                 rng,
                 attempts=50,
                 pool_by_slot=pools,
+                slots=formation_slots,
             )
             if squad:
                 break
         if not squad:
-            squad = cheapest_squad(market, room.budget_eur)
+            squad = cheapest_squad(market, room.budget_eur, slots=formation_slots)
         if not squad:
             raise ApiError(
                 'Bu bütçeyle kurallara uyan bir kadro bulunamadı.',
@@ -646,8 +655,9 @@ def lock_squad(room_code: str, participant: Participant) -> Room:
         if room.status != 'DRAFT':
             raise ApiError('Kadro kurma aşaması kapalı.', 400, 'draft_closed')
         picks = _squad_picks(room, member)
-        if len(picks) < len(SLOTS):
-            raise ApiError('Kilitlemek için 11 mevkinin tamamını doldur.', 400, 'squad_incomplete')
+        formation_slots = FORMATIONS.get(member.formation, FORMATIONS[DEFAULT_FORMATION])['slots']
+        if len(picks) < len(formation_slots):
+            raise ApiError(f'Kilitlemek için {len(formation_slots)} mevkinin tamamını doldur.', 400, 'squad_incomplete')
         if _squad_value(room, member) > room.budget_eur:
             raise ApiError('Kadro bütçeyi aşıyor.', 400, 'budget_exceeded')
         member.locked = True
@@ -670,6 +680,61 @@ def unlock_squad(room_code: str, participant: Participant) -> Room:
         return room
 
 
+def update_formation(room_code: str, participant: Participant, formation: str) -> Room:
+    """Update the participant's formation. Only allowed during DRAFT phase."""
+    formation = (formation or '').strip()
+    if formation not in FORMATIONS:
+        raise ApiError('Geçersiz diziliş.', 400, 'invalid_formation')
+
+    with transaction.atomic():
+        room = _lock_room(room_code)
+        if not room:
+            raise ApiError('Oda bulunamadı.', 404, 'room_not_found')
+        member = _get_member(room, participant)
+        if room.status != 'DRAFT':
+            raise ApiError('Diziliş yalnızca kadro kurma aşamasında değiştirilebilir.', 400, 'draft_closed')
+        if member.locked:
+            raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
+
+        # Check if current squad fits the new formation
+        new_slots = FORMATIONS[formation]['slots']
+        new_slot_keys = {slot['key'] for slot in new_slots}
+        current_picks = _squad_picks(room, member)
+        current_slot_keys = {pick.picked_slot for pick in current_picks}
+
+        # Remove picks that don't exist in new formation
+        for pick in current_picks:
+            if pick.picked_slot not in new_slot_keys:
+                pick.delete()
+
+        member.formation = formation
+        member.last_seen_at = _now()
+        member.save(update_fields=['formation', 'last_seen_at', 'updated_at'])
+        room.save(update_fields=['updated_at'])
+        return room
+
+
+def update_tactics(room_code: str, participant: Participant, tactics: dict) -> Room:
+    """Update the participant's tactics (mentality, pressing)."""
+    validated = validate_tactics(tactics)
+
+    with transaction.atomic():
+        room = _lock_room(room_code)
+        if not room:
+            raise ApiError('Oda bulunamadı.', 404, 'room_not_found')
+        member = _get_member(room, participant)
+        if room.status != 'DRAFT':
+            raise ApiError('Taktiği yalnızca kadro kurma aşamasında değiştirilebilir.', 400, 'draft_closed')
+        if member.locked:
+            raise ApiError('Kadron kilitli. Önce kilidi aç.', 400, 'squad_locked')
+
+        member.tactics = validated
+        member.last_seen_at = _now()
+        member.save(update_fields=['tactics', 'last_seen_at', 'updated_at'])
+        room.save(update_fields=['updated_at'])
+        return room
+
+
 def start_match(room_code: str, participant: Participant) -> Match:
     with transaction.atomic():
         room = _lock_room(room_code)
@@ -685,7 +750,9 @@ def start_match(room_code: str, participant: Participant) -> Match:
         if not all(member.locked for member in active):
             raise ApiError('İki menajer de kadrosunu kilitlemeli.', 400, 'squads_not_locked')
         for member in active:
-            if len(_squad_picks(room, member)) < len(SLOTS):
+            # Use participant's formation to determine required slots
+            formation_slots = FORMATIONS.get(member.formation, FORMATIONS[DEFAULT_FORMATION])['slots']
+            if len(_squad_picks(room, member)) < len(formation_slots):
                 raise ApiError(f'{member.display_name} kadrosunu tamamlamadı.', 400, 'squad_incomplete')
 
         home = next((m for m in active if m.side == 'home'), None)
@@ -705,6 +772,8 @@ def start_match(room_code: str, participant: Participant) -> Match:
             away_snapshot['challenges'],
             home.display_name,
             away.display_name,
+            home_tactics=home.tactics or {},
+            away_tactics=away.tactics or {},
         )
 
         home_snapshot['challenges'] = result['challenges']['home']
@@ -890,6 +959,7 @@ def serialize_participant(
     players = [mp.data for mp in picks]
     challenges = [challenge_progress(c, players) for c in (room.challenges or [])]
     spent = sum(int(mp.data.get('value_eur', 0) or 0) for mp in picks)
+    formation_slots = FORMATIONS.get(participant.formation, FORMATIONS[DEFAULT_FORMATION])['slots']
     return {
         'id': str(participant.pk),
         'name': participant.display_name,
@@ -898,11 +968,13 @@ def serialize_participant(
         'locked': participant.locked,
         'left': participant.left,
         'is_host': room.host_id == participant.pk,
+        'formation': participant.formation,
+        'tactics': participant.tactics or {},
         'squad': squad,
         'slots_filled': len(picks),
         'spent': spent,
         'remaining': max(0, room.budget_eur - spent),
-        'valid': len(picks) == len(SLOTS) and spent <= room.budget_eur,
+        'valid': len(picks) == len(formation_slots) and spent <= room.budget_eur,
         'challenges': challenges,
     }
 
@@ -942,6 +1014,12 @@ def build_room_state(room: Room, viewer: Participant) -> dict:
         if market_player.picked_by_id:
             picks_by_manager.setdefault(market_player.picked_by_id, []).append(market_player)
 
+    # Build formations list for the dropdown
+    formations_list = [
+        {'key': key, 'label': data['label'], 'description': data['description']}
+        for key, data in FORMATIONS.items()
+    ]
+
     return {
         'room': {
             'code': room.room_code,
@@ -978,8 +1056,9 @@ def build_room_state(room: Room, viewer: Participant) -> dict:
         'market_page_size': MARKET_PAGE_SIZE,
         'slots': [
             {**slot, 'accept': list(slot['accept'])}
-            for slot in SLOTS
+            for slot in FORMATIONS.get(viewer.formation, FORMATIONS[DEFAULT_FORMATION])['slots']
         ],
+        'formations': formations_list,
         'match': serialize_match(match, viewer) if match else None,
         'server_time': _now().isoformat(),
     }

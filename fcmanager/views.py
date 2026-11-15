@@ -325,6 +325,42 @@ def api_unlock(request, room_code):
 
 @csrf_exempt
 @require_http_methods(['POST'])
+def api_update_formation(request, room_code):
+    try:
+        room, player = _authenticate(request, room_code)
+        if not allow_rate(f'action:{player.pk}', 180, 60):
+            raise ApiError('Çok fazla işlem.', 429, 'rate_limited')
+        data = parse_json_body(request)
+        formation = data.get('formation', '')
+        room = services.update_formation(room_code.upper(), player, formation)
+        _broadcast_state(room_code.upper())
+        return _state_payload(room, player)
+    except Exception as exc:
+        if not isinstance(exc, ApiError):
+            logger.exception('FC Manager update formation failed')
+        return error_response(exc)
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
+def api_update_tactics(request, room_code):
+    try:
+        room, player = _authenticate(request, room_code)
+        if not allow_rate(f'action:{player.pk}', 180, 60):
+            raise ApiError('Çok fazla işlem.', 429, 'rate_limited')
+        data = parse_json_body(request)
+        tactics = data.get('tactics', {})
+        room = services.update_tactics(room_code.upper(), player, tactics)
+        _broadcast_state(room_code.upper())
+        return _state_payload(room, player)
+    except Exception as exc:
+        if not isinstance(exc, ApiError):
+            logger.exception('FC Manager update tactics failed')
+        return error_response(exc)
+
+
+@csrf_exempt
+@require_http_methods(['POST'])
 def api_start_match(request, room_code):
     try:
         _, player = _authenticate(request, room_code)

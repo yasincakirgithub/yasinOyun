@@ -1,0 +1,303 @@
+{
+  "characters": [
+    {
+      "id": "op_luffy",
+      "name": "Monkey D. Luffy",
+      "universe": "one_piece",
+      "power": 96,
+      "image": "/static/auction/themes/one_piece/luffy.webp",
+      "description": "Captain of the Straw Hats, user of the Gum-Gum Fruit, aspiring Pirate King."
+    },
+    {
+      "id": "op_zoro",
+      "name": "Roronoa Zoro",
+      "universe": "one_piece",
+      "power": 93,
+      "image": "/static/auction/themes/one_piece/zoro.webp",
+      "description": "Swordsman of the Straw Hats, master of Three Sword Style."
+    },
+    {
+      "id": "op_shanks",
+      "name": "Shanks",
+      "universe": "one_piece",
+      "power": 98,
+      "image": "/static/auction/themes/one_piece/shanks.webp",
+      "description": "Red-Haired Emperor, Luffy's inspiration, master of Conqueror's Haki."
+    },
+    {
+      "id": "op_kaido",
+      "name": "Kaido",
+      "universe": "one_piece",
+      "power": 99,
+      "image": "/static/auction/themes/one_piece/kaido.webp",
+      "description": "Strongest Creature, Beast Emperor, user of the Fish-Fish Fruit: Azure Dragon."
+    },
+    {
+      "id": "op_blackbeard",
+      "name": "Marshall D. Teach (Blackbeard)",
+      "universe": "one_piece",
+      "power": 97,
+      "image": "/static/auction/themes/one_piece/blackbeard.webp",
+      "description": "Emperor with two Devil Fruits, Darkness and Quake."
+    },
+    {
+      "id": "op_whitebeard",
+      "name": "Edward Newgate (Whitebeard)",
+      "universe": "one_piece",
+      "power": 98,
+      "image": "/static/auction/themes/one_piece/whitebeard.webp",
+      "description": "Strongest Man in the World, Emperor, Quake-Quake Fruit user."
+    },
+    {
+      "id": "op_mihawk",
+      "name": "Dracule Mihawk",
+      "universe": "one_piece",
+      "power": 95,
+      "image": "/static/auction/themes/one_piece/mihawk.webp",
+      "description": "World's Greatest Swordsman, former Warlord."
+    },
+    {
+      "id": "op_sanji",
+      "name": "Vinsmoke Sanji",
+      "universe": "one_piece",
+      "power": 91,
+      "image": "/static/auction/themes/one_piece/sanji.webp",
+      "description": "Cook of the Straw Hats, Black Leg, master of Diable Jambe."
+    },
+    {
+      "id": "op_nami",
+      "name": "Nami",
+      "universe": "one_piece",
+      "power": 82,
+      "image": "/static/auction/themes/one_piece/nami.webp",
+      "description": "Navigator of the Straw Hats, master of weather and Zeus."
+    },
+    {
+      "id": "op_usopp",
+      "name": "Usopp",
+      "universe": "one_piece",
+      "power": 78,
+      "image": "/static/auction/themes/one_piece/usopp.webp",
+      "description": "Sniper of the Straw Hats, God Usopp, master of Pop Greens."
+    },
+    {
+      "id": "op_chopper",
+      "name": "Tony Tony Chopper",
+      "universe": "one_piece",
+      "power": 80,
+      "image": "/static/auction/themes/one_piece/chopper.webp",
+      "description": "Doctor of the Straw Hats, Human-Human Fruit user, Monster Point."
+    },
+    {
+      "id": "op_robin",
+      "name": "Nico Robin",
+      "universe": "one_piece",
+      "power": 88,
+      "image": "/static/auction/themes/one_piece/robin.webp",
+      "description": "Archaeologist of the Straw Hats, Flower-Flower Fruit user."
+    },
+    {
+      "id": "op_franky",
+      "name": "Franky",
+      "universe": "one_piece",
+      "power": 86,
+      "image": "/static/auction/themes/one_piece/franky.webp",
+      "description": "Shipwright of the Straw Hats, cyborg, Cola-powered."
+    },
+    {
+      "id": "op_brook",
+      "name": "Brook",
+      "universe": "one_piece",
+      "power": 84,
+      "image": "/static/auction/themes/one_piece/brook.webp",
+      "description": "Musician of the Straw Hats, Soul-Soul Fruit, Revive-Revive."
+    },
+    {
+      "id": "op_jinbe",
+      "name": "Jinbe",
+      "universe": "one_piece",
+      "power": 92,
+      "image": "/static/auction/themes/one_piece/jinbe.webp",
+      "description": "Helmsman of the Straw Hats, former Warlord, Fish-Man Karate master."
+    },
+    {
+      "id": "op_law",
+      "name": "Trafalgar D. Water Law",
+      "universe": "one_piece",
+      "power": 93,
+      "image": "/static/auction/themes/one_piece/law.webp",
+      "description": "Captain of the Heart Pirates, Op-Op Fruit user, Worst Generation."
+    },
+    {
+      "id": "op_kid",
+      "name": "Eustass Kid",
+      "universe": "one_piece",
+      "power": 92,
+      "image": "/static/auction/themes/one_piece/kid.webp",
+      "description": "Captain of the Kid Pirates, Magnet-Magnet Fruit, Worst Generation."
+    },
+    {
+      "id": "op_hancock",
+      "name": "Boa Hancock",
+      "universe": "one_piece",
+      "power": 90,
+      "image": "/static/auction/themes/one_piece/hancock.webp",
+      "description": "Empress of Amazon Lily, Love-Love Fruit, former Warlord."
+    },
+    {
+      "id": "op_doflamingo",
+      "name": "Donquixote Doflamingo",
+      "universe": "one_piece",
+      "power": 91,
+      "image": "/static/auction/themes/one_piece/doflamingo.webp",
+      "description": "Heavenly Demon, String-String Fruit, former Warlord."
+    },
+    {
+      "id": "op_katakuri",
+      "name": "Charlotte Katakuri",
+      "universe": "one_piece",
+      "power": 94,
+      "image": "/static/auction/themes/one_piece/katakuri.webp",
+      "description": "Sweet Commander, Mochi-Mochi Fruit, perfect Observation Haki."
+    },
+    {
+      "id": "op_big_mom",
+      "name": "Charlotte Linlin (Big Mom)",
+      "universe": "one_piece",
+      "power": 98,
+      "image": "/static/auction/themes/one_piece/big_mom.webp",
+      "description": "Emperor, Soul-Soul Fruit, ruler of Totto Land."
+    },
+    {
+      "id": "op_marco",
+      "name": "Marco the Phoenix",
+      "universe": "one_piece",
+      "power": 92,
+      "image": "/static/auction/themes/one_piece/marco.webp",
+      "description": "Former 1st Division Commander, Phoenix Fruit, Whitebeard's son."
+    },
+    {
+      "id": "op_ace",
+      "name": "Portgas D. Ace",
+      "universe": "one_piece",
+      "power": 91,
+      "image": "/static/auction/themes/one_piece/ace.webp",
+      "description": "Fire-Fist, Flame-Flame Fruit, Luffy's brother, Whitebeard's son."
+    },
+    {
+      "id": "op_sabo",
+      "name": "Sabo",
+      "universe": "one_piece",
+      "power": 93,
+      "image": "/static/auction/themes/one_piece/sabo.webp",
+      "description": "Chief of Staff of Revolutionary Army, Flame-Flame Fruit."
+    },
+    {
+      "id": "op_akainu",
+      "name": "Sakazuki (Akainu)",
+      "universe": "one_piece",
+      "power": 96,
+      "image": "/static/auction/themes/one_piece/akainu.webp",
+      "description": "Fleet Admiral, Magma-Magma Fruit, absolute justice."
+    },
+    {
+      "id": "op_kizaru",
+      "name": "Borsalino (Kizaru)",
+      "universe": "one_piece",
+      "power": 95,
+      "image": "/static/auction/themes/one_piece/kizaru.webp",
+      "description": "Admiral, Light-Light Fruit, fastest man in the Marines."
+    },
+    {
+      "id": "op_aokiji",
+      "name": "Kuzan (Aokiji)",
+      "universe": "one_piece",
+      "power": 94,
+      "image": "/static/auction/themes/one_piece/aokiji.webp",
+      "description": "Former Admiral, Ice-Ice Fruit, wandered the Grand Line."
+    },
+    {
+      "id": "op_roger",
+      "name": "Gol D. Roger",
+      "universe": "one_piece",
+      "power": 100,
+      "image": "/static/auction/themes/one_piece/roger.webp",
+      "description": "Pirate King, conqueror of the Grand Line, father of Ace."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "op_straw_hats",
+      "name": "Straw Hat Crew",
+      "description": "The crew that will surpass all others.",
+      "required_character_ids": [
+        "op_luffy",
+        "op_zoro",
+        "op_sanji",
+        "op_nami",
+        "op_usopp"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 45
+      }
+    },
+    {
+      "id": "op_four_emperors",
+      "name": "Four Emperors",
+      "description": "The four rulers of the New World.",
+      "required_character_ids": [
+        "op_shanks",
+        "op_kaido",
+        "op_big_mom",
+        "op_blackbeard"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 45
+      }
+    },
+    {
+      "id": "op_worst_generation",
+      "name": "Worst Generation",
+      "description": "Supernovas who shook the world.",
+      "required_character_ids": [
+        "op_luffy",
+        "op_law",
+        "op_kid"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "op_marine_power",
+      "name": "Marine Power",
+      "description": "The sword of the World Government.",
+      "required_character_ids": [
+        "op_akainu",
+        "op_kizaru",
+        "op_aokiji"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "op_pirate_kings",
+      "name": "Pirate Kings",
+      "description": "Those who reached the peak of piracy.",
+      "required_character_ids": [
+        "op_roger",
+        "op_whitebeard",
+        "op_shanks"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    }
+  ]
+}

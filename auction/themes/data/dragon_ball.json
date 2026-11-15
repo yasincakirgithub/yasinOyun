@@ -1,0 +1,292 @@
+{
+  "characters": [
+    {
+      "id": "db_goku",
+      "name": "Goku",
+      "universe": "dragon_ball",
+      "power": 98,
+      "image": "/static/auction/themes/dragon_ball/db_goku.webp",
+      "description": "Saiyan raised on Earth, master of Ultra Instinct, Earth's greatest defender."
+    },
+    {
+      "id": "db_vegeta",
+      "name": "Vegeta",
+      "universe": "dragon_ball",
+      "power": 97,
+      "image": "/static/auction/themes/dragon_ball/db_vegeta.webp",
+      "description": "Prince of all Saiyans, rival of Goku, master of Ultra Ego."
+    },
+    {
+      "id": "db_frieza",
+      "name": "Frieza",
+      "universe": "dragon_ball",
+      "power": 95,
+      "image": "/static/auction/themes/dragon_ball/db_frieza.webp",
+      "description": "Emperor of Universe 7, tyrant who fears the Super Saiyan legend."
+    },
+    {
+      "id": "db_beerus",
+      "name": "Beerus",
+      "universe": "dragon_ball",
+      "power": 100,
+      "image": "/static/auction/themes/dragon_ball/db_beerus.webp",
+      "description": "God of Destruction of Universe 7, master of Hakai."
+    },
+    {
+      "id": "db_broly",
+      "name": "Broly",
+      "universe": "dragon_ball",
+      "power": 97,
+      "image": "/static/auction/themes/dragon_ball/db_broly.webp",
+      "description": "Legendary Super Saiyan, berserker of immense power."
+    },
+    {
+      "id": "db_gohan",
+      "name": "Gohan",
+      "universe": "dragon_ball",
+      "power": 94,
+      "image": "/static/auction/themes/dragon_ball/db_gohan.webp",
+      "description": "Son of Goku, scholar, unleashed his ultimate potential."
+    },
+    {
+      "id": "db_cell",
+      "name": "Cell",
+      "universe": "dragon_ball",
+      "power": 93,
+      "image": "/static/auction/themes/dragon_ball/db_cell.webp",
+      "description": "Perfect bio-android, created from the cells of the greatest fighters."
+    },
+    {
+      "id": "db_majin_buu",
+      "name": "Majin Buu (Kid Buu)",
+      "universe": "dragon_ball",
+      "power": 96,
+      "image": "/static/auction/themes/dragon_ball/majin_buu.webp",
+      "description": "Ancient majin, pure destruction, infinite regeneration."
+    },
+    {
+      "id": "db_piccolo",
+      "name": "Piccolo",
+      "universe": "dragon_ball",
+      "power": 90,
+      "image": "/static/auction/themes/dragon_ball/db_piccolo.webp",
+      "description": "Namekian warrior, Gohan's mentor, master strategist."
+    },
+    {
+      "id": "db_trunks_future",
+      "name": "Future Trunks",
+      "universe": "dragon_ball",
+      "power": 92,
+      "image": "/static/auction/themes/dragon_ball/trunks_future.webp",
+      "description": "Son of Vegeta from a ruined timeline, master of the sword."
+    },
+    {
+      "id": "db_gotenks",
+      "name": "Gotenks",
+      "universe": "dragon_ball",
+      "power": 95,
+      "image": "/static/auction/themes/dragon_ball/db_gotenks.webp",
+      "description": "Fusion of Goten and Trunks, mischievous Super Saiyan 3."
+    },
+    {
+      "id": "db_gogeta",
+      "name": "Gogeta",
+      "universe": "dragon_ball",
+      "power": 99,
+      "image": "/static/auction/themes/dragon_ball/db_gogeta.webp",
+      "description": "Fusion of Goku and Vegeta via Metamoran dance."
+    },
+    {
+      "id": "db_vegito",
+      "name": "Vegito",
+      "universe": "dragon_ball",
+      "power": 99,
+      "image": "/static/auction/themes/dragon_ball/db_vegito.webp",
+      "description": "Fusion of Goku and Vegeta via Potara earrings."
+    },
+    {
+      "id": "db_whis",
+      "name": "Whis",
+      "universe": "dragon_ball",
+      "power": 100,
+      "image": "/static/auction/themes/dragon_ball/db_whis.webp",
+      "description": "Angel attendant to Beerus, master of Ultra Instinct."
+    },
+    {
+      "id": "db_champa",
+      "name": "Champa",
+      "universe": "dragon_ball",
+      "power": 98,
+      "image": "/static/auction/themes/dragon_ball/db_champa.webp",
+      "description": "God of Destruction of Universe 6, Beerus's twin brother."
+    },
+    {
+      "id": "db_vados",
+      "name": "Vados",
+      "universe": "dragon_ball",
+      "power": 100,
+      "image": "/static/auction/themes/dragon_ball/db_vados.webp",
+      "description": "Angel attendant to Champa, Whis's older sister."
+    },
+    {
+      "id": "db_jiren",
+      "name": "Jiren",
+      "universe": "dragon_ball",
+      "power": 99,
+      "image": "/static/auction/themes/dragon_ball/db_jiren.webp",
+      "description": "Pride Trooper from Universe 11, mortal stronger than a God of Destruction."
+    },
+    {
+      "id": "db_hit",
+      "name": "Hit",
+      "universe": "dragon_ball",
+      "power": 94,
+      "image": "/static/auction/themes/dragon_ball/db_hit.webp",
+      "description": "Legendary assassin from Universe 6, master of Time-Skip."
+    },
+    {
+      "id": "db_android_17",
+      "name": "Android 17",
+      "universe": "dragon_ball",
+      "power": 92,
+      "image": "/static/auction/themes/dragon_ball/android_17.webp",
+      "description": "Twin of 18, infinite energy, Tournament of Power MVP."
+    },
+    {
+      "id": "db_android_18",
+      "name": "Android 18",
+      "universe": "dragon_ball",
+      "power": 91,
+      "image": "/static/auction/themes/dragon_ball/android_18.webp",
+      "description": "Twin of 17, infinite energy, wife of Krillin."
+    },
+    {
+      "id": "db_tien",
+      "name": "Tien Shinhan",
+      "universe": "dragon_ball",
+      "power": 85,
+      "image": "/static/auction/themes/dragon_ball/tien.webp",
+      "description": "Three-eyed martial artist, master of the Tri-Beam."
+    },
+    {
+      "id": "db_yamcha",
+      "name": "Yamcha",
+      "universe": "dragon_ball",
+      "power": 75,
+      "image": "/static/auction/themes/dragon_ball/db_yamcha.webp",
+      "description": "Desert bandit turned Z-Fighter, Wolf Fang Fist master."
+    },
+    {
+      "id": "db_krillin",
+      "name": "Krillin",
+      "universe": "dragon_ball",
+      "power": 82,
+      "image": "/static/auction/themes/dragon_ball/db_krillin.webp",
+      "description": "Goku's best friend, strongest human, Destructo Disc creator."
+    },
+    {
+      "id": "db_roshi",
+      "name": "Master Roshi",
+      "universe": "dragon_ball",
+      "power": 80,
+      "image": "/static/auction/themes/dragon_ball/roshi.webp",
+      "description": "Turtle Hermit, inventor of the Kamehameha."
+    },
+    {
+      "id": "db_garlic_jr",
+      "name": "Garlic Jr.",
+      "universe": "dragon_ball",
+      "power": 78,
+      "image": "/static/auction/themes/dragon_ball/garlic_jr.webp",
+      "description": "Immortal villain who sought the Dragon Balls for eternity."
+    },
+    {
+      "id": "db_cooler",
+      "name": "Cooler",
+      "universe": "dragon_ball",
+      "power": 93,
+      "image": "/static/auction/themes/dragon_ball/db_cooler.webp",
+      "description": "Frieza's older brother, has a fifth transformation."
+    },
+    {
+      "id": "db_king_cold",
+      "name": "King Cold",
+      "universe": "dragon_ball",
+      "power": 90,
+      "image": "/static/auction/themes/dragon_ball/king_cold.webp",
+      "description": "Father of Frieza and Cooler, former emperor of Universe 7."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "db_saiyan_pride",
+      "name": "Saiyan Pride",
+      "description": "The royal bloodline of the warrior race.",
+      "required_character_ids": [
+        "db_goku",
+        "db_vegeta",
+        "db_broly"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "db_fusion_warriors",
+      "name": "Fusion Warriors",
+      "description": "Metamoran and Potara fusions united.",
+      "required_character_ids": [
+        "db_gogeta",
+        "db_vegito",
+        "db_gotenks"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 45
+      }
+    },
+    {
+      "id": "db_gods_destruction",
+      "name": "Gods of Destruction",
+      "description": "The divine destroyers of universes.",
+      "required_character_ids": [
+        "db_beerus",
+        "db_whis",
+        "db_champa"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "db_frieza_force",
+      "name": "Frieza Force",
+      "description": "The galactic empire's strongest enforcers.",
+      "required_character_ids": [
+        "db_frieza",
+        "db_cooler",
+        "db_king_cold"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "db_ultimate_potential",
+      "name": "Ultimate Potential",
+      "description": "Warriors who transcended their limits.",
+      "required_character_ids": [
+        "db_gohan",
+        "db_piccolo",
+        "db_android_17"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    }
+  ]
+}

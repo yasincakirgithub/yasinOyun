@@ -1,0 +1,286 @@
+{
+  "characters": [
+    {
+      "id": "sw_darth_vader",
+      "name": "Darth Vader",
+      "universe": "star_wars",
+      "power": 97,
+      "image": "/static/auction/themes/star_wars/darth_vader.webp",
+      "description": "Chosen One, Sith Lord, enforcer of the Empire."
+    },
+    {
+      "id": "sw_luke_skywalker",
+      "name": "Luke Skywalker",
+      "universe": "star_wars",
+      "power": 95,
+      "image": "/static/auction/themes/star_wars/luke_skywalker.webp",
+      "description": "Last Jedi, son of Vader, redeemer of Anakin Skywalker."
+    },
+    {
+      "id": "sw_yoda",
+      "name": "Yoda",
+      "universe": "star_wars",
+      "power": 98,
+      "image": "/static/auction/themes/star_wars/yoda.webp",
+      "description": "Grand Master of the Jedi Order, 900 years old."
+    },
+    {
+      "id": "sw_palpatine",
+      "name": "Emperor Palpatine (Darth Sidious)",
+      "universe": "star_wars",
+      "power": 99,
+      "image": "/static/auction/themes/star_wars/palpatine.webp",
+      "description": "Dark Lord of the Sith, architect of the Empire."
+    },
+    {
+      "id": "sw_obi_wan",
+      "name": "Obi-Wan Kenobi",
+      "universe": "star_wars",
+      "power": 93,
+      "image": "/static/auction/themes/star_wars/obi_wan.webp",
+      "description": "Master of Soresu, mentor to Anakin and Luke."
+    },
+    {
+      "id": "sw_darth_maul",
+      "name": "Darth Maul",
+      "universe": "star_wars",
+      "power": 92,
+      "image": "/static/auction/themes/star_wars/darth_maul.webp",
+      "description": "Sith apprentice, dual-bladed lightsaber, survived bisection."
+    },
+    {
+      "id": "sw_mace_windu",
+      "name": "Mace Windu",
+      "universe": "star_wars",
+      "power": 94,
+      "image": "/static/auction/themes/star_wars/mace_windu.webp",
+      "description": "Master of Vaapad, senior Jedi Council member."
+    },
+    {
+      "id": "sw_qui_gon",
+      "name": "Qui-Gon Jinn",
+      "universe": "star_wars",
+      "power": 91,
+      "image": "/static/auction/themes/star_wars/qui_gon.webp",
+      "description": "Maverick Jedi, discoverer of the Chosen One."
+    },
+    {
+      "id": "sw_count_dooku",
+      "name": "Count Dooku (Darth Tyranus)",
+      "universe": "star_wars",
+      "power": 93,
+      "image": "/static/auction/themes/star_wars/count_dooku.webp",
+      "description": "Former Jedi Master, Sith Lord, master of Makashi."
+    },
+    {
+      "id": "sw_anakin_skywalker",
+      "name": "Anakin Skywalker",
+      "universe": "star_wars",
+      "power": 96,
+      "image": "/static/auction/themes/star_wars/anakin_skywalker.webp",
+      "description": "Chosen One, most powerful Jedi of his generation before fall."
+    },
+    {
+      "id": "sw_ahsoka_tano",
+      "name": "Ahsoka Tano",
+      "universe": "star_wars",
+      "power": 92,
+      "image": "/static/auction/themes/star_wars/ahsoka_tano.webp",
+      "description": "Anakin's Padawan, survivor of Order 66, dual white blades."
+    },
+    {
+      "id": "sw_rey",
+      "name": "Rey Skywalker",
+      "universe": "star_wars",
+      "power": 94,
+      "image": "/static/auction/themes/star_wars/rey.webp",
+      "description": "Granddaughter of Palpatine, heir to the Jedi legacy."
+    },
+    {
+      "id": "sw_kylo_ren",
+      "name": "Kylo Ren (Ben Solo)",
+      "universe": "star_wars",
+      "power": 93,
+      "image": "/static/auction/themes/star_wars/kylo_ren.webp",
+      "description": "Grandson of Vader, leader of the Knights of Ren."
+    },
+    {
+      "id": "sw_leia_organa",
+      "name": "Leia Organa",
+      "universe": "star_wars",
+      "power": 85,
+      "image": "/static/auction/themes/star_wars/leia_organa.webp",
+      "description": "Princess, General, Jedi trainee, leader of the Resistance."
+    },
+    {
+      "id": "sw_han_solo",
+      "name": "Han Solo",
+      "universe": "star_wars",
+      "power": 80,
+      "image": "/static/auction/themes/star_wars/han_solo.webp",
+      "description": "Smuggler, hero of the Rebellion, captain of the Falcon."
+    },
+    {
+      "id": "sw_chewbacca",
+      "name": "Chewbacca",
+      "universe": "star_wars",
+      "power": 82,
+      "image": "/static/auction/themes/star_wars/chewbacca.webp",
+      "description": "Wookiee warrior, Han's co-pilot, loyal friend."
+    },
+    {
+      "id": "sw_lando_calrissian",
+      "name": "Lando Calrissian",
+      "universe": "star_wars",
+      "power": 81,
+      "image": "/static/auction/themes/star_wars/lando_calrissian.webp",
+      "description": "Baron Administrator, gambler, hero of the Battle of Endor."
+    },
+    {
+      "id": "sw_boba_fett",
+      "name": "Boba Fett",
+      "universe": "star_wars",
+      "power": 86,
+      "image": "/static/auction/themes/star_wars/boba_fett.webp",
+      "description": "Legendary bounty hunter, clone of Jango Fett."
+    },
+    {
+      "id": "sw_jango_fett",
+      "name": "Jango Fett",
+      "universe": "star_wars",
+      "power": 85,
+      "image": "/static/auction/themes/star_wars/jango_fett.webp",
+      "description": "Template for the clone army, premier bounty hunter."
+    },
+    {
+      "id": "sw_din_djarin",
+      "name": "Din Djarin (The Mandalorian)",
+      "universe": "star_wars",
+      "power": 88,
+      "image": "/static/auction/themes/star_wars/din_djarin.webp",
+      "description": "Mandalorian bounty hunter, protector of Grogu."
+    },
+    {
+      "id": "sw_bo_katan",
+      "name": "Bo-Katan Kryze",
+      "universe": "star_wars",
+      "power": 89,
+      "image": "/static/auction/themes/star_wars/bo_katan.webp",
+      "description": "Mandalorian leader, wielder of the Darksaber."
+    },
+    {
+      "id": "sw_grogu",
+      "name": "Grogu (The Child)",
+      "universe": "star_wars",
+      "power": 85,
+      "image": "/static/auction/themes/star_wars/grogu.webp",
+      "description": "Force-sensitive foundling, Yoda's species, Mandalorian foundling."
+    },
+    {
+      "id": "sw_general_grievous",
+      "name": "General Grievous",
+      "universe": "star_wars",
+      "power": 90,
+      "image": "/static/auction/themes/star_wars/general_grievous.webp",
+      "description": "Cyborg Supreme Commander, Jedi hunter, four lightsabers."
+    },
+    {
+      "id": "sw_asajj_ventress",
+      "name": "Asajj Ventress",
+      "universe": "star_wars",
+      "power": 88,
+      "image": "/static/auction/themes/star_wars/asajj_ventress.webp",
+      "description": "Nightsister, Sith assassin, Count Dooku's apprentice."
+    },
+    {
+      "id": "sw_kanan_jarrus",
+      "name": "Kanan Jarrus",
+      "universe": "star_wars",
+      "power": 86,
+      "image": "/static/auction/themes/star_wars/kanan_jarrus.webp",
+      "description": "Jedi survivor, leader of the Spectres, blinded by Maul."
+    },
+    {
+      "id": "sw_ezra_bridger",
+      "name": "Ezra Bridger",
+      "universe": "star_wars",
+      "power": 87,
+      "image": "/static/auction/themes/star_wars/ezra_bridger.webp",
+      "description": "Jedi Padawan, Lothal's liberator, entered the World Between Worlds."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "sw_original_trilogy",
+      "name": "Original Trilogy Heroes",
+      "description": "The trio that brought down the Empire.",
+      "required_character_ids": [
+        "sw_luke_skywalker",
+        "sw_leia_organa",
+        "sw_han_solo",
+        "sw_chewbacca"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "sw_sith_legacy",
+      "name": "Sith Legacy",
+      "description": "The Rule of Two's deadliest practitioners.",
+      "required_character_ids": [
+        "sw_darth_vader",
+        "sw_palpatine",
+        "sw_darth_maul"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "sw_jedi_council",
+      "name": "Jedi Council",
+      "description": "The wisest masters of the Jedi Order.",
+      "required_character_ids": [
+        "sw_yoda",
+        "sw_obi_wan",
+        "sw_mace_windu"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "sw_skywalker_bloodline",
+      "name": "Skywalker Bloodline",
+      "description": "The dynasty that shaped the galaxy's fate.",
+      "required_character_ids": [
+        "sw_anakin_skywalker",
+        "sw_luke_skywalker",
+        "sw_leia_organa",
+        "sw_kylo_ren"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 45
+      }
+    },
+    {
+      "id": "sw_mandalorian_warriors",
+      "name": "Mandalorian Warriors",
+      "description": "The armor-clad protectors of Mandalore.",
+      "required_character_ids": [
+        "sw_din_djarin",
+        "sw_bo_katan",
+        "sw_boba_fett"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    }
+  ]
+}

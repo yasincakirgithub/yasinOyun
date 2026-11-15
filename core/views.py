@@ -140,6 +140,22 @@ GAMES = [
         'image_width': 1408,
         'image_height': 768,
     },
+    {
+        'slug': 'auction',
+        'url_name': 'auction:home',
+        'title': 'Character Auction',
+        'description': (
+            'Efsanevi evrenlerden karakterleri açık artırmayla topla. '
+            'Senarjileri aktif et, bütçeni yönet ve en güçlü koleksiyonu kurarak kazan.'
+        ),
+        'tag': 'Strateji',
+        'tone': 'purple',
+        'players': '2–8 oyuncu',
+        'mode': 'Canlı',
+        'image': 'core/img/auction.svg',
+        'image_width': 1600,
+        'image_height': 497,
+    },
 ]
 
 

@@ -1,0 +1,278 @@
+{
+  "characters": [
+    {
+      "id": "lotr_gandalf",
+      "name": "Gandalf",
+      "universe": "lord_of_the_rings",
+      "power": 95,
+      "image": "/static/auction/themes/lotr/lotr_gandalf.webp",
+      "description": "A powerful wizard of Middle-earth, known as Gandalf the Grey and later Gandalf the White."
+    },
+    {
+      "id": "lotr_sauron",
+      "name": "Sauron",
+      "universe": "lord_of_the_rings",
+      "power": 100,
+      "image": "/static/auction/themes/lotr/lotr_sauron.webp",
+      "description": "The Dark Lord, creator of the One Ring, and primary antagonist of The Lord of the Rings."
+    },
+    {
+      "id": "lotr_aragorn",
+      "name": "Aragorn",
+      "universe": "lord_of_the_rings",
+      "power": 90,
+      "image": "/static/auction/themes/lotr/lotr_aragorn.webp",
+      "description": "The heir of Isildur, ranger of the North, and future King of Gondor."
+    },
+    {
+      "id": "lotr_legolas",
+      "name": "Legolas",
+      "universe": "lord_of_the_rings",
+      "power": 85,
+      "image": "/static/auction/themes/lotr/legolas.webp",
+      "description": "Elven prince of Mirkwood, master archer, and member of the Fellowship."
+    },
+    {
+      "id": "lotr_frodo",
+      "name": "Frodo Baggins",
+      "universe": "lord_of_the_rings",
+      "power": 45,
+      "image": "/static/auction/themes/lotr/frodo.webp",
+      "description": "The Ring-bearer who carried the One Ring to Mount Doom."
+    },
+    {
+      "id": "lotr_sam",
+      "name": "Samwise Gamgee",
+      "universe": "lord_of_the_rings",
+      "power": 55,
+      "image": "/static/auction/themes/lotr/sam.webp",
+      "description": "Frodo's loyal gardener and companion, the true hero of the quest."
+    },
+    {
+      "id": "lotr_gimli",
+      "name": "Gimli",
+      "universe": "lord_of_the_rings",
+      "power": 80,
+      "image": "/static/auction/themes/lotr/gimli.webp",
+      "description": "Dwarf warrior, son of Glóin, and member of the Fellowship."
+    },
+    {
+      "id": "lotr_saruman",
+      "name": "Saruman",
+      "universe": "lord_of_the_rings",
+      "power": 88,
+      "image": "/static/auction/themes/lotr/lotr_saruman.webp",
+      "description": "The White Wizard who fell to darkness, seeking the One Ring for himself."
+    },
+    {
+      "id": "lotr_galadriel",
+      "name": "Galadriel",
+      "universe": "lord_of_the_rings",
+      "power": 92,
+      "image": "/static/auction/themes/lotr/lotr_galadriel.webp",
+      "description": "Lady of Lothlórien, bearer of Nenya, one of the Three Elven Rings."
+    },
+    {
+      "id": "lotr_boromir",
+      "name": "Boromir",
+      "universe": "lord_of_the_rings",
+      "power": 75,
+      "image": "/static/auction/themes/lotr/lotr_boromir.webp",
+      "description": "Captain of Gondor, son of Denethor, who succumbed to the Ring's temptation."
+    },
+    {
+      "id": "lotr_gollum",
+      "name": "Gollum",
+      "universe": "lord_of_the_rings",
+      "power": 50,
+      "image": "/static/auction/themes/lotr/lotr_gollum.webp",
+      "description": "Formerly Sméagol, corrupted by the One Ring over centuries."
+    },
+    {
+      "id": "lotr_elrond",
+      "name": "Elrond",
+      "universe": "lord_of_the_rings",
+      "power": 87,
+      "image": "/static/auction/themes/lotr/lotr_elrond.webp",
+      "description": "Lord of Rivendell, bearer of Vilya, and wise Elf-lord."
+    },
+    {
+      "id": "lotr_theoden",
+      "name": "Théoden",
+      "universe": "lord_of_the_rings",
+      "power": 70,
+      "image": "/static/auction/themes/lotr/lotr_theoden.webp",
+      "description": "King of Rohan, freed from Saruman's influence by Gandalf."
+    },
+    {
+      "id": "lotr_eowyn",
+      "name": "Éowyn",
+      "universe": "lord_of_the_rings",
+      "power": 78,
+      "image": "/static/auction/themes/lotr/lotr_eowyn.webp",
+      "description": "Shieldmaiden of Rohan who slew the Witch-king of Angmar."
+    },
+    {
+      "id": "lotr_faramir",
+      "name": "Faramir",
+      "universe": "lord_of_the_rings",
+      "power": 72,
+      "image": "/static/auction/themes/lotr/lotr_faramir.webp",
+      "description": "Captain of the Rangers of Ithilien, younger brother of Boromir."
+    },
+    {
+      "id": "lotr_treebeard",
+      "name": "Treebeard",
+      "universe": "lord_of_the_rings",
+      "power": 85,
+      "image": "/static/auction/themes/lotr/lotr_treebeard.webp",
+      "description": "The oldest Ent of Fangorn Forest, shepherd of the trees."
+    },
+    {
+      "id": "lotr_witch_king",
+      "name": "Witch-king of Angmar",
+      "universe": "lord_of_the_rings",
+      "power": 88,
+      "image": "/static/auction/themes/lotr/witch_king.webp",
+      "description": "Lord of the Nazgûl, Sauron's most powerful servant."
+    },
+    {
+      "id": "lotr_balrog",
+      "name": "Durin's Bane (Balrog)",
+      "universe": "lord_of_the_rings",
+      "power": 93,
+      "image": "/static/auction/themes/lotr/balrog.webp",
+      "description": "Ancient demon of shadow and flame, awakened in Moria."
+    },
+    {
+      "id": "lotr_tom_bombadil",
+      "name": "Tom Bombadil",
+      "universe": "lord_of_the_rings",
+      "power": 98,
+      "image": "/static/auction/themes/lotr/tom_bombadil.webp",
+      "description": "Enigmatic being of unknown origin, master of the Old Forest."
+    },
+    {
+      "id": "lotr_glorfindel",
+      "name": "Glorfindel",
+      "universe": "lord_of_the_rings",
+      "power": 89,
+      "image": "/static/auction/themes/lotr/lotr_glorfindel.webp",
+      "description": "Mighty Elf-lord of Rivendell, who faced the Witch-king at the Ford."
+    },
+    {
+      "id": "lotr_haldir",
+      "name": "Haldir",
+      "universe": "lord_of_the_rings",
+      "power": 70,
+      "image": "/static/auction/themes/lotr/lotr_haldir.webp",
+      "description": "Marchwarden of Lothlórien, guardian of the Golden Wood."
+    },
+    {
+      "id": "lotr_beregor",
+      "name": "Beregond",
+      "universe": "lord_of_the_rings",
+      "power": 65,
+      "image": "/static/auction/themes/lotr/lotr_beregor.webp",
+      "description": "Soldier of Gondor who saved Faramir from Denethor's madness."
+    },
+    {
+      "id": "lotr_halbarad",
+      "name": "Halbarad",
+      "universe": "lord_of_the_rings",
+      "power": 73,
+      "image": "/static/auction/themes/lotr/lotr_halbarad.webp",
+      "description": "Ranger of the North, kinsman of Aragorn, bearing his standard."
+    },
+    {
+      "id": "lotr_erkenbrand",
+      "name": "Erkenbrand",
+      "universe": "lord_of_the_rings",
+      "power": 68,
+      "image": "/static/auction/themes/lotr/lotr_erkenbrand.webp",
+      "description": "Lord of the Westfold, defender of Helm's Deep."
+    },
+    {
+      "id": "lotr_grima",
+      "name": "Gríma Wormtongue",
+      "universe": "lord_of_the_rings",
+      "power": 40,
+      "image": "/static/auction/themes/lotr/grima.webp",
+      "description": "Treacherous counselor of Théoden, spy for Saruman."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "lotr_fellowship",
+      "name": "The Fellowship",
+      "description": "Assemble the legendary Fellowship of the Ring.",
+      "required_character_ids": [
+        "lotr_frodo",
+        "lotr_sam",
+        "lotr_aragorn",
+        "lotr_legolas",
+        "lotr_gimli",
+        "lotr_gandalf"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 40
+      }
+    },
+    {
+      "id": "lotr_dark_lord",
+      "name": "The Dark Lord",
+      "description": "Sauron and his chief servants united.",
+      "required_character_ids": [
+        "lotr_sauron",
+        "lotr_saruman",
+        "lotr_witch_king"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 35
+      }
+    },
+    {
+      "id": "lotr_white_council",
+      "name": "The White Council",
+      "description": "The wisest beings of Middle-earth in council.",
+      "required_character_ids": [
+        "lotr_gandalf",
+        "lotr_galadriel",
+        "lotr_saruman"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 30
+      }
+    },
+    {
+      "id": "lotr_kings",
+      "name": "Kings of Middle-earth",
+      "description": "The rightful rulers of the free peoples.",
+      "required_character_ids": [
+        "lotr_aragorn",
+        "lotr_theoden",
+        "lotr_elrond"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 25
+      }
+    },
+    {
+      "id": "lotr_two_hobbits",
+      "name": "The Two Hobbits",
+      "description": "Frodo and Sam, bound by loyalty and friendship.",
+      "required_character_ids": [
+        "lotr_frodo",
+        "lotr_sam"
+      ],
+      "bonus": {
+        "type": "fixed",
+        "value": 15
+      }
+    }
+  ]
+}
