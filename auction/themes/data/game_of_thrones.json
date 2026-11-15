@@ -5,7 +5,7 @@
       "name": "Jon Snow",
       "universe": "game_of_thrones",
       "power": 88,
-      "image": "/static/auction/themes/game_of_thrones/jon_snow.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_jon_snow.webp",
       "description": "Aegon Targaryen, King in the North, shield of the realms of men."
     },
     {
@@ -13,7 +13,7 @@
       "name": "Daenerys Targaryen",
       "universe": "game_of_thrones",
       "power": 94,
-      "image": "/static/auction/themes/game_of_thrones/daenerys.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_daenerys.webp",
       "description": "Mother of Dragons, Breaker of Chains, rightful Queen."
     },
     {
@@ -21,7 +21,7 @@
       "name": "Night King",
       "universe": "game_of_thrones",
       "power": 97,
-      "image": "/static/auction/themes/game_of_thrones/night_king.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_night_king.webp",
       "description": "Leader of the White Walkers, bringer of the Long Night."
     },
     {
@@ -29,7 +29,7 @@
       "name": "Arya Stark",
       "universe": "game_of_thrones",
       "power": 90,
-      "image": "/static/auction/themes/game_of_thrones/arya_stark.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_arya_stark.webp",
       "description": "Faceless assassin, slayer of the Night King."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Tyrion Lannister",
       "universe": "game_of_thrones",
       "power": 82,
-      "image": "/static/auction/themes/game_of_thrones/tyrion.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_tyrion.webp",
       "description": "Hand of the Queen, brilliant strategist, wine enthusiast."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Cersei Lannister",
       "universe": "game_of_thrones",
       "power": 78,
-      "image": "/static/auction/themes/game_of_thrones/cersei.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_cersei.webp",
       "description": "Queen of the Seven Kingdoms, ruthless protector of her children."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Jaime Lannister",
       "universe": "game_of_thrones",
       "power": 85,
-      "image": "/static/auction/themes/game_of_thrones/jaime.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_jaime.webp",
       "description": "Kingslayer, greatest swordsman of his generation."
     },
     {
@@ -61,7 +61,7 @@
       "name": "Sansa Stark",
       "universe": "game_of_thrones",
       "power": 75,
-      "image": "/static/auction/themes/game_of_thrones/sansa_stark.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_sansa_stark.webp",
       "description": "Lady of Winterfell, Queen in the North, survivor."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Bran Stark",
       "universe": "game_of_thrones",
       "power": 92,
-      "image": "/static/auction/themes/game_of_thrones/bran_stark.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_bran_stark.webp",
       "description": "Three-Eyed Raven, keeper of all memories."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Robb Stark",
       "universe": "game_of_thrones",
       "power": 84,
-      "image": "/static/auction/themes/game_of_thrones/robb_stark.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_robb_stark.webp",
       "description": "Young Wolf, King in the North, undefeated in battle."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Jorah Mormont",
       "universe": "game_of_thrones",
       "power": 80,
-      "image": "/static/auction/themes/game_of_thrones/jorah_mormont.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_jorah_mormont.webp",
       "description": "Exiled knight, devoted protector of Daenerys."
     },
     {
@@ -93,7 +93,7 @@
       "name": "Brienne of Tarth",
       "universe": "game_of_thrones",
       "power": 86,
-      "image": "/static/auction/themes/game_of_thrones/brienne.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_brienne.webp",
       "description": "Knight of the Seven Kingdoms, paragon of honor."
     },
     {
@@ -101,7 +101,7 @@
       "name": "The Hound (Sandor Clegane)",
       "universe": "game_of_thrones",
       "power": 87,
-      "image": "/static/auction/themes/game_of_thrones/the_hound.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_the_hound.webp",
       "description": "Brutal warrior, scarred by fire, brother of the Mountain."
     },
     {
@@ -109,7 +109,7 @@
       "name": "The Mountain (Gregor Clegane)",
       "universe": "game_of_thrones",
       "power": 90,
-      "image": "/static/auction/themes/game_of_thrones/the_mountain.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_the_mountain.webp",
       "description": "Tywin's monster, near-invincible warrior."
     },
     {
@@ -117,7 +117,7 @@
       "name": "Tywin Lannister",
       "universe": "game_of_thrones",
       "power": 83,
-      "image": "/static/auction/themes/game_of_thrones/tywin_lannister.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_tywin_lannister.webp",
       "description": "Lord of Casterly Rock, most powerful man in Westeros."
     },
     {
@@ -125,7 +125,7 @@
       "name": "Stannis Baratheon",
       "universe": "game_of_thrones",
       "power": 82,
-      "image": "/static/auction/themes/game_of_thrones/stannis.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_stannis.webp",
       "description": "Rightful heir by law, unyielding in duty."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Davos Seaworth",
       "universe": "game_of_thrones",
       "power": 76,
-      "image": "/static/auction/themes/game_of_thrones/davos.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_davos.webp",
       "description": "Onion Knight, loyal advisor, fewest fingers in Westeros."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Samwell Tarly",
       "universe": "game_of_thrones",
       "power": 70,
-      "image": "/static/auction/themes/game_of_thrones/samwell_tarly.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_samwell_tarly.webp",
       "description": "Steward of the Night's Watch, slayer of White Walkers."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Jeor Mormont",
       "universe": "game_of_thrones",
       "power": 81,
-      "image": "/static/auction/themes/game_of_thrones/jeor_mormont.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_jeor_mormont.webp",
       "description": "Lord Commander of the Night's Watch, the Old Bear."
     },
     {
@@ -165,7 +165,7 @@
       "name": "Mance Rayder",
       "universe": "game_of_thrones",
       "power": 83,
-      "image": "/static/auction/themes/game_of_thrones/mance_rayder.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_mance_rayder.webp",
       "description": "King-Beyond-the-Wall, unifier of the Free Folk."
     },
     {
@@ -181,7 +181,7 @@
       "name": "Rhaegar Targaryen",
       "universe": "game_of_thrones",
       "power": 89,
-      "image": "/static/auction/themes/game_of_thrones/rhaegar.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_rhaegar.webp",
       "description": "Prince of Dragonstone, Jon Snow's true father."
     },
     {
@@ -189,7 +189,7 @@
       "name": "Aegon Targaryen (Young Griff)",
       "universe": "game_of_thrones",
       "power": 85,
-      "image": "/static/auction/themes/game_of_thrones/aegon_targaryen.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_aegon_targaryen.webp",
       "description": "Claimed son of Rhaegar, possible heir to the Iron Throne."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Lord Varys",
       "universe": "game_of_thrones",
       "power": 79,
-      "image": "/static/auction/themes/game_of_thrones/varys.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_varys.webp",
       "description": "Master of Whisperers, servant of the realm."
     },
     {
@@ -205,7 +205,7 @@
       "name": "Petyr Baelish",
       "universe": "game_of_thrones",
       "power": 77,
-      "image": "/static/auction/themes/game_of_thrones/littlefinger.webp",
+      "image": "/static/auction/themes/game_of_thrones/got_littlefinger.webp",
       "description": "Master of Coin, chaos is a ladder."
     }
   ],

@@ -5,7 +5,7 @@
       "name": "Kratos",
       "universe": "video_games",
       "power": 98,
-      "image": "/static/auction/themes/video_games/kratos.webp",
+      "image": "/static/auction/themes/video_games/vg_kratos.webp",
       "description": "Ghost of Sparta, God of War, slayer of gods across mythologies."
     },
     {
@@ -13,7 +13,7 @@
       "name": "Master Chief (John-117)",
       "universe": "video_games",
       "power": 92,
-      "image": "/static/auction/themes/video_games/master_chief.webp",
+      "image": "/static/auction/themes/video_games/vg_master_chief.webp",
       "description": "Spartan-II supersoldier, savior of humanity, Halo's protagonist."
     },
     {
@@ -21,7 +21,7 @@
       "name": "Lara Croft",
       "universe": "video_games",
       "power": 88,
-      "image": "/static/auction/themes/video_games/lara_croft.webp",
+      "image": "/static/auction/themes/video_games/vg_lara_croft.webp",
       "description": "Tomb Raider, archaeologist, survivor of impossible odds."
     },
     {
@@ -29,7 +29,7 @@
       "name": "Geralt of Rivia",
       "universe": "video_games",
       "power": 90,
-      "image": "/static/auction/themes/video_games/geralt.webp",
+      "image": "/static/auction/themes/video_games/vg_geralt.webp",
       "description": "Witcher, monster hunter, the White Wolf of Kaer Morhen."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Sonic the Hedgehog",
       "universe": "video_games",
       "power": 90,
-      "image": "/static/auction/themes/video_games/sonic.webp",
+      "image": "/static/auction/themes/video_games/vg_sonic.webp",
       "description": "Blue Blur, fastest thing alive, defender of Mobius."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Mario",
       "universe": "video_games",
       "power": 87,
-      "image": "/static/auction/themes/video_games/mario.webp",
+      "image": "/static/auction/themes/video_games/vg_mario.webp",
       "description": "Nintendo's mascot, plumber, savior of the Mushroom Kingdom."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Doom Slayer",
       "universe": "video_games",
       "power": 99,
-      "image": "/static/auction/themes/video_games/doom_slayer.webp",
+      "image": "/static/auction/themes/video_games/vg_doom_slayer.webp",
       "description": "Hellwalker, scourge of demons, ancient nightmare of the Dark Realm."
     },
     {
@@ -61,7 +61,7 @@
       "name": "Link",
       "universe": "video_games",
       "power": 91,
-      "image": "/static/auction/themes/video_games/link.webp",
+      "image": "/static/auction/themes/video_games/vg_link.webp",
       "description": "Hero of Hyrule, wielder of the Master Sword, reincarnated legend."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Samus Aran",
       "universe": "video_games",
       "power": 92,
-      "image": "/static/auction/themes/video_games/samus.webp",
+      "image": "/static/auction/themes/video_games/vg_samus.webp",
       "description": "Bounty hunter, Chozo-raised, Metroid's protagonist."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Cloud Strife",
       "universe": "video_games",
       "power": 93,
-      "image": "/static/auction/themes/video_games/cloud.webp",
+      "image": "/static/auction/themes/video_games/vg_cloud.webp",
       "description": "Former SOLDIER, Buster Sword wielder, savior of Gaia."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Sephiroth",
       "universe": "video_games",
       "power": 97,
-      "image": "/static/auction/themes/video_games/sephiroth.webp",
+      "image": "/static/auction/themes/video_games/vg_sephiroth.webp",
       "description": "One-Winged Angel, Jenova's legacy, Cloud's nemesis."
     },
     {
@@ -93,7 +93,7 @@
       "name": "Dante",
       "universe": "video_games",
       "power": 95,
-      "image": "/static/auction/themes/video_games/dante.webp",
+      "image": "/static/auction/themes/video_games/vg_dante.webp",
       "description": "Son of Sparda, devil hunter, Devil May Cry protagonist."
     },
     {
@@ -101,7 +101,7 @@
       "name": "Vergil",
       "universe": "video_games",
       "power": 96,
-      "image": "/static/auction/themes/video_games/vergil.webp",
+      "image": "/static/auction/themes/video_games/vg_vergil.webp",
       "description": "Dante's twin, seeker of power, Yamato wielder."
     },
     {
@@ -109,7 +109,7 @@
       "name": "Ezio Auditore",
       "universe": "video_games",
       "power": 87,
-      "image": "/static/auction/themes/video_games/ezio.webp",
+      "image": "/static/auction/themes/video_games/vg_ezio.webp",
       "description": "Master Assassin, Mentor of the Italian Brotherhood."
     },
     {
@@ -117,7 +117,7 @@
       "name": "Altaïr Ibn-La'Ahad",
       "universe": "video_games",
       "power": 88,
-      "image": "/static/auction/themes/video_games/altair.webp",
+      "image": "/static/auction/themes/video_games/vg_altair.webp",
       "description": "Mentor of the Levantine Assassins, Apple of Eden bearer."
     },
     {
@@ -125,7 +125,7 @@
       "name": "Arthas Menethil (Lich King)",
       "universe": "video_games",
       "power": 96,
-      "image": "/static/auction/themes/video_games/arthas.webp",
+      "image": "/static/auction/themes/video_games/vg_arthas.webp",
       "description": "Prince of Lordaeron, wielder of Frostmourne, Lich King."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Illidan Stormrage",
       "universe": "video_games",
       "power": 94,
-      "image": "/static/auction/themes/video_games/illidan.webp",
+      "image": "/static/auction/themes/video_games/vg_illidan.webp",
       "description": "The Betrayer, Demon Hunter, warden of the Burning Legion's jailor."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Sylvanas Windrunner",
       "universe": "video_games",
       "power": 92,
-      "image": "/static/auction/themes/video_games/sylvanas.webp",
+      "image": "/static/auction/themes/video_games/vg_sylvanas.webp",
       "description": "Banshee Queen, Ranger-General, Warchief of the Horde."
     },
     {
@@ -149,7 +149,7 @@
       "name": "John Marston",
       "universe": "video_games",
       "power": 82,
-      "image": "/static/auction/themes/video_games/john_marston.webp",
+      "image": "/static/auction/themes/video_games/vg_john_marston.webp",
       "description": "Former outlaw, Red Dead Redemption's tragic hero."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Arthur Morgan",
       "universe": "video_games",
       "power": 84,
-      "image": "/static/auction/themes/video_games/arthur_morgan.webp",
+      "image": "/static/auction/themes/video_games/vg_arthur_morgan.webp",
       "description": "Dutch's right hand, Red Dead Redemption 2's protagonist."
     },
     {
@@ -165,7 +165,7 @@
       "name": "Carl 'CJ' Johnson",
       "universe": "video_games",
       "power": 80,
-      "image": "/static/auction/themes/video_games/cj.webp",
+      "image": "/static/auction/themes/video_games/vg_cj.webp",
       "description": "Grove Street leader, San Andreas' kingpin."
     },
     {
@@ -173,7 +173,7 @@
       "name": "Tommy Vercetti",
       "universe": "video_games",
       "power": 83,
-      "image": "/static/auction/themes/video_games/tommy_vercetti.webp",
+      "image": "/static/auction/themes/video_games/vg_tommy_vercetti.webp",
       "description": "Vice City's kingpin, former Forelli soldier."
     },
     {
@@ -181,7 +181,7 @@
       "name": "Niko Bellic",
       "universe": "video_games",
       "power": 82,
-      "image": "/static/auction/themes/video_games/niko_bellic.webp",
+      "image": "/static/auction/themes/video_games/vg_niko_bellic.webp",
       "description": "Eastern European immigrant, Liberty City's deadliest."
     },
     {
@@ -189,7 +189,7 @@
       "name": "Kazuma Kiryu",
       "universe": "video_games",
       "power": 89,
-      "image": "/static/auction/themes/video_games/kazuma_kiryu.webp",
+      "image": "/static/auction/themes/video_games/vg_kazuma_kiryu.webp",
       "description": "Dragon of Dojima, Yakuza legend, orphanage father."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Goro Majima",
       "universe": "video_games",
       "power": 90,
-      "image": "/static/auction/themes/video_games/goro_majima.webp",
+      "image": "/static/auction/themes/video_games/vg_goro_majima.webp",
       "description": "Mad Dog of Shimano, Tojo Clan patriarch, Kiryu's rival."
     },
     {
@@ -205,7 +205,7 @@
       "name": "Luigi",
       "universe": "video_games",
       "power": 85,
-      "image": "/static/auction/themes/video_games/luigi.webp",
+      "image": "/static/auction/themes/video_games/vg_luigi.webp",
       "description": "Mario's brother, green-clad hero, mansion explorer."
     },
     {
@@ -213,7 +213,7 @@
       "name": "Crash Bandicoot",
       "universe": "video_games",
       "power": 85,
-      "image": "/static/auction/themes/video_games/crash_bandicoot.webp",
+      "image": "/static/auction/themes/video_games/vg_crash_bandicoot.webp",
       "description": "Genetically enhanced bandicoot, spin-attack master, N. Sanity Island hero."
     },
     {
@@ -221,7 +221,7 @@
       "name": "Nathan Drake",
       "universe": "video_games",
       "power": 88,
-      "image": "/static/auction/themes/video_games/nathan_drake.webp",
+      "image": "/static/auction/themes/video_games/vg_nathan_drake.webp",
       "description": "Treasure hunter, Uncharted protagonist, descendant of Francis Drake."
     },
     {
@@ -229,7 +229,7 @@
       "name": "Indiana Jones",
       "universe": "video_games",
       "power": 87,
-      "image": "/static/auction/themes/video_games/indiana_jones.webp",
+      "image": "/static/auction/themes/video_games/vg_indiana_jones.webp",
       "description": "Archaeologist, whip-wielding adventurer, seeker of lost artifacts."
     }
   ],

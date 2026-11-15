@@ -5,7 +5,7 @@
       "name": "Naruto Uzumaki",
       "universe": "naruto",
       "power": 96,
-      "image": "/static/auction/themes/naruto/naruto.webp",
+      "image": "/static/auction/themes/naruto/naruto_naruto.webp",
       "description": "Seventh Hokage, jinchūriki of Kurama, hero of the Fourth Shinobi War."
     },
     {
@@ -13,7 +13,7 @@
       "name": "Sasuke Uchiha",
       "universe": "naruto",
       "power": 96,
-      "image": "/static/auction/themes/naruto/sasuke.webp",
+      "image": "/static/auction/themes/naruto/naruto_sasuke.webp",
       "description": "Last Uchiha, wielder of Rinnegan, Naruto's eternal rival."
     },
     {
@@ -21,7 +21,7 @@
       "name": "Madara Uchiha",
       "universe": "naruto",
       "power": 99,
-      "image": "/static/auction/themes/naruto/madara.webp",
+      "image": "/static/auction/themes/naruto/naruto_madara.webp",
       "description": "Legendary Uchiha, co-founder of Konoha, master of the Sharingan."
     },
     {
@@ -29,7 +29,7 @@
       "name": "Hashirama Senju",
       "universe": "naruto",
       "power": 98,
-      "image": "/static/auction/themes/naruto/hashirama.webp",
+      "image": "/static/auction/themes/naruto/naruto_hashirama.webp",
       "description": "First Hokage, God of Shinobi, master of Wood Release."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Itachi Uchiha",
       "universe": "naruto",
       "power": 93,
-      "image": "/static/auction/themes/naruto/itachi.webp",
+      "image": "/static/auction/themes/naruto/naruto_itachi.webp",
       "description": "Prodigy of the Uchiha, pacifist who sacrificed everything for peace."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Kakashi Hatake",
       "universe": "naruto",
       "power": 90,
-      "image": "/static/auction/themes/naruto/kakashi.webp",
+      "image": "/static/auction/themes/naruto/naruto_kakashi.webp",
       "description": "Copy Ninja, Sixth Hokage, master of a thousand jutsu."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Pain (Nagato)",
       "universe": "naruto",
       "power": 95,
-      "image": "/static/auction/themes/naruto/pain.webp",
+      "image": "/static/auction/themes/naruto/naruto_pain.webp",
       "description": "Leader of Akatsuki, wielder of the Rinnegan, god of Amegakure."
     },
     {
@@ -61,7 +61,7 @@
       "name": "Minato Namikaze",
       "universe": "naruto",
       "power": 94,
-      "image": "/static/auction/themes/naruto/minato.webp",
+      "image": "/static/auction/themes/naruto/naruto_minato.webp",
       "description": "Fourth Hokage, Yellow Flash, creator of the Rasengan."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Obito Uchiha",
       "universe": "naruto",
       "power": 97,
-      "image": "/static/auction/themes/naruto/obito.webp",
+      "image": "/static/auction/themes/naruto/naruto_obito.webp",
       "description": "Masked Man, Ten-Tails jinchūriki, architect of the Fourth War."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Tsunade Senju",
       "universe": "naruto",
       "power": 92,
-      "image": "/static/auction/themes/naruto/tsunade.webp",
+      "image": "/static/auction/themes/naruto/naruto_tsunade.webp",
       "description": "Fifth Hokage, greatest medical ninja, granddaughter of Hashirama."
     },
     {
@@ -101,7 +101,7 @@
       "name": "Sakura Haruno",
       "universe": "naruto",
       "power": 87,
-      "image": "/static/auction/themes/naruto/sakura.webp",
+      "image": "/static/auction/themes/naruto/naruto_sakura.webp",
       "description": "Greatest medical ninja after Tsunade, monstrous strength."
     },
     {
@@ -109,7 +109,7 @@
       "name": "Shikamaru Nara",
       "universe": "naruto",
       "power": 85,
-      "image": "/static/auction/themes/naruto/shikamaru.webp",
+      "image": "/static/auction/themes/naruto/naruto_shikamaru.webp",
       "description": "Genius strategist, IQ over 200, shadow manipulation master."
     },
     {
@@ -125,7 +125,7 @@
       "name": "Killer Bee",
       "universe": "naruto",
       "power": 92,
-      "image": "/static/auction/themes/naruto/killer_bee.webp",
+      "image": "/static/auction/themes/naruto/naruto_killer_bee.webp",
       "description": "Jinchūriki of Gyūki, perfect jinchūriki, rapper."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Might Guy",
       "universe": "naruto",
       "power": 93,
-      "image": "/static/auction/themes/naruto/might_guy.webp",
+      "image": "/static/auction/themes/naruto/naruto_might_guy.webp",
       "description": "Master of taijutsu, opener of the Eight Gates."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Rock Lee",
       "universe": "naruto",
       "power": 84,
-      "image": "/static/auction/themes/naruto/rock_lee.webp",
+      "image": "/static/auction/themes/naruto/naruto_rock_lee.webp",
       "description": "Taijutsu specialist who cannot use ninjutsu or genjutsu."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Neji Hyūga",
       "universe": "naruto",
       "power": 86,
-      "image": "/static/auction/themes/naruto/neji.webp",
+      "image": "/static/auction/themes/naruto/naruto_neji.webp",
       "description": "Hyūga prodigy, master of Gentle Fist and Byakugan."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Hinata Hyūga",
       "universe": "naruto",
       "power": 85,
-      "image": "/static/auction/themes/naruto/hinata.webp",
+      "image": "/static/auction/themes/naruto/naruto_hinata.webp",
       "description": "Hyūga princess, mastered Gentle Fist, Naruto's wife."
     },
     {
@@ -165,7 +165,7 @@
       "name": "Kabuto Yakushi",
       "universe": "naruto",
       "power": 89,
-      "image": "/static/auction/themes/naruto/kabuto.webp",
+      "image": "/static/auction/themes/naruto/naruto_kabuto.webp",
       "description": "Medical ninja, master of Sage Mode, Orochimaru's spy."
     },
     {
@@ -173,7 +173,7 @@
       "name": "Kisame Hoshigaki",
       "universe": "naruto",
       "power": 88,
-      "image": "/static/auction/themes/naruto/kisame.webp",
+      "image": "/static/auction/themes/naruto/naruto_kisame.webp",
       "description": "Monster of the Hidden Mist, wielder of Samehada."
     },
     {
@@ -181,7 +181,7 @@
       "name": "Deidara",
       "universe": "naruto",
       "power": 85,
-      "image": "/static/auction/themes/naruto/deidara.webp",
+      "image": "/static/auction/themes/naruto/naruto_deidara.webp",
       "description": "Explosive artist, clay manipulation, Akatsuki member."
     },
     {
@@ -189,7 +189,7 @@
       "name": "Sasori",
       "universe": "naruto",
       "power": 87,
-      "image": "/static/auction/themes/naruto/sasori.webp",
+      "image": "/static/auction/themes/naruto/naruto_sasori.webp",
       "description": "Master puppeteer, turned himself into a puppet."
     },
     {
@@ -221,7 +221,7 @@
       "name": "Tobirama Senju",
       "universe": "naruto",
       "power": 94,
-      "image": "/static/auction/themes/naruto/tobirama.webp",
+      "image": "/static/auction/themes/naruto/naruto_tobirama.webp",
       "description": "Second Hokage, creator of many jutsu, master of Water Release."
     }
   ],

@@ -61,7 +61,7 @@
       "name": "Majin Buu (Kid Buu)",
       "universe": "dragon_ball",
       "power": 96,
-      "image": "/static/auction/themes/dragon_ball/majin_buu.webp",
+      "image": "/static/auction/themes/dragon_ball/db_majin_buu.webp",
       "description": "Ancient majin, pure destruction, infinite regeneration."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Future Trunks",
       "universe": "dragon_ball",
       "power": 92,
-      "image": "/static/auction/themes/dragon_ball/trunks_future.webp",
+      "image": "/static/auction/themes/dragon_ball/db_trunks_future.webp",
       "description": "Son of Vegeta from a ruined timeline, master of the sword."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Android 17",
       "universe": "dragon_ball",
       "power": 92,
-      "image": "/static/auction/themes/dragon_ball/android_17.webp",
+      "image": "/static/auction/themes/dragon_ball/db_android_17.webp",
       "description": "Twin of 18, infinite energy, Tournament of Power MVP."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Android 18",
       "universe": "dragon_ball",
       "power": 91,
-      "image": "/static/auction/themes/dragon_ball/android_18.webp",
+      "image": "/static/auction/themes/dragon_ball/db_android_18.webp",
       "description": "Twin of 17, infinite energy, wife of Krillin."
     },
     {
@@ -165,7 +165,7 @@
       "name": "Tien Shinhan",
       "universe": "dragon_ball",
       "power": 85,
-      "image": "/static/auction/themes/dragon_ball/tien.webp",
+      "image": "/static/auction/themes/dragon_ball/db_tien.webp",
       "description": "Three-eyed martial artist, master of the Tri-Beam."
     },
     {
@@ -189,7 +189,7 @@
       "name": "Master Roshi",
       "universe": "dragon_ball",
       "power": 80,
-      "image": "/static/auction/themes/dragon_ball/roshi.webp",
+      "image": "/static/auction/themes/dragon_ball/db_roshi.webp",
       "description": "Turtle Hermit, inventor of the Kamehameha."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Garlic Jr.",
       "universe": "dragon_ball",
       "power": 78,
-      "image": "/static/auction/themes/dragon_ball/garlic_jr.webp",
+      "image": "/static/auction/themes/dragon_ball/db_garlic_jr.webp",
       "description": "Immortal villain who sought the Dragon Balls for eternity."
     },
     {
@@ -213,7 +213,7 @@
       "name": "King Cold",
       "universe": "dragon_ball",
       "power": 90,
-      "image": "/static/auction/themes/dragon_ball/king_cold.webp",
+      "image": "/static/auction/themes/dragon_ball/db_king_cold.webp",
       "description": "Father of Frieza and Cooler, former emperor of Universe 7."
     }
   ],

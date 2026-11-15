@@ -5,7 +5,7 @@
       "name": "Iron Man",
       "universe": "marvel",
       "power": 92,
-      "image": "/static/auction/themes/marvel/iron_man.webp",
+      "image": "/static/auction/themes/marvel/marvel_iron_man.webp",
       "description": "Tony Stark, genius billionaire in powered armor."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Doctor Strange",
       "universe": "marvel",
       "power": 93,
-      "image": "/static/auction/themes/marvel/doctor_strange.webp",
+      "image": "/static/auction/themes/marvel/marvel_doctor_strange.webp",
       "description": "Sorcerer Supreme, master of the mystic arts."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Captain America",
       "universe": "marvel",
       "power": 88,
-      "image": "/static/auction/themes/marvel/captain_america.webp",
+      "image": "/static/auction/themes/marvel/marvel_captain_america.webp",
       "description": "Steve Rogers, super-soldier and living symbol of freedom."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Black Panther",
       "universe": "marvel",
       "power": 89,
-      "image": "/static/auction/themes/marvel/black_panther.webp",
+      "image": "/static/auction/themes/marvel/marvel_black_panther.webp",
       "description": "T'Challa, king of Wakanda, enhanced by the Heart-Shaped Herb."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Captain Marvel",
       "universe": "marvel",
       "power": 96,
-      "image": "/static/auction/themes/marvel/captain_marvel.webp",
+      "image": "/static/auction/themes/marvel/marvel_captain_marvel.webp",
       "description": "Carol Danvers, cosmic-powered hero with binary form."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Scarlet Witch",
       "universe": "marvel",
       "power": 94,
-      "image": "/static/auction/themes/marvel/scarlet_witch.webp",
+      "image": "/static/auction/themes/marvel/marvel_scarlet_witch.webp",
       "description": "Wanda Maximoff, wielder of chaos magic."
     },
     {
@@ -109,7 +109,7 @@
       "name": "The Wasp",
       "universe": "marvel",
       "power": 80,
-      "image": "/static/auction/themes/marvel/wasp.webp",
+      "image": "/static/auction/themes/marvel/marvel_wasp.webp",
       "description": "Hope van Dyne, master of shrinking and bio-electric stings."
     },
     {
@@ -117,7 +117,7 @@
       "name": "Black Widow",
       "universe": "marvel",
       "power": 75,
-      "image": "/static/auction/themes/marvel/black_widow.webp",
+      "image": "/static/auction/themes/marvel/marvel_black_widow.webp",
       "description": "Natasha Romanoff, world-class spy and assassin."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Winter Soldier",
       "universe": "marvel",
       "power": 82,
-      "image": "/static/auction/themes/marvel/winter_soldier.webp",
+      "image": "/static/auction/themes/marvel/marvel_winter_soldier.webp",
       "description": "Bucky Barnes, enhanced super-soldier with cybernetic arm."
     },
     {
@@ -149,7 +149,7 @@
       "name": "War Machine",
       "universe": "marvel",
       "power": 86,
-      "image": "/static/auction/themes/marvel/war_machine.webp",
+      "image": "/static/auction/themes/marvel/marvel_war_machine.webp",
       "description": "James Rhodes, armored Avenger with heavy weaponry."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Spider-Man (Miles Morales)",
       "universe": "marvel",
       "power": 84,
-      "image": "/static/auction/themes/marvel/spider_man_miles.webp",
+      "image": "/static/auction/themes/marvel/marvel_spider_man_miles.webp",
       "description": "Miles Morales, Spider-Man with bio-electric venom blast."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Magneto",
       "universe": "marvel",
       "power": 92,
-      "image": "/static/auction/themes/marvel/magneto.webp",
+      "image": "/static/auction/themes/marvel/marvel_magneto.webp",
       "description": "Erik Lehnsherr, master of magnetism."
     },
     {
@@ -205,7 +205,7 @@
       "name": "Professor X",
       "universe": "marvel",
       "power": 90,
-      "image": "/static/auction/themes/marvel/professor_x.webp",
+      "image": "/static/auction/themes/marvel/marvel_professor_x.webp",
       "description": "Charles Xavier, world's most powerful telepath."
     },
     {
@@ -213,7 +213,7 @@
       "name": "Phoenix (Jean Grey)",
       "universe": "marvel",
       "power": 98,
-      "image": "/static/auction/themes/marvel/phoenix.webp",
+      "image": "/static/auction/themes/marvel/marvel_phoenix.webp",
       "description": "Jean Grey as host of the cosmic Phoenix Force."
     },
     {
@@ -221,7 +221,7 @@
       "name": "Silver Surfer",
       "universe": "marvel",
       "power": 96,
-      "image": "/static/auction/themes/marvel/silver_surfer.webp",
+      "image": "/static/auction/themes/marvel/marvel_silver_surfer.webp",
       "description": "Norrin Radd, herald of Galactus with Power Cosmic."
     },
     {
@@ -229,7 +229,7 @@
       "name": "Galactus",
       "universe": "marvel",
       "power": 100,
-      "image": "/static/auction/themes/marvel/galactus.webp",
+      "image": "/static/auction/themes/marvel/marvel_galactus.webp",
       "description": "Devourer of Worlds, cosmic entity of immense power."
     },
     {
@@ -253,7 +253,7 @@
       "name": "Abomination",
       "universe": "marvel",
       "power": 92,
-      "image": "/static/auction/themes/marvel/abomination.webp",
+      "image": "/static/auction/themes/marvel/marvel_abomination.webp",
       "description": "Emil Blonsky, gamma-irradiated monstrosity, Hulk's nemesis."
     }
   ],

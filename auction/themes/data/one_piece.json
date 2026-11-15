@@ -5,7 +5,7 @@
       "name": "Monkey D. Luffy",
       "universe": "one_piece",
       "power": 96,
-      "image": "/static/auction/themes/one_piece/luffy.webp",
+      "image": "/static/auction/themes/one_piece/op_luffy.webp",
       "description": "Captain of the Straw Hats, user of the Gum-Gum Fruit, aspiring Pirate King."
     },
     {
@@ -13,7 +13,7 @@
       "name": "Roronoa Zoro",
       "universe": "one_piece",
       "power": 93,
-      "image": "/static/auction/themes/one_piece/zoro.webp",
+      "image": "/static/auction/themes/one_piece/op_zoro.webp",
       "description": "Swordsman of the Straw Hats, master of Three Sword Style."
     },
     {
@@ -21,7 +21,7 @@
       "name": "Shanks",
       "universe": "one_piece",
       "power": 98,
-      "image": "/static/auction/themes/one_piece/shanks.webp",
+      "image": "/static/auction/themes/one_piece/op_shanks.webp",
       "description": "Red-Haired Emperor, Luffy's inspiration, master of Conqueror's Haki."
     },
     {
@@ -29,7 +29,7 @@
       "name": "Kaido",
       "universe": "one_piece",
       "power": 99,
-      "image": "/static/auction/themes/one_piece/kaido.webp",
+      "image": "/static/auction/themes/one_piece/op_kaido.webp",
       "description": "Strongest Creature, Beast Emperor, user of the Fish-Fish Fruit: Azure Dragon."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Marshall D. Teach (Blackbeard)",
       "universe": "one_piece",
       "power": 97,
-      "image": "/static/auction/themes/one_piece/blackbeard.webp",
+      "image": "/static/auction/themes/one_piece/op_blackbeard.webp",
       "description": "Emperor with two Devil Fruits, Darkness and Quake."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Edward Newgate (Whitebeard)",
       "universe": "one_piece",
       "power": 98,
-      "image": "/static/auction/themes/one_piece/whitebeard.webp",
+      "image": "/static/auction/themes/one_piece/op_whitebeard.webp",
       "description": "Strongest Man in the World, Emperor, Quake-Quake Fruit user."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Dracule Mihawk",
       "universe": "one_piece",
       "power": 95,
-      "image": "/static/auction/themes/one_piece/mihawk.webp",
+      "image": "/static/auction/themes/one_piece/op_mihawk.webp",
       "description": "World's Greatest Swordsman, former Warlord."
     },
     {
@@ -61,7 +61,7 @@
       "name": "Vinsmoke Sanji",
       "universe": "one_piece",
       "power": 91,
-      "image": "/static/auction/themes/one_piece/sanji.webp",
+      "image": "/static/auction/themes/one_piece/op_sanji.webp",
       "description": "Cook of the Straw Hats, Black Leg, master of Diable Jambe."
     },
     {
@@ -69,7 +69,7 @@
       "name": "Nami",
       "universe": "one_piece",
       "power": 82,
-      "image": "/static/auction/themes/one_piece/nami.webp",
+      "image": "/static/auction/themes/one_piece/op_nami.webp",
       "description": "Navigator of the Straw Hats, master of weather and Zeus."
     },
     {
@@ -77,7 +77,7 @@
       "name": "Usopp",
       "universe": "one_piece",
       "power": 78,
-      "image": "/static/auction/themes/one_piece/usopp.webp",
+      "image": "/static/auction/themes/one_piece/op_usopp.webp",
       "description": "Sniper of the Straw Hats, God Usopp, master of Pop Greens."
     },
     {
@@ -85,7 +85,7 @@
       "name": "Tony Tony Chopper",
       "universe": "one_piece",
       "power": 80,
-      "image": "/static/auction/themes/one_piece/chopper.webp",
+      "image": "/static/auction/themes/one_piece/op_chopper.webp",
       "description": "Doctor of the Straw Hats, Human-Human Fruit user, Monster Point."
     },
     {
@@ -93,7 +93,7 @@
       "name": "Nico Robin",
       "universe": "one_piece",
       "power": 88,
-      "image": "/static/auction/themes/one_piece/robin.webp",
+      "image": "/static/auction/themes/one_piece/op_robin.webp",
       "description": "Archaeologist of the Straw Hats, Flower-Flower Fruit user."
     },
     {
@@ -101,7 +101,7 @@
       "name": "Franky",
       "universe": "one_piece",
       "power": 86,
-      "image": "/static/auction/themes/one_piece/franky.webp",
+      "image": "/static/auction/themes/one_piece/op_franky.webp",
       "description": "Shipwright of the Straw Hats, cyborg, Cola-powered."
     },
     {
@@ -109,7 +109,7 @@
       "name": "Brook",
       "universe": "one_piece",
       "power": 84,
-      "image": "/static/auction/themes/one_piece/brook.webp",
+      "image": "/static/auction/themes/one_piece/op_brook.webp",
       "description": "Musician of the Straw Hats, Soul-Soul Fruit, Revive-Revive."
     },
     {
@@ -117,7 +117,7 @@
       "name": "Jinbe",
       "universe": "one_piece",
       "power": 92,
-      "image": "/static/auction/themes/one_piece/jinbe.webp",
+      "image": "/static/auction/themes/one_piece/op_jinbe.webp",
       "description": "Helmsman of the Straw Hats, former Warlord, Fish-Man Karate master."
     },
     {
@@ -125,7 +125,7 @@
       "name": "Trafalgar D. Water Law",
       "universe": "one_piece",
       "power": 93,
-      "image": "/static/auction/themes/one_piece/law.webp",
+      "image": "/static/auction/themes/one_piece/op_law.webp",
       "description": "Captain of the Heart Pirates, Op-Op Fruit user, Worst Generation."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Eustass Kid",
       "universe": "one_piece",
       "power": 92,
-      "image": "/static/auction/themes/one_piece/kid.webp",
+      "image": "/static/auction/themes/one_piece/op_kid.webp",
       "description": "Captain of the Kid Pirates, Magnet-Magnet Fruit, Worst Generation."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Boa Hancock",
       "universe": "one_piece",
       "power": 90,
-      "image": "/static/auction/themes/one_piece/hancock.webp",
+      "image": "/static/auction/themes/one_piece/op_hancock.webp",
       "description": "Empress of Amazon Lily, Love-Love Fruit, former Warlord."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Donquixote Doflamingo",
       "universe": "one_piece",
       "power": 91,
-      "image": "/static/auction/themes/one_piece/doflamingo.webp",
+      "image": "/static/auction/themes/one_piece/op_doflamingo.webp",
       "description": "Heavenly Demon, String-String Fruit, former Warlord."
     },
     {
@@ -157,7 +157,7 @@
       "name": "Charlotte Katakuri",
       "universe": "one_piece",
       "power": 94,
-      "image": "/static/auction/themes/one_piece/katakuri.webp",
+      "image": "/static/auction/themes/one_piece/op_katakuri.webp",
       "description": "Sweet Commander, Mochi-Mochi Fruit, perfect Observation Haki."
     },
     {
@@ -165,7 +165,7 @@
       "name": "Charlotte Linlin (Big Mom)",
       "universe": "one_piece",
       "power": 98,
-      "image": "/static/auction/themes/one_piece/big_mom.webp",
+      "image": "/static/auction/themes/one_piece/op_big_mom.webp",
       "description": "Emperor, Soul-Soul Fruit, ruler of Totto Land."
     },
     {
@@ -173,7 +173,7 @@
       "name": "Marco the Phoenix",
       "universe": "one_piece",
       "power": 92,
-      "image": "/static/auction/themes/one_piece/marco.webp",
+      "image": "/static/auction/themes/one_piece/op_marco.webp",
       "description": "Former 1st Division Commander, Phoenix Fruit, Whitebeard's son."
     },
     {
@@ -181,7 +181,7 @@
       "name": "Portgas D. Ace",
       "universe": "one_piece",
       "power": 91,
-      "image": "/static/auction/themes/one_piece/ace.webp",
+      "image": "/static/auction/themes/one_piece/op_ace.webp",
       "description": "Fire-Fist, Flame-Flame Fruit, Luffy's brother, Whitebeard's son."
     },
     {
@@ -189,7 +189,7 @@
       "name": "Sabo",
       "universe": "one_piece",
       "power": 93,
-      "image": "/static/auction/themes/one_piece/sabo.webp",
+      "image": "/static/auction/themes/one_piece/op_sabo.webp",
       "description": "Chief of Staff of Revolutionary Army, Flame-Flame Fruit."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Sakazuki (Akainu)",
       "universe": "one_piece",
       "power": 96,
-      "image": "/static/auction/themes/one_piece/akainu.webp",
+      "image": "/static/auction/themes/one_piece/op_akainu.webp",
       "description": "Fleet Admiral, Magma-Magma Fruit, absolute justice."
     },
     {
@@ -205,7 +205,7 @@
       "name": "Borsalino (Kizaru)",
       "universe": "one_piece",
       "power": 95,
-      "image": "/static/auction/themes/one_piece/kizaru.webp",
+      "image": "/static/auction/themes/one_piece/op_kizaru.webp",
       "description": "Admiral, Light-Light Fruit, fastest man in the Marines."
     },
     {
@@ -213,7 +213,7 @@
       "name": "Kuzan (Aokiji)",
       "universe": "one_piece",
       "power": 94,
-      "image": "/static/auction/themes/one_piece/aokiji.webp",
+      "image": "/static/auction/themes/one_piece/op_aokiji.webp",
       "description": "Former Admiral, Ice-Ice Fruit, wandered the Grand Line."
     },
     {
@@ -221,7 +221,7 @@
       "name": "Gol D. Roger",
       "universe": "one_piece",
       "power": 100,
-      "image": "/static/auction/themes/one_piece/roger.webp",
+      "image": "/static/auction/themes/one_piece/op_roger.webp",
       "description": "Pirate King, conqueror of the Grand Line, father of Ace."
     }
   ],

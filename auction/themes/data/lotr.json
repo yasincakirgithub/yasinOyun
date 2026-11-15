@@ -29,7 +29,7 @@
       "name": "Legolas",
       "universe": "lord_of_the_rings",
       "power": 85,
-      "image": "/static/auction/themes/lotr/legolas.webp",
+      "image": "/static/auction/themes/lotr/lotr_legolas.webp",
       "description": "Elven prince of Mirkwood, master archer, and member of the Fellowship."
     },
     {
@@ -37,7 +37,7 @@
       "name": "Frodo Baggins",
       "universe": "lord_of_the_rings",
       "power": 45,
-      "image": "/static/auction/themes/lotr/frodo.webp",
+      "image": "/static/auction/themes/lotr/lotr_frodo.webp",
       "description": "The Ring-bearer who carried the One Ring to Mount Doom."
     },
     {
@@ -45,7 +45,7 @@
       "name": "Samwise Gamgee",
       "universe": "lord_of_the_rings",
       "power": 55,
-      "image": "/static/auction/themes/lotr/sam.webp",
+      "image": "/static/auction/themes/lotr/lotr_sam.webp",
       "description": "Frodo's loyal gardener and companion, the true hero of the quest."
     },
     {
@@ -53,7 +53,7 @@
       "name": "Gimli",
       "universe": "lord_of_the_rings",
       "power": 80,
-      "image": "/static/auction/themes/lotr/gimli.webp",
+      "image": "/static/auction/themes/lotr/lotr_gimli.webp",
       "description": "Dwarf warrior, son of Glóin, and member of the Fellowship."
     },
     {
@@ -133,7 +133,7 @@
       "name": "Witch-king of Angmar",
       "universe": "lord_of_the_rings",
       "power": 88,
-      "image": "/static/auction/themes/lotr/witch_king.webp",
+      "image": "/static/auction/themes/lotr/lotr_witch_king.webp",
       "description": "Lord of the Nazgûl, Sauron's most powerful servant."
     },
     {
@@ -141,7 +141,7 @@
       "name": "Durin's Bane (Balrog)",
       "universe": "lord_of_the_rings",
       "power": 93,
-      "image": "/static/auction/themes/lotr/balrog.webp",
+      "image": "/static/auction/themes/lotr/lotr_balrog.webp",
       "description": "Ancient demon of shadow and flame, awakened in Moria."
     },
     {
@@ -149,7 +149,7 @@
       "name": "Tom Bombadil",
       "universe": "lord_of_the_rings",
       "power": 98,
-      "image": "/static/auction/themes/lotr/tom_bombadil.webp",
+      "image": "/static/auction/themes/lotr/lotr_tom_bombadil.webp",
       "description": "Enigmatic being of unknown origin, master of the Old Forest."
     },
     {
@@ -197,7 +197,7 @@
       "name": "Gríma Wormtongue",
       "universe": "lord_of_the_rings",
       "power": 40,
-      "image": "/static/auction/themes/lotr/grima.webp",
+      "image": "/static/auction/themes/lotr/lotr_grima.webp",
       "description": "Treacherous counselor of Théoden, spy for Saruman."
     }
   ],

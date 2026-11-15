@@ -93,7 +93,7 @@
       "name": "Martian Manhunter",
       "universe": "dc",
       "power": 94,
-      "image": "/static/auction/themes/dc/martian_manhunter.webp",
+      "image": "/static/auction/themes/dc/dc_martian_manhunter.webp",
       "description": "J'onn J'onzz, last Green Martian, powerful telepath."
     },
     {
@@ -205,7 +205,7 @@
       "name": "Ra's al Ghul",
       "universe": "dc",
       "power": 85,
-      "image": "/static/auction/themes/dc/ra_al_ghul.webp",
+      "image": "/static/auction/themes/dc/dc_ra_al_ghul.webp",
       "description": "Immortal eco-terrorist, leader of the League of Assassins."
     },
     {
@@ -213,7 +213,7 @@
       "name": "General Zod",
       "universe": "dc",
       "power": 95,
-      "image": "/static/auction/themes/dc/general_zod.webp",
+      "image": "/static/auction/themes/dc/dc_general_zod.webp",
       "description": "Kryptonian military leader, sworn enemy of Superman."
     },
     {
@@ -221,7 +221,7 @@
       "name": "Star Sapphire (Carol Ferris)",
       "universe": "dc",
       "power": 88,
-      "image": "/static/auction/themes/dc/star_sapphire.webp",
+      "image": "/static/auction/themes/dc/dc_star_sapphire.webp",
       "description": "Wielder of the Violet Power Ring, powered by love."
     }
   ],
