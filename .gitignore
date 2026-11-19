@@ -26,6 +26,9 @@ media/
 .mypy_cache/
 .ruff_cache/
 
+# Script çalışma profilleri
+.chrome_profile_auction/
+
 # OS / editors
 .DS_Store
 .idea/

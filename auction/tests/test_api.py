@@ -68,7 +68,7 @@ class RoomApiTests(AuctionApiTestCase):
         self.assertEqual(state['room']['status'], 'WAITING')
         self.assertEqual(state['me']['display_name'], 'Host')
         self.assertTrue(state['permissions']['is_host'])
-        self.assertEqual(len(state['theme_info']['themes']), 10)
+        self.assertGreaterEqual(len(state['theme_info']['themes']), 10)  # 10+ themes including Kurtlar Vadisi
 
         guest_token, payload = self.join_room(room_code, 'Guest')
         self.assertFalse(payload['rejoined'])

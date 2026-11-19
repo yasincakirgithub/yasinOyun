@@ -4,7 +4,7 @@
       "id": "vg_kratos",
       "name": "Kratos",
       "universe": "video_games",
-      "power": 98,
+      "power": 97,
       "image": "/static/auction/themes/video_games/vg_kratos.webp",
       "description": "Ghost of Sparta, God of War, slayer of gods across mythologies."
     },
@@ -20,7 +20,7 @@
       "id": "vg_lara_croft",
       "name": "Lara Croft",
       "universe": "video_games",
-      "power": 88,
+      "power": 94,
       "image": "/static/auction/themes/video_games/vg_lara_croft.webp",
       "description": "Tomb Raider, archaeologist, survivor of impossible odds."
     },
@@ -28,7 +28,7 @@
       "id": "vg_geralt",
       "name": "Geralt of Rivia",
       "universe": "video_games",
-      "power": 90,
+      "power": 96,
       "image": "/static/auction/themes/video_games/vg_geralt.webp",
       "description": "Witcher, monster hunter, the White Wolf of Kaer Morhen."
     },
@@ -44,7 +44,7 @@
       "id": "vg_mario",
       "name": "Mario",
       "universe": "video_games",
-      "power": 87,
+      "power": 98,
       "image": "/static/auction/themes/video_games/vg_mario.webp",
       "description": "Nintendo's mascot, plumber, savior of the Mushroom Kingdom."
     },
@@ -60,7 +60,7 @@
       "id": "vg_link",
       "name": "Link",
       "universe": "video_games",
-      "power": 91,
+      "power": 97,
       "image": "/static/auction/themes/video_games/vg_link.webp",
       "description": "Hero of Hyrule, wielder of the Master Sword, reincarnated legend."
     },
@@ -68,7 +68,7 @@
       "id": "vg_samus",
       "name": "Samus Aran",
       "universe": "video_games",
-      "power": 92,
+      "power": 95,
       "image": "/static/auction/themes/video_games/vg_samus.webp",
       "description": "Bounty hunter, Chozo-raised, Metroid's protagonist."
     },
@@ -84,7 +84,7 @@
       "id": "vg_sephiroth",
       "name": "Sephiroth",
       "universe": "video_games",
-      "power": 97,
+      "power": 94,
       "image": "/static/auction/themes/video_games/vg_sephiroth.webp",
       "description": "One-Winged Angel, Jenova's legacy, Cloud's nemesis."
     },
@@ -92,7 +92,7 @@
       "id": "vg_dante",
       "name": "Dante",
       "universe": "video_games",
-      "power": 95,
+      "power": 92,
       "image": "/static/auction/themes/video_games/vg_dante.webp",
       "description": "Son of Sparda, devil hunter, Devil May Cry protagonist."
     },
@@ -108,7 +108,7 @@
       "id": "vg_ezio",
       "name": "Ezio Auditore",
       "universe": "video_games",
-      "power": 87,
+      "power": 93,
       "image": "/static/auction/themes/video_games/vg_ezio.webp",
       "description": "Master Assassin, Mentor of the Italian Brotherhood."
     },
@@ -156,7 +156,7 @@
       "id": "vg_arthur_morgan",
       "name": "Arthur Morgan",
       "universe": "video_games",
-      "power": 84,
+      "power": 94,
       "image": "/static/auction/themes/video_games/vg_arthur_morgan.webp",
       "description": "Dutch's right hand, Red Dead Redemption 2's protagonist."
     },
@@ -220,7 +220,7 @@
       "id": "vg_nathan_drake",
       "name": "Nathan Drake",
       "universe": "video_games",
-      "power": 88,
+      "power": 92,
       "image": "/static/auction/themes/video_games/vg_nathan_drake.webp",
       "description": "Treasure hunter, Uncharted protagonist, descendant of Francis Drake."
     },

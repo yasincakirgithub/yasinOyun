@@ -1,0 +1,292 @@
+{
+  "characters": [
+    {
+      "id": "kv_polat",
+      "name": "Polat Alemdar",
+      "actor": "Necati Şaşmaz",
+      "universe": "kurtlar_vadisi",
+      "power": 100,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_polat.webp",
+      "description": "MİT ajanı Ali Candan, yani Polat Alemdar. Kurtlar Vadisi'nin merkezî kahramanı ve adaletin simgesi."
+    },
+    {
+      "id": "kv_memati",
+      "name": "Memati Baş",
+      "actor": "Gürkan Uygun",
+      "universe": "kurtlar_vadisi",
+      "power": 97,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_memati.webp",
+      "description": "Çakır'ın sağ kolu, efsanevi komutan. 'Amca' lakabıyla anılır, sadakat ve güç timsali."
+    },
+    {
+      "id": "kv_baron",
+      "name": "Mehmet Karahanlı (Baron)",
+      "actor": "Zafer Ergin",
+      "universe": "kurtlar_vadisi",
+      "power": 95,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_baron.webp",
+      "description": "Kurtlar Konseyi'nin başı, iş insanı ve mafya dünyasının en güçlü adamı."
+    },
+    {
+      "id": "kv_aslan",
+      "name": "Aslan Akbey",
+      "actor": "Selçuk Yöntem",
+      "universe": "kurtlar_vadisi",
+      "power": 93,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_aslan.webp",
+      "description": "Polat'ın akıl hocası, KGT başkanı. Strateji ve tecrübenin simgesi."
+    },
+    {
+      "id": "kv_cakir",
+      "name": "Süleyman Çakır",
+      "actor": "Oktay Kaynarca",
+      "universe": "kurtlar_vadisi",
+      "power": 92,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_cakir.webp",
+      "description": "Mafya babası. Polat'ın can dostu ve ortağı; vadideki güçlü figürlerden biri."
+    },
+    {
+      "id": "kv_abdulhey",
+      "name": "Abdülhey Çoban",
+      "actor": "Kenan Çoban",
+      "universe": "kurtlar_vadisi",
+      "power": 90,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_abdulhey.webp",
+      "description": "Polat'ın yanına yerleştirilen sağ kol, Aslan Akbey'in güvenilir adamı."
+    },
+    {
+      "id": "kv_elif",
+      "name": "Elif Eylül",
+      "actor": "Özgü Namal",
+      "universe": "kurtlar_vadisi",
+      "power": 89,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_elif.webp",
+      "description": "Polat Alemdar'ın sevgilisi, avukat. Zekâsı ve cesaretiyle vadide ayrıcalıklı bir isim."
+    },
+    {
+      "id": "kv_dogu",
+      "name": "Doğu Eşrefoğlu",
+      "actor": "Altan Akışık",
+      "universe": "kurtlar_vadisi",
+      "power": 87,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_dogu.webp",
+      "description": "Emekli üst düzey devlet görevlisi, Aslan Akbey'in akıl hocası."
+    },
+    {
+      "id": "kv_seyfo",
+      "name": "Seyfo Dayı",
+      "actor": "Nihat Nikerel",
+      "universe": "kurtlar_vadisi",
+      "power": 86,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_seyfo.webp",
+      "description": "Emektar kabadayı Duran Şatıroğlu'nun en sadık adamı."
+    },
+    {
+      "id": "kv_lazziya",
+      "name": "Laz Ziya",
+      "actor": "İstemi Betil",
+      "universe": "kurtlar_vadisi",
+      "power": 85,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_lazziya.webp",
+      "description": "Konseyin en büyük gelir kaynağı olan silah ticaretinin sorumlusu."
+    },
+    {
+      "id": "kv_safiye",
+      "name": "Safiye Karahanlı",
+      "actor": "Begüm Kütük Yaşaroğlu",
+      "universe": "kurtlar_vadisi",
+      "power": 85,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_safiye.webp",
+      "description": "Mehmet Karahanlı'nın kızı, Polat'ın sevgilisi; ailenin kalbi."
+    },
+    {
+      "id": "kv_nergiz",
+      "name": "Nergiz Karahanlı",
+      "actor": "Güven Hokna",
+      "universe": "kurtlar_vadisi",
+      "power": 84,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_nergiz.webp",
+      "description": "Mehmet Karahanlı'nın eşi, Polat ve Safiye'nin annesi; soğukkanlı bir güç."
+    },
+    {
+      "id": "kv_erhan",
+      "name": "Güllü Erhan",
+      "actor": "Erhan Ufak",
+      "universe": "kurtlar_vadisi",
+      "power": 83,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_erhan.webp",
+      "description": "Seyfo Dayı'nın yeğeni; Polat'ın eski dostu, sef bir yol arkadaşı."
+    },
+    {
+      "id": "kv_kilic",
+      "name": "Kılıç",
+      "actor": "Attila Olgaç",
+      "universe": "kurtlar_vadisi",
+      "power": 83,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_kilic.webp",
+      "description": "Mehmet Karahanlı'nın sağ kolu, eski kabadayı."
+    },
+    {
+      "id": "kv_nesrin",
+      "name": "Nesrin Çakır",
+      "actor": "İpek Tenolcay",
+      "universe": "kurtlar_vadisi",
+      "power": 82,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_nesrin.webp",
+      "description": "Süleyman Çakır'ın eşi, Laz Ziya'nın kızı."
+    },
+    {
+      "id": "kv_testere",
+      "name": "Testere Necmi",
+      "actor": "Tarık Ünlüoğlu",
+      "universe": "kurtlar_vadisi",
+      "power": 82,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_testere.webp",
+      "description": "Konseyin silahlı gücü ve tetikçisi; korku veren bir figür."
+    },
+    {
+      "id": "kv_derya",
+      "name": "Derya Çakır",
+      "actor": "Seray Sever",
+      "universe": "kurtlar_vadisi",
+      "power": 80,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_derya.webp",
+      "description": "Süleyman Çakır'ın kız kardeşi."
+    },
+    {
+      "id": "kv_husrev",
+      "name": "Hüsrev Ağa",
+      "actor": "Baykal Saran",
+      "universe": "kurtlar_vadisi",
+      "power": 80,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_husrev.webp",
+      "description": "Konseyin gelenekçi kanadından, uyuşturucu ticaretinin sorumlusu."
+    },
+    {
+      "id": "kv_meral",
+      "name": "Meral Yılmaz",
+      "actor": "Müge Ulusoy",
+      "universe": "kurtlar_vadisi",
+      "power": 79,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_meral.webp",
+      "description": "Nesrin Çakır'ın kardeşi, Laz Ziya'nın kızı."
+    },
+    {
+      "id": "kv_canan",
+      "name": "Canan Çavan",
+      "actor": "Hande Kazanova",
+      "universe": "kurtlar_vadisi",
+      "power": 78,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_canan.webp",
+      "description": "Elif'in arkadaşı, avukat; adaletin genç yüzü."
+    },
+    {
+      "id": "kv_samuel",
+      "name": "Samuel Vanunu",
+      "actor": "Nişan Şirinyan",
+      "universe": "kurtlar_vadisi",
+      "power": 78,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_samuel.webp",
+      "description": "Konseyin dış ilişkilerinden sorumlu üyesi."
+    },
+    {
+      "id": "kv_nizamettin",
+      "name": "Nizamettin Güvenç",
+      "actor": "Adnan Biricik",
+      "universe": "kurtlar_vadisi",
+      "power": 77,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_nizamettin.webp",
+      "description": "Konseyin hukuki işlerini takip eden, devlet içinde derin bağlantıları olan adamı."
+    },
+    {
+      "id": "kv_tombalaci",
+      "name": "Tombalacı Mehmet",
+      "actor": "Haldun Boysan",
+      "universe": "kurtlar_vadisi",
+      "power": 76,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_tombalaci.webp",
+      "description": "Konseyin kumarhane işletmelerinden sorumlu üyesi."
+    },
+    {
+      "id": "kv_iplikci",
+      "name": "İplikçi Nedim",
+      "actor": "İsmail İncekara",
+      "universe": "kurtlar_vadisi",
+      "power": 75,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_iplikci.webp",
+      "description": "Konseyin para kasası; bütün üyelerin paralarını o yönetir."
+    },
+    {
+      "id": "kv_tuncay",
+      "name": "Tuncay Kantarcı",
+      "actor": "Osman Wöber",
+      "universe": "kurtlar_vadisi",
+      "power": 74,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_tuncay.webp",
+      "description": "Konseyin bütün gümrük işlerini yöneten adamı."
+    },
+    {
+      "id": "kv_halil",
+      "name": "Halil İbrahim Kapar",
+      "actor": "Sönmez Atasoy",
+      "universe": "kurtlar_vadisi",
+      "power": 73,
+      "image": "/static/auction/themes/kurtlar_vadisi/kv_halil.webp",
+      "description": "Konseye sonradan dahil olan uyuşturucu kaçakçısı."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "kv_mit_ekibi",
+      "name": "MİT Ekibi",
+      "description": "Polat ve çekirdek ekibi bir araya geldiğinde operasyon gücü katlanarak artar.",
+      "required_character_ids": ["kv_polat", "kv_aslan", "kv_elif", "kv_memati"],
+      "bonus": {"type": "fixed", "value": 50}
+    },
+    {
+      "id": "kv_kurtlar_konseyi",
+      "name": "Kurtlar Konseyi",
+      "description": "Konseyin bütün halkası aynı masada toplanırsa suç imparatorluğu doğar.",
+      "required_character_ids": [
+        "kv_baron", "kv_lazziya", "kv_husrev", "kv_nizamettin",
+        "kv_iplikci", "kv_tuncay", "kv_samuel"
+      ],
+      "bonus": {"type": "fixed", "value": 45}
+    },
+    {
+      "id": "kv_vadideki_komutanlar",
+      "name": "Vadideki Komutanlar",
+      "description": "Çakır, Memati, Abdülhey ve Kılıç gibi vadideki güçler bir arada toplanır.",
+      "required_character_ids": ["kv_cakir", "kv_memati", "kv_abdulhey", "kv_kilic"],
+      "bonus": {"type": "fixed", "value": 45}
+    },
+    {
+      "id": "kv_kadin_gucu",
+      "name": "Kadın Gücü",
+      "description": "Vadideki güçlü kadın karakterler dayanışma hâlinde bir araya gelir.",
+      "required_character_ids": ["kv_elif", "kv_nesrin", "kv_safiye", "kv_nergiz", "kv_meral"],
+      "bonus": {"type": "fixed", "value": 40}
+    },
+    {
+      "id": "kv_baron_ve_ekibi",
+      "name": "Baron ve Ekibi",
+      "description": "Baron'un çevresindeki kanlı ekip toplandığında hiçbir rakip ayakta kalamaz.",
+      "required_character_ids": ["kv_baron", "kv_testere", "kv_husrev", "kv_tombalaci"],
+      "bonus": {"type": "fixed", "value": 40}
+    },
+    {
+      "id": "kv_arkadaslik",
+      "name": "Eski Dostlar",
+      "description": "Polat'ın çocukluk yoldaşları ve eski dostları yeniden buluşur.",
+      "required_character_ids": ["kv_polat", "kv_erhan", "kv_seyfo", "kv_dogu"],
+      "bonus": {"type": "fixed", "value": 30}
+    },
+    {
+      "id": "kv_aile",
+      "name": "Karahanlı Ailesi",
+      "description": "Aile reisi, eşi ve kızı birlikte hareket ettiğinde hiçbir güç onlara dayanamaz.",
+      "required_character_ids": ["kv_baron", "kv_nergiz", "kv_safiye"],
+      "bonus": {"type": "fixed", "value": 25}
+    }
+  ]
+}

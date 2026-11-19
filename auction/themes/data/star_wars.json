@@ -4,7 +4,7 @@
       "id": "sw_darth_vader",
       "name": "Darth Vader",
       "universe": "star_wars",
-      "power": 97,
+      "power": 100,
       "image": "/static/auction/themes/star_wars/sw_darth_vader.webp",
       "description": "Chosen One, Sith Lord, enforcer of the Empire."
     },
@@ -12,7 +12,7 @@
       "id": "sw_luke_skywalker",
       "name": "Luke Skywalker",
       "universe": "star_wars",
-      "power": 95,
+      "power": 98,
       "image": "/static/auction/themes/star_wars/sw_luke_skywalker.webp",
       "description": "Last Jedi, son of Vader, redeemer of Anakin Skywalker."
     },
@@ -20,7 +20,7 @@
       "id": "sw_yoda",
       "name": "Yoda",
       "universe": "star_wars",
-      "power": 98,
+      "power": 97,
       "image": "/static/auction/themes/star_wars/sw_yoda.webp",
       "description": "Grand Master of the Jedi Order, 900 years old."
     },
@@ -36,7 +36,7 @@
       "id": "sw_obi_wan",
       "name": "Obi-Wan Kenobi",
       "universe": "star_wars",
-      "power": 93,
+      "power": 96,
       "image": "/static/auction/themes/star_wars/sw_obi_wan.webp",
       "description": "Master of Soresu, mentor to Anakin and Luke."
     },
@@ -44,7 +44,7 @@
       "id": "sw_darth_maul",
       "name": "Darth Maul",
       "universe": "star_wars",
-      "power": 92,
+      "power": 93,
       "image": "/static/auction/themes/star_wars/sw_darth_maul.webp",
       "description": "Sith apprentice, dual-bladed lightsaber, survived bisection."
     },
@@ -52,7 +52,7 @@
       "id": "sw_mace_windu",
       "name": "Mace Windu",
       "universe": "star_wars",
-      "power": 94,
+      "power": 93,
       "image": "/static/auction/themes/star_wars/sw_mace_windu.webp",
       "description": "Master of Vaapad, senior Jedi Council member."
     },
@@ -60,7 +60,7 @@
       "id": "sw_qui_gon",
       "name": "Qui-Gon Jinn",
       "universe": "star_wars",
-      "power": 91,
+      "power": 90,
       "image": "/static/auction/themes/star_wars/sw_qui_gon.webp",
       "description": "Maverick Jedi, discoverer of the Chosen One."
     },
@@ -76,7 +76,7 @@
       "id": "sw_anakin_skywalker",
       "name": "Anakin Skywalker",
       "universe": "star_wars",
-      "power": 96,
+      "power": 95,
       "image": "/static/auction/themes/star_wars/sw_anakin_skywalker.webp",
       "description": "Chosen One, most powerful Jedi of his generation before fall."
     },
@@ -84,7 +84,7 @@
       "id": "sw_ahsoka_tano",
       "name": "Ahsoka Tano",
       "universe": "star_wars",
-      "power": 92,
+      "power": 91,
       "image": "/static/auction/themes/star_wars/sw_ahsoka_tano.webp",
       "description": "Anakin's Padawan, survivor of Order 66, dual white blades."
     },
@@ -116,7 +116,7 @@
       "id": "sw_han_solo",
       "name": "Han Solo",
       "universe": "star_wars",
-      "power": 80,
+      "power": 91,
       "image": "/static/auction/themes/star_wars/sw_han_solo.webp",
       "description": "Smuggler, hero of the Rebellion, captain of the Falcon."
     },
@@ -132,7 +132,7 @@
       "id": "sw_lando_calrissian",
       "name": "Lando Calrissian",
       "universe": "star_wars",
-      "power": 81,
+      "power": 84,
       "image": "/static/auction/themes/star_wars/sw_lando_calrissian.webp",
       "description": "Baron Administrator, gambler, hero of the Battle of Endor."
     },
@@ -140,7 +140,7 @@
       "id": "sw_boba_fett",
       "name": "Boba Fett",
       "universe": "star_wars",
-      "power": 86,
+      "power": 87,
       "image": "/static/auction/themes/star_wars/sw_boba_fett.webp",
       "description": "Legendary bounty hunter, clone of Jango Fett."
     },
@@ -148,7 +148,7 @@
       "id": "sw_jango_fett",
       "name": "Jango Fett",
       "universe": "star_wars",
-      "power": 85,
+      "power": 86,
       "image": "/static/auction/themes/star_wars/sw_jango_fett.webp",
       "description": "Template for the clone army, premier bounty hunter."
     },
@@ -180,7 +180,7 @@
       "id": "sw_general_grievous",
       "name": "General Grievous",
       "universe": "star_wars",
-      "power": 90,
+      "power": 88,
       "image": "/static/auction/themes/star_wars/sw_general_grievous.webp",
       "description": "Cyborg Supreme Commander, Jedi hunter, four lightsabers."
     },
@@ -196,7 +196,7 @@
       "id": "sw_kanan_jarrus",
       "name": "Kanan Jarrus",
       "universe": "star_wars",
-      "power": 86,
+      "power": 82,
       "image": "/static/auction/themes/star_wars/sw_kanan_jarrus.webp",
       "description": "Jedi survivor, leader of the Spectres, blinded by Maul."
     },
@@ -204,7 +204,7 @@
       "id": "sw_ezra_bridger",
       "name": "Ezra Bridger",
       "universe": "star_wars",
-      "power": 87,
+      "power": 81,
       "image": "/static/auction/themes/star_wars/sw_ezra_bridger.webp",
       "description": "Jedi Padawan, Lothal's liberator, entered the World Between Worlds."
     }

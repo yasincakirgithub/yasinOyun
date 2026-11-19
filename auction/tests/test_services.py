@@ -480,7 +480,8 @@ class AuctionProgressionTests(TestCase):
 
         self.assertEqual(guest.owned_characters, ['marvel_iron_man'])
         self.assertEqual(guest.budget, room.starting_budget - 300)
-        self.assertEqual(guest.total_power, 92)
+        # Iron Man power was rebalanced from 92 to 96
+        self.assertEqual(guest.total_power, 96)
         self.assertEqual(room.current_character_index, 1)
 
     def test_all_characters_finish_the_game_and_persist_results(self):

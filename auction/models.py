@@ -32,6 +32,7 @@ class AuctionRoom(models.Model):
     starting_bid = models.PositiveIntegerField(default=100)  # in cents ($1.00)
     auction_duration = models.PositiveSmallIntegerField(default=20)  # seconds
     max_players = models.PositiveSmallIntegerField(default=8)
+    max_characters_per_player = models.PositiveSmallIntegerField(default=0)  # 0 = unlimited
     extension_threshold = models.PositiveSmallIntegerField(default=3)  # seconds
     extension_duration = models.PositiveSmallIntegerField(default=5)  # seconds
 

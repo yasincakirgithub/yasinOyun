@@ -113,6 +113,16 @@ THEME_METADATA = {
         'accent_2': '#a855f7',
         'icon': '🎮',
     },
+    'kurtlar_vadisi': {
+        'id': 'kurtlar_vadisi',
+        'name': 'Kurtlar Vadisi',
+        'description': 'Efsanevi Türk dizisi Kurtlar Vadisi karakterleri',
+        'cover_image': '/static/auction/themes/kurtlar_vadisi/cover.webp',
+        'character_count': 25,
+        'accent': '#dc2626',
+        'accent_2': '#fbbf24',
+        'icon': '🐺',
+    },
 }
 
 

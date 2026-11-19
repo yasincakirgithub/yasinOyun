@@ -4,7 +4,7 @@
       "id": "dc_superman",
       "name": "Superman",
       "universe": "dc",
-      "power": 98,
+      "power": 100,
       "image": "/static/auction/themes/dc/dc_superman.webp",
       "description": "Clark Kent, the Last Son of Krypton, Earth's greatest hero."
     },
@@ -12,7 +12,7 @@
       "id": "dc_batman",
       "name": "Batman",
       "universe": "dc",
-      "power": 90,
+      "power": 98,
       "image": "/static/auction/themes/dc/dc_batman.webp",
       "description": "Bruce Wayne, the Dark Knight of Gotham City."
     },
@@ -20,7 +20,7 @@
       "id": "dc_wonder_woman",
       "name": "Wonder Woman",
       "universe": "dc",
-      "power": 95,
+      "power": 97,
       "image": "/static/auction/themes/dc/dc_wonder_woman.webp",
       "description": "Diana of Themyscira, Amazonian princess and demigoddess."
     },
@@ -28,7 +28,7 @@
       "id": "dc_flash",
       "name": "The Flash",
       "universe": "dc",
-      "power": 92,
+      "power": 96,
       "image": "/static/auction/themes/dc/dc_flash.webp",
       "description": "Barry Allen, fastest man alive, connected to the Speed Force."
     },
@@ -36,7 +36,7 @@
       "id": "dc_darkseid",
       "name": "Darkseid",
       "universe": "dc",
-      "power": 100,
+      "power": 99,
       "image": "/static/auction/themes/dc/dc_darkseid.webp",
       "description": "Lord of Apokolips, seeker of the Anti-Life Equation."
     },
@@ -44,7 +44,7 @@
       "id": "dc_joker",
       "name": "Joker",
       "universe": "dc",
-      "power": 75,
+      "power": 95,
       "image": "/static/auction/themes/dc/dc_joker.webp",
       "description": "Clown Prince of Crime, Batman's arch-nemesis."
     },
@@ -52,7 +52,7 @@
       "id": "dc_aquaman",
       "name": "Aquaman",
       "universe": "dc",
-      "power": 88,
+      "power": 91,
       "image": "/static/auction/themes/dc/dc_aquaman.webp",
       "description": "Arthur Curry, King of Atlantis, master of the seas."
     },
@@ -68,7 +68,7 @@
       "id": "dc_supergirl",
       "name": "Supergirl",
       "universe": "dc",
-      "power": 94,
+      "power": 92,
       "image": "/static/auction/themes/dc/dc_supergirl.webp",
       "description": "Kara Zor-El, Superman's cousin, last daughter of Krypton."
     },
@@ -84,7 +84,7 @@
       "id": "dc_cyborg",
       "name": "Cyborg",
       "universe": "dc",
-      "power": 87,
+      "power": 89,
       "image": "/static/auction/themes/dc/dc_cyborg.webp",
       "description": "Victor Stone, technologically enhanced Justice League member."
     },
@@ -140,7 +140,7 @@
       "id": "dc_lex_luthor",
       "name": "Lex Luthor",
       "universe": "dc",
-      "power": 85,
+      "power": 90,
       "image": "/static/auction/themes/dc/dc_lex_luthor.webp",
       "description": "Genius billionaire, Superman's greatest intellectual rival."
     },
@@ -148,7 +148,7 @@
       "id": "dc_brainiac",
       "name": "Brainiac",
       "universe": "dc",
-      "power": 92,
+      "power": 88,
       "image": "/static/auction/themes/dc/dc_brainiac.webp",
       "description": "Coluan superintelligence, collector of worlds."
     },
@@ -156,7 +156,7 @@
       "id": "dc_sinestro",
       "name": "Sinestro",
       "universe": "dc",
-      "power": 90,
+      "power": 88,
       "image": "/static/auction/themes/dc/dc_sinestro.webp",
       "description": "Former Green Lantern, wielder of the Yellow Power Ring."
     },
@@ -164,7 +164,7 @@
       "id": "dc_black_adam",
       "name": "Black Adam",
       "universe": "dc",
-      "power": 96,
+      "power": 93,
       "image": "/static/auction/themes/dc/dc_black_adam.webp",
       "description": "Teth-Adam, ancient Egyptian empowered by six gods."
     },
@@ -180,7 +180,7 @@
       "id": "dc_deathstroke",
       "name": "Deathstroke",
       "universe": "dc",
-      "power": 86,
+      "power": 87,
       "image": "/static/auction/themes/dc/dc_deathstroke.webp",
       "description": "Slade Wilson, world's deadliest assassin."
     },
@@ -188,7 +188,7 @@
       "id": "dc_harley_quinn",
       "name": "Harley Quinn",
       "universe": "dc",
-      "power": 78,
+      "power": 86,
       "image": "/static/auction/themes/dc/dc_harley_quinn.webp",
       "description": "Harleen Quinzel, Joker's partner in chaos."
     },
@@ -196,7 +196,7 @@
       "id": "dc_catwoman",
       "name": "Catwoman",
       "universe": "dc",
-      "power": 77,
+      "power": 85,
       "image": "/static/auction/themes/dc/dc_catwoman.webp",
       "description": "Selina Kyle, master thief and Batman's complex ally."
     },
@@ -204,7 +204,7 @@
       "id": "dc_ra_al_ghul",
       "name": "Ra's al Ghul",
       "universe": "dc",
-      "power": 85,
+      "power": 86,
       "image": "/static/auction/themes/dc/dc_ra_al_ghul.webp",
       "description": "Immortal eco-terrorist, leader of the League of Assassins."
     },
@@ -212,7 +212,7 @@
       "id": "dc_general_zod",
       "name": "General Zod",
       "universe": "dc",
-      "power": 95,
+      "power": 88,
       "image": "/static/auction/themes/dc/dc_general_zod.webp",
       "description": "Kryptonian military leader, sworn enemy of Superman."
     },

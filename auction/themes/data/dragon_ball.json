@@ -12,7 +12,7 @@
       "id": "db_vegeta",
       "name": "Vegeta",
       "universe": "dragon_ball",
-      "power": 97,
+      "power": 98,
       "image": "/static/auction/themes/dragon_ball/db_vegeta.webp",
       "description": "Prince of all Saiyans, rival of Goku, master of Ultra Ego."
     },
@@ -20,7 +20,7 @@
       "id": "db_frieza",
       "name": "Frieza",
       "universe": "dragon_ball",
-      "power": 95,
+      "power": 97,
       "image": "/static/auction/themes/dragon_ball/db_frieza.webp",
       "description": "Emperor of Universe 7, tyrant who fears the Super Saiyan legend."
     },
@@ -52,7 +52,7 @@
       "id": "db_cell",
       "name": "Cell",
       "universe": "dragon_ball",
-      "power": 93,
+      "power": 96,
       "image": "/static/auction/themes/dragon_ball/db_cell.webp",
       "description": "Perfect bio-android, created from the cells of the greatest fighters."
     },
@@ -68,7 +68,7 @@
       "id": "db_piccolo",
       "name": "Piccolo",
       "universe": "dragon_ball",
-      "power": 90,
+      "power": 91,
       "image": "/static/auction/themes/dragon_ball/db_piccolo.webp",
       "description": "Namekian warrior, Gohan's mentor, master strategist."
     },
@@ -76,7 +76,7 @@
       "id": "db_trunks_future",
       "name": "Future Trunks",
       "universe": "dragon_ball",
-      "power": 92,
+      "power": 93,
       "image": "/static/auction/themes/dragon_ball/db_trunks_future.webp",
       "description": "Son of Vegeta from a ruined timeline, master of the sword."
     },
@@ -92,7 +92,7 @@
       "id": "db_gogeta",
       "name": "Gogeta",
       "universe": "dragon_ball",
-      "power": 99,
+      "power": 98,
       "image": "/static/auction/themes/dragon_ball/db_gogeta.webp",
       "description": "Fusion of Goku and Vegeta via Metamoran dance."
     },
@@ -100,7 +100,7 @@
       "id": "db_vegito",
       "name": "Vegito",
       "universe": "dragon_ball",
-      "power": 99,
+      "power": 98,
       "image": "/static/auction/themes/dragon_ball/db_vegito.webp",
       "description": "Fusion of Goku and Vegeta via Potara earrings."
     },
@@ -148,7 +148,7 @@
       "id": "db_android_17",
       "name": "Android 17",
       "universe": "dragon_ball",
-      "power": 92,
+      "power": 90,
       "image": "/static/auction/themes/dragon_ball/db_android_17.webp",
       "description": "Twin of 18, infinite energy, Tournament of Power MVP."
     },
@@ -156,7 +156,7 @@
       "id": "db_android_18",
       "name": "Android 18",
       "universe": "dragon_ball",
-      "power": 91,
+      "power": 90,
       "image": "/static/auction/themes/dragon_ball/db_android_18.webp",
       "description": "Twin of 17, infinite energy, wife of Krillin."
     },
@@ -164,7 +164,7 @@
       "id": "db_tien",
       "name": "Tien Shinhan",
       "universe": "dragon_ball",
-      "power": 85,
+      "power": 84,
       "image": "/static/auction/themes/dragon_ball/db_tien.webp",
       "description": "Three-eyed martial artist, master of the Tri-Beam."
     },
@@ -172,7 +172,7 @@
       "id": "db_yamcha",
       "name": "Yamcha",
       "universe": "dragon_ball",
-      "power": 75,
+      "power": 80,
       "image": "/static/auction/themes/dragon_ball/db_yamcha.webp",
       "description": "Desert bandit turned Z-Fighter, Wolf Fang Fist master."
     },
@@ -180,7 +180,7 @@
       "id": "db_krillin",
       "name": "Krillin",
       "universe": "dragon_ball",
-      "power": 82,
+      "power": 83,
       "image": "/static/auction/themes/dragon_ball/db_krillin.webp",
       "description": "Goku's best friend, strongest human, Destructo Disc creator."
     },
@@ -188,7 +188,7 @@
       "id": "db_roshi",
       "name": "Master Roshi",
       "universe": "dragon_ball",
-      "power": 80,
+      "power": 85,
       "image": "/static/auction/themes/dragon_ball/db_roshi.webp",
       "description": "Turtle Hermit, inventor of the Kamehameha."
     },

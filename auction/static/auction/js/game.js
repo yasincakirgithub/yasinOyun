@@ -124,8 +124,8 @@
             var el = document.querySelector(focusedElementSelector);
             if (el) {
                 el.focus();
-                // Restore cursor position for text inputs
-                if (el.type === 'text' || el.type === 'number' || el.type === 'search') {
+                // Restore cursor position for text-like inputs (not number - setSelectionRange not supported)
+                if (el.type === 'text' || el.type === 'search' || el.type === 'email' || el.type === 'password') {
                     var len = el.value.length;
                     el.setSelectionRange(len, len);
                 }
@@ -528,6 +528,7 @@
             { key: 'starting_budget', label: 'Başlangıç Bütçesi ($)', type: 'number', min: 1, step: 1, value: room.starting_budget / 100 },
             { key: 'starting_bid', label: 'Başlangıç Teklifi ($)', type: 'number', min: 1, step: 1, value: room.starting_bid / 100 },
             { key: 'character_count', label: 'Karakter Sayısı', type: 'number', min: 1, max: 50, step: 1, value: room.character_count },
+            { key: 'max_characters_per_player', label: 'Oyuncu Başına Max Karakter (0=sınırsız)', type: 'number', min: 0, max: 50, step: 1, value: room.max_characters_per_player || 0 },
             { key: 'auction_duration', label: 'Açık Artırma Süresi (sn)', type: 'number', min: 5, max: 300, step: 5, value: room.auction_duration },
             { key: 'max_players', label: 'Maksimum Oyuncu', type: 'number', min: 2, max: MAX_PLAYERS, step: 1, value: room.max_players },
             { key: 'extension_threshold', label: 'Uzatma Eşiği (sn)', type: 'number', min: 1, max: 10, step: 1, value: room.extension_threshold },
@@ -630,6 +631,8 @@
         saveFocus();
         var players = state.players || [];
         var me = state.me;
+        var isAuctionActive = state.room.status === 'AUCTION';
+        var isFinished = state.room.status === 'FINISHED';
 
         clearNode(el.playerList);
         players.forEach(function (player) {
@@ -642,7 +645,12 @@
             if (player.id === me.id) nameRow.appendChild(createEl('span', 'auction-you-tag', 'SEN'));
             var stats = createEl('div', 'auction-player-stats');
             stats.appendChild(statLine('Bütçe', formatMoneyCompact(player.budget)));
-            stats.appendChild(statLine('Güç', player.total_power));
+            // Power hidden during active auction, shown only in final results
+            if (!isAuctionActive || isFinished) {
+                stats.appendChild(statLine('Güç', player.total_power));
+            } else {
+                stats.appendChild(statLine('Güç', '???'));
+            }
             stats.appendChild(statLine('Karakter', (player.owned_characters && player.owned_characters.length) || 0));
             info.appendChild(nameRow);
             info.appendChild(stats);

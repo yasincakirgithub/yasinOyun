@@ -4,7 +4,7 @@
       "id": "op_luffy",
       "name": "Monkey D. Luffy",
       "universe": "one_piece",
-      "power": 96,
+      "power": 100,
       "image": "/static/auction/themes/one_piece/op_luffy.webp",
       "description": "Captain of the Straw Hats, user of the Gum-Gum Fruit, aspiring Pirate King."
     },
@@ -12,7 +12,7 @@
       "id": "op_zoro",
       "name": "Roronoa Zoro",
       "universe": "one_piece",
-      "power": 93,
+      "power": 92,
       "image": "/static/auction/themes/one_piece/op_zoro.webp",
       "description": "Swordsman of the Straw Hats, master of Three Sword Style."
     },
@@ -20,7 +20,7 @@
       "id": "op_shanks",
       "name": "Shanks",
       "universe": "one_piece",
-      "power": 98,
+      "power": 97,
       "image": "/static/auction/themes/one_piece/op_shanks.webp",
       "description": "Red-Haired Emperor, Luffy's inspiration, master of Conqueror's Haki."
     },
@@ -28,7 +28,7 @@
       "id": "op_kaido",
       "name": "Kaido",
       "universe": "one_piece",
-      "power": 99,
+      "power": 98,
       "image": "/static/auction/themes/one_piece/op_kaido.webp",
       "description": "Strongest Creature, Beast Emperor, user of the Fish-Fish Fruit: Azure Dragon."
     },
@@ -92,7 +92,7 @@
       "id": "op_robin",
       "name": "Nico Robin",
       "universe": "one_piece",
-      "power": 88,
+      "power": 86,
       "image": "/static/auction/themes/one_piece/op_robin.webp",
       "description": "Archaeologist of the Straw Hats, Flower-Flower Fruit user."
     },
@@ -100,7 +100,7 @@
       "id": "op_franky",
       "name": "Franky",
       "universe": "one_piece",
-      "power": 86,
+      "power": 84,
       "image": "/static/auction/themes/one_piece/op_franky.webp",
       "description": "Shipwright of the Straw Hats, cyborg, Cola-powered."
     },
@@ -108,7 +108,7 @@
       "id": "op_brook",
       "name": "Brook",
       "universe": "one_piece",
-      "power": 84,
+      "power": 82,
       "image": "/static/auction/themes/one_piece/op_brook.webp",
       "description": "Musician of the Straw Hats, Soul-Soul Fruit, Revive-Revive."
     },
@@ -116,7 +116,7 @@
       "id": "op_jinbe",
       "name": "Jinbe",
       "universe": "one_piece",
-      "power": 92,
+      "power": 90,
       "image": "/static/auction/themes/one_piece/op_jinbe.webp",
       "description": "Helmsman of the Straw Hats, former Warlord, Fish-Man Karate master."
     },
@@ -132,7 +132,7 @@
       "id": "op_kid",
       "name": "Eustass Kid",
       "universe": "one_piece",
-      "power": 92,
+      "power": 90,
       "image": "/static/auction/themes/one_piece/op_kid.webp",
       "description": "Captain of the Kid Pirates, Magnet-Magnet Fruit, Worst Generation."
     },
@@ -140,7 +140,7 @@
       "id": "op_hancock",
       "name": "Boa Hancock",
       "universe": "one_piece",
-      "power": 90,
+      "power": 89,
       "image": "/static/auction/themes/one_piece/op_hancock.webp",
       "description": "Empress of Amazon Lily, Love-Love Fruit, former Warlord."
     },
@@ -172,7 +172,7 @@
       "id": "op_marco",
       "name": "Marco the Phoenix",
       "universe": "one_piece",
-      "power": 92,
+      "power": 91,
       "image": "/static/auction/themes/one_piece/op_marco.webp",
       "description": "Former 1st Division Commander, Phoenix Fruit, Whitebeard's son."
     },
@@ -180,7 +180,7 @@
       "id": "op_ace",
       "name": "Portgas D. Ace",
       "universe": "one_piece",
-      "power": 91,
+      "power": 93,
       "image": "/static/auction/themes/one_piece/op_ace.webp",
       "description": "Fire-Fist, Flame-Flame Fruit, Luffy's brother, Whitebeard's son."
     },
@@ -188,7 +188,7 @@
       "id": "op_sabo",
       "name": "Sabo",
       "universe": "one_piece",
-      "power": 93,
+      "power": 92,
       "image": "/static/auction/themes/one_piece/op_sabo.webp",
       "description": "Chief of Staff of Revolutionary Army, Flame-Flame Fruit."
     },
@@ -220,7 +220,7 @@
       "id": "op_roger",
       "name": "Gol D. Roger",
       "universe": "one_piece",
-      "power": 100,
+      "power": 99,
       "image": "/static/auction/themes/one_piece/op_roger.webp",
       "description": "Pirate King, conqueror of the Grand Line, father of Ace."
     }
