@@ -1,0 +1,272 @@
+{
+  "characters": [
+    {
+      "id": "ty_murat",
+      "name": "Murat Cesur (MCT)",
+      "universe": "turk_youtubers",
+      "power": 98,
+      "image": "/static/auction/themes/turk_youtubers/ty_murat.webp",
+      "description": "Türkiye'nin en büyük YouTuber'larından biri, MCT kanalıyla oyun, eğlence ve vlog içerikleri üreten efsanevi isim."
+    },
+    {
+      "id": "ty_enes",
+      "name": "Enes Batur",
+      "universe": "turk_youtubers",
+      "power": 97,
+      "image": "/static/auction/themes/turk_youtubers/ty_enes.webp",
+      "description": "Gençlerin idolu, oyun, challenge ve vlog videolarıyla Türkiye'de en çok aboneli kanallardan birine sahip YouTuber."
+    },
+    {
+      "id": "ty_berkay",
+      "name": "Berkay Öztürk",
+      "universe": "turk_youtubers",
+      "power": 93,
+      "image": "/static/auction/themes/turk_youtubers/ty_berkay.webp",
+      "description": "Berkay Öztürk kanalıyla teknoloji, oyun ve günlük yaşam videoları üreten, samimi tarzıyla sevilen YouTuber."
+    },
+    {
+      "id": "ty_oguz",
+      "name": "Oğuzhan Uğur",
+      "universe": "turk_youtubers",
+      "power": 94,
+      "image": "/static/auction/themes/turk_youtubers/ty_oguz.webp",
+      "description": "Oğuzhan Uğur kanalıyla komik sketchler, parodiler ve sosyal deneyler yapan, Türk YouTube'inin pionerlerinden."
+    },
+    {
+      "id": "ty_boray",
+      "name": "Boray",
+      "universe": "turk_youtubers",
+      "power": 91,
+      "image": "/static/auction/themes/turk_youtubers/ty_boray.webp",
+      "description": "Oyun, teknoloji ve eğlence içerikleriyle tanınan, yüksek üretim kalitesiyle öne çıkan YouTuber."
+    },
+    {
+      "id": "ty_kadir",
+      "name": "Kadir Döner",
+      "universe": "turk_youtubers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_youtubers/ty_kadir.webp",
+      "description": "Kadir Döner kanalıyla oyun, vlog ve challenge videoları üreten, genç kitleye hitap eden YouTuber."
+    },
+    {
+      "id": "ty_mete",
+      "name": "Mete Kök",
+      "universe": "turk_youtubers",
+      "power": 89,
+      "image": "/static/auction/themes/turk_youtubers/ty_mete.webp",
+      "description": "Mete Kök kanalıyla eğlence, yaşam tarzı ve seyahat vlogları çeken, doğallığıyla sevilen YouTuber."
+    },
+    {
+      "id": "ty_cemre",
+      "name": "Cemre Baysel",
+      "universe": "turk_youtubers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_youtubers/ty_cemre.webp",
+      "description": "Oyuncu ve YouTuber, kendi kanalında vlog, makyaj ve yaşam tarzı videoları paylaşan popüler isim."
+    },
+    {
+      "id": "ty_alper",
+      "name": "Alper Rende",
+      "universe": "turk_youtubers",
+      "power": 92,
+      "image": "/static/auction/themes/turk_youtubers/ty_alper.webp",
+      "description": "Alper Rende kanalıyla oyun, teknoloji ve bilim içerikleri üreten, eğitici ve eğlenceli videolarıyla tanınan YouTuber."
+    },
+    {
+      "id": "ty_volkan",
+      "name": "Volkan",
+      "universe": "turk_youtubers",
+      "power": 88,
+      "image": "/static/auction/themes/turk_youtubers/ty_volkan.webp",
+      "description": "Volkan kanalıyla oyun ve eğlence içerikleri üreten, samimi tarzıyla takipçilerini gülendiren YouTuber."
+    },
+    {
+      "id": "ty_burak",
+      "name": "Burak Özdemir (CZN Burak)",
+      "universe": "turk_youtubers",
+      "power": 98,
+      "image": "/static/auction/themes/turk_youtubers/ty_burak.webp",
+      "description": "Dünya çapında ünlü aşçı YouTuber, yemek yapım videoları ve gülüşüyle milyarlarca izlenme rekorları kırık."
+    },
+    {
+      "id": "ty_orhan",
+      "name": "Orhan Awatramani",
+      "universe": "turk_youtubers",
+      "power": 89,
+      "image": "/static/auction/themes/turk_youtubers/ty_orhan.webp",
+      "description": "Yaşam tarzı, seyahat ve lüks içeriklerle YouTube'da hızla büyüyen yeni nesil içerik üreticisi."
+    },
+    {
+      "id": "ty_berkcan",
+      "name": "Berkcan Güven",
+      "universe": "turk_youtubers",
+      "power": 94,
+      "image": "/static/auction/themes/turk_youtubers/ty_berkcan.webp",
+      "description": "Bilim, teknoloji, oyun ve eğlence karışımı yüksek kaliteli videolar üreten, Türkiye'nin en prestijli YouTuber'larından."
+    },
+    {
+      "id": "ti_yusuf",
+      "name": "Yusuf Aktaş",
+      "universe": "turk_youtubers",
+      "power": 87,
+      "image": "/static/auction/themes/turk_youtubers/ti_yusuf.webp",
+      "description": "Yusuf Aktaş kanalıyla oyun, vlog ve challenge içerikleri üreten, genç takipçi kitlesine sahip YouTuber."
+    },
+    {
+      "id": "ti_berk",
+      "name": "Berk Öztürk",
+      "universe": "turk_youtubers",
+      "power": 86,
+      "image": "/static/auction/themes/turk_youtubers/ti_berk.webp",
+      "description": "Berk Öztürk kanalıyla teknoloji incelemeleri, oyun ve vlog videoları paylaşan YouTuber."
+    },
+    {
+      "id": "ti_emirhan",
+      "name": "Emirhan",
+      "universe": "turk_youtubers",
+      "power": 85,
+      "image": "/static/auction/themes/turk_youtubers/ti_emirhan.webp",
+      "description": "Emirhan kanalıyla oyun ve eğlence videoları üreten, hızla büyüyen genç YouTuber."
+    },
+    {
+      "id": "ti_oguzhan",
+      "name": "Oğuzhan Koç",
+      "universe": "turk_youtubers",
+      "power": 93,
+      "image": "/static/auction/themes/turk_youtubers/ti_oguzhan.webp",
+      "description": "Şarkıcı, oyuncu ve YouTuber, müzik ve eğlence videolarıyla çoklu platformda başarılı sanatçı."
+    },
+    {
+      "id": "ti_emrah",
+      "name": "Emrah",
+      "universe": "turk_youtubers",
+      "power": 84,
+      "image": "/static/auction/themes/turk_youtubers/ti_emrah.webp",
+      "description": "Emrah kanalıyla oyun ve vlog içerikleri üreten, samimi tarzıyla takip edilen YouTuber."
+    },
+    {
+      "id": "ti_burakcan",
+      "name": "Burakcan",
+      "universe": "turk_youtubers",
+      "power": 83,
+      "image": "/static/auction/themes/turk_youtubers/ti_burakcan.webp",
+      "description": "Burakcan kanalıyla oyun, challenge ve günlük yaşam videoları paylaşan YouTuber."
+    },
+    {
+      "id": "ti_berkayy",
+      "name": "Berkay Yıldız",
+      "universe": "turk_youtubers",
+      "power": 85,
+      "image": "/static/auction/themes/turk_youtubers/ti_berkayy.webp",
+      "description": "Berkay Yıldız kanalıyla teknoloji, oyun ve eğlence içerikleri üreten YouTuber."
+    },
+    {
+      "id": "ti_cem",
+      "name": "Cem Yılmaz",
+      "universe": "turk_youtubers",
+      "power": 96,
+      "image": "/static/auction/themes/turk_youtubers/ti_cem.webp",
+      "description": "Türkiye'nin en ünlü komedyeni, YouTube'da stand-up, röportaj ve özel içeriklerle milyonlarca izlenme alan efsane."
+    },
+    {
+      "id": "ti_ahmet",
+      "name": "Ahmet Çakar",
+      "universe": "turk_youtubers",
+      "power": 92,
+      "image": "/static/auction/themes/turk_youtubers/ti_ahmet.webp",
+      "description": "Eski futbolcu, sporumcu ve YouTuber, futbol analizi, tartışma ve spor içerikleriyle çok takip edilen kanal sahibi."
+    },
+    {
+      "id": "ti_onur",
+      "name": "Onur Öz",
+      "universe": "turk_youtubers",
+      "power": 82,
+      "image": "/static/auction/themes/turk_youtubers/ti_onur.webp",
+      "description": "Onur Öz kanalıyla oyun, teknoloji ve vlog videoları üreten YouTuber."
+    },
+    {
+      "id": "ti_volkan_sahin",
+      "name": "Volkan Şahin",
+      "universe": "turk_youtubers",
+      "power": 83,
+      "image": "/static/auction/themes/turk_youtubers/ti_volkan_sahin.webp",
+      "description": "Volkan Şahin kanalıyla spor, futbol analizi ve vlog içerikleri paylaşan YouTuber."
+    },
+    {
+      "id": "ti_eren",
+      "name": "Eren Bülbül",
+      "universe": "turk_youtubers",
+      "power": 87,
+      "image": "/static/auction/themes/turk_youtubers/ti_eren.webp",
+      "description": "Eren Bülbül kanalıyla oyun, challenge ve eğlence videoları üreten genç YouTuber."
+    },
+    {
+      "id": "ti_mustafa",
+      "name": "Mustafa",
+      "universe": "turk_youtubers",
+      "power": 81,
+      "image": "/static/auction/themes/turk_youtubers/ti_mustafa.webp",
+      "description": "Mustafa kanalıyla oyun ve vlog içerikleri paylaşan YouTuber."
+    },
+    {
+      "id": "ti_selami",
+      "name": "Selami Şahin",
+      "universe": "turk_youtubers",
+      "power": 82,
+      "image": "/static/auction/themes/turk_youtubers/ti_selami.webp",
+      "description": "Selami Şahin kanalıyla spor, futbol ve yaşam tarzı videoları üreten YouTuber."
+    },
+    {
+      "id": "ty_berkcan_youtube",
+      "name": "Berkcan Güven (YouTube)",
+      "universe": "turk_youtubers",
+      "power": 95,
+      "image": "/static/auction/themes/turk_youtubers/ty_berkcan_youtube.webp",
+      "description": "Berkcan Güven'in ana YouTube kanalı, bilim-popülerleştirme, teknoloji ve eğlence içeriğiyle Türkiye'nin en kaliteli kanallarından."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "ty_legends",
+      "name": "Türk YouTube Efsaneleri",
+      "description": "Türk YouTube tarihini yazan, milyonlarca aboneye sahip dev kanallar",
+      "bonus": { "type": "percentage", "value": 30 },
+      "required_character_ids": ["ty_murat", "ty_enes", "ty_oguz", "ty_cem"]
+    },
+    {
+      "id": "ty_gaming_creators",
+      "name": "Oyun İçerik Üreticileri",
+      "description": "Oyun videolarıyla büyüyen, genç kitleye hitap eden YouTuber'lar",
+      "bonus": { "type": "fixed", "value": 200 },
+      "required_character_ids": ["ty_murat", "ty_enes", "ty_berkay", "ty_boray", "ty_kadir", "ty_volkan", "ti_yusuf", "ti_berk", "ti_emirhan", "ti_burakcan", "ti_eren", "ti_mustafa"]
+    },
+    {
+      "id": "ty_educational_tech",
+      "name": "Bilim ve Teknoloji Kanalları",
+      "description": "Eğitici, bilimsel ve teknoloji odaklı kaliteli içerik üreten kanallar",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["ty_berkcan", "ty_alper", "ty_berkcan_youtube"]
+    },
+    {
+      "id": "ty_celebrity_youtubers",
+      "name": "Ünlü YouTuber'lar",
+      "description": "Diğer alanlarda (müzik, spor, komedi) ünlülük kazanıp YouTube'a gelen isimler",
+      "bonus": { "type": "fixed", "value": 220 },
+      "required_character_ids": ["ty_cem", "ti_ahmet", "ti_oguzhan", "ty_burak"]
+    },
+    {
+      "id": "ty_vlog_lifestyle",
+      "name": "Vlog ve Yaşam Tarzı",
+      "description": "Günlük yaşam, seyahat ve kişisel vlog içeriği üreten kanallar",
+      "bonus": { "type": "percentage", "value": 18 },
+      "required_character_ids": ["ty_mete", "ty_cemre", "ty_orhan", "ty_volkan_sahin", "ti_onur", "ti_emrah", "ti_burakcan", "ti_berkayy", "ti_selami"]
+    },
+    {
+      "id": "ty_comedy_entertainment",
+      "name": "Komedi ve Eğlence",
+      "description": "Gülmeyi misyon edinen, sketch ve parodi yapan kanallar",
+      "bonus": { "type": "fixed", "value": 180 },
+      "required_character_ids": ["ty_oguz", "ty_cem", "ty_murat", "ty_enes"]
+    }
+  ]
+}

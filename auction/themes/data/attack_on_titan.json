@@ -1,0 +1,241 @@
+{
+  "characters": [
+    {
+      "id": "aot_eren",
+      "name": "Eren Yeager",
+      "universe": "attack_on_titan",
+      "power": 95,
+      "image": "/static/auction/themes/attack_on_titan/aot_eren.webp",
+      "description": "The main protagonist who inherits the Attack Titan and Founding Titan powers."
+    },
+    {
+      "id": "aot_mikasa",
+      "name": "Mikasa Ackerman",
+      "universe": "attack_on_titan",
+      "power": 94,
+      "image": "/static/auction/themes/attack_on_titan/aot_mikasa.webp",
+      "description": "Eren's adopted sister and one of the most skilled soldiers in the Survey Corps."
+    },
+    {
+      "id": "aot_armin",
+      "name": "Armin Arlert",
+      "universe": "attack_on_titan",
+      "power": 88,
+      "image": "/static/auction/themes/attack_on_titan/aot_armin.webp",
+      "description": "Childhood friend of Eren and Mikasa, later becomes the 15th Commander of the Survey Corps."
+    },
+    {
+      "id": "aot_levi",
+      "name": "Levi Ackerman",
+      "universe": "attack_on_titan",
+      "power": 98,
+      "image": "/static/auction/themes/attack_on_titan/aot_levi.webp",
+      "description": "Humanity's strongest soldier, Captain of the Special Operations Squad."
+    },
+    {
+      "id": "aot_erwin",
+      "name": "Erwin Smith",
+      "universe": "attack_on_titan",
+      "power": 92,
+      "image": "/static/auction/themes/attack_on_titan/aot_erwin.webp",
+      "description": "The 13th Commander of the Survey Corps, known for his strategic brilliance."
+    },
+    {
+      "id": "aot_hange",
+      "name": "Hange Zoe",
+      "universe": "attack_on_titan",
+      "power": 90,
+      "image": "/static/auction/themes/attack_on_titan/aot_hange.webp",
+      "description": "The 14th Commander of the Survey Corps, a brilliant researcher of Titans."
+    },
+    {
+      "id": "aot_reiner",
+      "name": "Reiner Braun",
+      "universe": "attack_on_titan",
+      "power": 93,
+      "image": "/static/auction/themes/attack_on_titan/aot_reiner.webp",
+      "description": "The Armored Titan, former Warrior candidate from Marley."
+    },
+    {
+      "id": "aot_bertholdt",
+      "name": "Bertholdt Hoover",
+      "universe": "attack_on_titan",
+      "power": 92,
+      "image": "/static/auction/themes/attack_on_titan/aot_bertholdt.webp",
+      "description": "The Colossal Titan, childhood friend of Reiner."
+    },
+    {
+      "id": "aot_annie",
+      "name": "Annie Leonhart",
+      "universe": "attack_on_titan",
+      "power": 91,
+      "image": "/static/auction/themes/attack_on_titan/aot_annie.webp",
+      "description": "The Female Titan, a Marley Warrior with exceptional combat skills."
+    },
+    {
+      "id": "aot_jean",
+      "name": "Jean Kirstein",
+      "universe": "attack_on_titan",
+      "power": 85,
+      "image": "/static/auction/themes/attack_on_titan/aot_jean.webp",
+      "description": "Former 104th cadet, later becomes a Squad Leader in the Survey Corps."
+    },
+    {
+      "id": "aot_connie",
+      "name": "Connie Springer",
+      "universe": "attack_on_titan",
+      "power": 82,
+      "image": "/static/auction/themes/attack_on_titan/aot_connie.webp",
+      "description": "104th cadet from Ragako village, known for his agility."
+    },
+    {
+      "id": "aot_sasha",
+      "name": "Sasha Blouse",
+      "universe": "attack_on_titan",
+      "power": 83,
+      "image": "/static/auction/themes/attack_on_titan/aot_sasha.webp",
+      "description": "104th cadet known as 'Potato Girl', exceptional hunter and tracker."
+    },
+    {
+      "id": "aot_historia",
+      "name": "Historia Reiss",
+      "universe": "attack_on_titan",
+      "power": 80,
+      "image": "/static/auction/themes/attack_on_titan/aot_historia.webp",
+      "description": "The true heir to the Reiss family, later becomes Queen of the Walls."
+    },
+    {
+      "id": "aot_yelena",
+      "name": "Yelena",
+      "universe": "attack_on_titan",
+      "power": 87,
+      "image": "/static/auction/themes/attack_on_titan/aot_yelena.webp",
+      "description": "Leader of the Anti-Marleyan Volunteers, devoted to Zeke Yeager."
+    },
+    {
+      "id": "aot_floch",
+      "name": "Floch Forster",
+      "universe": "attack_on_titan",
+      "power": 84,
+      "image": "/static/auction/themes/attack_on_titan/aot_floch.webp",
+      "description": "Survey Corps soldier who becomes a Yeagerist leader."
+    },
+    {
+      "id": "aot_zeke",
+      "name": "Zeke Yeager",
+      "universe": "attack_on_titan",
+      "power": 96,
+      "image": "/static/auction/themes/attack_on_titan/aot_zeke.webp",
+      "description": "The Beast Titan, Eren's half-brother and former Marley Warrior."
+    },
+    {
+      "id": "aot_rod",
+      "name": "Rod Reiss",
+      "universe": "attack_on_titan",
+      "power": 78,
+      "image": "/static/auction/themes/attack_on_titan/aot_rod.webp",
+      "description": "Father of Historia, former King of the Walls."
+    },
+    {
+      "id": "aot_kenny",
+      "name": "Kenny Ackerman",
+      "universe": "attack_on_titan",
+      "power": 94,
+      "image": "/static/auction/themes/attack_on_titan/aot_kenny.webp",
+      "description": "Captain of the Anti-Personnel Control Squad, Levi's uncle."
+    },
+    {
+      "id": "aot_marlowe",
+      "name": "Marlowe Freudenberg",
+      "universe": "attack_on_titan",
+      "power": 75,
+      "image": "/static/auction/themes/attack_on_titan/aot_marlowe.webp",
+      "description": "Survey Corps recruit who joined to reform the Military Police."
+    },
+    {
+      "id": "aot_hitch",
+      "name": "Hitch Dreyse",
+      "universe": "attack_on_titan",
+      "power": 76,
+      "image": "/static/auction/themes/attack_on_titan/aot_hitch.webp",
+      "description": "Military Police officer, friend of Marlowe and Annie."
+    },
+    {
+      "id": "aot_porco",
+      "name": "Porco Galliard",
+      "universe": "attack_on_titan",
+      "power": 89,
+      "image": "/static/auction/themes/attack_on_titan/aot_porco.webp",
+      "description": "The Jaw Titan, Marcel's younger brother."
+    },
+    {
+      "id": "aot_pieck",
+      "name": "Pieck Finger",
+      "universe": "attack_on_titan",
+      "power": 88,
+      "image": "/static/auction/themes/attack_on_titan/aot_pieck.webp",
+      "description": "The Cart Titan, intelligent and strategic Marley Warrior."
+    },
+    {
+      "id": "aot_colt",
+      "name": "Colt Grice",
+      "universe": "attack_on_titan",
+      "power": 80,
+      "image": "/static/auction/themes/attack_on_titan/aot_colt.webp",
+      "description": "Marley Warrior candidate, Falco's older brother."
+    },
+    {
+      "id": "aot_magath",
+      "name": "Theo Magath",
+      "universe": "attack_on_titan",
+      "power": 86,
+      "image": "/static/auction/themes/attack_on_titan/aot_magath.webp",
+      "description": "Marleyan military commander, later becomes a general."
+    },
+    {
+      "id": "aot_kruger",
+      "name": "Eren Kruger",
+      "universe": "attack_on_titan",
+      "power": 92,
+      "image": "/static/auction/themes/attack_on_titan/aot_kruger.webp",
+      "description": "The Owl, former Marley officer who passed the Attack Titan to Grisha."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "aot_survey_corps",
+      "name": "Survey Corps Veterans",
+      "description": "Core members of the Survey Corps who fought together",
+      "bonus": { "type": "percentage", "value": 15 },
+      "required_character_ids": ["aot_eren", "aot_mikasa", "aot_armin", "aot_levi"]
+    },
+    {
+      "id": "aot_titan_shifters",
+      "name": "Nine Titan Shifters",
+      "description": "Those who inherit the power of the Nine Titans",
+      "bonus": { "type": "fixed", "value": 200 },
+      "required_character_ids": ["aot_eren", "aot_reiner", "aot_bertholdt", "aot_annie", "aot_zeke", "aot_porco", "aot_pieck"]
+    },
+    {
+      "id": "aot_ackerman_bloodline",
+      "name": "Ackerman Bloodline",
+      "description": "The Ackerman clan's awakened power",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["aot_mikasa", "aot_levi", "aot_kenny"]
+    },
+    {
+      "id": "aot_marley_warriors",
+      "name": "Marley Warriors",
+      "description": "Eldian Warriors serving Marley",
+      "bonus": { "type": "fixed", "value": 150 },
+      "required_character_ids": ["aot_reiner", "aot_bertholdt", "aot_annie", "aot_zeke", "aot_porco", "aot_pieck"]
+    },
+    {
+      "id": "aot_yeager_brothers",
+      "name": "Yeager Brothers",
+      "description": "Eren and Zeke, united by blood and destiny",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["aot_eren", "aot_zeke"]
+    }
+  ]
+}

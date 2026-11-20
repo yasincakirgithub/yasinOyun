@@ -1,0 +1,265 @@
+{
+  "characters": [
+    {
+      "id": "mha_deku",
+      "name": "Izuku Midoriya",
+      "universe": "my_hero_academia",
+      "power": 96,
+      "image": "/static/auction/themes/my_hero_academia/mha_deku.webp",
+      "description": "Ninth holder of One For All, symbol of peace in training."
+    },
+    {
+      "id": "mha_bakugo",
+      "name": "Katsuki Bakugo",
+      "universe": "my_hero_academia",
+      "power": 95,
+      "image": "/static/auction/themes/my_hero_academia/mha_bakugo.webp",
+      "description": "Explosion Quirk user, Deku's rival and childhood friend."
+    },
+    {
+      "id": "mha_todoroki",
+      "name": "Shoto Todoroki",
+      "universe": "my_hero_academia",
+      "power": 96,
+      "image": "/static/auction/themes/my_hero_academia/mha_todoroki.webp",
+      "description": "Half-Cold Half-Hot Quirk, son of Endeavor."
+    },
+    {
+      "id": "mha_all_might",
+      "name": "All Might",
+      "universe": "my_hero_academia",
+      "power": 100,
+      "image": "/static/auction/themes/my_hero_academia/mha_all_might.webp",
+      "description": "Eighth holder of One For All, Symbol of Peace."
+    },
+    {
+      "id": "mha_endeavor",
+      "name": "Enji Todoroki",
+      "universe": "my_hero_academia",
+      "power": 97,
+      "image": "/static/auction/themes/my_hero_academia/mha_endeavor.webp",
+      "description": "Hellflame Quirk, current No. 1 Hero."
+    },
+    {
+      "id": "mha_hawks",
+      "name": "Keigo Takami",
+      "universe": "my_hero_academia",
+      "power": 94,
+      "image": "/static/auction/themes/my_hero_academia/mha_hawks.webp",
+      "description": "Fierce Wings Quirk, No. 2 Hero, double agent."
+    },
+    {
+      "id": "mha_best_jeanist",
+      "name": "Tsunagu Hakamata",
+      "universe": "my_hero_academia",
+      "power": 92,
+      "image": "/static/auction/themes/my_hero_academia/mha_best_jeanist.webp",
+      "description": "Fiber Master Quirk, former No. 3 Hero."
+    },
+    {
+      "id": "mha_erasure",
+      "name": "Shota Aizawa",
+      "universe": "my_hero_academia",
+      "power": 91,
+      "image": "/static/auction/themes/my_hero_academia/mha_erasure.webp",
+      "description": "Erasure Quirk, Class 1-A homeroom teacher, Underground Hero."
+    },
+    {
+      "id": "mha_present_mic",
+      "name": "Hizashi Yamada",
+      "universe": "my_hero_academia",
+      "power": 88,
+      "image": "/static/auction/themes/my_hero_academia/mha_present_mic.webp",
+      "description": "Voice Quirk, UA teacher and radio host."
+    },
+    {
+      "id": "mha_midnight",
+      "name": "Nemuri Kayama",
+      "universe": "my_hero_academia",
+      "power": 87,
+      "image": "/static/auction/themes/my_hero_academia/mha_midnight.webp",
+      "description": "Somnambulist Quirk, former UA teacher."
+    },
+    {
+      "id": "mha_mirko",
+      "name": "Rumi Usagiyama",
+      "universe": "my_hero_academia",
+      "power": 95,
+      "image": "/static/auction/themes/my_hero_academia/mha_mirko.webp",
+      "description": "Rabbit Quirk, No. 5 Hero, incredible leg strength."
+    },
+    {
+      "id": "mha_edgeshot",
+      "name": "Shinya Kamihara",
+      "universe": "my_hero_academia",
+      "power": 93,
+      "image": "/static/auction/themes/my_hero_academia/mha_edgeshot.webp",
+      "description": "Foldabody Quirk, No. 4 Hero, ninja-like speed."
+    },
+    {
+      "id": "mha_wash",
+      "name": "Tatami Nakagame",
+      "universe": "my_hero_academia",
+      "power": 85,
+      "image": "/static/auction/themes/my_hero_academia/mha_wash.webp",
+      "description": "Telescopic Quirk, new No. 8 Hero."
+    },
+    {
+      "id": "mha_manual",
+      "name": "Manual",
+      "universe": "my_hero_academia",
+      "power": 82,
+      "image": "/static/auction/themes/my_hero_academia/mha_manual.webp",
+      "description": "Unnamed Quirk, professional hero with precise control."
+    },
+    {
+      "id": "mha_uravity",
+      "name": "Ochaco Uraraka",
+      "universe": "my_hero_academia",
+      "power": 89,
+      "image": "/static/auction/themes/my_hero_academia/mha_uravity.webp",
+      "description": "Zero Gravity Quirk, Class 1-A student."
+    },
+    {
+      "id": "mha_froppy",
+      "name": "Tsuyu Asui",
+      "universe": "my_hero_academia",
+      "power": 88,
+      "image": "/static/auction/themes/my_hero_academia/mha_froppy.webp",
+      "description": "Frog Quirk, Class 1-A student, versatile combatant."
+    },
+    {
+      "id": "mha_idaten",
+      "name": "Tenya Iida",
+      "universe": "my_hero_academia",
+      "power": 89,
+      "image": "/static/auction/themes/my_hero_academia/mha_idaten.webp",
+      "description": "Engine Quirk, Class 1-A president."
+    },
+    {
+      "id": "mha_yaoyorozu",
+      "name": "Momo Yaoyorozu",
+      "universe": "my_hero_academia",
+      "power": 90,
+      "image": "/static/auction/themes/my_hero_academia/mha_yaoyorozu.webp",
+      "description": "Creation Quirk, Class 1-A vice president."
+    },
+    {
+      "id": "mha_kirishima",
+      "name": "Eijiro Kirishima",
+      "universe": "my_hero_academia",
+      "power": 88,
+      "image": "/static/auction/themes/my_hero_academia/mha_kirishima.webp",
+      "description": "Hardening Quirk, manly spirit, Class 1-A."
+    },
+    {
+      "id": "mha_kaminari",
+      "name": "Denki Kaminari",
+      "universe": "my_hero_academia",
+      "power": 86,
+      "image": "/static/auction/themes/my_hero_academia/mha_kaminari.webp",
+      "description": "Electrification Quirk, Class 1-A."
+    },
+    {
+      "id": "mha_mineta",
+      "name": "Minoru Mineta",
+      "universe": "my_hero_academia",
+      "power": 80,
+      "image": "/static/auction/themes/my_hero_academia/mha_mineta.webp",
+      "description": "Pop Off Quirk, Class 1-A."
+    },
+    {
+      "id": "mha_ashido",
+      "name": "Mina Ashido",
+      "universe": "my_hero_academia",
+      "power": 87,
+      "image": "/static/auction/themes/my_hero_academia/mha_ashido.webp",
+      "description": "Acid Quirk, Class 1-A, dance enthusiast."
+    },
+    {
+      "id": "mha_shoji",
+      "name": "Mezo Shoji",
+      "universe": "my_hero_academia",
+      "power": 86,
+      "image": "/static/auction/themes/my_hero_academia/mha_shoji.webp",
+      "description": "Dupli-Arms Quirk, Class 1-A, gentle giant."
+    },
+    {
+      "id": "mha_aoyama",
+      "name": "Yuga Aoyama",
+      "universe": "my_hero_academia",
+      "power": 84,
+      "image": "/static/auction/themes/my_hero_academia/mha_aoyama.webp",
+      "description": "Navel Laser Quirk, Class 1-A."
+    },
+    {
+      "id": "mha_hagakure",
+      "name": "Torou Hagakure",
+      "universe": "my_hero_academia",
+      "power": 83,
+      "image": "/static/auction/themes/my_hero_academia/mha_hagakure.webp",
+      "description": "Invisibility Quirk, Class 1-A."
+    },
+    {
+      "id": "mha_shinsou",
+      "name": "Hitoshi Shinsou",
+      "universe": "my_hero_academia",
+      "power": 90,
+      "image": "/static/auction/themes/my_hero_academia/mha_shinsou.webp",
+      "description": "Brainwashing Quirk, General Studies -> Hero Course."
+    },
+    {
+      "id": "mha_monoma",
+      "name": "Neito Monoma",
+      "universe": "my_hero_academia",
+      "power": 88,
+      "image": "/static/auction/themes/my_hero_academia/mha_monoma.webp",
+      "description": "Copy Quirk, Class 1-B, tactical genius."
+    },
+    {
+      "id": "mha_kendo",
+      "name": "Itsuka Kendo",
+      "universe": "my_hero_academia",
+      "power": 87,
+      "image": "/static/auction/themes/my_hero_academia/mha_kendo.webp",
+      "description": "Big Fist Quirk, Class 1-B president."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "mha_class_1a_big3",
+      "name": "Class 1-A's Big Three",
+      "description": "Deku, Bakugo, and Todoroki - the strongest students",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["mha_deku", "mha_bakugo", "mha_todoroki"]
+    },
+    {
+      "id": "mha_one_for_all",
+      "name": "One For All Legacy",
+      "description": "Successors of the ultimate Quirk",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["mha_deku", "mha_all_might"]
+    },
+    {
+      "id": "mha_top_heroes",
+      "name": "Top Hero Rankings",
+      "description": "Current top professional heroes",
+      "bonus": { "type": "fixed", "value": 200 },
+      "required_character_ids": ["mha_all_might", "mha_endeavor", "mha_hawks", "mha_best_jeanist", "mha_edgeshot", "mha_mirko"]
+    },
+    {
+      "id": "mha_ua_teachers",
+      "name": "UA Faculty",
+      "description": "Teachers shaping the next generation",
+      "bonus": { "type": "percentage", "value": 15 },
+      "required_character_ids": ["mha_erasure", "mha_present_mic", "mha_midnight"]
+    },
+    {
+      "id": "mha_todoroki_family",
+      "name": "Todoroki Family",
+      "description": "Endeavor and his son Shoto",
+      "bonus": { "type": "percentage", "value": 18 },
+      "required_character_ids": ["mha_endeavor", "mha_todoroki"]
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "characters": [
+    {
+      "id": "jjk_yuji",
+      "name": "Yuji Itadori",
+      "universe": "jujutsu_kaisen",
+      "power": 94,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_yuji.webp",
+      "description": "Vessel of Ryomen Sukuna, superhuman physical abilities."
+    },
+    {
+      "id": "jjk_megumi",
+      "name": "Megumi Fushiguro",
+      "universe": "jujutsu_kaisen",
+      "power": 93,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_megumi.webp",
+      "description": "Ten Shadows Technique user, Zenin clan descendant."
+    },
+    {
+      "id": "jjk_nobara",
+      "name": "Nobara Kugisaki",
+      "universe": "jujutsu_kaisen",
+      "power": 90,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_nobara.webp",
+      "description": "Straw Doll Technique user, hammer and nails specialist."
+    },
+    {
+      "id": "jjk_gojo",
+      "name": "Satoru Gojo",
+      "universe": "jujutsu_kaisen",
+      "power": 100,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_gojo.webp",
+      "description": "Strongest sorcerer, Limitless and Six Eyes, Gojo clan."
+    },
+    {
+      "id": "jjk_geto",
+      "name": "Suguru Geto",
+      "universe": "jujutsu_kaisen",
+      "power": 97,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_geto.webp",
+      "description": "Cursed Spirit Manipulation, former best friend of Gojo."
+    },
+    {
+      "id": "jjk_nanami",
+      "name": "Kento Nanami",
+      "universe": "jujutsu_kaisen",
+      "power": 94,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_nanami.webp",
+      "description": "Ratio Technique user, Grade 1 sorcerer, salaryman turned sorcerer."
+    },
+    {
+      "id": "jjk_megumi_shoko",
+      "name": "Shoko Ieiri",
+      "universe": "jujutsu_kaisen",
+      "power": 85,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_megumi_shoko.webp",
+      "description": "Reverse Cursed Technique specialist, Jujutsu High doctor."
+    },
+    {
+      "id": "jjk_maki",
+      "name": "Maki Zenin",
+      "universe": "jujutsu_kaisen",
+      "power": 95,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_maki.webp",
+      "description": "Heavenly Restriction, zero cursed energy but superhuman physical prowess."
+    },
+    {
+      "id": "jjk_toge",
+      "name": "Toge Inumaki",
+      "universe": "jujutsu_kaisen",
+      "power": 91,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_toge.webp",
+      "description": "Cursed Speech user, speaks only in rice ball ingredients."
+    },
+    {
+      "id": "jjk_panda",
+      "name": "Panda",
+      "universe": "jujutsu_kaisen",
+      "power": 90,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_panda.webp",
+      "description": "Cursed corpse created by Masamichi Yaga, three cores."
+    },
+    {
+      "id": "jjk_yuta",
+      "name": "Yuta Okkotsu",
+      "universe": "jujutsu_kaisen",
+      "power": 98,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_yuta.webp",
+      "description": "Special Grade sorcerer, Rika the Queen of Curses, copies techniques."
+    },
+    {
+      "id": "jjk_miguel",
+      "name": "Miguel",
+      "universe": "jujutsu_kaisen",
+      "power": 88,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_miguel.webp",
+      "description": "Geto's follower, rope cursed tool user."
+    },
+    {
+      "id": "jjk_larue",
+      "name": "Larue",
+      "universe": "jujutsu_kaisen",
+      "power": 86,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_larue.webp",
+      "description": "Geto's follower, cursed tool user."
+    },
+    {
+      "id": "jjk_choso",
+      "name": "Choso",
+      "universe": "jujutsu_kaisen",
+      "power": 95,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_choso.webp",
+      "description": "Blood Manipulation, Death Painting Womb No. 1, brother to Yuji."
+    },
+    {
+      "id": "jjk_esou",
+      "name": "Esou",
+      "universe": "jujutsu_kaisen",
+      "power": 90,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_esou.webp",
+      "description": "Rot Technique, Death Painting Womb No. 2."
+    },
+    {
+      "id": "jjk_kechizu",
+      "name": "Kechizu",
+      "universe": "jujutsu_kaisen",
+      "power": 88,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_kechizu.webp",
+      "description": "Rot Technique, Death Painting Womb No. 3."
+    },
+    {
+      "id": "jjk_mahito",
+      "name": "Mahito",
+      "universe": "jujutsu_kaisen",
+      "power": 96,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_mahito.webp",
+      "description": "Idle Transfiguration, special grade cursed spirit."
+    },
+    {
+      "id": "jjk_jogo",
+      "name": "Jogo",
+      "universe": "jujutsu_kaisen",
+      "power": 94,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_jogo.webp",
+      "description": "Volcano cursed spirit, special grade, prideful."
+    },
+    {
+      "id": "jjk_hanami",
+      "name": "Hanami",
+      "universe": "jujutsu_kaisen",
+      "power": 93,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_hanami.webp",
+      "description": "Plant cursed spirit, special grade, environmentalist."
+    },
+    {
+      "id": "jjk_dagon",
+      "name": "Dagon",
+      "universe": "jujutsu_kaisen",
+      "power": 92,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_dagon.webp",
+      "description": "Water/Sea cursed spirit, special grade, domain expansion."
+    },
+    {
+      "id": "jjk_sukuna",
+      "name": "Ryomen Sukuna",
+      "universe": "jujutsu_kaisen",
+      "power": 100,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_sukuna.webp",
+      "description": "King of Curses, malevolent shrine, 20 fingers."
+    },
+    {
+      "id": "jjk_kenjaku",
+      "name": "Kenjaku",
+      "universe": "jujutsu_kaisen",
+      "power": 98,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_kenjaku.webp",
+      "description": "Ancient sorcerer, body hopper, mastermind behind Shibuya Incident."
+    },
+    {
+      "id": "jjk_urume",
+      "name": "Uraume",
+      "universe": "jujutsu_kaisen",
+      "power": 92,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_urume.webp",
+      "description": "Ice Formation, Sukuna's loyal servant from Heian era."
+    },
+    {
+      "id": "jjk_higuruma",
+      "name": "Hiromi Higuruma",
+      "universe": "jujutsu_kaisen",
+      "power": 93,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_higuruma.webp",
+      "description": "Deadly Sentencing, lawyer turned sorcerer, domain expansion."
+    },
+    {
+      "id": "jjk_kashimo",
+      "name": "Hajime Kashimo",
+      "universe": "jujutsu_kaisen",
+      "power": 96,
+      "image": "/static/auction/themes/jujutsu_kaisen/jjk_kashimo.webp",
+      "description": "Mythical Beast Amber, ancient sorcerer, lightning cursed energy."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "jjk_first_years",
+      "name": "Jujutsu High First Years",
+      "description": "Yuji, Megumi, and Nobara - the main trio",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["jjk_yuji", "jjk_megumi", "jjk_nobara"]
+    },
+    {
+      "id": "jjk_strongest_sorcerers",
+      "name": "Strongest Sorcerers",
+      "description": "Gojo and Geto - the strongest duo",
+      "bonus": { "type": "percentage", "value": 30 },
+      "required_character_ids": ["jjk_gojo", "jjk_geto"]
+    },
+    {
+      "id": "jjk_special_grades",
+      "name": "Special Grade Sorcerers",
+      "description": "All four special grade sorcerers",
+      "bonus": { "type": "fixed", "value": 250 },
+      "required_character_ids": ["jjk_gojo", "jjk_geto", "jjk_yuta", "jjk_maki"]
+    },
+    {
+      "id": "jjk_disaster_curses",
+      "name": "Disaster Curses",
+      "description": "Mahito, Jogo, Hanami, Dagon - special grade curses",
+      "bonus": { "type": "fixed", "value": 200 },
+      "required_character_ids": ["jjk_mahito", "jjk_jogo", "jjk_hanami", "jjk_dagon"]
+    },
+    {
+      "id": "jjk_death_paintings",
+      "name": "Death Painting Wombs",
+      "description": "Choso, Esou, and Kechizu - cursed womb brothers",
+      "bonus": { "type": "percentage", "value": 22 },
+      "required_character_ids": ["jjk_choso", "jjk_esou", "jjk_kechizu"]
+    },
+    {
+      "id": "jjk_sukuna_vessel",
+      "name": "Sukuna's Vessel & King",
+      "description": "Yuji as vessel and Sukuna the King of Curses",
+      "bonus": { "type": "percentage", "value": 35 },
+      "required_character_ids": ["jjk_yuji", "jjk_sukuna"]
+    }
+  ]
+}

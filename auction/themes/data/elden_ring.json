@@ -1,0 +1,248 @@
+{
+  "characters": [
+    {
+      "id": "er_malenia",
+      "name": "Malenia, Blade of Miquella",
+      "universe": "elden_ring",
+      "power": 100,
+      "image": "/static/auction/themes/elden_ring/er_malenia.webp",
+      "description": "Goddess of Rot, undefeated warrior, twin of Miquella, Scarlet Aeonia."
+    },
+    {
+      "id": "er_radahn",
+      "name": "Starscourge Radahn",
+      "universe": "elden_ring",
+      "power": 99,
+      "image": "/static/auction/themes/elden_ring/er_radahn.webp",
+      "description": "Conqueror of the Stars, gravity magic, Redmane Castle lord."
+    },
+    {
+      "id": "er_godrick",
+      "name": "Godrick the Grafted",
+      "universe": "elden_ring",
+      "power": 90,
+      "image": "/static/auction/themes/elden_ring/er_godrick.webp",
+      "description": "First Shardbearer, grafts limbs onto himself, Stormveil Castle lord."
+    },
+    {
+      "id": "er_rykard",
+      "name": "Rykard, Lord of Blasphemy",
+      "universe": "elden_ring",
+      "power": 96,
+      "image": "/static/auction/themes/elden_ring/er_rykard.webp",
+      "description": "Devoured by the Serpent, Volcano Manor lord, Rykard's Rancor."
+    },
+    {
+      "id": "er_rennala",
+      "name": "Rennala, Queen of the Full Moon",
+      "universe": "elden_ring",
+      "power": 94,
+      "image": "/static/auction/themes/elden_ring/er_rennala.webp",
+      "description": "Carian Queen, Full Moon sorcery, Academy of Raya Lucaria head."
+    },
+    {
+      "id": "er_mohg",
+      "name": "Mohg, Lord of Blood",
+      "universe": "elden_ring",
+      "power": 97,
+      "image": "/static/auction/themes/elden_ring/er_mohg.webp",
+      "description": "Bloodflame, Mohgwyn Palace, seeks to raise Miquella as god."
+    },
+    {
+      "id": "er_morgott",
+      "name": "Morgott, the Omen King",
+      "universe": "elden_ring",
+      "power": 95,
+      "image": "/static/auction/themes/elden_ring/er_morgott.webp",
+      "description": "Leyndell's last king, cursed blood, guards the Erdtree."
+    },
+    {
+      "id": "er_miquella",
+      "name": "Miquella of the Haligtree",
+      "universe": "elden_ring",
+      "power": 96,
+      "image": "/static/auction/themes/elden_ring/er_miquella.webp",
+      "description": "Eternal child, Haligtree creator, twin of Malenia, Unalloyed Gold Needle."
+    },
+    {
+      "id": "er_radagon",
+      "name": "Radagon of the Golden Order",
+      "universe": "elden_ring",
+      "power": 99,
+      "image": "/static/auction/themes/elden_ring/er_radagon.webp",
+      "description": "Marika's consort, Elden Beast host, hammer of Marika."
+    },
+    {
+      "id": "er_marika",
+      "name": "Marika the Eternal",
+      "universe": "elden_ring",
+      "power": 100,
+      "image": "/static/auction/themes/elden_ring/er_marika.webp",
+      "description": "Elden Ring vessel, shattered the Ring, mother of demigods."
+    },
+    {
+      "id": "er_gideon",
+      "name": "Gideon Ofnir, the All-Knowing",
+      "universe": "elden_ring",
+      "power": 92,
+      "image": "/static/auction/themes/elden_ring/er_gideon.webp",
+      "description": "Roundtable Hold leader, knows all, uses copied incantations."
+    },
+    {
+      "id": "er_fia",
+      "name": "Fia, Deathbed Companion",
+      "universe": "elden_ring",
+      "power": 90,
+      "image": "/static/auction/themes/elden_ring/er_fia.webp",
+      "description": "Deathbed Smother, Mending Rune of Death-Prince, Godwyn's companion."
+    },
+    {
+      "id": "er_rhya",
+      "name": "Rya",
+      "universe": "elden_ring",
+      "power": 85,
+      "image": "/static/auction/themes/elden_ring/er_rhya.webp",
+      "description": "Volcano Manor guest, serpent-girl, seeks her true self."
+    },
+    {
+      "id": "er_roger",
+      "name": "Rogier",
+      "universe": "elden_ring",
+      "power": 86,
+      "image": "/static/auction/themes/elden_ring/er_roger.webp",
+      "description": "Sorcerer, Roundtable Hold, Fia's champion, dies from thorns."
+    },
+    {
+      "id": "er_d",
+      "name": "D, Hunter of the Dead",
+      "universe": "elden_ring",
+      "power": 88,
+      "image": "/static/auction/themes/elden_ring/er_d.webp",
+      "description": "Twinblade wielder, hunts Those Who Live in Death."
+    },
+    {
+      "id": "er_nep",
+      "name": "Nepheli Loux",
+      "universe": "elden_ring",
+      "power": 89,
+      "image": "/static/auction/themes/elden_ring/er_nep.webp",
+      "description": "Warrior, Gideon's adopted daughter, potential Leyndell lord."
+    },
+    {
+      "id": "er_kenneth",
+      "name": "Kenneth Haight",
+      "universe": "elden_ring",
+      "power": 84,
+      "image": "/static/auction/themes/elden_ring/er_kenneth.webp",
+      "description": "Fort Haight lord, seeks to reclaim Fort Faroth."
+    },
+    {
+      "id": "er_jarren",
+      "name": "Jarren",
+      "universe": "elden_ring",
+      "power": 83,
+      "image": "/static/auction/themes/elden_ring/er_jarren.webp",
+      "description": "Rogier's friend, Roundtable Hold, cares for Nepheli."
+    },
+    {
+      "id": "er_boc",
+      "name": "Boc the Seamster",
+      "universe": "elden_ring",
+      "power": 80,
+      "image": "/static/auction/themes/elden_ring/er_boc.webp",
+      "description": "Demi-human tailor, seeks to become 'proper' human."
+    },
+    {
+      "id": "er_patches",
+      "name": "Patches",
+      "universe": "elden_ring",
+      "power": 85,
+      "image": "/static/auction/themes/elden_ring/er_patches.webp",
+      "description": "Trickster, kicks you into pits, recurring Souls character."
+    },
+    {
+      "id": "er_alexander",
+      "name": "Iron Fist Alexander",
+      "universe": "elden_ring",
+      "power": 88,
+      "image": "/static/auction/themes/elden_ring/er_alexander.webp",
+      "description": "Living jar warrior, seeks to become a great warrior."
+    },
+    {
+      "id": "er_jar_bae",
+      "name": "Jar-Bairn",
+      "universe": "elden_ring",
+      "power": 82,
+      "image": "/static/auction/themes/elden_ring/er_jar_bae.webp",
+      "description": "Jar village elder, Alexander's mentor."
+    },
+    {
+      "id": "er_millicent",
+      "name": "Millicent",
+      "universe": "elden_ring",
+      "power": 91,
+      "image": "/static/auction/themes/elden_ring/er_millicent.webp",
+      "description": "Rot-infected maiden, Malenia's descendant, Unalloyed Gold Needle."
+    },
+    {
+      "id": "er_gowry",
+      "name": "Gowry",
+      "universe": "elden_ring",
+      "power": 87,
+      "image": "/static/auction/themes/elden_ring/er_gowry.webp",
+      "description": "Millicent's caretaker, sage of the Swamp of Aeonia."
+    },
+    {
+      "id": "er_tanith",
+      "name": "Tanith",
+      "universe": "elden_ring",
+      "power": 90,
+      "image": "/static/auction/themes/elden_ring/er_tanith.webp",
+      "description": "Volcano Manor consort, Rykard's wife, Recusant leader."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "er_shardbearers",
+      "name": "The Shardbearers",
+      "description": "Demigods who hold Great Runes",
+      "bonus": { "type": "fixed", "value": 300 },
+      "required_character_ids": ["er_godrick", "er_rennala", "er_radahn", "er_rykard", "er_morgott", "er_mohg", "er_malenia"]
+    },
+    {
+      "id": "er_golden_lineage",
+      "name": "Golden Lineage",
+      "description": "Marika, Radagon, and their children",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["er_marika", "er_radagon", "er_malenia", "er_miquella", "er_morgott", "er_mohg"]
+    },
+    {
+      "id": "er_rot_goddess",
+      "name": "Scarlet Rot Goddesses",
+      "description": "Malenia and her descendant Millicent",
+      "bonus": { "type": "percentage", "value": 30 },
+      "required_character_ids": ["er_malenia", "er_millicent"]
+    },
+    {
+      "id": "er_volcano_manor",
+      "name": "Volcano Manor Conspirators",
+      "description": "Rykard, Tanith, and Rya",
+      "bonus": { "type": "fixed", "value": 180 },
+      "required_character_ids": ["er_rykard", "er_tanith", "er_rhya"]
+    },
+    {
+      "id": "er_haligtree",
+      "name": "Miquella's Haligtree",
+      "description": "Miquella, Malenia, and their followers",
+      "bonus": { "type": "percentage", "value": 22 },
+      "required_character_ids": ["er_miquella", "er_malenia", "er_nep", "er_millicent"]
+    },
+    {
+      "id": "er_elden_lord_path",
+      "name": "Path to Elden Lord",
+      "description": "Key figures on the journey to become Elden Lord",
+      "bonus": { "type": "fixed", "value": 220 },
+      "required_character_ids": ["er_godrick", "er_radahn", "er_morgott", "er_gideon", "er_marika", "er_radagon"]
+    }
+  ]
+}

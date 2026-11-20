@@ -13,159 +13,172 @@ from .models import Comment
 # Games shown on the landing page.
 GAMES = [
     {
-        'slug': 'satranc',
-        'url_name': 'satranc:home',
-        'title': 'Satranç',
-        'description': (
-            'Klasik iki kişilik satranç. Oda kur, kodu paylaş ya da '
-            'Stockfish botuna karşı stratejini test et.'
+        "slug": "satranc",
+        "url_name": "satranc:home",
+        "title": "Satranç",
+        "description": (
+            "Klasik iki kişilik satranç. Oda kur, kodu paylaş ya da "
+            "Stockfish botuna karşı stratejini test et."
         ),
-        'tag': 'Strateji',
-        'tone': 'violet',
-        'players': '2 oyuncu',
-        'mode': 'Canlı / Bot',
-        'image': 'core/img/satranc.webp',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Strateji",
+        "tone": "violet",
+        "players": "2 oyuncu",
+        "mode": "Canlı / Bot",
+        "image": "core/img/satranc.webp",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'bilardo',
-        'url_name': 'bilardo:home',
-        'title': 'Bilardo',
-        'description': (
-            '3 Bant, 8 Top, 9 Top ve Düz Bilardo modlarıyla iki kişilik masa '
-            'oyunu. İstekanı seç, gücü ve falsoyu ayarla, isabetli vuruşlarla rakibini geç.'
+        "slug": "bilardo",
+        "url_name": "bilardo:home",
+        "title": "Bilardo",
+        "description": (
+            "3 Bant, 8 Top, 9 Top ve Düz Bilardo modlarıyla iki kişilik masa "
+            "oyunu. İstekanı seç, gücü ve falsoyu ayarla, isabetli vuruşlarla rakibini geç."
         ),
-        'tag': 'Spor',
-        'tone': 'emerald',
-        'players': '2 oyuncu',
-        'mode': 'Canlı / Yerel',
-        'image': 'core/img/bilardo.svg',
-        'image_width': 1600,
-        'image_height': 900,
+        "tag": "Spor",
+        "tone": "emerald",
+        "players": "2 oyuncu",
+        "mode": "Canlı / Yerel",
+        "image": "core/img/bilardo.svg",
+        "image_width": 1600,
+        "image_height": 900,
     },
     {
-        'slug': 'kim-bu',
-        'url_name': 'kim:home',
-        'title': 'Kim Bu?',
-        'description': (
-            'Gizli karakterini seç, evet/hayır soruları sor ve rakibinin '
-            'karakterini herkesten önce bul.'
+        "slug": "kim-bu",
+        "url_name": "kim:home",
+        "title": "Kim Bu?",
+        "description": (
+            "Gizli karakterini seç, evet/hayır soruları sor ve rakibinin "
+            "karakterini herkesten önce bul."
         ),
-        'tag': 'Parti',
-        'tone': 'coral',
-        'players': '2 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/kim_bu.webp',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Parti",
+        "tone": "coral",
+        "players": "2 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/kim_bu.webp",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'okey101',
-        'url_name': 'okey101:home',
-        'title': '101 Okey',
-        'description': (
-            '2–4 kişilik klasik 101 Okey. Oda kur, taş çek, perlerini aç '
-            've elini ilk bitiren ol.'
+        "slug": "okey101",
+        "url_name": "okey101:home",
+        "title": "101 Okey",
+        "description": (
+            "2–4 kişilik klasik 101 Okey. Oda kur, taş çek, perlerini aç "
+            "ve elini ilk bitiren ol."
         ),
-        'tag': 'Masa Oyunu',
-        'tone': 'amber',
-        'players': '2–4 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/okey.webp',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Masa Oyunu",
+        "tone": "amber",
+        "players": "2–4 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/okey.webp",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'codenames',
-        'url_name': 'codenames:home',
-        'title': 'Codenames',
-        'description': (
-            'İki takım, gizli ajanlar ve tek kelimelik ipuçları. Spymaster '
-            'ipucunu ver, operatifler doğru kelimeleri bulmadan rakibine fırsat verme.'
+        "slug": "codenames",
+        "url_name": "codenames:home",
+        "title": "Codenames",
+        "description": (
+            "İki takım, gizli ajanlar ve tek kelimelik ipuçları. Spymaster "
+            "ipucunu ver, operatifler doğru kelimeleri bulmadan rakibine fırsat verme."
         ),
-        'tag': 'Parti',
-        'tone': 'cyan',
-        'players': '4–10 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/codenames.jpeg',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Parti",
+        "tone": "cyan",
+        "players": "4–10 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/codenames.jpeg",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'fcmanager',
-        'url_name': 'fcmanager:home',
-        'title': 'FC Manager',
-        'description': (
-            'Bütçeni yönet, ortak görevleri tamamla ve sürükle-bırak ile '
-            'hayalindeki 11’i kur. Rakibinle mini maç simülasyonunda karşılaş.'
+        "slug": "fcmanager",
+        "url_name": "fcmanager:home",
+        "title": "FC Manager",
+        "description": (
+            "Bütçeni yönet, ortak görevleri tamamla ve sürükle-bırak ile "
+            "hayalindeki 11’i kur. Rakibinle mini maç simülasyonunda karşılaş."
         ),
-        'tag': 'Spor',
-        'tone': 'emerald',
-        'players': '2 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/fcmanager.svg',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Spor",
+        "tone": "emerald",
+        "players": "2 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/fcmanager.svg",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'amiral',
-        'url_name': 'amiral:home',
-        'title': 'Amiral Battı',
-        'description': (
-            'Gemilerini yerleştir, koordinatlara ateş et ve rakibinin tüm '
-            'filosunu batırmak için hamle yap.'
+        "slug": "amiral",
+        "url_name": "amiral:home",
+        "title": "Amiral Battı",
+        "description": (
+            "Gemilerini yerleştir, koordinatlara ateş et ve rakibinin tüm "
+            "filosunu batırmak için hamle yap."
         ),
-        'tag': 'Strateji',
-        'tone': 'cyan',
-        'players': '2 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/amiral_batti.webp',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Strateji",
+        "tone": "cyan",
+        "players": "2 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/amiral_batti.webp",
+        "image_width": 1600,
+        "image_height": 497,
     },
     {
-        'slug': 'sayi',
-        'url_name': 'sayi:home',
-        'title': 'Sayı Tahmin Oyunu',
-        'description': (
-            'Rakibinin 4 basamaklı gizli sayısını artı/eksi ipuçlarıyla '
-            'tahmin etmeye çalış.'
+        "slug": "sayi",
+        "url_name": "sayi:home",
+        "title": "Sayı Tahmin Oyunu",
+        "description": (
+            "Rakibinin 4 basamaklı gizli sayısını artı/eksi ipuçlarıyla "
+            "tahmin etmeye çalış."
         ),
-        'tag': 'Mantık',
-        'tone': 'rose',
-        'players': '2 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/sayi_tahmin.jpeg',
-        'image_width': 1408,
-        'image_height': 768,
+        "tag": "Mantık",
+        "tone": "rose",
+        "players": "2 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/sayi_tahmin.jpeg",
+        "image_width": 1408,
+        "image_height": 768,
     },
     {
-        'slug': 'auction',
-        'url_name': 'auction:home',
-        'title': 'Character Auction',
-        'description': (
-            'Efsanevi evrenlerden karakterleri açık artırmayla topla. '
-            'Senarjileri aktif et, bütçeni yönet ve en güçlü koleksiyonu kurarak kazan.'
+        "slug": "auction",
+        "url_name": "auction:home",
+        "title": "Character Auction",
+        "description": (
+            "Efsanevi evrenlerden karakterleri açık artırmayla topla. "
+            "Sinarjileri aktif et, bütçeni yönet ve en güçlü koleksiyonu kurarak kazan."
         ),
-        'tag': 'Strateji',
-        'tone': 'purple',
-        'players': '2–8 oyuncu',
-        'mode': 'Canlı',
-        'image': 'core/img/auction.svg',
-        'image_width': 1600,
-        'image_height': 497,
+        "tag": "Strateji",
+        "tone": "purple",
+        "players": "2–8 oyuncu",
+        "mode": "Canlı",
+        "image": "core/img/auction.jpeg",
+        "image_width": 1600,
+        "image_height": 497,
     },
 ]
 
 
-GAME_SLUGS = {game['slug'] for game in GAMES}
+GAME_SLUGS = {game["slug"] for game in GAMES}
 COMMENT_LIMIT = 100
 GAMES_PAGE_SIZE = 6
-_TR_SEARCH_MAP = str.maketrans({
-    'ç': 'c', 'Ç': 'c', 'ğ': 'g', 'Ğ': 'g', 'ı': 'i', 'I': 'i', 'İ': 'i',
-    'ö': 'o', 'Ö': 'o', 'ş': 's', 'Ş': 's', 'ü': 'u', 'Ü': 'u',
-})
+_TR_SEARCH_MAP = str.maketrans(
+    {
+        "ç": "c",
+        "Ç": "c",
+        "ğ": "g",
+        "Ğ": "g",
+        "ı": "i",
+        "I": "i",
+        "İ": "i",
+        "ö": "o",
+        "Ö": "o",
+        "ş": "s",
+        "Ş": "s",
+        "ü": "u",
+        "Ü": "u",
+    }
+)
 
 
 def _search_key(value):
@@ -174,115 +187,129 @@ def _search_key(value):
 
 def _serialize_comment(comment):
     return {
-        'author': comment.author_name or 'Misafir',
-        'body': comment.body,
-        'created_at': timezone.localtime(comment.created_at).strftime('%d.%m.%Y %H:%M'),
+        "author": comment.author_name or "Misafir",
+        "body": comment.body,
+        "created_at": timezone.localtime(comment.created_at).strftime("%d.%m.%Y %H:%M"),
     }
 
 
 @csrf_exempt
-@require_http_methods(['GET', 'POST'])
+@require_http_methods(["GET", "POST"])
 def comments(request, game):
     """List or add comments for a single game's landing page."""
     if game not in GAME_SLUGS:
-        return JsonResponse({'success': False, 'error': 'Geçersiz oyun.'}, status=404)
+        return JsonResponse({"success": False, "error": "Geçersiz oyun."}, status=404)
 
-    if request.method == 'GET':
-        items = [_serialize_comment(c) for c in Comment.objects.filter(game=game)[:COMMENT_LIMIT]]
-        return JsonResponse({'success': True, 'comments': items})
+    if request.method == "GET":
+        items = [
+            _serialize_comment(c)
+            for c in Comment.objects.filter(game=game)[:COMMENT_LIMIT]
+        ]
+        return JsonResponse({"success": True, "comments": items})
 
     try:
-        data = json.loads(request.body or '{}')
+        data = json.loads(request.body or "{}")
     except ValueError:
         data = {}
 
-    author = (data.get('name') or '').strip()[:30]
-    body = (data.get('body') or '').strip()[:500]
+    author = (data.get("name") or "").strip()[:30]
+    body = (data.get("body") or "").strip()[:500]
 
     if not body:
-        return JsonResponse({'success': False, 'error': 'Yorum boş olamaz.'}, status=400)
+        return JsonResponse(
+            {"success": False, "error": "Yorum boş olamaz."}, status=400
+        )
 
     comment = Comment.objects.create(game=game, author_name=author, body=body)
-    return JsonResponse({'success': True, 'comment': _serialize_comment(comment)})
+    return JsonResponse({"success": True, "comment": _serialize_comment(comment)})
 
 
 def home(request):
     """Landing page: let the visitor pick which game to play."""
-    return render(request, 'core/home.html', {'games': GAMES})
+    return render(request, "core/home.html", {"games": GAMES})
 
 
 def games(request):
     """Searchable, paginated catalogue of all games."""
-    query = (request.GET.get('q') or '').strip()
+    query = (request.GET.get("q") or "").strip()
 
     items = GAMES
     if query:
         needle = _search_key(query)
         items = [
-            game for game in GAMES
-            if needle in _search_key(game['title'])
-            or needle in _search_key(game['description'])
-            or needle in _search_key(game['tag'])
+            game
+            for game in GAMES
+            if needle in _search_key(game["title"])
+            or needle in _search_key(game["description"])
+            or needle in _search_key(game["tag"])
         ]
 
     paginator = Paginator(items, GAMES_PAGE_SIZE)
-    page_obj = paginator.get_page(request.GET.get('page'))
+    page_obj = paginator.get_page(request.GET.get("page"))
 
-    return render(request, 'core/games.html', {
-        'page_obj': page_obj,
-        'query': query,
-        'total': paginator.count,
-    })
+    return render(
+        request,
+        "core/games.html",
+        {
+            "page_obj": page_obj,
+            "query": query,
+            "total": paginator.count,
+        },
+    )
 
 
 # --- Anlık altın fiyatı proxy ------------------------------------------------
 
 GRAM_PER_OZ = 31.1034768
-_GOLD_CACHE = {'value': None, 'updated_at': None}
+_GOLD_CACHE = {"value": None, "updated_at": None}
 
 
 def _fetch_json(url, timeout=10):
     with urllib.request.urlopen(url, timeout=timeout) as resp:
-        return json.loads(resp.read().decode('utf-8'))
+        return json.loads(resp.read().decode("utf-8"))
 
 
 @csrf_exempt
-@require_http_methods(['GET'])
+@require_http_methods(["GET"])
 def gold_price(request):
     """Anlık gram altın fiyatı (TL) — dış API'leri sunucu tarafından birleştirir."""
     try:
-        xau = _fetch_json('https://api.gold-api.com/price/XAU')
-        rates = _fetch_json('https://open.er-api.com/v6/latest/USD')
+        xau = _fetch_json("https://api.gold-api.com/price/XAU")
+        rates = _fetch_json("https://open.er-api.com/v6/latest/USD")
 
-        price_usd_oz = float(xau.get('price') or 0)
-        usd_try = float((rates.get('rates') or {}).get('TRY') or 0)
+        price_usd_oz = float(xau.get("price") or 0)
+        usd_try = float((rates.get("rates") or {}).get("TRY") or 0)
 
         if price_usd_oz <= 0 or usd_try <= 0:
-            raise ValueError('Geçersiz altın/döviz verisi')
+            raise ValueError("Geçersiz altın/döviz verisi")
 
         gram_tl = (price_usd_oz / GRAM_PER_OZ) * usd_try
 
-        previous = _GOLD_CACHE['value']
+        previous = _GOLD_CACHE["value"]
         if previous is not None:
             if gram_tl > previous:
-                change = 'up'
+                change = "up"
             elif gram_tl < previous:
-                change = 'down'
+                change = "down"
             else:
-                change = 'neutral'
+                change = "neutral"
         else:
-            change = 'neutral'
+            change = "neutral"
 
-        _GOLD_CACHE['value'] = gram_tl
-        _GOLD_CACHE['updated_at'] = xau.get('updatedAt') or rates.get('time_last_update_utc')
+        _GOLD_CACHE["value"] = gram_tl
+        _GOLD_CACHE["updated_at"] = xau.get("updatedAt") or rates.get(
+            "time_last_update_utc"
+        )
 
-        return JsonResponse({
-            'success': True,
-            'value': round(gram_tl, 2),
-            'change': change,
-            'unit': 'gram',
-            'currency': 'TL',
-            'updated_at': _GOLD_CACHE['updated_at'],
-        })
+        return JsonResponse(
+            {
+                "success": True,
+                "value": round(gram_tl, 2),
+                "change": change,
+                "unit": "gram",
+                "currency": "TL",
+                "updated_at": _GOLD_CACHE["updated_at"],
+            }
+        )
     except Exception as exc:  # pragma: no cover - external dependency
-        return JsonResponse({'success': False, 'error': str(exc)}, status=502)
+        return JsonResponse({"success": False, "error": str(exc)}, status=502)

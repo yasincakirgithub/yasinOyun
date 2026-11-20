@@ -1,0 +1,265 @@
+{
+  "characters": [
+    {
+      "id": "sl_galatasaray",
+      "name": "Galatasaray SK",
+      "universe": "super_lig",
+      "power": 98,
+      "image": "/static/auction/themes/super_lig/sl_galatasaray.webp",
+      "description": "Türkiye'nin en çok şampiyonluk kazanan kulübü, 23 lig şampiyonluğu, 2000 UEFA Kupası ve UEFA Süper Kupa şampiyonu."
+    },
+    {
+      "id": "sl_fenerbahce",
+      "name": "Fenerbahçe SK",
+      "universe": "super_lig",
+      "power": 97,
+      "image": "/static/auction/themes/super_lig/sl_fenerbahce.webp",
+      "description": "Kadıköy'ün efsanevi kulübü, 19 lig şampiyonluğu, sürekli şampiyonluk yarışı yapan dev ekibin bir tanesi."
+    },
+    {
+      "id": "sl_besiktas",
+      "name": "Beşiktaş JK",
+      "universe": "super_lig",
+      "power": 96,
+      "image": "/static/auction/themes/super_lig/sl_besiktas.webp",
+      "description": "Kara Kartal, 16 lig şampiyonluğu, Türk futbol tarihinde ilk lig şampiyonu, sadece Beşiktaş..."
+    },
+    {
+      "id": "sl_trabzonspor",
+      "name": "Trabzonspor",
+      "universe": "super_lig",
+      "power": 93,
+      "image": "/static/auction/themes/super_lig/sl_trabzonspor.webp",
+      "description": "Karadeniz Fırtınası, 7 lig şampiyonluğu, Ankara dışındaki ilk şampiyon kulüp."
+    },
+    {
+      "id": "sl_basaksehir",
+      "name": "İstanbul Başakşehir",
+      "universe": "super_lig",
+      "power": 90,
+      "image": "/static/auction/themes/super_lig/sl_basaksehir.webp",
+      "description": "2019-2020 sezonunda tarihi ilk lig şampiyonluğunu kazanan yeni dev."
+    },
+    {
+      "id": "sl_hatayspor",
+      "name": "Hatayspor",
+      "universe": "super_lig",
+      "power": 85,
+      "image": "/static/auction/themes/super_lig/sl_hatayspor.webp",
+      "description": "Yıldızlarıyla Süper Lig'de sürprizler yaratan, wolfe ve boupendza gibi cracklerin takımı."
+    },
+    {
+      "id": "sl_kasimpasa",
+      "name": "Kasımpaşa SK",
+      "universe": "super_lig",
+      "power": 84,
+      "image": "/static/auction/themes/super_lig/sl_kasimpasa.webp",
+      "description": "İstanbul'un Beyoğlu ilçesini temsil eden, genç yetenekleri yetiştiren kulüp."
+    },
+    {
+      "id": "sl_kayserispor",
+      "name": "Kayserispor",
+      "universe": "super_lig",
+      "power": 83,
+      "image": "/static/auction/themes/super_lig/sl_kayserispor.webp",
+      "description": "Anadolu Yıldızı, 2008'de Türkiye Kupası'nı kazanarak Avrupa'ya çıkış yapan kulüp."
+    },
+    {
+      "id": "sl_antalyaspor",
+      "name": "Antalyaspor",
+      "universe": "super_lig",
+      "power": 84,
+      "image": "/static/auction/themes/super_lig/sl_antalyaspor.webp",
+      "description": "Akdeniz'in takımı, stadyumu deniz kenarında, samimiyetle anılan kulüp."
+    },
+    {
+      "id": "sl_gaziantep",
+      "name": "Gaziantep FK",
+      "universe": "super_lig",
+      "power": 85,
+      "image": "/static/auction/themes/super_lig/sl_gaziantep.webp",
+      "description": "Güneydoğu'nun gururu, 2019'da Süper Lig'e dönen, stabil bir orta sıra takımı."
+    },
+    {
+      "id": "sl_rize",
+      "name": "Çaykur Rizespor",
+      "universe": "super_lig",
+      "power": 82,
+      "image": "/static/auction/themes/super_lig/sl_rize.webp",
+      "description": "Karadeniz'in yeşil-beyazlı takımı, çay bahçelerinin şehri Rize'yi temsil eden kulüp."
+    },
+    {
+      "id": "sl_sivasspor",
+      "name": "Sivasspor",
+      "universe": "super_lig",
+      "power": 86,
+      "image": "/static/auction/themes/super_lig/sl_sivasspor.webp",
+      "description": "Yiğidoğlu, 2022'de Türkiye Kupası'nı kazanarak tarihi başarıya imza atan kulüp."
+    },
+    {
+      "id": "sl_alanyaspor",
+      "name": "Alanyaspor",
+      "universe": "super_lig",
+      "power": 84,
+      "image": "/static/auction/themes/super_lig/sl_alanyaspor.webp",
+      "description": "Alanya'nın turistik şehrini temsil eden, son yıllarda Avrupa kupalarına katılan kulüp."
+    },
+    {
+      "id": "sl_konyaspor",
+      "name": "Konyaspor",
+      "universe": "super_lig",
+      "power": 85,
+      "image": "/static/auction/themes/super_lig/sl_konyaspor.webp",
+      "description": "Anadolu'nun kalbinden, 2017'de Türkiye Kupası'nı kazanarak tarihe geçen kulüp."
+    },
+    {
+      "id": "sl_samsunspor",
+      "name": "Samsunspor",
+      "universe": "super_lig",
+      "power": 83,
+      "image": "/static/auction/themes/super_lig/sl_samsunspor.webp",
+      "description": "Samsun'un tarihi kulübü, 2023'te Süper Lig'e dönüş yapan 'Samsun'un Yıldızı'."
+    },
+    {
+      "id": "sl_pendikspor",
+      "name": "Pendikspor",
+      "universe": "super_lig",
+      "power": 80,
+      "image": "/static/auction/themes/super_lig/sl_pendikspor.webp",
+      "description": "İstanbul'un Pendik ilçesini temsil eden, 2023'te Süper Lig'e yükselen yeni takım."
+    },
+    {
+      "id": "sl_anadolu",
+      "name": "Ankaragücü",
+      "universe": "super_lig",
+      "power": 82,
+      "image": "/static/auction/themes/super_lig/sl_anadolu.webp",
+      "description": "Başkent Ankara'nın köklü kulübü, 1987-88 sezonunda Türkiye Kupası'nı kazanmış."
+    },
+    {
+      "id": "sl_fatihkaragumruk",
+      "name": "Fatih Karagümrük",
+      "universe": "super_lig",
+      "power": 81,
+      "image": "/static/auction/themes/super_lig/sl_fatihkaragumruk.webp",
+      "description": "Fatih'in tarihi kulübü, 2020'de yıllar sonra Süper Lig'e dönen yeşil-kırmızılılar."
+    },
+    {
+      "id": "sl_umraniyespor",
+      "name": "Ümraniyespor",
+      "universe": "super_lig",
+      "power": 80,
+      "image": "/static/auction/themes/super_lig/sl_umraniyespor.webp",
+      "description": "İstanbul'un Ümraniye ilçesini temsil eden, 2022'de ilk kez Süper Lig'e yükselen kulüp."
+    },
+    {
+      "id": "sl_giresunspor",
+      "name": "Giresunspor",
+      "universe": "super_lig",
+      "power": 81,
+      "image": "/static/auction/themes/super_lig/sl_giresunspor.webp",
+      "description": "Karadeniz'in incisi Giresun'u temsil eden, 2022'de Süper Lig'e dönen kulüp."
+    },
+    {
+      "id": "sl_osmanlispor",
+      "name": "Osmanlıspor",
+      "universe": "super_lig",
+      "power": 80,
+      "image": "/static/auction/themes/super_lig/sl_osmanlispor.webp",
+      "description": "Ankara'nın ikinci büyük kulübü, 2016-17 sezonunda Avrupa ligi oynayan takımlardan."
+    },
+    {
+      "id": "sl_akhisarspor",
+      "name": "Akhisarspor",
+      "universe": "super_lig",
+      "power": 82,
+      "image": "/static/auction/themes/super_lig/sl_akhisarspor.webp",
+      "description": "2018'de Türkiye Kupası'nı kazanan, tarihi başarıya imza atan Akhisar'ın gururu."
+    },
+    {
+      "id": "sl_balikesirspor",
+      "name": "Balıkesirspor",
+      "universe": "super_lig",
+      "power": 78,
+      "image": "/static/auction/themes/super_lig/sl_balikesirspor.webp",
+      "description": "Marmara'nın takımı, 2014-15 sezonunda Süper Lig'de oynamış tarihi kulüp."
+    },
+    {
+      "id": "sl_denizlispor",
+      "name": "Denizlispor",
+      "universe": "super_lig",
+      "power": 79,
+      "image": "/static/auction/themes/super_lig/sl_denizlispor.webp",
+      "description": "Pamukkale'in şehrini temsil eden, 2019-20 sezonunda Süper Lig'de oynamış kulüp."
+    },
+    {
+      "id": "sl_genclerbirligi",
+      "name": "Gençlerbirliği",
+      "universe": "super_lig",
+      "power": 83,
+      "image": "/static/auction/themes/super_lig/sl_genclerbirligi.webp",
+      "description": "Ankara'nın gençlik kulübü, 1987 ve 2001'de Türkiye Kupası'nı iki kez kazanan efsanevi takım."
+    },
+    {
+      "id": "sl_eskisehirspor",
+      "name": "Eskişehirspor",
+      "universe": "super_lig",
+      "power": 82,
+      "image": "/static/auction/themes/super_lig/sl_eskisehirspor.webp",
+      "description": "Eskişehir'in tarihi kulübü, 1970-71'de Türkiye Kupası'nı kazanan 'Eşeğin Şehri' takımı."
+    },
+    {
+      "id": "sl_mersin",
+      "name": "Mersin İdmanyurdu",
+      "universe": "super_lig",
+      "power": 78,
+      "image": "/static/auction/themes/super_lig/sl_mersin.webp",
+      "description": "Akdeniz'in liman şehrini temsil eden, 2014-15 sezonunda Süper Lig'de oynamış kulüp."
+    },
+    {
+      "id": "sl_adanaspor",
+      "name": "Adanaspor",
+      "universe": "super_lig",
+      "power": 79,
+      "image": "/static/auction/themes/super_lig/sl_adanaspor.webp",
+      "description": "Çukurova'nın yeşil-beyazlı takımı, 1970'lerde ligde oynayan tarihi kulüp."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "sl_big_three",
+      "name": "İstanbul Üç Büyükleri",
+      "description": "Galatasaray, Fenerbahçe, Beşiktaş - Türk futbolunun üç devі",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["sl_galatasaray", "sl_fenerbahce", "sl_besiktas"]
+    },
+    {
+      "id": "sl_champions",
+      "name": "Şampiyonluklar",
+      "description": "En az bir kez lig şampiyonluğu kazanan kulüpler",
+      "bonus": { "type": "fixed", "value": 200 },
+      "required_character_ids": ["sl_galatasaray", "sl_fenerbahce", "sl_besiktas", "sl_trabzonspor", "sl_basaksehir"]
+    },
+    {
+      "id": "sl_istanbul_derby",
+      "name": "İstanbul Derbileri",
+      "description": "Karaköy-Kadıköy-İstanbul derbilerinin aktörleri",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["sl_galatasaray", "sl_fenerbahce", "sl_besiktas", "sl_basaksehir", "sl_kasimpasa", "sl_fatihkaragumruk"]
+    },
+    {
+      "id": "sl_anadolu_champions",
+      "name": "Anadolu Şampiyonları",
+      "description": "İstanbul dışından şampiyon olan efsanevi takımlar",
+      "bonus": { "type": "percentage", "value": 22 },
+      "required_character_ids": ["sl_trabzonspor", "sl_basaksehir", "sl_sivasspor", "sl_konyaspor", "sl_akhisarspor", "sl_genclerbirligi", "sl_eskisehirspor"]
+    },
+    {
+      "id": "sl_cup_winners",
+      "name": "Türkiye Kupası Şampiyonları",
+      "description": "Türkiye Kupası'nı kazanmış kulüpler",
+      "bonus": { "type": "fixed", "value": 150 },
+      "required_character_ids": ["sl_galatasaray", "sl_fenerbahce", "sl_besiktas", "sl_trabzonspor", "sl_basaksehir", "sl_sivasspor", "sl_konyaspor", "sl_akhisarspor", "sl_genclerbirligi", "sl_eskisehirspor"]
+    }
+  ]
+}

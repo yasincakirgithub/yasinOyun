@@ -1,0 +1,241 @@
+{
+  "characters": [
+    {
+      "id": "ds_tanjiro",
+      "name": "Tanjiro Kamado",
+      "universe": "demon_slayer",
+      "power": 94,
+      "image": "/static/auction/themes/demon_slayer/ds_tanjiro.webp",
+      "description": "Main protagonist, user of Water Breathing and Hinokami Kagura (Sun Breathing)."
+    },
+    {
+      "id": "ds_nezuko",
+      "name": "Nezuko Kamado",
+      "universe": "demon_slayer",
+      "power": 92,
+      "image": "/static/auction/themes/demon_slayer/ds_nezuko.webp",
+      "description": "Tanjiro's sister, a demon who retains her humanity and fights without consuming humans."
+    },
+    {
+      "id": "ds_zenitsu",
+      "name": "Zenitsu Agatsuma",
+      "universe": "demon_slayer",
+      "power": 90,
+      "image": "/static/auction/themes/demon_slayer/ds_zenitsu.webp",
+      "description": "Thunder Breathing user who fights at his best while unconscious."
+    },
+    {
+      "id": "ds_inosuke",
+      "name": "Inosuke Hashibira",
+      "universe": "demon_slayer",
+      "power": 91,
+      "image": "/static/auction/themes/demon_slayer/ds_inosuke.webp",
+      "description": "Beast Breathing user raised by boars, wears a boar mask."
+    },
+    {
+      "id": "ds_giyu",
+      "name": "Giyu Tomioka",
+      "universe": "demon_slayer",
+      "power": 96,
+      "image": "/static/auction/themes/demon_slayer/ds_giyu.webp",
+      "description": "Water Hashira, stoic and powerful, first Hashira Tanjiro meets."
+    },
+    {
+      "id": "ds_shinobu",
+      "name": "Shinobu Kocho",
+      "universe": "demon_slayer",
+      "power": 93,
+      "image": "/static/auction/themes/demon_slayer/ds_shinobu.webp",
+      "description": "Insect Hashira, uses poison-based techniques instead of decapitation."
+    },
+    {
+      "id": "ds_kyojuro",
+      "name": "Kyojuro Rengoku",
+      "universe": "demon_slayer",
+      "power": 97,
+      "image": "/static/auction/themes/demon_slayer/ds_kyojuro.webp",
+      "description": "Flame Hashira, passionate and noble, died fighting Upper Rank 3 Akaza."
+    },
+    {
+      "id": "ds_tengen",
+      "name": "Tengen Uzui",
+      "universe": "demon_slayer",
+      "power": 94,
+      "image": "/static/auction/themes/demon_slayer/ds_tengen.webp",
+      "description": "Sound Hashira, former shinobi, flamboyant and powerful."
+    },
+    {
+      "id": "ds_mitsuri",
+      "name": "Mitsuri Kanroji",
+      "universe": "demon_slayer",
+      "power": 93,
+      "image": "/static/auction/themes/demon_slayer/ds_mitsuri.webp",
+      "description": "Love Hashira, possesses unique muscle density and flexibility."
+    },
+    {
+      "id": "ds_muichiro",
+      "name": "Muichiro Tokito",
+      "universe": "demon_slayer",
+      "power": 95,
+      "image": "/static/auction/themes/demon_slayer/ds_muichiro.webp",
+      "description": "Mist Hashira, prodigy who achieved Hashira rank in two months."
+    },
+    {
+      "id": "ds_gyomei",
+      "name": "Gyomei Himejima",
+      "universe": "demon_slayer",
+      "power": 98,
+      "image": "/static/auction/themes/demon_slayer/ds_gyomei.webp",
+      "description": "Stone Hashira, blind but strongest Hashira, uses a spiked flail and axe."
+    },
+    {
+      "id": "ds_sanemi",
+      "name": "Sanemi Shinazugawa",
+      "universe": "demon_slayer",
+      "power": 96,
+      "image": "/static/auction/themes/demon_slayer/ds_sanemi.webp",
+      "description": "Wind Hashira, abrasive personality but incredibly skilled."
+    },
+    {
+      "id": "ds_obi",
+      "name": "Obanai Iguro",
+      "universe": "demon_slayer",
+      "power": 94,
+      "image": "/static/auction/themes/demon_slayer/ds_obi.webp",
+      "description": "Serpent Hashira, uses a twisted blade, deeply loyal to Mitsuri."
+    },
+    {
+      "id": "ds_kanao",
+      "name": "Kanao Tsuyuri",
+      "universe": "demon_slayer",
+      "power": 92,
+      "image": "/static/auction/themes/demon_slayer/ds_kanao.webp",
+      "description": "Flower Breathing user, Shinobu's adopted sister and Tsuguko."
+    },
+    {
+      "id": "ds_genya",
+      "name": "Genya Shinazugawa",
+      "universe": "demon_slayer",
+      "power": 88,
+      "image": "/static/auction/themes/demon_slayer/ds_genya.webp",
+      "description": "Sanemi's younger brother, gains demon powers by consuming demon flesh."
+    },
+    {
+      "id": "ds_muzan",
+      "name": "Muzan Kibutsuji",
+      "universe": "demon_slayer",
+      "power": 100,
+      "image": "/static/auction/themes/demon_slayer/ds_muzan.webp",
+      "description": "The Demon King, progenitor of all demons, seeks the Blue Spider Lily."
+    },
+    {
+      "id": "ds_kokushibo",
+      "name": "Kokushibo",
+      "universe": "demon_slayer",
+      "power": 99,
+      "image": "/static/auction/themes/demon_slayer/ds_kokushibo.webp",
+      "description": "Upper Rank 1, former Demon Slayer and Yoriichi's twin brother."
+    },
+    {
+      "id": "ds_doma",
+      "name": "Doma",
+      "universe": "demon_slayer",
+      "power": 97,
+      "image": "/static/auction/themes/demon_slayer/ds_doma.webp",
+      "description": "Upper Rank 2, leader of the Eternal Paradise Faith cult."
+    },
+    {
+      "id": "ds_akaza",
+      "name": "Akaza",
+      "universe": "demon_slayer",
+      "power": 96,
+      "image": "/static/auction/themes/demon_slayer/ds_akaza.webp",
+      "description": "Upper Rank 3, martial artist who seeks strong opponents."
+    },
+    {
+      "id": "ds_hantengu",
+      "name": "Hantengu",
+      "universe": "demon_slayer",
+      "power": 93,
+      "image": "/static/auction/themes/demon_slayer/ds_hantengu.webp",
+      "description": "Upper Rank 4, manifests multiple bodies based on emotions."
+    },
+    {
+      "id": "ds_gyokko",
+      "name": "Gyokko",
+      "universe": "demon_slayer",
+      "power": 91,
+      "image": "/static/auction/themes/demon_slayer/ds_gyokko.webp",
+      "description": "Upper Rank 5, artist demon who creates grotesque 'art' from humans."
+    },
+    {
+      "id": "ds_daki",
+      "name": "Daki",
+      "universe": "demon_slayer",
+      "power": 90,
+      "image": "/static/auction/themes/demon_slayer/ds_daki.webp",
+      "description": "Upper Rank 6 (shared), uses Obi sash techniques."
+    },
+    {
+      "id": "ds_gyutaro",
+      "name": "Gyutaro",
+      "universe": "demon_slayer",
+      "power": 92,
+      "image": "/static/auction/themes/demon_slayer/ds_gyutaro.webp",
+      "description": "Upper Rank 6 (shared), Daki's older brother, uses blood sickles."
+    },
+    {
+      "id": "ds_kaigaku",
+      "name": "Kaigaku",
+      "universe": "demon_slayer",
+      "power": 89,
+      "image": "/static/auction/themes/demon_slayer/ds_kaigaku.webp",
+      "description": "Upper Rank 6 (replacement), Zenitsu's former senior disciple."
+    },
+    {
+      "id": "ds_yoriichi",
+      "name": "Yoriichi Tsugikuni",
+      "universe": "demon_slayer",
+      "power": 100,
+      "image": "/static/auction/themes/demon_slayer/ds_yoriichi.webp",
+      "description": "Creator of Sun Breathing, strongest Demon Slayer in history."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "ds_kamado_siblings",
+      "name": "Kamado Siblings",
+      "description": "Tanjiro and Nezuko, bound by family love",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["ds_tanjiro", "ds_nezuko"]
+    },
+    {
+      "id": "ds_hashira_assembly",
+      "name": "Hashira Assembly",
+      "description": "All nine Hashira united",
+      "bonus": { "type": "fixed", "value": 300 },
+      "required_character_ids": ["ds_giyu", "ds_shinobu", "ds_kyojuro", "ds_tengen", "ds_mitsuri", "ds_muichiro", "ds_gyomei", "ds_sanemi", "ds_obi"]
+    },
+    {
+      "id": "ds_breathing_styles",
+      "name": "Breathing Style Masters",
+      "description": "Users of the five fundamental breathing styles",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["ds_tanjiro", "ds_giyu", "ds_kyojuro", "ds_shinobu", "ds_tengen"]
+    },
+    {
+      "id": "ds_upper_moons",
+      "name": "Upper Moon Demons",
+      "description": "Muzan's most powerful servants",
+      "bonus": { "type": "fixed", "value": 250 },
+      "required_character_ids": ["ds_kokushibo", "ds_doma", "ds_akaza", "ds_hantengu", "ds_gyokko", "ds_daki", "ds_gyutaro"]
+    },
+    {
+      "id": "ds_sun_breathing",
+      "name": "Sun Breathing Legacy",
+      "description": "The original breathing style and its inheritors",
+      "bonus": { "type": "percentage", "value": 30 },
+      "required_character_ids": ["ds_tanjiro", "ds_yoriichi"]
+    }
+  ]
+}

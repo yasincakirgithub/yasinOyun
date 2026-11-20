@@ -29,7 +29,7 @@ class AuctionRoom(models.Model):
     theme_id = models.CharField(max_length=50, blank=True, default='')
     character_count = models.PositiveSmallIntegerField(default=10)
     starting_budget = models.PositiveIntegerField(default=2000)  # in cents ($20.00)
-    starting_bid = models.PositiveIntegerField(default=100)  # in cents ($1.00)
+    starting_bid = models.PositiveIntegerField(default=0)  # in cents ($0.00, first bid from 1 cent)
     auction_duration = models.PositiveSmallIntegerField(default=20)  # seconds
     max_players = models.PositiveSmallIntegerField(default=8)
     max_characters_per_player = models.PositiveSmallIntegerField(default=0)  # 0 = unlimited
@@ -144,3 +144,65 @@ class AuctionResult(models.Model):
 
     def __str__(self):
         return f'Result for {self.room.room_code}'
+
+
+class Theme(models.Model):
+    """Theme metadata (e.g., Marvel, DC, LotR)."""
+    id = models.CharField(max_length=50, primary_key=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, default='')
+    cover_image = models.CharField(max_length=255, blank=True, default='')
+    accent = models.CharField(max_length=7, blank=True, default='')  # hex color
+    accent_2 = models.CharField(max_length=7, blank=True, default='')  # hex color
+    icon = models.CharField(max_length=10, blank=True, default='')
+    character_count = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Character(models.Model):
+    """Character within a theme."""
+    id = models.CharField(max_length=100, primary_key=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='characters')
+    name = models.CharField(max_length=100)
+    universe = models.CharField(max_length=100, blank=True, default='')
+    power = models.PositiveSmallIntegerField(default=0)
+    image = models.CharField(max_length=255, blank=True, default='')
+    description = models.TextField(blank=True, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['theme', 'name']
+        indexes = [
+            models.Index(fields=['theme', 'power']),
+        ]
+
+    def __str__(self):
+        return f'{self.theme_id} - {self.name}'
+
+
+class Synergy(models.Model):
+    """Synergy bonus for a set of characters within a theme."""
+    id = models.CharField(max_length=100, primary_key=True)
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name='synergies')
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True, default='')
+    bonus_type = models.CharField(max_length=20, choices=[('fixed', 'Fixed'), ('percentage', 'Percentage')], default='fixed')
+    bonus_value = models.PositiveIntegerField(default=0)
+    required_character_ids = models.JSONField(default=list)  # list of character IDs
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['theme', 'name']
+
+    def __str__(self):
+        return f'{self.theme_id} - {self.name}'

@@ -21,6 +21,7 @@
     var actionBusy = false;
     var previousStatus = null;
     var timerAnimationFrame = null;
+    var pendingSettings = {};
 
     var $ = function (id) { return document.getElementById(id); };
     var el = {
@@ -523,7 +524,6 @@
             return;
         }
 
-        var html = '';
         var settings = [
             { key: 'starting_budget', label: 'Başlangıç Bütçesi ($)', type: 'number', min: 1, step: 1, value: room.starting_budget / 100 },
             { key: 'starting_bid', label: 'Başlangıç Teklifi ($)', type: 'number', min: 1, step: 1, value: room.starting_bid / 100 },
@@ -535,27 +535,73 @@
             { key: 'extension_duration', label: 'Uzatma Süresi (sn)', type: 'number', min: 1, max: 30, step: 1, value: room.extension_duration },
         ];
 
-        settings.forEach(function (s) {
-            var inputId = 'setting-' + s.key;
-            html += '<label class="auction-setting">'
-                + '<span>' + s.label + '</span>'
-                + '<input id="' + inputId + '" type="' + s.type + '" data-key="' + s.key + '" name="' + s.key + '" min="' + (s.min || '') + '" max="' + (s.max || '') + '" step="' + (s.step || 1) + '" value="' + s.value + '">'
-                + '</label>';
-        });
-
-        el.lobbySettings.innerHTML = html;
-
-        el.lobbySettings.querySelectorAll('input').forEach(function (input) {
-            input.addEventListener('change', function () {
-                var key = this.dataset.key;
-                var value = this.type === 'number' ? parseFloat(this.value) : this.value;
-                var payload = {}; payload[key] = value;
-                if (key === 'starting_budget' || key === 'starting_bid') {
-                    payload[key] = Math.round(value * 100);
+        // First render: create HTML if empty or structure changed
+        var needsFullRender = !el.lobbySettings.querySelector('.auction-setting');
+        if (needsFullRender) {
+            var html = '';
+            settings.forEach(function (s) {
+                var inputId = 'setting-' + s.key;
+                var displayValue = s.value;
+                // Use pending value if user has modified it
+                if (pendingSettings.hasOwnProperty(s.key)) {
+                    displayValue = (s.key === 'starting_budget' || s.key === 'starting_bid')
+                        ? pendingSettings[s.key] / 100
+                        : pendingSettings[s.key];
                 }
-                requestUpdateSettings(payload);
+                html += '<label class="auction-setting">'
+                    + '<span>' + s.label + '</span>'
+                    + '<input id="' + inputId + '" type="' + s.type + '" data-key="' + s.key + '" name="' + s.key + '" min="' + (s.min || '') + '" max="' + (s.max || '') + '" step="' + (s.step || 1) + '" value="' + displayValue + '">'
+                    + '</label>';
             });
-        });
+            el.lobbySettings.innerHTML = html;
+
+            el.lobbySettings.querySelectorAll('input').forEach(function (input) {
+                input.addEventListener('change', function () {
+                    var key = this.dataset.key;
+                    var value = this.type === 'number' ? parseFloat(this.value) : this.value;
+                    if (key === 'starting_budget' || key === 'starting_bid') {
+                        pendingSettings[key] = Math.round(value * 100);
+                    } else {
+                        pendingSettings[key] = value;
+                    }
+                });
+                // Track user interaction
+                input.addEventListener('focus', function () {
+                    this.dataset.userEditing = 'true';
+                });
+                input.addEventListener('blur', function () {
+                    delete this.dataset.userEditing;
+                });
+                input.addEventListener('input', function () {
+                    this.dataset.userEdited = 'true';
+                });
+            });
+        } else {
+            // Update existing inputs: only update values that user hasn't edited
+            settings.forEach(function (s) {
+                var input = el.lobbySettings.querySelector('input[data-key="' + s.key + '"]');
+                if (!input) return;
+
+                // Don't update if user is currently editing or has edited this field
+                if (input.dataset.userEditing === 'true' || input.dataset.userEdited === 'true') {
+                    return;
+                }
+
+                var serverValue = s.value;
+                // Use pending value if exists (from previous user edit that was sent but not confirmed)
+                if (pendingSettings.hasOwnProperty(s.key)) {
+                    serverValue = (s.key === 'starting_budget' || s.key === 'starting_bid')
+                        ? pendingSettings[s.key] / 100
+                        : pendingSettings[s.key];
+                }
+
+                // Only update if value actually changed
+                var currentValue = input.type === 'number' ? parseFloat(input.value) : input.value;
+                if (currentValue !== serverValue) {
+                    input.value = serverValue;
+                }
+            });
+        }
         restoreFocus();
     }
 
@@ -569,33 +615,80 @@
 
         var canSelect = me.is_host && (room.status === 'WAITING' || room.status === 'CONFIGURING' || room.status === 'THEME_SELECT');
 
-        var html = '<div class="auction-theme-grid-small">';
-        themes.forEach(function (theme) {
-            var isSelected = selectedTheme && selectedTheme.id === theme.id;
-            var accent = theme.accent || '#a855f7';
-            var accent2 = theme.accent_2 || '#ec4899';
-            html += '<button type="button" class="auction-theme-card-small' + (isSelected ? ' selected' : '') + '"'
-                + ' data-theme-id="' + escapeXml(theme.id) + '"'
-                + ' style="--theme-accent:' + escapeXml(accent) + ';--theme-accent-2:' + escapeXml(accent2) + '"'
-                + ' aria-pressed="' + (isSelected ? 'true' : 'false') + '">';
-            html += '<span class="auction-theme-cover">';
-            html += '<span class="auction-theme-icon" aria-hidden="true">' + escapeXml(theme.icon || '★') + '</span>';
-            html += '<span class="auction-theme-name">' + escapeXml(theme.name) + '</span>';
-            html += '</span>';
-            html += '<span class="auction-theme-meta"><span>' + theme.character_count + ' karakter</span><span class="auction-theme-count">' + (isSelected ? 'SEÇİLİ' : 'SEÇ') + '</span></span>';
-            if (isSelected) html += '<span class="auction-checkmark" aria-hidden="true">✓</span>';
-            html += '</button>';
-        });
-        html += '</div>';
+        // Save scroll position before render
+        var scrollLeft = el.lobbyThemeSelect.scrollLeft || 0;
 
-        if (!canSelect) {
-            html = '<p class="auction-muted auction-theme-locked">Tema seçimi oda sahibi tarafından yapılır.</p>' + html;
+        // Check if we need full render (first time or theme list changed)
+        var grid = el.lobbyThemeSelect.querySelector('.auction-theme-grid');
+        var needsFullRender = !grid || grid.children.length !== themes.length;
+
+        if (needsFullRender) {
+            var html = '<div class="auction-theme-grid">';
+            themes.forEach(function (theme) {
+                var isSelected = selectedTheme && selectedTheme.id === theme.id;
+                var accent = theme.accent || '#a855f7';
+                var accent2 = theme.accent_2 || '#ec4899';
+                var coverImage = theme.cover_image || '';
+                html += '<button type="button" class="auction-theme-card' + (isSelected ? ' selected' : '') + '"'
+                    + ' data-theme-id="' + escapeXml(theme.id) + '"'
+                    + ' style="--theme-accent:' + escapeXml(accent) + ';--theme-accent-2:' + escapeXml(accent2) + '"'
+                    + ' aria-pressed="' + (isSelected ? 'true' : 'false') + '">';
+                html += '<div class="auction-theme-cover-wrapper">';
+                if (coverImage) {
+                    html += '<img class="auction-theme-cover-image" src="' + escapeXml(coverImage) + '" alt="" loading="lazy">';
+                } else {
+                    html += '<span class="auction-theme-icon" aria-hidden="true">' + escapeXml(theme.icon || '★') + '</span>';
+                }
+                html += '<div class="auction-theme-overlay">';
+                html += '<span class="auction-theme-name">' + escapeXml(theme.name) + '</span>';
+                html += '<span class="auction-theme-char-count">' + theme.character_count + ' karakter</span>';
+                if (isSelected) {
+                    html += '<span class="auction-theme-selected-badge">SEÇİLİ ✓</span>';
+                }
+                html += '</div>';
+                html += '</div>';
+                html += '</button>';
+            });
+            html += '</div>';
+
+            if (!canSelect) {
+                html = '<p class="auction-muted auction-theme-locked">Tema seçimi oda sahibi tarafından yapılır.</p>' + html;
+            }
+
+            el.lobbyThemeSelect.innerHTML = html;
+        } else {
+            // Update existing cards: only update selection state
+            var cards = grid.querySelectorAll('.auction-theme-card');
+            cards.forEach(function (card) {
+                var themeId = card.dataset.themeId;
+                var isSelected = selectedTheme && selectedTheme.id === themeId;
+                card.classList.toggle('selected', isSelected);
+                card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+                // Update badge
+                var badge = card.querySelector('.auction-theme-selected-badge');
+                if (isSelected && !badge) {
+                    var overlay = card.querySelector('.auction-theme-overlay');
+                    if (overlay) {
+                        overlay.insertAdjacentHTML('beforeend', '<span class="auction-theme-selected-badge">SEÇİLİ ✓</span>');
+                    }
+                } else if (!isSelected && badge) {
+                    badge.remove();
+                }
+            });
         }
 
-        el.lobbyThemeSelect.innerHTML = html;
+        // Restore scroll position (use requestAnimationFrame to ensure DOM is ready)
+        requestAnimationFrame(function () {
+            el.lobbyThemeSelect.scrollLeft = scrollLeft;
+        });
 
         if (canSelect) {
-            el.lobbyThemeSelect.querySelectorAll('.auction-theme-card-small').forEach(function (card) {
+            el.lobbyThemeSelect.querySelectorAll('.auction-theme-card').forEach(function (card) {
+                // Remove existing listeners to avoid duplicates
+                card.replaceWith(card.cloneNode(true));
+            });
+            // Re-attach listeners to new clones
+            el.lobbyThemeSelect.querySelectorAll('.auction-theme-card').forEach(function (card) {
                 card.addEventListener('click', function () {
                     requestSelectTheme(this.dataset.themeId);
                 });
@@ -803,7 +896,7 @@
                 el.activeSynergies.appendChild(item);
             });
         } else {
-            el.activeSynergies.appendChild(createEl('div', 'auction-empty-synergy', 'Henüz aktif senarji yok'));
+            el.activeSynergies.appendChild(createEl('div', 'auction-empty-synergy', 'Henüz aktif sinerji yok'));
         }
 
         clearNode(el.incompleteSynergies);
@@ -825,7 +918,7 @@
                 el.incompleteSynergies.appendChild(item);
             });
         } else {
-            el.incompleteSynergies.appendChild(createEl('div', 'auction-empty-synergy', 'Yaklaşan senarji yok'));
+            el.incompleteSynergies.appendChild(createEl('div', 'auction-empty-synergy', 'Yaklaşan sinerji yok'));
         }
         restoreFocus();
     }
@@ -909,7 +1002,15 @@
         actionBusy = true;
         try {
             var data = await api(roomApi('settings'), 'POST', { settings: settings });
-            if (data.state) applyState(data.state);
+            if (data.state) {
+                // Clear userEdited flags so future server updates can sync
+                if (el.lobbySettings) {
+                    el.lobbySettings.querySelectorAll('input[data-user-edited="true"]').forEach(function (input) {
+                        delete input.dataset.userEdited;
+                    });
+                }
+                applyState(data.state);
+            }
         } catch (error) {
             handleActionError(error);
         } finally {
@@ -934,6 +1035,21 @@
         if (actionBusy) return;
         actionBusy = true;
         try {
+            // Send pending settings first if any
+            if (Object.keys(pendingSettings).length > 0) {
+                var settingsData = await api(roomApi('settings'), 'POST', { settings: pendingSettings });
+                if (settingsData.state) {
+                    // Clear userEdited flags so future server updates can sync
+                    if (el.lobbySettings) {
+                        el.lobbySettings.querySelectorAll('input[data-user-edited="true"]').forEach(function (input) {
+                            delete input.dataset.userEdited;
+                        });
+                    }
+                    applyState(settingsData.state);
+                }
+                pendingSettings = {};
+            }
+            // Then start auction
             var data = await api(roomApi('start'), 'POST', {});
             if (data.state) applyState(data.state);
         } catch (error) {

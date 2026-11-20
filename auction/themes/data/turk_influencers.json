@@ -1,0 +1,241 @@
+{
+  "characters": [
+    {
+      "id": "ti_brutalcizim",
+      "name": "Brutal Çizim",
+      "universe": "turk_influencers",
+      "power": 95,
+      "image": "/static/auction/themes/turk_influencers/ti_brutalcizim.webp",
+      "description": "Türkiye'nin en popüler çizim/animasyon içerik üreticisi, YouTube ve TikTok'ta milyonlarca takipçisi var."
+    },
+    {
+      "id": "ti_ensar",
+      "name": "Ensar",
+      "universe": "turk_influencers",
+      "power": 92,
+      "image": "/static/auction/themes/turk_influencers/ti_ensar.webp",
+      "description": "Eğlence ve vlog içerikleriyle ünlü, genç neslin favori fenomenlerinden biri."
+    },
+    {
+      "id": "ti_yasin",
+      "name": "Yasin",
+      "universe": "turk_influencers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_influencers/ti_yasin.webp",
+      "description": "Komik ve günlük yaşam videolarıyla tanınan, yüksek etkileşim alan içerik üreticisi."
+    },
+    {
+      "id": "ti_berkcan",
+      "name": "Berkcan Güven",
+      "universe": "turk_influencers",
+      "power": 94,
+      "image": "/static/auction/themes/turk_influencers/ti_berkcan.webp",
+      "description": "YouTube'da bilim, teknoloji ve eğlence karışımı içerikler üreten, eğitici ve eğlenceli videolarıyla tanınan fenomen."
+    },
+    {
+      "id": "ti_orhan",
+      "name": "Orhan Awatramani",
+      "universe": "turk_influencers",
+      "power": 91,
+      "image": "/static/auction/themes/turk_influencers/ti_orhan.webp",
+      "description": "Sosyal medyada hızla büyüyen, yaşam tarzı ve seyahat içerikleriyle takipçilerini büyüleyen fenomen."
+    },
+    {
+      "id": "ti_elif",
+      "name": "Elif Şafak",
+      "universe": "turk_influencers",
+      "power": 96,
+      "image": "/static/auction/themes/turk_influencers/ti_elif.webp",
+      "description": "Dünya çapında ünlü yazar, sosyal medyada edebiyat, toplum ve kültür üzerine etkili paylaşımlar yapan intelektüel fenomen."
+    },
+    {
+      "id": "ti_burak",
+      "name": "Burak Özdemir (CZN Burak)",
+      "universe": "turk_influencers",
+      "power": 98,
+      "image": "/static/auction/themes/turk_influencers/ti_burak.webp",
+      "description": "Dünya çapında ünlü Türk aşçı fenomeni, gülümseyen yüzü ve dev porsiyonlarıyla milyarlarca izlenme."
+    },
+    {
+      "id": "ti_didem",
+      "name": "Didem Soydan",
+      "universe": "turk_influencers",
+      "power": 88,
+      "image": "/static/auction/themes/turk_influencers/ti_didem.webp",
+      "description": "Moda, yaşam tarzı ve güzellik içerikleriyle tanınan, genç kızların rol modeli fenomen."
+    },
+    {
+      "id": "ti_zeynep",
+      "name": "Zeynep Bastık",
+      "universe": "turk_influencers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_influencers/ti_zeynep.webp",
+      "description": "Şarkıcı ve sosyal medya fenomeni, TikTok'ta dans ve playback videolarıyla patlayan isim."
+    },
+    {
+      "id": "ti_murat",
+      "name": "Murat Boz",
+      "universe": "turk_influencers",
+      "power": 92,
+      "image": "/static/auction/themes/turk_influencers/ti_murat.webp",
+      "description": "Ünlü şarkıcı, sosyallarda aktif, hem müzik hem de günlük yaşam paylaşımlarıyla takip edilen fenomen."
+    },
+    {
+      "id": "ti_hande",
+      "name": "Hande Erçel",
+      "universe": "turk_influencers",
+      "power": 95,
+      "image": "/static/auction/themes/turk_influencers/ti_hande.webp",
+      "description": "Ünlü oyuncu, Instagram'da Türkiye'nin en çok takipçili kadınlarından biri, marka yüzü."
+    },
+    {
+      "id": "ti_kerem",
+      "name": "Kerem Bürsin",
+      "universe": "turk_influencers",
+      "power": 93,
+      "image": "/static/auction/themes/turk_influencers/ti_kerem.webp",
+      "description": "Ünlü oyuncu, Sen Çal Kapımı dizisiyle dünya çapında tanınan, sosyal medyada çok aktif fenomen."
+    },
+    {
+      "id": "ti_cemre",
+      "name": "Cemre Baysel",
+      "universe": "turk_influencers",
+      "power": 89,
+      "image": "/static/auction/themes/turk_influencers/ti_cemre.webp",
+      "description": "Genç oyuncu ve sosyal medya fenomeni, doğallığı ve samimiyetiyle gençlerin beğenisini kazanan isim."
+    },
+    {
+      "id": "ti_afra",
+      "name": "Afra Saraçoğlu",
+      "universe": "turk_influencers",
+      "power": 91,
+      "image": "/static/auction/themes/turk_influencers/ti_afra.webp",
+      "description": "Yıldızlar Bana Uzak dizisiyle tanınan, sosyal medyada doğa ve hayat paylaşımlarıyla takip edilen oyuncu."
+    },
+    {
+      "id": "ti_mert",
+      "name": "Mert Yazıcıoğlu",
+      "universe": "turk_influencers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_influencers/ti_mert.webp",
+      "description": "Kardeşlerim dizisiyle tanınan, sosyallarda samimi ve doğal paylaşımlarıyla sevenler kitlesi oluşturan oyuncu."
+    },
+    {
+      "id": "ti_boran",
+      "name": "Boran Kuzum",
+      "universe": "turk_influencers",
+      "power": 92,
+      "image": "/static/auction/themes/turk_influencers/ti_boran.webp",
+      "description": "Vuslat, Kuzgun dizileriyle tanınan, karizmatik görünümü ve sosyal medya paylaşımlarıyla fenomen olan oyuncu."
+    },
+    {
+      "id": "ti_alperen",
+      "name": "Alperen Duymaz",
+      "universe": "turk_influencers",
+      "power": 91,
+      "image": "/static/auction/themes/turk_influencers/ti_alperen.webp",
+      "description": "Son Yaz, Çukur dizileriyle tanınan, gençlerin favori oyuncularından biri, sosyallerde aktif."
+    },
+    {
+      "id": "ti_ugur",
+      "name": "Uğur Güneş",
+      "universe": "turk_influencers",
+      "power": 89,
+      "image": "/static/auction/themes/turk_influencers/ti_ugur.webp",
+      "description": "Diriliş Ertuğrul, Bir Zamanlar Çukurova dizileriyle tanınan, tarihi karakterleriyle tanınan oyuncu."
+    },
+    {
+      "id": "ti_engin",
+      "name": "Engin Altan Düzyatan",
+      "universe": "turk_influencers",
+      "power": 97,
+      "image": "/static/auction/themes/turk_influencers/ti_engin.webp",
+      "description": "Diriliş Ertuğrul'un Ertuğrul Gazi'si, dünya çapında efsanevi olan, Türkiye'yi dünya haritasına koyan oyuncu."
+    },
+    {
+      "id": "ti_burak_deniz",
+      "name": "Burak Deniz",
+      "universe": "turk_influencers",
+      "power": 93,
+      "image": "/static/auction/themes/turk_influencers/ti_burak_deniz.webp",
+      "description": "Yarım Kalan Aşklar, Bambaşka Biri dizileriyle tanınan, çok sevilen ve takip edilen genç oyuncu."
+    },
+    {
+      "id": "ti_alina",
+      "name": "Alina Boz",
+      "universe": "turk_influencers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_influencers/ti_alina.webp",
+      "description": "Maraşlı, Aşk 101 dizileriyle tanınan, sosyal medyada moda ve yaşam tarzı paylaşımlarıyla fenomen."
+    },
+    {
+      "id": "ti_su",
+      "name": "Su Burcu Yazgı Coşkun",
+      "universe": "turk_influencers",
+      "power": 88,
+      "image": "/static/auction/themes/turk_influencers/ti_su.webp",
+      "description": "Kardeşlerim dizisinin Emel'i, gençlik dizilerinin yükselen yıldızı, sosyallerde çok aktif."
+    },
+    {
+      "id": "ti_halit",
+      "name": "Halit Özgür Sarı",
+      "universe": "turk_influencers",
+      "power": 87,
+      "image": "/static/auction/themes/turk_influencers/ti_halit.webp",
+      "description": "Kardeşlerim dizisinin Doruk'u, genç oyuncu, sosyallerde doğal paylaşımlarıyla takip edilen isim."
+    },
+    {
+      "id": "ti_serkan",
+      "name": "Serkan Çayoğlu",
+      "universe": "turk_influencers",
+      "power": 90,
+      "image": "/static/auction/themes/turk_influencers/ti_serkan.webp",
+      "description": "Kara Sevda, Halka dizileriyle tanınan, eşi Büşra Develi ile birlikte sosyal medyada popüler çift."
+    },
+    {
+      "id": "ti_alperen_duymaz",
+      "name": "Alperen Duymaz",
+      "universe": "turk_influencers",
+      "power": 89,
+      "image": "/static/auction/themes/turk_influencers/ti_alperen_duymaz.webp",
+      "description": "Bodrum Masalı, Çukur dizileriyle tanınan, karizmatik rolüyle sevenler kitlesi oluşturan oyuncu."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "ti_global_stars",
+      "name": "Dünya Çapında Yıldızlar",
+      "description": "Dünya genelinde tanınan Türk fenomenler",
+      "bonus": { "type": "percentage", "value": 30 },
+      "required_character_ids": ["ti_burak", "ti_elif", "ti_engin"]
+    },
+    {
+      "id": "ti_actor_influencers",
+      "name": "Oyuncu Fenomenler",
+      "description": "Dizi/film oyuncusu olup sosyallerde de dev takipçi kitlesine sahip isimler",
+      "bonus": { "type": "fixed", "value": 250 },
+      "required_character_ids": ["ti_hande", "ti_kerem", "ti_burak_deniz", "ti_afra", "ti_mert", "ti_boran", "ti_alperen", "ti_engin", "ti_ugur", "ti_alina", "ti_su", "ti_halit", "ti_serkan"]
+    },
+    {
+      "id": "ti_content_creators",
+      "name": "İçerik Üreticileri",
+      "description": "YouTube/TikTok/Instagram'dan başarıya ulaşan asıl fenomenler",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["ti_brutalcizim", "ti_ensar", "ti_yasin", "ti_berkcan", "ti_orhan", "ti_burak", "ti_didem", "ti_zeynep"]
+    },
+    {
+      "id": "ti_music_artists",
+      "name": "Müzik Sanatçıları",
+      "description": "Şarkıcı kimliğiyle de fenomen olan isimler",
+      "bonus": { "type": "fixed", "value": 180 },
+      "required_character_ids": ["ti_murat", "ti_zeynep"]
+    },
+    {
+      "id": "ti_couple_goals",
+      "name": "Sosyal Medya Çiftleri",
+      "description": "Beraber paylaşımlar yapan sevilen çiftler",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["ti_kerem", "ti_hande", "ti_serkan"]
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "characters": [
+    {
+      "id": "cp_david",
+      "name": "David Martinez",
+      "universe": "cyberpunk",
+      "power": 94,
+      "image": "/static/auction/themes/cyberpunk/cp_david.webp",
+      "description": "Edgerunners protagonist, Sandevistan user, rises from student to legend."
+    },
+    {
+      "id": "cp_lucy",
+      "name": "Lucy",
+      "universe": "cyberpunk",
+      "power": 95,
+      "image": "/static/auction/themes/cyberpunk/cp_lucy.webp",
+      "description": "Netrunner extraordinaire, David's love interest, seeks the moon."
+    },
+    {
+      "id": "cp_maine",
+      "name": "Maine",
+      "universe": "cyberpunk",
+      "power": 93,
+      "image": "/static/auction/themes/cyberpunk/cp_maine.webp",
+      "description": "Edgerunners crew leader, heavy cyberware, succumbs to cyberpsychosis."
+    },
+    {
+      "id": "cp_dorio",
+      "name": "Dorio",
+      "universe": "cyberpunk",
+      "power": 91,
+      "image": "/static/auction/themes/cyberpunk/cp_dorio.webp",
+      "description": "Maine's partner, loyal and deadly, meets tragic end."
+    },
+    {
+      "id": "cp_kiwi",
+      "name": "Kiwi",
+      "universe": "cyberpunk",
+      "power": 89,
+      "image": "/static/auction/themes/cyberpunk/cp_kiwi.webp",
+      "description": "Netrunner, betrays the crew for her own survival."
+    },
+    {
+      "id": "cp_rebecca",
+      "name": "Rebecca",
+      "universe": "cyberpunk",
+      "power": 90,
+      "image": "/static/auction/themes/cyberpunk/cp_rebecca.webp",
+      "description": "Tiny but deadly, shotgun enthusiast, Pilar's sister."
+    },
+    {
+      "id": "cp_pilar",
+      "name": "Pilar",
+      "universe": "cyberpunk",
+      "power": 88,
+      "image": "/static/auction/themes/cyberpunk/cp_pilar.webp",
+      "description": "Rebecca's brother, loyal crew member."
+    },
+    {
+      "id": "cp_falco",
+      "name": "Falco",
+      "universe": "cyberpunk",
+      "power": 85,
+      "image": "/static/auction/themes/cyberpunk/cp_falco.webp",
+      "description": "Driver and fixer, helps David join the crew."
+    },
+    {
+      "id": "cp_v",
+      "name": "V",
+      "universe": "cyberpunk",
+      "power": 96,
+      "image": "/static/auction/themes/cyberpunk/cp_v.webp",
+      "description": "Game protagonist, mercenary with Johnny Silverhand's engram."
+    },
+    {
+      "id": "cp_johnny",
+      "name": "Johnny Silverhand",
+      "universe": "cyberpunk",
+      "power": 97,
+      "image": "/static/auction/themes/cyberpunk/cp_johnny.webp",
+      "description": "Rockerboy legend, anti-corp terrorist, digital ghost in V's head."
+    },
+    {
+      "id": "cp_panam",
+      "name": "Panam Palmer",
+      "universe": "cyberpunk",
+      "power": 92,
+      "image": "/static/auction/themes/cyberpunk/cp_panam.webp",
+      "description": "Aldecaldos nomad leader, V's ally and potential romance."
+    },
+    {
+      "id": "cp_judy",
+      "name": "Judy Alvarez",
+      "universe": "cyberpunk",
+      "power": 91,
+      "image": "/static/auction/themes/cyberpunk/cp_judy.webp",
+      "description": "Braindance technician, Moxes member, V's ally."
+    },
+    {
+      "id": "cp_river",
+      "name": "River Ward",
+      "universe": "cyberpunk",
+      "power": 89,
+      "image": "/static/auction/themes/cyberpunk/cp_river.webp",
+      "description": "NCPD detective, seeks justice in a corrupt system."
+    },
+    {
+      "id": "cp_kerry",
+      "name": "Kerry Eurodyne",
+      "universe": "cyberpunk",
+      "power": 88,
+      "image": "/static/auction/themes/cyberpunk/cp_kerry.webp",
+      "description": "Rockerboy, former Samurai bandmate of Johnny."
+    },
+    {
+      "id": "cp_rogue",
+      "name": "Rogue Amendiares",
+      "universe": "cyberpunk",
+      "power": 93,
+      "image": "/static/auction/themes/cyberpunk/cp_rogue.webp",
+      "description": "Fixer queen of Night City, former lover of Johnny."
+    },
+    {
+      "id": "cp_alt",
+      "name": "Alt Cunningham",
+      "universe": "cyberpunk",
+      "power": 95,
+      "image": "/static/auction/themes/cyberpunk/cp_alt.webp",
+      "description": "Netrunning legend, creator of Soulkiller, digital goddess."
+    },
+    {
+      "id": "cp_saburo",
+      "name": "Saburo Arasaka",
+      "universe": "cyberpunk",
+      "power": 85,
+      "image": "/static/auction/themes/cyberpunk/cp_saburo.webp",
+      "description": "Arasaka patriarch, corporate emperor, seeks immortality."
+    },
+    {
+      "id": "cp_hanako",
+      "name": "Hanako Arasaka",
+      "universe": "cyberpunk",
+      "power": 87,
+      "image": "/static/auction/themes/cyberpunk/cp_hanako.webp",
+      "description": "Arasaka heir, ruthless corporate strategist."
+    },
+    {
+      "id": "cp_yorinobu",
+      "name": "Yorinobu Arasaka",
+      "universe": "cyberpunk",
+      "power": 88,
+      "image": "/static/auction/themes/cyberpunk/cp_yorinobu.webp",
+      "description": "Rebellious Arasaka son, triggers the game's main conflict."
+    },
+    {
+      "id": "cp_takemura",
+      "name": "Goro Takemura",
+      "universe": "cyberpunk",
+      "power": 92,
+      "image": "/static/auction/themes/cyberpunk/cp_takemura.webp",
+      "description": "Arasaka bodyguard, loyal to Saburo, becomes V's ally."
+    },
+    {
+      "id": "cp_maiko",
+      "name": "Maiko",
+      "universe": "cyberpunk",
+      "power": 84,
+      "image": "/static/auction/themes/cyberpunk/cp_maiko.webp",
+      "description": "Clouds Mox leader, schemer in Night City politics."
+    },
+    {
+      "id": "cp_smasher",
+      "name": "Adam Smasher",
+      "universe": "cyberpunk",
+      "power": 98,
+      "image": "/static/auction/themes/cyberpunk/cp_smasher.webp",
+      "description": "Full-body conversion cyborg, Arasaka's weapon, no empathy left."
+    },
+    {
+      "id": "cp_dex",
+      "name": "Dexter DeShawn",
+      "universe": "cyberpunk",
+      "power": 86,
+      "image": "/static/auction/themes/cyberpunk/cp_dex.webp",
+      "description": "Fixer who gives V the heist of a lifetime, then betrays."
+    },
+    {
+      "id": "cp_t_bug",
+      "name": "T-Bug",
+      "universe": "cyberpunk",
+      "power": 85,
+      "image": "/static/auction/themes/cyberpunk/cp_t_bug.webp",
+      "description": "Netrunner on the heist crew, killed by Arasaka ICE."
+    },
+    {
+      "id": "cp_viktor",
+      "name": "Viktor Vektor",
+      "universe": "cyberpunk",
+      "power": 88,
+      "image": "/static/auction/themes/cyberpunk/cp_viktor.webp",
+      "description": "Ripperdoc, V's trusted cyberware specialist."
+    }
+  ],
+  "synergies": [
+    {
+      "id": "cp_edgerunners_crew",
+      "name": "Edgerunners Crew",
+      "description": "Maine's crew from the anime",
+      "bonus": { "type": "percentage", "value": 20 },
+      "required_character_ids": ["cp_david", "cp_lucy", "cp_maine", "cp_dorio", "cp_rebecca", "cp_pilar"]
+    },
+    {
+      "id": "cp_night_city_legends",
+      "name": "Night City Legends",
+      "description": "The biggest names in Night City",
+      "bonus": { "type": "fixed", "value": 250 },
+      "required_character_ids": ["cp_v", "cp_johnny", "cp_rogue", "cp_alt", "cp_smasher"]
+    },
+    {
+      "id": "cp_arasaka_family",
+      "name": "Arasaka Family",
+      "description": "The corporate dynasty controlling Night City",
+      "bonus": { "type": "percentage", "value": 18 },
+      "required_character_ids": ["cp_saburo", "cp_hanako", "cp_yorinobu", "cp_takemura"]
+    },
+    {
+      "id": "cp_netrunners",
+      "name": "Elite Netrunners",
+      "description": "Masters of the digital realm",
+      "bonus": { "type": "percentage", "value": 22 },
+      "required_character_ids": ["cp_lucy", "cp_judy", "cp_alt", "cp_t_bug", "cp_kiwi"]
+    },
+    {
+      "id": "cp_samurai_band",
+      "name": "Samurai Reunion",
+      "description": "Johnny Silverhand and his bandmate Kerry",
+      "bonus": { "type": "percentage", "value": 25 },
+      "required_character_ids": ["cp_johnny", "cp_kerry"]
+    },
+    {
+      "id": "cp_nomad_blood",
+      "name": "Aldecaldos Nomads",
+      "description": "Panam and the nomad clan",
+      "bonus": { "type": "percentage", "value": 15 },
+      "required_character_ids": ["cp_panam", "cp_v"]
+    }
+  ]
+}

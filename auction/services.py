@@ -37,7 +37,7 @@ MIN_PLAYERS = 2
 ROOM_TTL_HOURS = 12
 
 DEFAULT_STARTING_BUDGET = 2000  # $20.00 in cents
-DEFAULT_STARTING_BID = 100  # $1.00 in cents
+DEFAULT_STARTING_BID = 0  # $0.00 in cents (first bid starts from 1 cent)
 DEFAULT_CHARACTER_COUNT = 10
 DEFAULT_AUCTION_DURATION = 20  # seconds
 DEFAULT_EXTENSION_THRESHOLD = 3
@@ -285,7 +285,7 @@ def update_settings(
         if "starting_budget" in payload:
             room.starting_budget = max(100, int(payload["starting_budget"]))  # min $1
         if "starting_bid" in payload:
-            room.starting_bid = max(1, int(payload["starting_bid"]))
+            room.starting_bid = max(0, int(payload["starting_bid"]))
         if "character_count" in payload:
             room.character_count = max(1, min(50, int(payload["character_count"])))
         if "auction_duration" in payload:
