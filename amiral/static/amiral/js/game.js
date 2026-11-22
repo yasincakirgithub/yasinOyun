@@ -275,7 +275,7 @@ class BattleshipGame {
         sessionStorage.setItem(storageKey, this.playerIdentifier);
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        const wsUrl = `${wsScheme}://${window.location.host}/amiral/ws/game/${this.roomCode}/`;
+        const wsUrl = `${wsScheme}://${window.location.host}/ws/amiral/${this.roomCode}/`;
 
         this.ws = new WebSocket(wsUrl);
 

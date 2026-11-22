@@ -306,7 +306,7 @@ class ChessGame {
         this.playerName = sessionStorage.getItem('satranc:playerName') || '';
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        const wsUrl = `${wsScheme}://${window.location.host}/satranc/ws/game/${this.roomCode}/`;
+        const wsUrl = `${wsScheme}://${window.location.host}/ws/satranc/${this.roomCode}/`;
 
         this.ws = new WebSocket(wsUrl);
 

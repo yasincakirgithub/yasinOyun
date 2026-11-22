@@ -255,7 +255,7 @@
         setConnection('connecting');
 
         const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        const url = `${protocol}://${window.location.host}/101-okey/ws/game/${encodeURIComponent(roomCode)}/`;
+        const url = `${protocol}://${window.location.host}/ws/okey101/${encodeURIComponent(roomCode)}/`;
         socket = new WebSocket(url);
 
         socket.addEventListener('open', () => {

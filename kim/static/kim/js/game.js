@@ -221,7 +221,7 @@ class GuessWhoGame {
         sessionStorage.setItem(storageKey, this.playerIdentifier);
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        this.ws = new WebSocket(`${wsScheme}://${window.location.host}/kim-bu/ws/game/${this.roomCode}/`);
+        this.ws = new WebSocket(`${wsScheme}://${window.location.host}/ws/kim/${this.roomCode}/`);
 
         this.ws.onopen = () => {
             this.send({ type: 'join_player', player_identifier: this.playerIdentifier });

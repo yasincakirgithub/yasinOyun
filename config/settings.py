@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
+    'corsheaders',  # CORS support for Flutter web
     'core',
     'sayi',
     'kim',
@@ -82,6 +83,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS - must be before CommonMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -329,3 +331,55 @@ LOGGING = {
         'auction': {'handlers': ['console'], 'level': 'INFO', 'propagate': False},
     },
 }
+
+# ---------------------------------------------------------------------------
+# CORS & CSRF Configuration for Flutter Web
+# ---------------------------------------------------------------------------
+# Allow Flutter web app to connect from any origin during development
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only in development
+
+# Specific allowed origins for production
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:8080,http://127.0.0.1:8080,https://www.yasincakir.com.tr').split(',')
+    if origin.strip()
+]
+
+# Allow credentials (cookies, auth headers)
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow all headers
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'x-device-id',
+    'x-player-token',
+]
+
+# Allow all methods
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+# CSRF trusted origins for Flutter web
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:8080,http://127.0.0.1:8080,https://www.yasincakir.com.tr').split(',')
+    if origin.strip()
+]
+
+# Session/CSRF cookie settings for cross-origin
+SESSION_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'
+CSRF_COOKIE_SAMESITE = 'None' if not DEBUG else 'Lax'

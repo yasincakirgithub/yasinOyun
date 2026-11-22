@@ -1,7 +1,7 @@
-from django.urls import re_path
+from django.urls import path
 
-from .consumers import AuctionConsumer
+from . import consumers
 
 websocket_urlpatterns = [
-    re_path(r'^auction/ws/room/(?P<room_code>[A-Z0-9]{1,12})/$', AuctionConsumer.as_asgi()),
+    path('ws/auction/<str:room_code>/', consumers.GameConsumer.as_asgi()),
 ]

@@ -132,7 +132,7 @@ authentication uses `Authorization: Bearer <session_token>` (or
 | `GET` | `/codenames/api/rooms/<code>/events/` | Latest room events. |
 | `GET` | `/healthz/` | Database health check. |
 
-WebSocket endpoint: `/codenames/ws/room/<code>/`. The first server message is
+WebSocket endpoint: `/ws/codenames/room/<code>/`. The first server message is
 `{"type": "auth_required"}`; reply with:
 
 ```json

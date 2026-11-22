@@ -110,7 +110,7 @@ Mutating endpoints take JSON and return `{"success": ...}`. Authenticate with
 | `POST` | `/fcmanager/api/rooms/<code>/leave/` | Leave the room. |
 | `GET` | `/fcmanager/health/` | Database health check. |
 
-WebSocket endpoint: `/fcmanager/ws/room/<code>/`. The server first sends
+WebSocket endpoint: `/ws/fcmanager/room/<code>/`. The server first sends
 `{"type": "auth_required"}`; reply with
 `{"type": "authenticate", "session_token": "<token>"}`. Authenticated clients
 receive personalised `{"type": "state", ...}` snapshots. `get_state` and `ping`

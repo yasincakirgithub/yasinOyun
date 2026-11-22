@@ -64,7 +64,7 @@ class NumberGame {
         sessionStorage.setItem(storageKey, this.playerIdentifier);
 
         const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
-        const wsUrl = `${wsScheme}://${window.location.host}/sayi/ws/game/${this.roomCode}/`;
+        const wsUrl = `${wsScheme}://${window.location.host}/ws/sayi/${this.roomCode}/`;
 
         this.ws = new WebSocket(wsUrl);
 

@@ -1523,7 +1523,7 @@
         var protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
         var ws;
         try {
-            ws = new WebSocket(protocol + window.location.host + '/fcmanager/ws/room/' + encodeURIComponent(roomCode) + '/');
+            ws = new WebSocket(protocol + window.location.host + '/ws/fcmanager/' + encodeURIComponent(roomCode) + '/');
         } catch (error) {
             scheduleReconnect();
             return;

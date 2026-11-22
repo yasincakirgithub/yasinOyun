@@ -11,3 +11,4 @@ uvicorn[standard]>=0.20.0
 whitenoise>=6.6.0,<7.0
 python-chess>=1.999
 requests>=2.31
+corsheaders>=4.0.0

@@ -481,7 +481,7 @@
         clearTimeout(reconnectTimer);
         setConnection('connecting', 'Bağlanıyor…');
         var protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        var ws = new WebSocket(protocol + window.location.host + '/codenames/ws/room/' + encodeURIComponent(roomCode) + '/');
+        var ws = new WebSocket(protocol + window.location.host + '/ws/codenames/' + encodeURIComponent(roomCode) + '/');
         socket = ws;
 
         ws.onopen = function () {

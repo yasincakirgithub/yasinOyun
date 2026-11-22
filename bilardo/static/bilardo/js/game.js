@@ -828,7 +828,7 @@
         showConnectionOverlay('Odaya bağlanılıyor...');
 
         const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-        socket = new WebSocket(protocol + window.location.host + '/bilardo/ws/game/' + encodeURIComponent(roomCode) + '/');
+        socket = new WebSocket(protocol + window.location.host + '/ws/bilardo/' + encodeURIComponent(roomCode) + '/');
 
         socket.addEventListener('open', () => {
             setConnectionStatus('Bağlı', 'online');

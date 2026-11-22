@@ -1116,7 +1116,7 @@
     function connectSocket() {
         if (socket) return;
         var protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        var wsUrl = protocol + '//' + window.location.host + '/auction/ws/room/' + roomCode + '/';
+        var wsUrl = protocol + '//' + window.location.host + '/ws/auction/' + roomCode + '/';
         socket = new WebSocket(wsUrl);
 
         socket.onopen = function () {
